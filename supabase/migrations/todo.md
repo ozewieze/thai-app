@@ -1,1 +1,1 @@
--maak een nieuwe migratie aan met de RLS en policies
+-maak een nieuwe migratie aan met de RLS en policies [x]
