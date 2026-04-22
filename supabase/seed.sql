@@ -1,0 +1,1 @@
+truncate table public.vocabulary_master restart identity cascade;

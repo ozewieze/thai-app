@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:vocab": "node scripts/generate-vocabulary-seed.mjs",
+    "db:reset": "npm run seed:vocab && npx supabase db reset"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.0",
