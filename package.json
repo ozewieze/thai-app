@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "seed:vocab": "node scripts/generate-vocabulary-seed.mjs",
-    "db:reset": "npm run seed:vocab && npx supabase db reset"
+    "seed:grammar": "node scripts/generate-grammar-seed.mjs",
+    "db:reset": "npm run seed:vocab && npm run seed:grammar && npx supabase db reset"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.0",
