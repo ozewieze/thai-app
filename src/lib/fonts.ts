@@ -8,5 +8,5 @@ export const inter = Inter({
 export const notoSansThai = Noto_Sans_Thai({
   weight: ["400", "500", "600", "700"],
   subsets: ["thai"],
-  variable: "--font-thai",
+  variable: "--font-noto-thai",
 });
