@@ -1,0 +1,6 @@
+body {
+  font-family: var(--font-ui), sans-serif;
+}
+.text-thai {
+  font-family: var(--font-thai), sans-serif;
+}
