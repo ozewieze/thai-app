@@ -1,0 +1,5 @@
+.u-w-max {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: var(--spacing-base) var(--spacing-m);
+}

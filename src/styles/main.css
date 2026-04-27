@@ -1,9 +1,13 @@
-/* -------------------- TOKENS -------------------- */
-
 /* -------------------- BASE -------------------- */
 @import "./base/base.css";
 @import "./base/reset.css";
 @import "./base/variables.css";
 @import "./base/typography.css";
+
+/* -------------------- LAYOUT -------------------- */
 @import "./layout/app-shell.css";
 @import "./layout/navigation.css";
+@import "./layout/footer.css";
+
+/* -------------------- UTILITIES -------------------- */
+@import "./utilities/spacing.css";

@@ -1,12 +1,9 @@
 .site-header {
-  border-bottom: 1px solid #2f4f7f14;
+  border-bottom: 1px solid var(--color-border);
   background-color: var(--color-surface);
 }
 
 .site-header__inner {
-  max-width: 75rem;
-  margin: 0 auto;
-  padding: var(--spacing-base) var(--spacing-m);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,11 +24,11 @@
 }
 
 .site-header__link {
-  color: var(--color-text-nav);
+  color: var(--color-nav-text);
   text-decoration: none;
   font-weight: var(--medium);
   transition: color 0.3s ease-in-out;
   &:hover {
-    color: var(--color-text-nav-hover);
+    color: var(--color-nav-text-hover);
   }
 }

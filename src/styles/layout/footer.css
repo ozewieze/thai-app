@@ -1,0 +1,15 @@
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.site-footer__inner {
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+}
+
+.site-footer__text {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}

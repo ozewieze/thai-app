@@ -1,4 +1,4 @@
-export default function MarketingPage() {
-  return <main>Marketing page</main>;
+import HeroSection from "@/features/home/components/HeroSection";
+export default function HomePage() {
+  return <HeroSection />;
 }
-

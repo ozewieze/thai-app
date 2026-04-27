@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Navigation() {
   return (
     <header className="site-header">
-      <div className="site-header__inner">
+      <div className="site-header__inner u-w-max">
         <Link href="/" className="site-header__brand">
           ThaiNook
         </Link>

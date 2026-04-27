@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <div className="app-shell ">
           <Navigation />
-          <main className="app-shell__main">{children}</main>
+          <main className="app-shell__main u-w-max">{children}</main>
           <Footer />
         </div>
       </body>

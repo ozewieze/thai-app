@@ -6,9 +6,13 @@
   /* colors */
   --color-primary: #faf8f5;
   --color-contrast: #2f4f7f;
-  --color-border: #2f4f7f33;
-  --color-text-nav: #2a2a2ab3;
-  --color-text-nav-hover: #2a2a2a;
+  --color-surface: #ffffff;
+  --color-border: #2f4f7f14;
+  --color-nav-text: #5f6673;
+  --color-nav-text-hover: #4b5563;
+  --color-text-muted: #4b5563;
+  --color-text-muted-soft: #5f6673;
+  --color-text-muted-hover: #2a2a2a;
 
   /* spacing/ 2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 /128 ... */
   --spacing-3xs: 0.125rem;
