@@ -6,6 +6,13 @@ import { Menu, X } from "lucide-react";
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
+  // TODO: Bereken navItems in server-side layout (of via server action) op basis van sessie. Om pricing pagina te verbergen voor ingelogde gebruikers, en om een "My Account" link toe te voegen.
+  const navItems = [
+    { href: "/", label: "Home" },
+    { href: "/levels", label: "Levels" },
+    { href: "/thai-script", label: "Thai Script" },
+    { href: "/pricing", label: "Pricing" },
+  ];
 
   function openMenu() {
     setMenuOpen(true);
@@ -57,18 +64,15 @@ export default function Navigation() {
         </button>
 
         <nav className="site-header__nav" aria-label="Main navigation">
-          <Link href="/" className="site-header__link">
-            Home
-          </Link>
-          <Link href="/levels" className="site-header__link">
-            Levels
-          </Link>
-          <Link href="/thai-script" className="site-header__link">
-            Thai Script
-          </Link>
-          <Link href="/pricing" className="site-header__link">
-            Pricing
-          </Link>
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="site-header__link"
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
       </div>
 
@@ -106,34 +110,16 @@ export default function Navigation() {
               className="mobile-menu__nav"
               aria-label="Mobile navigation links"
             >
-              <Link
-                href="/"
-                className="mobile-menu__link mobile-menu__link--active"
-                onClick={closeMenu}
-              >
-                Home
-              </Link>
-              <Link
-                href="/levels"
-                className="mobile-menu__link"
-                onClick={closeMenu}
-              >
-                Levels
-              </Link>
-              <Link
-                href="/thai-script"
-                className="mobile-menu__link"
-                onClick={closeMenu}
-              >
-                Thai Script
-              </Link>
-              <Link
-                href="/pricing"
-                className="mobile-menu__link"
-                onClick={closeMenu}
-              >
-                Pricing
-              </Link>
+              {navItems.map((item, index) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`mobile-menu__link${index === 0 ? " mobile-menu__link--active" : ""}`}
+                  onClick={closeMenu}
+                >
+                  {item.label}
+                </Link>
+              ))}
             </nav>
 
             <div className="mobile-menu__footer">

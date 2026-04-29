@@ -4,6 +4,7 @@ export default function HeroSection() {
   return (
     <section className={styles.hero}>
       <div className={styles.content}>
+        <p className={styles.eyebrow}>CEFR-structured learning path</p>
         <h1 className={styles.title}>Master Thai With Confidence</h1>
         <p>
           Learn Thai through structured dialogs, thematic vocabulary, and
