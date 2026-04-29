@@ -1,3 +1,15 @@
+/* body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  background:
+    linear-gradient(
+      180deg,
+      var(--color-wash-blue-soft) 0%,
+      var(--color-wash-blue-fade) 28rem
+    ),
+    var(--color-bg);
+} */
 body {
-  background-color: var(--color-primary);
+  background: var(--color-bg);
+  color: var(--color-text);
 }
