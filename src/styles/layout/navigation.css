@@ -18,7 +18,7 @@
   color: var(--color-brand);
   text-decoration: none;
   font-size: var(--size-xl);
-  font-weight: 700;
+  font-weight: var(--bold);
   letter-spacing: -0.02em;
 }
 
@@ -27,7 +27,7 @@
   @media (min-width: 48rem) {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: var(--spacing-lg);
   }
 }
 
@@ -74,7 +74,7 @@
   z-index: 100;
   display: grid;
   place-items: center;
-  padding: 1.25rem;
+  padding: var(--spacing-md);
 }
 
 .mobile-menu__backdrop {
@@ -86,10 +86,10 @@
 }
 
 .mobile-menu__panel {
-  position: relative;
+  /* position: relative; */
   z-index: 1;
   width: min(100%, 28rem);
-  padding: var(--size-l);
+  padding: var(--size-lg);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-xl);
   background: var(--color-surface);
@@ -106,8 +106,8 @@
 .mobile-menu__title {
   margin: 0;
   color: var(--color-text-muted);
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: var(--size-xs);
+  font-weight: var(--bold);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -136,18 +136,18 @@
 .mobile-menu__nav {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--spacing-xs);
 }
 
 .mobile-menu__link {
   display: flex;
   align-items: center;
   min-height: 3.5rem;
-  padding: 0.95rem 1rem;
+  padding: var(--spacing-base);
   border-radius: var(--radius-md);
   color: var(--color-text);
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: var(--size-md);
+  font-weight: var(--medium-bold);
   text-decoration: none;
   transition:
     background-color var(--transition-fast),
@@ -163,9 +163,9 @@
 
 .mobile-menu__footer {
   display: grid;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
-  padding-top: 1rem;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-base);
   border-top: 1px solid var(--color-divider);
 }
 
@@ -175,9 +175,9 @@
   align-items: center;
   justify-content: center;
   min-height: 3.25rem;
-  padding-inline: 1.25rem;
+  padding-inline: var(--spacing-md);
   border-radius: var(--radius-pill);
-  font-weight: 600;
+  font-weight: var(--medium-bold);
   text-decoration: none;
 }
 
@@ -207,37 +207,58 @@
   background: var(--color-interactive-primary-hover);
 }
 
+/* Alleen animeren als de gebruiker GEEN voorkeur voor minder beweging heeft ingesteld */
 @media (prefers-reduced-motion: no-preference) {
+  /* De donkere/blur achtergrond achter het menu fade rustig in */
   .mobile-menu__backdrop {
+    /* Ik gebruik de keyframes 'menu-fade' en de snelheid uit mijn variabelen */
     animation: menu-fade var(--transition-fast);
   }
 
+  /* Het menu-paneel zelf verschijnt met een zachtere, iets rijkere animatie */
   .mobile-menu__panel {
+    /* Ik gebruik de keyframes 'menu-panel-in' en de iets tragere/smoother timing */
     animation: menu-panel-in var(--transition-smooth);
   }
 }
 
+/* Als de gebruiker in zijn toestel 'reduce motion' heeft aangezet */
 @media (prefers-reduced-motion: reduce) {
+  /* Zet ik alle niet-essentiële animatie voor dit menu uit */
   .mobile-menu__backdrop,
   .mobile-menu__panel {
     animation: none;
   }
 }
 
+/* Keyframes voor de achtergrondlaag */
 @keyframes menu-fade {
+  /* Start volledig transparant */
   from {
     opacity: 0;
   }
+
+  /* Eindig volledig zichtbaar */
   to {
     opacity: 1;
   }
 }
 
+/* Keyframes voor het menu-paneel zelf */
 @keyframes menu-panel-in {
+  /* Start:
+     - onzichtbaar
+     - 14px lager dan de eindpositie
+     - een héél klein beetje kleiner */
   from {
     opacity: 0;
     transform: translateY(14px) scale(0.98);
   }
+
+  /* Eindig:
+     - volledig zichtbaar
+     - op de juiste plek
+     - op normale grootte */
   to {
     opacity: 1;
     transform: translateY(0) scale(1);

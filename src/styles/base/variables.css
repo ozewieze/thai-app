@@ -104,10 +104,10 @@
   --spacing-3xs: 0.125rem;
   --spacing-2xs: 0.25rem;
   --spacing-xs: 0.5rem;
-  --spacing-s: 0.75rem;
+  --spacing-sm: 0.75rem;
   --spacing-base: 1rem;
-  --spacing-m: 1.5rem;
-  --spacing-l: 2rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
   --spacing-xl: 3rem;
   --spacing-2xl: 4rem;
   --spacing-3xl: 5rem;
@@ -116,10 +116,10 @@
   /* fONT-SIZE: 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98  */
   --size-2xs: 0.625rem;
   --size-xs: 0.75rem;
-  --size-s: 0.875rem;
+  --size-sm: 0.875rem;
   --size-base: 1rem;
-  --size-m: 1.125rem;
-  --size-l: 1.25rem;
+  --size-md: 1.125rem;
+  --size-lg: 1.25rem;
   --size-xl: 1.5rem;
   --size-2xl: 1.875rem;
   --size-3xl: 2.25rem;
@@ -131,6 +131,7 @@
   --light: 300;
   --normal: 400;
   --medium: 500;
+  --medium-bold: 600;
   --bold: 700;
   --extra-bold: 800;
 
