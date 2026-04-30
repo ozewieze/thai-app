@@ -10,14 +10,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: var(--spacing-2xl);
-  gap: var(--spacing-base);
+  min-height: var(--spacing-64);
+  gap: var(--spacing-16);
 }
 
 .site-header__brand {
   color: var(--color-brand);
   text-decoration: none;
-  font-size: var(--size-xl);
+  font-size: var(--size-24);
   font-weight: var(--bold);
   letter-spacing: -0.02em;
 }
@@ -27,7 +27,7 @@
   @media (min-width: 48rem) {
     display: flex;
     align-items: center;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-32);
   }
 }
 
@@ -35,7 +35,7 @@
   color: var(--color-text-soft);
   text-decoration: none;
   font-weight: var(--medium);
-  font-size: var(--size-base);
+  font-size: var(--size-16);
   transition:
     color var(--transition-fast),
     background-color var(--transition-fast);
@@ -49,8 +49,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--spacing-xl);
-  height: var(--spacing-xl);
+  width: var(--spacing-48);
+  height: var(--spacing-48);
   border: 1px solid var(--color-interactive-secondary-border);
   border-radius: var(--radius-pill);
   background: var(--color-interactive-secondary-bg);
@@ -74,7 +74,7 @@
   z-index: 100;
   display: grid;
   place-items: center;
-  padding: var(--spacing-md);
+  padding: var(--spacing-24);
 }
 
 .mobile-menu__backdrop {
@@ -89,7 +89,7 @@
   /* position: relative; */
   z-index: 1;
   width: min(100%, 28rem);
-  padding: var(--size-lg);
+  padding: var(--size-20);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-xl);
   background: var(--color-surface);
@@ -100,13 +100,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--size-base);
+  margin-bottom: var(--spacing-16);
 }
 
 .mobile-menu__title {
   margin: 0;
   color: var(--color-text-muted);
-  font-size: var(--size-xs);
+  font-size: var(--size-12);
   font-weight: var(--bold);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -136,17 +136,17 @@
 .mobile-menu__nav {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-8);
 }
 
 .mobile-menu__link {
   display: flex;
   align-items: center;
   min-height: 3.5rem;
-  padding: var(--spacing-base);
+  padding: var(--spacing-16);
   border-radius: var(--radius-md);
   color: var(--color-text);
-  font-size: var(--size-md);
+  font-size: var(--size-18);
   font-weight: var(--medium-bold);
   text-decoration: none;
   transition:
@@ -163,9 +163,9 @@
 
 .mobile-menu__footer {
   display: grid;
-  gap: var(--spacing-sm);
-  margin-top: var(--spacing-md);
-  padding-top: var(--spacing-base);
+  gap: var(--spacing-12);
+  margin-top: var(--spacing-24);
+  padding-top: var(--spacing-16);
   border-top: 1px solid var(--color-divider);
 }
 
@@ -175,7 +175,7 @@
   align-items: center;
   justify-content: center;
   min-height: 3.25rem;
-  padding-inline: var(--spacing-md);
+  padding-inline: var(--spacing-24);
   border-radius: var(--radius-pill);
   font-weight: var(--medium-bold);
   text-decoration: none;

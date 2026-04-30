@@ -1,5 +1,5 @@
 .hero {
-  margin-top: var(--spacing-3xl);
+  margin-top: var(--spacing-80);
   display: flex;
   flex-direction: column;
   @media (min-width: 48rem) {
@@ -11,23 +11,23 @@
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-base);
+  gap: var(--spacing-8);
+  padding: var(--spacing-xs) var(--spacing-16);
   color: var(--color-text-muted);
   background-color: var(--color-surface);
-  font-size: var(--size-sm);
+  font-size: var(--size-12);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
   margin-bottom: var(--spacing-sm);
 }
 .title {
-  font-size: var(--size-3xl);
+  font-size: var(--size-36);
   font-weight: 700;
   color: var(--color-heading);
   line-height: 1.2;
 
   @media (min-width: 48rem) {
-    font-size: var(--size-6xl);
+    font-size: var(--size-62);
   }
 }
 
@@ -36,9 +36,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-32);
   @media (min-width: 48rem) {
-    gap: var(--spacing-xl);
+    gap: var(--spacing-48);
   }
 }
 
