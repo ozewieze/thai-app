@@ -1,6 +1,7 @@
 import styles from "./HeroSection.module.css";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
+import ActionLink from "@/components/ui/ActionLink/ActionLink";
 export default function HeroSection() {
   return (
     <section className={styles.hero}>
@@ -17,8 +18,15 @@ export default function HeroSection() {
           contextual practice. Progress from A1 to C2 with a method designed for
           adult learners.
         </p>
-        <button>Try free lessons</button>
-        <button>See how it works</button>
+        <div className={styles.actions}>
+          <ActionLink href="/lessons" variant="primary" size="lg">
+            Try free lessons
+          </ActionLink>
+
+          <ActionLink href="/how-it-works" variant="secondary" size="lg">
+            See how it works
+          </ActionLink>
+        </div>
       </div>
       <div className={styles.image}>
         <Image

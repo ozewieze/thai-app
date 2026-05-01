@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--spacing-8);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-md);
   text-decoration: none;
   font-family: var(--font-ui);
   font-weight: var(--medium);
@@ -33,20 +33,24 @@
 /* Sizes */
 .sm {
   min-height: 2.5rem;
-  padding: var(--spacing-xs) var(--spacing-12);
-  font-size: var(--size-s);
+  padding: var(--spacing-8) var(--spacing-12);
+  font-size: var(--size-14);
 }
 
 .md {
   min-height: 2.75rem;
-  padding: var(--spacing-12) var(--spacing-16);
-  font-size: var(--size-s);
+  padding: var(--spacing-14) var(--spacing-16);
+  font-size: var(--size-14);
 }
 
 .lg {
   min-height: 3rem;
-  padding: var(--spacing-12) var(--spacing-24);
+  padding: var(--spacing-16) var(--spacing-24);
   font-size: var(--size-16);
+  @media (min-width: 64rem) {
+    min-height: 3.5rem;
+    padding: var(--spacing-16) var(--spacing-32);
+  }
 }
 
 /* Variants */

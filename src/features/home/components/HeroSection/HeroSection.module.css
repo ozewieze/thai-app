@@ -1,33 +1,15 @@
 .hero {
-  margin-top: var(--spacing-80);
+  margin-top: var(--spacing-48);
+  margin-bottom: var(--spacing-64);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-48);
   @media (min-width: 48rem) {
     flex-direction: row;
-    flex-basis: 50%;
   }
-}
-.eyebrow {
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-8);
-  padding: var(--spacing-xs) var(--spacing-16);
-  color: var(--color-text-muted);
-  background-color: var(--color-surface);
-  font-size: var(--size-12);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-pill);
-  margin-bottom: var(--spacing-sm);
-}
-.title {
-  font-size: var(--size-36);
-  font-weight: 700;
-  color: var(--color-heading);
-  line-height: 1.2;
-
-  @media (min-width: 48rem) {
-    font-size: var(--size-62);
+  @media (min-width: 48rem) and (max-width: 48.5rem) {
+    gap: var(--spacing-32);
   }
 }
 
@@ -36,26 +18,70 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   gap: var(--spacing-32);
+  max-width: 34rem;
+}
+@media (min-width: 48rem) and (max-width: 48.5rem) {
+  .hero {
+    gap: var(--spacing-32);
+  }
+
+  /* .content {
+    max-width: 30rem;
+  } */
+
+  /* .image img {
+    width: 100%;
+  } */
+}
+.eyebrow {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: var(--spacing-8) var(--spacing-16);
+  color: var(--color-text-muted);
+  background-color: var(--color-surface);
+  font-size: var(--size-14);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--spacing-12);
+}
+.title {
+  font-size: var(--size-44);
+  font-weight: var(--medium-bold);
+  color: var(--color-heading);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  @media (min-width: 60rem) {
+    font-size: var(--size-62);
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  margin-top: var(--spacing-24);
   @media (min-width: 48rem) {
-    gap: var(--spacing-48);
+    flex-direction: row;
+
+    gap: var(--spacing-16);
+    margin-top: var(--spacing-32);
   }
 }
 
 .image {
   flex: 1;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: flex-end;
-  overflow: hidden;
 }
 
 .image img {
-  width: 100%;
+  width: min(100%, 34rem);
   height: auto;
-  object-fit: contain;
+  display: block;
   border-radius: var(--radius-xl);
-  @media (min-width: 48rem) {
-    width: 85%;
-  }
 }
