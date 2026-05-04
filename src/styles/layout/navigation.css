@@ -18,8 +18,8 @@
   color: var(--color-brand);
   text-decoration: none;
   font-size: var(--size-24);
-  font-weight: var(--bold);
-  letter-spacing: -0.02em;
+  font-weight: var(--medium-bold);
+  letter-spacing: -0.035em;
 }
 
 .site-header__nav {

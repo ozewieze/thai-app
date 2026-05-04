@@ -1,0 +1,25 @@
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  color: var(--color-text-muted);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  width: fit-content;
+  padding: var(--spacing-8) var(--spacing-16);
+  /* margin-bottom: var(--spacing-16); */
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.sm {
+  font-size: var(--size-12);
+}
+
+.md {
+  font-size: var(--size-14);
+}

@@ -2,16 +2,18 @@ import styles from "./HeroSection.module.css";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import ActionLink from "@/components/ui/ActionLink/ActionLink";
+import SectionEyebrow from "@/components/ui/SectionEyebrow/SectionEyebrow";
 export default function HeroSection() {
   return (
-    <section className={styles.hero}>
+    <section className={`${styles.hero} u-w-max`}>
       <div className={styles.content}>
-        <p className={styles.eyebrow}>
-          <span className={styles.eyebrowIcon} aria-hidden="true">
+        <SectionEyebrow
+          icon={
             <Sparkles size={18} strokeWidth={1.8} color="var(--color-accent)" />
-          </span>
-          <span>CEFR-structured learning path</span>
-        </p>
+          }
+        >
+          CEFR-structured learning path
+        </SectionEyebrow>
         <h1 className={styles.title}>Master Thai With Confidence</h1>
         <p>
           Learn Thai through structured dialogs, thematic vocabulary, and
