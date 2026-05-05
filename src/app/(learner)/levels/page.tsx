@@ -1,3 +1,4 @@
-﻿export default function Page() {
-	return <main>Placeholder page</main>;
+﻿import AllLevelsPage from "@/features/levels/AllLevelsPage";
+export default function Page() {
+  return <AllLevelsPage />;
 }

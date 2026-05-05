@@ -1,54 +1,3 @@
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-32);
-  @media (min-width: 48rem) {
-    gap: var(--spacing-64);
-    padding-top: var(--spacing-16);
-    padding-bottom: var(--spacing-16);
-    margin-bottom: var(--spacing-128);
-  }
-}
-
-.header {
-  max-width: 42rem;
-  margin-inline: auto;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-24);
-}
-
-/* .title {
-  font-size: var(--size-30);
-  font-weight: var(--medium-bold);
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-  color: var(--color-heading);
-} */
-.title {
-  font-size: var(--size-30);
-  /* margin-bottom: var(--spacing-16); */
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  color: var(--color-heading);
-  @media (min-width: 48rem) {
-    font-size: var(--size-44);
-  }
-}
-
-.description {
-  max-width: 34rem;
-  margin-inline: auto;
-  color: var(--color-text-soft);
-  /* text-align: left; */
-}
-
-.grid {
-  display: grid;
-  gap: var(--spacing-24);
-}
-
 .card {
   display: flex;
   flex-direction: column;
@@ -91,9 +40,8 @@
   font-size: var(--size-18);
   font-weight: var(--bold);
   line-height: 1;
-  /* opacity: 0.88; */
+  opacity: 0.88;
 }
-
 .cardTitle {
   font-size: var(--size-20);
   font-weight: var(--medium-bold);
@@ -106,16 +54,6 @@
   line-height: 1.6;
   flex-grow: 1;
 }
-
-.stats {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--spacing-8);
-  color: var(--color-text-muted);
-  font-size: var(--size-14);
-}
-
 .cta {
   display: inline-flex;
   align-items: center;
@@ -126,7 +64,6 @@
   color: var(--color-brand);
   transition: color var(--transition-smooth);
 }
-
 .arrow {
   transition: transform var(--transition-smooth);
 }
@@ -139,24 +76,4 @@
 .card:hover .arrow,
 .card:focus-visible .arrow {
   transform: translateX(0.25rem);
-}
-
-@media (min-width: 48rem) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  /* .card {
-    padding: var(--spacing-32);
-  } */
-
-  /* .title {
-    font-size: var(--size-36);
-  } */
-}
-
-@media (min-width: 64rem) {
-  .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }

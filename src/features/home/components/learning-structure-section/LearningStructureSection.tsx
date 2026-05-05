@@ -1,6 +1,6 @@
 import styles from "./LearningStructureSection.module.css";
 import { BookOpenText, LayoutList, NotebookPen } from "lucide-react";
-import SectionEyebrow from "@/components/ui/SectionEyebrow/SectionEyebrow";
+import SectionEyebrow from "@/components/ui/section-eyebrow/SectionEyebrow";
 import { Sparkles } from "lucide-react";
 
 export default function LearningStructureSection() {

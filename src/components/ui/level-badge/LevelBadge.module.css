@@ -1,0 +1,30 @@
+.levelBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 3.5rem;
+  height: 3.5rem; */
+  border-radius: var(--radius-md);
+  background-color: var(--color-brand-soft);
+  color: var(--color-brand);
+  /* font-size: var(--size-18); */
+  font-weight: var(--bold);
+  line-height: 1;
+  opacity: 0.88;
+}
+.sm {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: var(--size-18);
+}
+.md {
+  width: 4.5rem;
+  height: 4.5rem;
+  font-size: var(--size-20);
+}
+
+.lg {
+  width: 5.5rem;
+  height: 5.5rem;
+  font-size: var(--size-24);
+}

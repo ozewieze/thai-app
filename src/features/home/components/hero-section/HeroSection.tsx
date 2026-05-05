@@ -1,8 +1,8 @@
 import styles from "./HeroSection.module.css";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
-import ActionLink from "@/components/ui/ActionLink/ActionLink";
-import SectionEyebrow from "@/components/ui/SectionEyebrow/SectionEyebrow";
+import ActionLink from "@/components/ui/action-link/ActionLink";
+import SectionEyebrow from "@/components/ui/section-eyebrow/SectionEyebrow";
 export default function HeroSection() {
   return (
     <section className={`${styles.hero} u-w-max`}>
