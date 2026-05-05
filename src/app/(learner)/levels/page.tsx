@@ -1,4 +1,4 @@
-﻿import AllLevelsPage from "@/features/levels/AllLevelsPage";
+﻿import AllLevelsPage from "@/features/all-levels/AllLevelsPage";
 export default function Page() {
   return <AllLevelsPage />;
 }

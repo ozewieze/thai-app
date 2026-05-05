@@ -12,6 +12,5 @@ Thai script fields are canonical.
 If user-facing romanization is needed later, it will be stored separately."
 
 TODO
--herbruikbare LevelBadge voorzien
--in sm, md en lg versie
+
 op de levelpage level.id en level.description etc. trachten mee te geven
