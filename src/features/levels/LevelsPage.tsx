@@ -1,8 +1,8 @@
-import styles from "./AllLevelsPage.module.css";
+import styles from "./LevelsPage.module.css";
 import LevelsGrid from "@/components/ui/levels-grid/LevelsGrid";
 import levels from "@/features/curriculum/levels";
 
-export default function AllLevelsPage() {
+export default function LevelsPage() {
   return (
     <main className={styles.page}>
       <div className={styles.header}>
