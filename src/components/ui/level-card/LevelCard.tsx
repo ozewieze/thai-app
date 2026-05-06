@@ -16,7 +16,10 @@ export default function LevelCard({
     ctaLabelMode === "level" ? `Start ${level.id}` : "Start learning";
 
   return (
-    <Link href={`/learn/${level.id.toLowerCase()}`} className={styles.card}>
+    <Link
+      href={`/learn/${level.id.toLowerCase()}/dialogs`}
+      className={styles.card}
+    >
       <LevelBadge levelId={level.id} />
 
       <h3 className={styles.cardTitle}>{level.title}</h3>

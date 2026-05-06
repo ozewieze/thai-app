@@ -4,9 +4,11 @@ import levels from "@/features/curriculum/levels";
 
 export default function LevelsPage() {
   return (
-    <main className={styles.page}>
+    <section className={styles.page} aria-labelledby="levels-title">
       <div className={styles.header}>
-        <h1 className={styles.title}>All Levels</h1>
+        <h1 id="levels-title" className={styles.title}>
+          All Levels
+        </h1>
         <p className={styles.description}>
           Choose your level and start learning. Follow the CEFR framework from
           A1 Beginner to C2 Fluent.
@@ -14,6 +16,6 @@ export default function LevelsPage() {
       </div>
 
       <LevelsGrid levels={levels} ctaLabelMode="level" />
-    </main>
+    </section>
   );
 }

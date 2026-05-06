@@ -13,4 +13,7 @@ If user-facing romanization is needed later, it will be stored separately."
 
 TODO
 
-op de levelpage level.id en level.description etc. trachten mee te geven
+-route en paginastructuur
+-layout levelpage
+-navigatielinks naar de section
+-section dialogs uitbouwen
