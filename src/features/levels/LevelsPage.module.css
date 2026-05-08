@@ -4,9 +4,9 @@
   gap: var(--spacing-32);
   padding-top: var(--spacing-48);
   padding-bottom: var(--spacing-96);
-  background:
+  /* background:
     linear-gradient(var(--color-wash-blue-flat), var(--color-wash-blue-flat)),
-    var(--color-bg);
+    var(--color-bg); */
 }
 
 .header {

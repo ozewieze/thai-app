@@ -13,7 +13,7 @@ If user-facing romanization is needed later, it will be stored separately."
 
 TODO
 
--route en paginastructuur
--layout levelpage
--navigatielinks naar de section
--section dialogs uitbouwen
+-code hernemen
+-breadcrumbs
+-styling van de levelpage
+-componenten maken
