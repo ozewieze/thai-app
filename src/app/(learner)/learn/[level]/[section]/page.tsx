@@ -1,91 +1,3 @@
-// import { getLevelById } from "@/features/level/lib/getLevelById";
-// import { notFound } from "next/navigation";
-// import LevelBadge from "@/components/ui/level-badge/LevelBadge";
-// import Link from "next/link";
-// import { levelSectionData, isLevelSectionKey } from "@/features/level/data";
-
-// type PageProps = { params: Promise<{ level: string; section: string }> };
-
-// export default async function LevelSectionPage({ params }: PageProps) {
-//   const { level, section } = await params;
-//   const levelData = getLevelById(level);
-
-//   if (!levelData) {
-//     notFound();
-//   }
-
-//   const sectionsForLevel =
-//     levelSectionData[level as keyof typeof levelSectionData];
-
-//   if (!sectionsForLevel || !isLevelSectionKey(section)) {
-//     notFound();
-//   }
-
-//   return (
-//     <>
-//       <LevelBadge levelId={levelData.id} size="lg" />
-//       <h1>{levelData.title}</h1>
-//       <p>{levelData.description}</p>
-
-//       <nav aria-label="Level sections">
-//         <ul>
-//           <li>
-//             <Link href={`/learn/${level}/dialogs`}>Dialogs</Link>
-//           </li>
-//           <li>
-//             <Link href={`/learn/${level}/themes`}>Themes</Link>
-//           </li>
-//           <li>
-//             <Link href={`/learn/${level}/stories`}>Stories</Link>
-//           </li>
-//           <li>
-//             <Link href={`/learn/${level}/practice`}>Practice</Link>
-//           </li>
-//         </ul>
-//       </nav>
-
-//       <div>
-//         {/* TODO routes nog aanpassen, ik ga niet verder nesten */}
-//         {section === "dialogs" && (
-//           <ul>
-//             {sectionsForLevel.dialogs.map((item) => (
-//               <li key={item.id}>
-//                 {item.type === "dialog" ? (
-//                   <Link href={`/learn/${level}/dialogs/${item.slug}`}>
-//                     <p>{item.number}</p>
-//                     <h2>{item.title}</h2>
-//                     <p>{item.subtitle}</p>
-//                     <span>{item.label}</span>
-//                   </Link>
-//                 ) : (
-//                   <Link href={`/learn/${level}/practice/${item.slug}`}>
-//                     <h2>{item.title}</h2>
-//                     <p>{item.rangeLabel}</p>
-//                     <p>{item.exerciseCount} exercises</p>
-//                   </Link>
-//                 )}
-//               </li>
-//             ))}
-//           </ul>
-//         )}
-
-//         {section === "themes" && (
-//           <ul>
-//             {sectionsForLevel.themes.map((theme) => (
-//               <li key={theme.id}>
-//                 <Link href={`/learn/${level}/themes/${theme.slug}`}>
-//                   <h2>{theme.title}</h2>
-//                   <p>{theme.description}</p>
-//                   <span>{theme.label}</span>
-//                 </Link>
-//               </li>
-//             ))}
-//           </ul>
-//         )}
-//       </div>
-//     </>
-//   );
-// }
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import LevelBadge from "@/components/ui/level-badge/LevelBadge";
@@ -146,7 +58,7 @@ export default async function LevelSectionPage({ params }: PageProps) {
         </nav>
 
         <div className={styles.header}>
-          <LevelBadge levelId={levelData.id} size="lg" />
+          <LevelBadge levelId={levelData.id} responsive />
           <div className={styles.headerText}>
             <h1 id="level-title" className={styles.title}>
               {levelData.title}
@@ -155,7 +67,6 @@ export default async function LevelSectionPage({ params }: PageProps) {
           </div>
         </div>
       </div>
-
       <nav className={styles.sectionNav} aria-label="Level sections">
         <ul className={styles.sectionNavList}>
           {Object.entries(sectionLabels).map(([key, label]) => {
@@ -178,7 +89,7 @@ export default async function LevelSectionPage({ params }: PageProps) {
           })}
         </ul>
       </nav>
-      {/* TODO routes nog aanpassen, ik ga niet verder nesten */}
+      7
       <div className={styles.content}>
         {section === "dialogs" && (
           <ul className={styles.grid} role="list">
@@ -186,7 +97,7 @@ export default async function LevelSectionPage({ params }: PageProps) {
               <li key={item.id}>
                 {item.type === "dialog" ? (
                   <Link
-                    href={`/learn/${level}/dialogs/${item.slug}`}
+                    href={`/lessons/${item.slug}`}
                     className={styles.lessonCard}
                   >
                     <div className={styles.lessonCardTop}>
@@ -210,7 +121,7 @@ export default async function LevelSectionPage({ params }: PageProps) {
                   </Link>
                 ) : (
                   <Link
-                    href={`/learn/${level}/practice/${item.slug}`}
+                    href={`/lessons/${item.slug}`}
                     className={styles.revisionCard}
                   >
                     <div className={styles.revisionTop}>
@@ -242,7 +153,7 @@ export default async function LevelSectionPage({ params }: PageProps) {
             {sectionsForLevel.themes.map((theme) => (
               <li key={theme.id}>
                 <Link
-                  href={`/learn/${level}/themes/${theme.slug}`}
+                  href={`/lessons/${theme.slug}`}
                   className={styles.themeCard}
                 >
                   <div className={styles.themeCardTop}>

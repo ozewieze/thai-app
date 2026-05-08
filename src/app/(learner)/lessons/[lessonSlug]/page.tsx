@@ -1,3 +1,3 @@
 export default function LessonPage() {
-  return <main>Placeholder page</main>;
+  return <main>Placeholder page for a lesson</main>;
 }

@@ -14,6 +14,5 @@ If user-facing romanization is needed later, it will be stored separately."
 TODO
 
 -code hernemen
--breadcrumbs
--styling van de levelpage
--componenten maken
+-styling van de sectionpage
+-componenten maken van de code in de sectionpage
