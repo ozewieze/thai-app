@@ -1,9 +1,10 @@
-import Link from "next/link";
+// import Link from "next/link";
 import { notFound } from "next/navigation";
-import LevelBadge from "@/components/ui/level-badge/LevelBadge";
+// import LevelBadge from "@/components/ui/level-badge/LevelBadge";
 import { getLevelById } from "@/features/level/lib/getLevelById";
 import { isLevelSectionKey, levelSectionData } from "@/features/level/data";
-import styles from "./LevelSectionPage.module.css";
+// import styles from "./LevelSectionPage.module.css";
+import SectionPageView from "@/features/section/components/section-page-view/SectionPageView";
 
 type PageProps = {
   params: Promise<{ level: string; section: string }>;
@@ -32,166 +33,12 @@ export default async function LevelSectionPage({ params }: PageProps) {
   }
 
   return (
-    <section className={styles.page} aria-labelledby="level-title">
-      <div className={styles.hero}>
-        <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
-          <ol className={styles.breadcrumbList}>
-            <li className={styles.breadcrumbItem}>
-              <Link href="/levels" className={styles.breadcrumbLink}>
-                Levels
-              </Link>
-            </li>
-            <li className={styles.breadcrumbItem}>
-              <Link
-                href={`/learn/${level}/dialogs`}
-                className={styles.breadcrumbLink}
-              >
-                {levelData.id}
-              </Link>
-            </li>
-            <li className={styles.breadcrumbItem}>
-              <span aria-current="page" className={styles.breadcrumbCurrent}>
-                {sectionLabels[section]}
-              </span>
-            </li>
-          </ol>
-        </nav>
-
-        <div className={styles.header}>
-          <LevelBadge levelId={levelData.id} responsive />
-          <div className={styles.headerText}>
-            <h1 id="level-title" className={styles.title}>
-              {levelData.title}
-            </h1>
-            <p className={styles.description}>{levelData.description}</p>
-          </div>
-        </div>
-      </div>
-      <nav className={styles.sectionNav} aria-label="Level sections">
-        <div className={styles.sectionNavScroller}>
-          <ul className={styles.sectionNavList}>
-            {Object.entries(sectionLabels).map(([key, label]) => {
-              const href = `/learn/${level}/${key}`;
-              const isActive = section === key;
-
-              return (
-                <li key={key} className={styles.sectionNavItem}>
-                  <Link
-                    href={href}
-                    className={
-                      isActive ? styles.sectionLinkActive : styles.sectionLink
-                    }
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </nav>
-
-      <div className={styles.content}>
-        {section === "dialogs" && (
-          <ul className={styles.grid} role="list">
-            {sectionsForLevel.dialogs.map((item) => (
-              <li key={item.id}>
-                {item.type === "dialog" ? (
-                  <Link
-                    href={`/lessons/${item.slug}`}
-                    className={styles.lessonCard}
-                  >
-                    <div className={styles.lessonCardTop}>
-                      <span className={styles.lessonNumber}>{item.number}</span>
-
-                      <div className={styles.lessonStatus}>
-                        {item.access === "premium" ? (
-                          <span className={styles.premiumBadge}>Premium</span>
-                        ) : item.access === "free" ? (
-                          <span className={styles.freeBadge}>Free</span>
-                        ) : null}
-                      </div>
-                    </div>
-
-                    <div className={styles.lessonBody}>
-                      <h2 className={styles.lessonTitle}>{item.title}</h2>
-                      <p className={styles.lessonSubtitle}>{item.subtitle}</p>
-                    </div>
-
-                    <span className={styles.lessonTag}>{item.label}</span>
-                  </Link>
-                ) : (
-                  <Link
-                    href={`/lessons/${item.slug}`}
-                    className={styles.revisionCard}
-                  >
-                    <div className={styles.revisionTop}>
-                      <span className={styles.revisionEyebrow}>Revision</span>
-                    </div>
-
-                    <div className={styles.revisionBody}>
-                      <h2 className={styles.revisionTitle}>
-                        {item.rangeLabel}
-                      </h2>
-                      <p className={styles.revisionText}>
-                        Review key vocabulary and patterns from the previous
-                        lessons.
-                      </p>
-                    </div>
-
-                    <span className={styles.revisionMeta}>
-                      {item.exerciseCount} exercises
-                    </span>
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {section === "themes" && (
-          <ul className={styles.grid} role="list">
-            {sectionsForLevel.themes.map((theme) => (
-              <li key={theme.id}>
-                <Link
-                  href={`/lessons/${theme.slug}`}
-                  className={styles.themeCard}
-                >
-                  <div className={styles.themeCardTop}>
-                    {theme.access === "premium" ? (
-                      <span className={styles.premiumBadge}>Premium</span>
-                    ) : theme.access === "free" ? (
-                      <span className={styles.freeBadge}>Free</span>
-                    ) : null}
-                  </div>
-
-                  <div className={styles.themeBody}>
-                    <h2 className={styles.themeTitle}>{theme.title}</h2>
-                    <p className={styles.themeText}>{theme.description}</p>
-                  </div>
-
-                  <span className={styles.themeTag}>{theme.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {section === "stories" && (
-          <div className={styles.emptyState}>
-            <h2 className={styles.emptyTitle}>Stories</h2>
-            <p className={styles.emptyText}>Stories are coming soon.</p>
-          </div>
-        )}
-
-        {section === "practice" && (
-          <div className={styles.emptyState}>
-            <h2 className={styles.emptyTitle}>Practice</h2>
-            <p className={styles.emptyText}>Practice is coming soon.</p>
-          </div>
-        )}
-      </div>
-    </section>
+    <SectionPageView
+      level={level}
+      section={section}
+      levelData={levelData}
+      sectionsForLevel={sectionsForLevel}
+      sectionLabels={sectionLabels}
+    />
   );
 }
