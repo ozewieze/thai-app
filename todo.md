@@ -16,3 +16,4 @@ TODO
 -code hernemen
 -styling van de sectionpage
 -componenten maken van de code in de sectionpage
+verplaatsen naar features/section

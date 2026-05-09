@@ -68,28 +68,30 @@ export default async function LevelSectionPage({ params }: PageProps) {
         </div>
       </div>
       <nav className={styles.sectionNav} aria-label="Level sections">
-        <ul className={styles.sectionNavList}>
-          {Object.entries(sectionLabels).map(([key, label]) => {
-            const href = `/learn/${level}/${key}`;
-            const isActive = section === key;
+        <div className={styles.sectionNavScroller}>
+          <ul className={styles.sectionNavList}>
+            {Object.entries(sectionLabels).map(([key, label]) => {
+              const href = `/learn/${level}/${key}`;
+              const isActive = section === key;
 
-            return (
-              <li key={key} className={styles.sectionNavItem}>
-                <Link
-                  href={href}
-                  className={
-                    isActive ? styles.sectionLinkActive : styles.sectionLink
-                  }
-                  aria-current={isActive ? "page" : undefined}
-                >
-                  {label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+              return (
+                <li key={key} className={styles.sectionNavItem}>
+                  <Link
+                    href={href}
+                    className={
+                      isActive ? styles.sectionLinkActive : styles.sectionLink
+                    }
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </nav>
-      7
+
       <div className={styles.content}>
         {section === "dialogs" && (
           <ul className={styles.grid} role="list">
