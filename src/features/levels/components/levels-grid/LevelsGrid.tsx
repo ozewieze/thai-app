@@ -1,5 +1,5 @@
 import styles from "./LevelsGrid.module.css";
-import LevelCard from "@/components/ui/level-card/LevelCard";
+import LevelCard from "@/features/levels/components/level-card/LevelCard";
 import { CtaLabelMode, Level } from "@/features/curriculum/types";
 
 type LevelsGridProps = {

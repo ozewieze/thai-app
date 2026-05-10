@@ -1,5 +1,5 @@
 import styles from "./LevelsSection.module.css";
-import LevelsGrid from "@/components/ui/levels-grid/LevelsGrid";
+import LevelsGrid from "@/features/levels/components/levels-grid/LevelsGrid";
 import levels from "@/features/curriculum/levels";
 
 export default function LevelsSection() {
