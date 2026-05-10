@@ -1,0 +1,34 @@
+.breadcrumbs {
+  display: flex;
+}
+
+.breadcrumbList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-8);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumbItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  color: var(--color-text-muted);
+}
+
+.breadcrumbItem:not(:last-child)::after {
+  content: "/";
+  color: var(--color-text-faint);
+}
+
+.breadcrumbLink {
+  color: var(--color-text-soft);
+  text-decoration: none;
+}
+
+.breadcrumbCurrent {
+  color: var(--color-heading);
+}

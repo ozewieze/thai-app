@@ -2,6 +2,7 @@ import Link from "next/link";
 import LevelBadge from "@/components/ui/level-badge/LevelBadge";
 import { levelSectionData } from "@/features/level/data";
 import styles from "./SectionPageView.module.css";
+import Breadcrumbs from "@/components/ui/breadcrumbs/Breadcrumbs";
 
 type LevelData = {
   id: string;
@@ -30,28 +31,13 @@ export default function SectionPageView({
   return (
     <section className={styles.page} aria-labelledby="level-title">
       <div className={styles.hero}>
-        <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
-          <ol className={styles.breadcrumbList}>
-            <li className={styles.breadcrumbItem}>
-              <Link href="/levels" className={styles.breadcrumbLink}>
-                Levels
-              </Link>
-            </li>
-            <li className={styles.breadcrumbItem}>
-              <Link
-                href={`/learn/${level}/dialogs`}
-                className={styles.breadcrumbLink}
-              >
-                {levelData.id}
-              </Link>
-            </li>
-            <li className={styles.breadcrumbItem}>
-              <span aria-current="page" className={styles.breadcrumbCurrent}>
-                {sectionLabels[section]}
-              </span>
-            </li>
-          </ol>
-        </nav>
+        <Breadcrumbs
+          items={[
+            { label: "levels", href: "/levels" },
+            { label: levelData.id, href: `/learn/${level}/dialogs` },
+            { label: sectionLabels[section] },
+          ]}
+        />
 
         <div className={styles.header}>
           <LevelBadge levelId={levelData.id} responsive />
