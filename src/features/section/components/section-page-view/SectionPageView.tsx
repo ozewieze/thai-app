@@ -3,6 +3,7 @@ import LevelBadge from "@/components/ui/level-badge/LevelBadge";
 import { levelSectionData } from "@/features/level/data";
 import styles from "./SectionPageView.module.css";
 import Breadcrumbs from "@/components/ui/breadcrumbs/Breadcrumbs";
+import SectionNav from "../section-nav/SectionNav";
 
 type LevelData = {
   id: string;
@@ -49,7 +50,7 @@ export default function SectionPageView({
           </div>
         </div>
       </div>
-      <nav className={styles.sectionNav} aria-label="Level sections">
+      {/* <nav className={styles.sectionNav} aria-label="Level sections">
         <div className={styles.sectionNavScroller}>
           <ul className={styles.sectionNavList}>
             {Object.entries(sectionLabels).map(([key, label]) => {
@@ -72,7 +73,12 @@ export default function SectionPageView({
             })}
           </ul>
         </div>
-      </nav>
+      </nav> */}
+      <SectionNav
+        level={level}
+        section={section}
+        sectionLabels={sectionLabels}
+      />
 
       <div className={styles.content}>
         {section === "dialogs" && (
