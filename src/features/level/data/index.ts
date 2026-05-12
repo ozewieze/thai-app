@@ -10,7 +10,7 @@ export const levelSectionData = {
     stories: [],
     practice: [],
   },
-} as const;
+}; // as const; :gezien dit een readonly geeft, voorlopig gecomment
 
 export function isLevelSectionKey(value: string): value is LevelSectionKey {
   return ["dialogs", "themes", "stories", "practice"].includes(value);
