@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-
 import type { Level } from "@/features/curriculum/types";
 import { getLevelById } from "@/features/level/lib/getLevelById";
 import {
@@ -8,6 +7,7 @@ import {
   getSectionLabels,
 } from "@/features/level/data";
 import SectionPageView from "@/features/section/components/section-page-view/SectionPageView";
+import { getLessonsForSection } from "@/features/curriculum/server/queries";
 
 type PageProps = {
   params: Promise<{ level: string; section: string }>;
@@ -21,10 +21,11 @@ export default async function LevelSectionPage({ params }: PageProps) {
     notFound();
   }
 
-  const sectionsForLevel =
-    levelSectionData[level as keyof typeof levelSectionData];
+  // const sectionsForLevel =
+  //   levelSectionData[level as keyof typeof levelSectionData];
+  const sectionItems = await getLessonsForSection(level, section);
 
-  if (!sectionsForLevel || !isLevelSectionKey(section)) {
+  if (!isLevelSectionKey(section)) {
     notFound();
   }
   const sectionLabels = getSectionLabels(
@@ -36,7 +37,7 @@ export default async function LevelSectionPage({ params }: PageProps) {
       level={level}
       section={section}
       levelData={levelData}
-      sectionsForLevel={sectionsForLevel}
+      sectionItems={sectionItems}
       sectionLabels={sectionLabels}
     />
   );

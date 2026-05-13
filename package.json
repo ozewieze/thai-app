@@ -13,6 +13,7 @@
     "db:reset": "npm run seed:vocab && npm run seed:grammar && npm run seed:pattern && npx supabase db reset"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.104.0",
     "lucide-react": "^1.11.0",
     "next": "16.2.4",

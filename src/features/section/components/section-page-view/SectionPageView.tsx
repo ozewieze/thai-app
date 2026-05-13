@@ -3,14 +3,24 @@ import LevelBadge from "@/components/ui/level-badge/LevelBadge";
 import styles from "./SectionPageView.module.css";
 import Breadcrumbs from "@/components/ui/breadcrumbs/Breadcrumbs";
 import SectionNav from "../section-nav/SectionNav";
-import type { SectionPageViewProps } from "@/features/section/types";
-//TODO check eerst hoe ik nu de leveldata ophaal en dan nadenken over hoe ik het uit de lessons moet halen, misschien moet ik dat wel in de page doen en dan hier alleen maar de data doorgeven, zodat deze component echt alleen maar voor de view is en geen logica bevat
+import type { Level } from "@/features/curriculum/types";
+import type { LevelSectionKey } from "@/features/level/data";
+// import type { SectionsForLevel } from "@/features/section/types";
+import type { SectionLessonCardItem } from "@/features/curriculum/types";
+
+export type SectionPageViewProps = {
+  level: string;
+  section: LevelSectionKey;
+  levelData: Level;
+  sectionItems: SectionLessonCardItem[];
+  sectionLabels: Record<LevelSectionKey, string>;
+};
 
 export default function SectionPageView({
   level,
   section,
   levelData,
-  sectionsForLevel,
+  sectionItems,
   sectionLabels,
 }: SectionPageViewProps) {
   return (
@@ -34,6 +44,7 @@ export default function SectionPageView({
           </div>
         </div>
       </div>
+
       <SectionNav
         level={level}
         section={section}
@@ -41,89 +52,88 @@ export default function SectionPageView({
       />
 
       <div className={styles.content}>
-        {section === "dialogs" && (
-          <ul className={styles.grid} role="list">
-            {sectionsForLevel.dialogs.map((item) => (
-              <li key={item.id}>
-                {item.type === "dialog" ? (
-                  <Link
-                    href={`/lessons/${item.slug}`}
-                    className={styles.lessonCard}
-                  >
-                    <div className={styles.lessonCardTop}>
-                      <span className={styles.lessonNumber}>{item.number}</span>
+        {section === "dialogs" &&
+          (sectionItems.length > 0 ? (
+            <ul className={styles.grid} role="list">
+              {sectionItems.map((item) => (
+                <li key={item.lessonKey}>
+                  {item.lessonType === "dialog" ? (
+                    <Link
+                      href={`/lessons/${item.slug}`}
+                      className={styles.lessonCard}
+                    >
+                      <div className={styles.lessonCardTop}>
+                        <span className={styles.lessonNumber}>
+                          {item.sequenceNumber}
+                        </span>
 
-                      <div className={styles.lessonStatus}>
-                        {item.access === "premium" ? (
-                          <span className={styles.premiumBadge}>Premium</span>
-                        ) : item.access === "free" ? (
-                          <span className={styles.freeBadge}>Free</span>
+                        <div className={styles.lessonStatus}>
+                          {item.accessTier === "premium" ? (
+                            <span className={styles.premiumBadge}>Premium</span>
+                          ) : item.accessTier === "free" ? (
+                            <span className={styles.freeBadge}>Free</span>
+                          ) : null}
+                        </div>
+                      </div>
+
+                      <div className={styles.lessonBody}>
+                        <h2 className={styles.lessonTitle}>{item.title}</h2>
+                        {item.subtitle ? (
+                          <p className={styles.lessonSubtitle}>
+                            {item.subtitle}
+                          </p>
                         ) : null}
                       </div>
-                    </div>
 
-                    <div className={styles.lessonBody}>
-                      <h2 className={styles.lessonTitle}>{item.title}</h2>
-                      <p className={styles.lessonSubtitle}>{item.subtitle}</p>
-                    </div>
+                      <span className={styles.lessonTag}>Dialog</span>
+                    </Link>
+                  ) : (
+                    <Link
+                      href={`/lessons/${item.slug}`}
+                      className={styles.revisionCard}
+                    >
+                      <div className={styles.revisionTop}>
+                        <span className={styles.revisionEyebrow}>Revision</span>
 
-                    <span className={styles.lessonTag}>{item.label}</span>
-                  </Link>
-                ) : (
-                  <Link
-                    href={`/lessons/${item.slug}`}
-                    className={styles.revisionCard}
-                  >
-                    <div className={styles.revisionTop}>
-                      <span className={styles.revisionEyebrow}>Revision</span>
-                    </div>
+                        <div className={styles.lessonStatus}>
+                          {item.accessTier === "premium" ? (
+                            <span className={styles.premiumBadge}>Premium</span>
+                          ) : item.accessTier === "free" ? (
+                            <span className={styles.freeBadge}>Free</span>
+                          ) : null}
+                        </div>
+                      </div>
 
-                    <div className={styles.revisionBody}>
-                      <h2 className={styles.revisionTitle}>
-                        {item.rangeLabel}
-                      </h2>
-                      <p className={styles.revisionText}>
-                        Review key vocabulary and patterns from the previous
-                        lessons.
-                      </p>
-                    </div>
+                      <div className={styles.revisionBody}>
+                        <h2 className={styles.revisionTitle}>{item.title}</h2>
+                        {item.subtitle ? (
+                          <p className={styles.revisionText}>{item.subtitle}</p>
+                        ) : (
+                          <p className={styles.revisionText}>
+                            Review key vocabulary and patterns from previous
+                            lessons.
+                          </p>
+                        )}
+                      </div>
 
-                    <span className={styles.revisionMeta}>
-                      {item.exerciseCount} exercises
-                    </span>
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
+                      <span className={styles.revisionMeta}>Checkpoint</span>
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className={styles.emptyState}>
+              <h2 className={styles.emptyTitle}>Dialogs</h2>
+              <p className={styles.emptyText}>No lessons available yet.</p>
+            </div>
+          ))}
 
         {section === "themes" && (
-          <ul className={styles.grid} role="list">
-            {sectionsForLevel.themes.map((theme) => (
-              <li key={theme.id}>
-                <Link
-                  href={`/lessons/${theme.slug}`}
-                  className={styles.themeCard}
-                >
-                  <div className={styles.themeCardTop}>
-                    {theme.access === "premium" ? (
-                      <span className={styles.premiumBadge}>Premium</span>
-                    ) : theme.access === "free" ? (
-                      <span className={styles.freeBadge}>Free</span>
-                    ) : null}
-                  </div>
-
-                  <div className={styles.themeBody}>
-                    <h2 className={styles.themeTitle}>{theme.title}</h2>
-                    <p className={styles.themeText}>{theme.description}</p>
-                  </div>
-
-                  <span className={styles.themeTag}>{theme.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className={styles.emptyState}>
+            <h2 className={styles.emptyTitle}>Themes</h2>
+            <p className={styles.emptyText}>Themes are coming soon.</p>
+          </div>
         )}
 
         {section === "stories" && (

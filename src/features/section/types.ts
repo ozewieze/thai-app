@@ -1,6 +1,4 @@
-import type { Level } from "@/features/curriculum/types";
 import { levelSectionData } from "@/features/level/data";
-import type { LevelSectionKey } from "@/features/level/data";
 
 export type Dialog = {
   id: string;
@@ -32,11 +30,3 @@ export type Theme = {
 
 export type SectionsForLevel =
   (typeof levelSectionData)[keyof typeof levelSectionData];
-
-export type SectionPageViewProps = {
-  level: string;
-  section: LevelSectionKey;
-  levelData: Level;
-  sectionsForLevel: SectionsForLevel;
-  sectionLabels: Record<LevelSectionKey, string>;
-};
