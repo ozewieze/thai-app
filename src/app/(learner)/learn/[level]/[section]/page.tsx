@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import type { Level } from "@/features/curriculum/types";
 import { getLevelById } from "@/features/level/lib/getLevelById";
 import {
   isLevelSectionKey,
@@ -14,7 +15,7 @@ type PageProps = {
 
 export default async function LevelSectionPage({ params }: PageProps) {
   const { level, section } = await params;
-  const levelData = getLevelById(level);
+  const levelData: Level | undefined = getLevelById(level);
 
   if (!levelData) {
     notFound();

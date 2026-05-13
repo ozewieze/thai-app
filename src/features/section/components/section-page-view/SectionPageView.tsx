@@ -1,26 +1,10 @@
 import Link from "next/link";
 import LevelBadge from "@/components/ui/level-badge/LevelBadge";
-import { levelSectionData } from "@/features/level/data";
 import styles from "./SectionPageView.module.css";
 import Breadcrumbs from "@/components/ui/breadcrumbs/Breadcrumbs";
 import SectionNav from "../section-nav/SectionNav";
+import type { SectionPageViewProps } from "@/features/section/types";
 //TODO check eerst hoe ik nu de leveldata ophaal en dan nadenken over hoe ik het uit de lessons moet halen, misschien moet ik dat wel in de page doen en dan hier alleen maar de data doorgeven, zodat deze component echt alleen maar voor de view is en geen logica bevat
-type LevelData = {
-  id: string;
-  title: string;
-  description: string;
-};
-
-type SectionsForLevel =
-  (typeof levelSectionData)[keyof typeof levelSectionData];
-
-type SectionPageViewProps = {
-  level: string;
-  section: "dialogs" | "themes" | "stories" | "practice";
-  levelData: LevelData;
-  sectionsForLevel: SectionsForLevel;
-  sectionLabels: Record<string, string>;
-};
 
 export default function SectionPageView({
   level,
