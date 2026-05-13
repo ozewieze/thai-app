@@ -1,21 +1,16 @@
-// import Link from "next/link";
 import { notFound } from "next/navigation";
-// import LevelBadge from "@/components/ui/level-badge/LevelBadge";
+
 import { getLevelById } from "@/features/level/lib/getLevelById";
-import { isLevelSectionKey, levelSectionData } from "@/features/level/data";
-// import styles from "./LevelSectionPage.module.css";
+import {
+  isLevelSectionKey,
+  levelSectionData,
+  getSectionLabels,
+} from "@/features/level/data";
 import SectionPageView from "@/features/section/components/section-page-view/SectionPageView";
 
 type PageProps = {
   params: Promise<{ level: string; section: string }>;
 };
-
-const sectionLabels = {
-  dialogs: "Dialogs",
-  themes: "Themes",
-  stories: "Stories",
-  practice: "Practice",
-} as const;
 
 export default async function LevelSectionPage({ params }: PageProps) {
   const { level, section } = await params;
@@ -31,6 +26,9 @@ export default async function LevelSectionPage({ params }: PageProps) {
   if (!sectionsForLevel || !isLevelSectionKey(section)) {
     notFound();
   }
+  const sectionLabels = getSectionLabels(
+    level as keyof typeof levelSectionData,
+  );
 
   return (
     <SectionPageView

@@ -4,7 +4,7 @@ import { levelSectionData } from "@/features/level/data";
 import styles from "./SectionPageView.module.css";
 import Breadcrumbs from "@/components/ui/breadcrumbs/Breadcrumbs";
 import SectionNav from "../section-nav/SectionNav";
-
+//TODO check eerst hoe ik nu de leveldata ophaal en dan nadenken over hoe ik het uit de lessons moet halen, misschien moet ik dat wel in de page doen en dan hier alleen maar de data doorgeven, zodat deze component echt alleen maar voor de view is en geen logica bevat
 type LevelData = {
   id: string;
   title: string;
@@ -50,30 +50,6 @@ export default function SectionPageView({
           </div>
         </div>
       </div>
-      {/* <nav className={styles.sectionNav} aria-label="Level sections">
-        <div className={styles.sectionNavScroller}>
-          <ul className={styles.sectionNavList}>
-            {Object.entries(sectionLabels).map(([key, label]) => {
-              const href = `/learn/${level}/${key}`;
-              const isActive = section === key;
-
-              return (
-                <li key={key} className={styles.sectionNavItem}>
-                  <Link
-                    href={href}
-                    className={
-                      isActive ? styles.sectionLinkActive : styles.sectionLink
-                    }
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </nav> */}
       <SectionNav
         level={level}
         section={section}
