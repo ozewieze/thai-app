@@ -1,11 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Level } from "@/features/curriculum/types";
 import { getLevelById } from "@/features/level/lib/getLevelById";
-import {
-  isLevelSectionKey,
-  levelSectionData,
-  getSectionLabels,
-} from "@/features/level/data";
+import { isLevelSectionKey, sectionLabels } from "@/features/level/data";
 import SectionPageView from "@/features/section/components/section-page-view/SectionPageView";
 import { getLessonsForSection } from "@/features/curriculum/server/queries";
 
@@ -28,9 +24,6 @@ export default async function LevelSectionPage({ params }: PageProps) {
   if (!isLevelSectionKey(section)) {
     notFound();
   }
-  const sectionLabels = getSectionLabels(
-    level as keyof typeof levelSectionData,
-  );
 
   return (
     <SectionPageView

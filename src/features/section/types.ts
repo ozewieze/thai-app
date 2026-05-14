@@ -1,4 +1,4 @@
-import { levelSectionData } from "@/features/level/data";
+// import { levelSectionData } from "@/features/level/data";
 
 export type Dialog = {
   id: string;
@@ -28,5 +28,5 @@ export type Theme = {
   label: string;
 };
 
-export type SectionsForLevel =
-  (typeof levelSectionData)[keyof typeof levelSectionData];
+// export type SectionsForLevel =
+//   (typeof levelSectionData)[keyof typeof levelSectionData];

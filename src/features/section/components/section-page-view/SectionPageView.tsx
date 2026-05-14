@@ -5,7 +5,6 @@ import Breadcrumbs from "@/components/ui/breadcrumbs/Breadcrumbs";
 import SectionNav from "../section-nav/SectionNav";
 import type { Level } from "@/features/curriculum/types";
 import type { LevelSectionKey } from "@/features/level/data";
-// import type { SectionsForLevel } from "@/features/section/types";
 import type { SectionLessonCardItem } from "@/features/curriculum/types";
 
 export type SectionPageViewProps = {
@@ -85,7 +84,7 @@ export default function SectionPageView({
                         ) : null}
                       </div>
 
-                      <span className={styles.lessonTag}>Dialog</span>
+                      {/* <span className={styles.lessonTag}>Dialog</span> */}
                     </Link>
                   ) : (
                     <Link
