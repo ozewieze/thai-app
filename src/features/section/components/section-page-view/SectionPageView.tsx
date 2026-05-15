@@ -8,7 +8,7 @@ import type { LevelSectionKey } from "@/features/level/data";
 import type { SectionLessonCardItem } from "@/features/curriculum/types";
 import LessonCompletionButton from "../lesson-completion-button/LessonCompletionButton";
 import PremiumBadge from "@/features/level/section/premium-badge/PremiumBadge";
-
+import { isLessonLocked } from "@/features/section/lib/isLessonLocked";
 export type SectionPageViewProps = {
   level: string;
   section: LevelSectionKey;
@@ -16,6 +16,8 @@ export type SectionPageViewProps = {
   sectionItems: SectionLessonCardItem[];
   sectionLabels: Record<LevelSectionKey, string>;
 };
+// TODO - connect lesson completion button to real user data
+const viewer = { plan: "free" as const };
 
 export default function SectionPageView({
   level,
@@ -56,90 +58,100 @@ export default function SectionPageView({
         {section === "dialogs" &&
           (sectionItems.length > 0 ? (
             <ul className={styles.grid} role="list">
-              {sectionItems.map((item) => (
-                <li key={item.lessonKey} className={styles.gridItem}>
-                  {item.lessonType === "dialog" ? (
-                    <article className={styles.lessonCard}>
-                      <LessonCompletionButton
-                        lessonTitle={item.title}
-                        comingSoon
-                      />
-
-                      <div className={styles.lessonCardTop}>
-                        <span className={styles.lessonNumber}>
-                          {item.sequenceNumber}
-                        </span>
-
-                        <div className={styles.lessonStatus}>
-                          {item.accessTier === "premium" ? (
+              {sectionItems.map((item) => {
+                const isLocked = isLessonLocked(item, viewer);
+                return (
+                  <li key={item.lessonKey} className={styles.gridItem}>
+                    {item.lessonType === "dialog" ? (
+                      <article className={styles.lessonCard}>
+                        <div className={styles.lessonCardTop}>
+                          <span className={styles.lessonNumber}>
+                            {item.sequenceNumber}
+                          </span>
+                          {isLocked ? (
                             <PremiumBadge />
                           ) : (
-                            ""
+                            <LessonCompletionButton
+                              lessonTitle={item.title}
+                              comingSoon
+                            />
                           )}
                         </div>
-                      </div>
 
-                      <div className={styles.lessonBody}>
-                        <h2 className={styles.lessonTitle}>
-                          <Link
-                            href={`/lessons/${item.slug}`}
-                            className={styles.cardMainLink}
-                          >
-                            {item.title}
-                          </Link>
-                        </h2>
+                        <div className={styles.lessonBody}>
+                          <h2 className={styles.lessonTitle}>
+                            <Link
+                              href={`/lessons/${item.slug}`}
+                              className={styles.cardMainLink}
+                            >
+                              {item.title}
+                            </Link>
+                          </h2>
 
-                        {item.subtitle ? (
-                          <p className={styles.lessonSubtitle}>
-                            {item.subtitle}
-                          </p>
-                        ) : null}
-                      </div>
-                    </article>
-                  ) : (
-                    <article className={styles.revisionCard}>
-                      <LessonCompletionButton
-                        lessonTitle={item.title}
-                        comingSoon
-                      />
-
-                      <div className={styles.revisionTop}>
-                        <span className={styles.lessonNumber}>
-                          {item.sequenceNumber}
-                        </span>
-
-                        <div className={styles.lessonStatus}>
-                          {item.accessTier === "premium" ? (
-                            <span className={styles.premiumBadge}>Premium</span>
-                          ) : (
-                            ""
-                          )}
+                          {item.subtitle ? (
+                            <p className={styles.lessonSubtitle}>
+                              {item.subtitle}
+                            </p>
+                          ) : null}
                         </div>
-                      </div>
-
-                      <div className={styles.revisionBody}>
-                        <h2 className={styles.revisionTitle}>
-                          <Link
-                            href={`/lessons/${item.slug}`}
-                            className={styles.cardMainLink}
-                          >
-                            {item.title}
-                          </Link>
-                        </h2>
-
-                        {item.subtitle ? (
-                          <p className={styles.revisionText}>{item.subtitle}</p>
+                      </article>
+                    ) : (
+                      <article className={styles.revisionCard}>
+                        {isLocked ? (
+                          <PremiumBadge />
                         ) : (
-                          <p className={styles.revisionText}>
-                            Review key vocabulary and patterns from previous
-                            lessons.
-                          </p>
+                          <LessonCompletionButton
+                            lessonTitle={item.title}
+                            comingSoon
+                          />
                         )}
-                      </div>
-                    </article>
-                  )}
-                </li>
-              ))}
+                        {/* <LessonCompletionButton
+                          lessonTitle={item.title}
+                          comingSoon
+                        /> */}
+
+                        {/* <div className={styles.revisionTop}>
+                          <span className={styles.lessonNumber}>
+                            {item.sequenceNumber}
+                          </span>
+
+                          <div className={styles.lessonStatus}>
+                            {item.accessTier === "premium" ? (
+                              <span className={styles.premiumBadge}>
+                                Premium
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        </div> */}
+
+                        <div className={styles.revisionBody}>
+                          <h2 className={styles.revisionTitle}>
+                            <Link
+                              href={`/lessons/${item.slug}`}
+                              className={styles.cardMainLink}
+                            >
+                              {item.title}
+                            </Link>
+                          </h2>
+
+                          {item.subtitle ? (
+                            <p className={styles.revisionText}>
+                              {item.subtitle}
+                            </p>
+                          ) : (
+                            <p className={styles.revisionText}>
+                              Review key vocabulary and patterns from previous
+                              lessons.
+                            </p>
+                          )}
+                        </div>
+                      </article>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           ) : (
             <div className={styles.emptyState}>
