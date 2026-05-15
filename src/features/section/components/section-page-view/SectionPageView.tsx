@@ -6,6 +6,8 @@ import SectionNav from "../section-nav/SectionNav";
 import type { Level } from "@/features/curriculum/types";
 import type { LevelSectionKey } from "@/features/level/data";
 import type { SectionLessonCardItem } from "@/features/curriculum/types";
+import LessonCompletionButton from "../lesson-completion-button/LessonCompletionButton";
+import PremiumBadge from "@/features/level/section/premium-badge/PremiumBadge";
 
 export type SectionPageViewProps = {
   level: string;
@@ -55,12 +57,14 @@ export default function SectionPageView({
           (sectionItems.length > 0 ? (
             <ul className={styles.grid} role="list">
               {sectionItems.map((item) => (
-                <li key={item.lessonKey}>
+                <li key={item.lessonKey} className={styles.gridItem}>
                   {item.lessonType === "dialog" ? (
-                    <Link
-                      href={`/lessons/${item.slug}`}
-                      className={styles.lessonCard}
-                    >
+                    <article className={styles.lessonCard}>
+                      <LessonCompletionButton
+                        lessonTitle={item.title}
+                        comingSoon
+                      />
+
                       <div className={styles.lessonCardTop}>
                         <span className={styles.lessonNumber}>
                           {item.sequenceNumber}
@@ -68,43 +72,61 @@ export default function SectionPageView({
 
                         <div className={styles.lessonStatus}>
                           {item.accessTier === "premium" ? (
-                            <span className={styles.premiumBadge}>Premium</span>
-                          ) : item.accessTier === "free" ? (
-                            <span className={styles.freeBadge}>Free</span>
-                          ) : null}
+                            <PremiumBadge />
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
 
                       <div className={styles.lessonBody}>
-                        <h2 className={styles.lessonTitle}>{item.title}</h2>
+                        <h2 className={styles.lessonTitle}>
+                          <Link
+                            href={`/lessons/${item.slug}`}
+                            className={styles.cardMainLink}
+                          >
+                            {item.title}
+                          </Link>
+                        </h2>
+
                         {item.subtitle ? (
                           <p className={styles.lessonSubtitle}>
                             {item.subtitle}
                           </p>
                         ) : null}
                       </div>
-
-                      {/* <span className={styles.lessonTag}>Dialog</span> */}
-                    </Link>
+                    </article>
                   ) : (
-                    <Link
-                      href={`/lessons/${item.slug}`}
-                      className={styles.revisionCard}
-                    >
+                    <article className={styles.revisionCard}>
+                      <LessonCompletionButton
+                        lessonTitle={item.title}
+                        comingSoon
+                      />
+
                       <div className={styles.revisionTop}>
-                        <span className={styles.revisionEyebrow}>Revision</span>
+                        <span className={styles.lessonNumber}>
+                          {item.sequenceNumber}
+                        </span>
 
                         <div className={styles.lessonStatus}>
                           {item.accessTier === "premium" ? (
                             <span className={styles.premiumBadge}>Premium</span>
-                          ) : item.accessTier === "free" ? (
-                            <span className={styles.freeBadge}>Free</span>
-                          ) : null}
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
 
                       <div className={styles.revisionBody}>
-                        <h2 className={styles.revisionTitle}>{item.title}</h2>
+                        <h2 className={styles.revisionTitle}>
+                          <Link
+                            href={`/lessons/${item.slug}`}
+                            className={styles.cardMainLink}
+                          >
+                            {item.title}
+                          </Link>
+                        </h2>
+
                         {item.subtitle ? (
                           <p className={styles.revisionText}>{item.subtitle}</p>
                         ) : (
@@ -114,9 +136,7 @@ export default function SectionPageView({
                           </p>
                         )}
                       </div>
-
-                      <span className={styles.revisionMeta}>Checkpoint</span>
-                    </Link>
+                    </article>
                   )}
                 </li>
               ))}
@@ -127,27 +147,6 @@ export default function SectionPageView({
               <p className={styles.emptyText}>No lessons available yet.</p>
             </div>
           ))}
-
-        {section === "themes" && (
-          <div className={styles.emptyState}>
-            <h2 className={styles.emptyTitle}>Themes</h2>
-            <p className={styles.emptyText}>Themes are coming soon.</p>
-          </div>
-        )}
-
-        {section === "stories" && (
-          <div className={styles.emptyState}>
-            <h2 className={styles.emptyTitle}>Stories</h2>
-            <p className={styles.emptyText}>Stories are coming soon.</p>
-          </div>
-        )}
-
-        {section === "practice" && (
-          <div className={styles.emptyState}>
-            <h2 className={styles.emptyTitle}>Practice</h2>
-            <p className={styles.emptyText}>Practice is coming soon.</p>
-          </div>
-        )}
       </div>
     </section>
   );
