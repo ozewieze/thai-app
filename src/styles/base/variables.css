@@ -66,6 +66,8 @@
   --color-accent-soft: #f5e8e4;
 
   /* Semantic states */
+  --color-completed: #8eb892;
+  --color-completed-soft: #a5c5a5;
   --color-success: #73926c;
   --color-success-soft: #e8f1e5;
   --color-warning: #9c7b4e;

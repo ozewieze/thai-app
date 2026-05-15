@@ -97,34 +97,19 @@ export default function SectionPageView({
                       </article>
                     ) : (
                       <article className={styles.revisionCard}>
-                        {isLocked ? (
-                          <PremiumBadge />
-                        ) : (
-                          <LessonCompletionButton
-                            lessonTitle={item.title}
-                            comingSoon
-                          />
-                        )}
-                        {/* <LessonCompletionButton
-                          lessonTitle={item.title}
-                          comingSoon
-                        /> */}
-
-                        {/* <div className={styles.revisionTop}>
+                        <div className={styles.revisionTop}>
                           <span className={styles.lessonNumber}>
                             {item.sequenceNumber}
                           </span>
-
-                          <div className={styles.lessonStatus}>
-                            {item.accessTier === "premium" ? (
-                              <span className={styles.premiumBadge}>
-                                Premium
-                              </span>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        </div> */}
+                          {isLocked ? (
+                            <PremiumBadge />
+                          ) : (
+                            <LessonCompletionButton
+                              lessonTitle={item.title}
+                              comingSoon
+                            />
+                          )}
+                        </div>
 
                         <div className={styles.revisionBody}>
                           <h2 className={styles.revisionTitle}>

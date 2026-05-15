@@ -1,8 +1,6 @@
 .completeButton {
-  /* position: absolute;
-  top: var(--spacing-12);
-  right: var(--spacing-16);
-  z-index: 2; */
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +16,6 @@
 }
 
 .rings {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -64,17 +61,17 @@
 }
 
 .isCompleted .outerCircle {
-  background: #8eb892;
+  background: var(--color-completed);
   &:hover {
-    background: #a5c5a5;
+    background: var(--color-completed-soft);
   }
 }
 
 .isCompleted .innerCircle {
-  background: #8eb892;
+  background: var(--color-completed);
   border-color: var(--color-surface);
   &:hover {
-    background: #a5c5a5;
+    background: var(--color-completed-soft);
   }
 }
 
