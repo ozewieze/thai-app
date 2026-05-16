@@ -99,14 +99,14 @@
 
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--spacing-20);
+    gap: var(--spacing-24);
   }
 }
 
 @media (min-width: 64rem) {
   .grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--spacing-24);
+    /* gap: var(--spacing-24); */
   }
 }
 .gridItem {
@@ -119,8 +119,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 12rem;
-  padding: var(--spacing-16);
+  gap: var(--spacing-8);
+  min-height: 10rem;
+  padding-inline: var(--spacing-16);
+  padding-block: var(--spacing-12);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-lg);
@@ -128,11 +130,16 @@
   transition:
     border-color var(--transition-smooth),
     box-shadow var(--transition-smooth);
+  @media (min-width: 64rem) {
+    /* padding-inline: var(--spacing-24); */
+    min-height: 11.5rem;
+    padding-block: var(--spacing-16);
+  }
 }
 
 .revisionCard {
   background-color: var(--color-surface-subtle);
-  border-color: rgba(53, 87, 137, 0.12);
+  border-color: var(--color-border-standout);
 }
 
 .lessonCard:hover,
@@ -170,37 +177,23 @@
   opacity: 0.82;
 }
 
-.lessonStatus {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-height: 2rem;
-  padding-right: 3.25rem;
-}
-
 .lessonBody,
 .revisionBody,
 .themeBody {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-6);
+  gap: var(--spacing-2);
   flex: 1;
-}
-
-.cardFooter {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 1.75rem;
-  margin-top: var(--spacing-14);
 }
 
 .lessonTitle,
 .revisionTitle,
 .themeTitle {
-  z-index: 1;
+  /* z-index: 1; */
   color: var(--color-heading);
-  line-height: 1.25;
+  /* line-height: 1.25; */
+  font-size: var(--size-18);
+  font-weight: var(--bold);
 }
 
 .cardMainLink {
@@ -233,7 +226,6 @@
   color: var(--color-brand);
 }
 
-.freeBadge,
 .premiumBadge {
   display: inline-flex;
   align-items: center;
@@ -243,9 +235,4 @@
   font-size: var(--size-12);
   font-weight: var(--medium);
   line-height: 1;
-}
-
-.freeBadge {
-  background-color: var(--color-success-soft);
-  color: var(--color-success);
 }

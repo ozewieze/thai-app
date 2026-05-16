@@ -12,7 +12,7 @@ type LessonCompletionButtonProps = {
 
 export default function LessonCompletionButton({
   lessonTitle,
-  isCompleted = true,
+  isCompleted = false,
   comingSoon = true,
 }: LessonCompletionButtonProps) {
   const actionLabel = isCompleted

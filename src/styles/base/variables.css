@@ -24,6 +24,7 @@
   --color-border-default: rgba(36, 50, 72, 0.1);
   --color-border-strong: rgba(36, 50, 72, 0.14);
   --color-divider: rgba(36, 50, 72, 0.08);
+  --color-border-standout: rgba(53, 87, 137, 0.12);
 
   /* Text */
   --color-heading: #2c476d;
