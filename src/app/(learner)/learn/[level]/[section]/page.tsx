@@ -16,14 +16,13 @@ export default async function LevelSectionPage({ params }: PageProps) {
   if (!levelData) {
     notFound();
   }
+  if (!isLevelSectionKey(section)) {
+    notFound();
+  }
 
   // const sectionsForLevel =
   //   levelSectionData[level as keyof typeof levelSectionData];
   const sectionItems = await getLessonsForSection(level, section);
-
-  if (!isLevelSectionKey(section)) {
-    notFound();
-  }
 
   return (
     <SectionPageView
