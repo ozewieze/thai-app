@@ -75,3 +75,5 @@ adjective_kwa,A1,More adjective,ADJECTIVE + กว่า,Makes a simple comparis
 adjective_thi_sut,A1,Most adjective,ADJECTIVE + ที่สุด,Forms a basic superlative.,comparison_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 statement_di_mai,A1,Would it be good,STATEMENT + ดีไหม,Makes a soft suggestion.,request_frame,formal,semi_fixed,true,ai_a1_pattern_master_v3_final
 question_answer_polite,A1,Question and polite answer,A: ... ไหม / B: ... ครับ/ค่ะ,Models a basic yes or no exchange with polite particles.,response_frame,formal,semi_fixed,true,ai_a1_pattern_master_v3_final
+yin_di_thi_dai_ru_jak,A1,Nice to meet you,ยินดีที่ได้รู้จัก,Polite formula used when meeting someone for the first time.,politeness_frame,formal,fixed,false,ai_a1_pattern_master_v3_final
+self_introduction_name,A1,Introduce yourself by name,"คุณชื่ออะไร / ผมชื่อ... / ฉันชื่อ...","Asks someone’s name and gives your own name in a simple first-meeting exchange.",question_answer_exchange,formal,semi_fixed,true,ai_a1_first_meetings_master_v3_final
