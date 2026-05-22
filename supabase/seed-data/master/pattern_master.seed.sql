@@ -1,4 +1,5 @@
 -- Auto-generated from supabase\seed-data\pattern_master.csv. Do not edit manually.
+
 insert into public.pattern_master (pattern_key, cefr_level, title, pattern_formula, short_explanation, pattern_type, register, fixedness_level, is_productive, source_note) values
 ('mai_verb', 'A1', 'Not do', 'ไม่ + VERB', 'Negates an action or state.', 'negation_frame', 'formal', 'productive', true, 'ai_a1_pattern_master_v3_final'),
 ('yang_mai_verb', 'A1', 'Not yet do', 'ยังไม่ + VERB', 'Says something has not happened yet.', 'negation_frame', 'formal', 'productive', true, 'ai_a1_pattern_master_v3_final'),
@@ -77,52 +78,3 @@ insert into public.pattern_master (pattern_key, cefr_level, title, pattern_formu
 ('statement_di_mai', 'A1', 'Would it be good', 'STATEMENT + ดีไหม', 'Makes a soft suggestion.', 'request_frame', 'formal', 'semi_fixed', true, 'ai_a1_pattern_master_v3_final'),
 ('question_answer_polite', 'A1', 'Question and polite answer', 'A: ... ไหม / B: ... ครับ/ค่ะ', 'Models a basic yes or no exchange with polite particles.', 'response_frame', 'formal', 'semi_fixed', true, 'ai_a1_pattern_master_v3_final');
 
-insert into public.pattern_master (
-  pattern_key,
-  cefr_level,
-  title,
-  pattern_formula,
-  short_explanation,
-  pattern_type,
-  register,
-  fixedness_level,
-  is_productive,
-  source_note
-)
-values (
-  'yin_di_thi_dai_ru_jak',
-  'A1',
-  'Nice to meet you',
-  'ยินดีที่ได้รู้จัก',
-  'Polite formula used when meeting someone for the first time.',
-  'politeness_frame',
-  'formal',
-  'fixed',
-  false,
-  'ai_a1_pattern_master_v3_final'
-);
-
-insert into public.pattern_master (
-  pattern_key,
-  cefr_level,
-  title,
-  pattern_formula,
-  short_explanation,
-  pattern_type,
-  register,
-  fixedness_level,
-  is_productive,
-  source_note
-)
-values (
-  'self_introduction_name',
-  'A1',
-  'Introduce yourself by name',
-  'คุณชื่ออะไร / ผมชื่อ... / ฉันชื่อ...',
-  'Asks someone’s name and gives your own name in a simple first-meeting exchange.',
-  'question_frame',
-  'formal',
-  'semi_fixed',
-  true,
-  'ai_a1_first_meetings_master_v3_final'
-);

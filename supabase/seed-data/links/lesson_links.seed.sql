@@ -15,21 +15,6 @@ values (
   'Polite sentence-final particles used in first-meeting introductions.'
 );
 
-insert into public.lesson_pattern (
-  lesson_id,
-  pattern_id,
-  requires_explanation,
-  display_order,
-  notes
-)
-values (
-  (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-  (select id from public.pattern_master where pattern_key = 'self_introduction_name'),
-  true,
-  1,
-  'Core first-meeting exchange for asking and giving names.'
-);
-
 insert into public.lesson_vocabulary (
   lesson_id,
   vocabulary_id,
