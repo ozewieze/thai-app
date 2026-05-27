@@ -1,0 +1,1 @@
+DROP VIEW IF EXISTS public.lesson_blueprint_view;

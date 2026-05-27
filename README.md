@@ -43,6 +43,22 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 This project uses CSV master files as the editable source of truth and generates SQL seed files from them for local Supabase resets. Seed execution happens after migrations, which keeps schema changes and data seeding clearly separated.
 
+## Database Commands
+
+Use these commands depending on whether you are working against the local Supabase stack or the remote project.
+
+### Local
+
+- `npx supabase migration up` - applies only new local migrations to the local database.
+- `npx supabase db reset` - rebuilds the local database from scratch and runs all migrations plus seed files.
+- `npx supabase status` - shows the local Supabase service status and database connection details.
+
+### Remote
+
+- `npx supabase db push` - pushes pending migrations to the linked remote Supabase project.
+- `npx supabase db pull` - pulls the remote schema into local migration files.
+- `npx supabase migration list` - compares local and remote migration history.
+
 ### Overview
 
 The seed workflow was changed from `COPY`-based seeding to SQL-based seeding.

@@ -24,7 +24,7 @@ values
   'คุณชื่ออะไร / ผมชื่อ... / ฉันชื่อ...',
   'Asks someone’s name and gives your own name in a simple first-meeting exchange.',
   'question_answer_exchange',
-  'formal',
+  'polite',
   'semi_fixed',
   true,
   'a1_dialog_01_first_meetings'
