@@ -195,6 +195,7 @@ values
 insert into public.character_profiles (
   character_key,
   display_name,
+  display_name_thai,
   role_summary,
   age_impression,
   default_tone,
@@ -204,6 +205,7 @@ values
   (
     'narin',
     'Narin',
+    'นริน',
     'Central anchor character; calm, socially capable, dependable, connector between groups.',
     'adult',
     array['calm', 'approachable', 'socially_confident', 'believable'],
@@ -212,6 +214,7 @@ values
   (
     'mali',
     'Mali',
+    'มะลิ',
     'Adult woman with a polished, professional-adjacent presence; organized and polite.',
     'adult',
     array['calm', 'polite', 'organized', 'mature'],
@@ -220,6 +223,7 @@ values
   (
     'ploy',
     'Ploy',
+    'พลอย',
     'Relaxed younger urban adult; casual and modern.',
     'younger_adult',
     array['casual', 'modern', 'relaxed', 'approachable'],
@@ -228,6 +232,7 @@ values
   (
     'dao',
     'Dao',
+    'ดาว',
     'Warm and friendly adult woman; gentle and supportive.',
     'adult',
     array['warm', 'gentle', 'approachable', 'friendly'],
@@ -236,6 +241,7 @@ values
   (
     'lin',
     'Lin',
+    'ลิน',
     'Youngest adult figure; study-oriented, modest, careful.',
     'early_20s',
     array['studious', 'modest', 'careful', 'polite'],
@@ -244,6 +250,7 @@ values
   (
     'suda',
     'Suda',
+    'สุดา',
     'Middle-aged grounding figure; practical, caring, neighborhood/home anchor.',
     'middle_aged',
     array['warm', 'practical', 'caring', 'grounded'],
@@ -252,6 +259,7 @@ values
   (
     'kiet',
     'Kiet',
+    'เกียรติ',
     'Friendly practical man; colleague or peer type.',
     'around_35',
     array['friendly', 'practical', 'approachable', 'grounded'],
@@ -260,11 +268,21 @@ values
   (
     'arun',
     'Arun',
+    'อรุณ',
     'Older established man; calm authority presence.',
     'around_44',
     array['calm', 'reliable', 'authoritative', 'composed'],
     array['respectful_hierarchy', 'work', 'advice', 'organization', 'teacher_like_interactions']
-  );
+  )
+on conflict (character_key) do update
+set
+  display_name = excluded.display_name,
+  display_name_thai = excluded.display_name_thai,
+  role_summary = excluded.role_summary,
+  age_impression = excluded.age_impression,
+  default_tone = excluded.default_tone,
+  default_usage = excluded.default_usage,
+  updated_at = now();
 
 -- =========================================
 -- Relationship pairs

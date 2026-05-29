@@ -1,5 +1,4 @@
 -- Auto-generated from supabase\seed-data\pattern_master.csv. Do not edit manually.
-
 insert into public.pattern_master (pattern_key, cefr_level, title, pattern_formula, short_explanation, pattern_type, register, fixedness_level, is_productive, source_note) values
 ('mai_verb', 'A1', 'Not do', 'ไม่ + VERB', 'Negates an action or state.', 'negation_frame', 'formal', 'productive', true, 'ai_a1_pattern_master_v3_final'),
 ('yang_mai_verb', 'A1', 'Not yet do', 'ยังไม่ + VERB', 'Says something has not happened yet.', 'negation_frame', 'formal', 'productive', true, 'ai_a1_pattern_master_v3_final'),

@@ -1,0 +1,41 @@
+insert into public.dialogs (
+  lesson_id,
+  title,
+  thai_text,
+  transliteration,
+  translation_en,
+  register
+) values (
+  1,
+  'Dialog 1 — Greetings and introductions',
+  'มะลิ: สวัสดีค่ะ
+นริน: สวัสดีครับ
+มะลิ: ฉันชื่อมะลิค่ะ
+มะลิ: คุณชื่ออะไรคะ
+นริน: ผมชื่อนรินครับ
+นริน: ยินดีที่ได้รู้จักครับ
+มะลิ: ยินดีที่ได้รู้จักค่ะ',
+  'Mali: sà-wàt-dii khâ
+Narin: sà-wàt-dii khráp
+Mali: chǎn chʉ̂ʉ Mali khâ
+Mali: khun chʉ̂ʉ à-rai khá
+Narin: phǒm chʉ̂ʉ Narin khráp
+Narin: yin-dii thîi dâai rúu-jàk khráp
+Mali: yin-dii thîi dâai rúu-jàk khâ',
+  'Mali: Hello.
+Narin: Hello.
+Mali: My name is Mali.
+Mali: What is your name?
+Narin: My name is Narin.
+Narin: Nice to meet you.
+Mali: Nice to meet you.',
+  'polite'
+)
+on conflict (lesson_id)
+do update set
+  title = excluded.title,
+  thai_text = excluded.thai_text,
+  transliteration = excluded.transliteration,
+  translation_en = excluded.translation_en,
+  register = excluded.register,
+  updated_at = now();

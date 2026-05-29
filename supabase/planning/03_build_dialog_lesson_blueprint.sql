@@ -1,3 +1,7 @@
+
+-- CHANGE ONLY THIS VALUE:
+-- target lesson_key = 'a1-dialog-01'
+
 select jsonb_build_object(
   'lesson_identity', jsonb_build_object(
     'lesson_id', lb.lesson_id,
@@ -27,25 +31,27 @@ select jsonb_build_object(
     'function_summary', lc.function_summary,
     'allowed_progression', lc.allowed_progression,
 
-    'speaker_a', jsonb_build_object(
-      'character_id', lc.character_a_id,
-      'character_key', lc.character_a_key,
-      'display_name', lc.character_a_name,
-      'role_summary', lc.character_a_role_summary,
-      'age_impression', lc.character_a_age_impression,
-      'default_tone', lc.character_a_default_tone,
-      'default_usage', lc.character_a_default_usage
-    ),
+ 'speaker_a', jsonb_build_object(
+  'character_id', lc.character_a_id,
+  'character_key', lc.character_a_key,
+  'display_name', lc.character_a_name,
+  'display_name_thai', lc.character_a_name_thai,
+  'role_summary', lc.character_a_role_summary,
+  'age_impression', lc.character_a_age_impression,
+  'default_tone', lc.character_a_default_tone,
+  'default_usage', lc.character_a_default_usage
+),
 
-    'speaker_b', jsonb_build_object(
-      'character_id', lc.character_b_id,
-      'character_key', lc.character_b_key,
-      'display_name', lc.character_b_name,
-      'role_summary', lc.character_b_role_summary,
-      'age_impression', lc.character_b_age_impression,
-      'default_tone', lc.character_b_default_tone,
-      'default_usage', lc.character_b_default_usage
-    ),
+'speaker_b', jsonb_build_object(
+  'character_id', lc.character_b_id,
+  'character_key', lc.character_b_key,
+  'display_name', lc.character_b_name,
+  'display_name_thai', lc.character_b_name_thai,
+  'role_summary', lc.character_b_role_summary,
+  'age_impression', lc.character_b_age_impression,
+  'default_tone', lc.character_b_default_tone,
+  'default_usage', lc.character_b_default_usage
+),
 
     'relationship_rules', lc.relationship_rules
   ),

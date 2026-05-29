@@ -504,46 +504,6 @@ insert into public.vocabulary_master (source_key, cefr_level, thai_script, paibo
 ('miss_lose', 'A1', 'พลาด', 'phlâat', 'miss', 'verb', 'formal', 'travel', true, 'can mean miss fail or make a mistake depending on context', 'ai_a1_master_v3'),
 ('cross_road', 'A1', 'ข้ามถนน', 'khâam-thà-nǒn', 'cross the road', 'verb', 'formal', 'directions', false, NULL, 'ai_a1_master_v3'),
 ('open_book', 'A1', 'เปิดหนังสือ', 'bpə̀ət-nǎng-sʉ̌ʉ', 'open book', 'verb', 'formal', 'school', false, NULL, 'ai_a1_master_v3'),
-('close_book', 'A1', 'ปิดหนังสือ', 'bpìt-nǎng-sʉ̌ʉ', 'close book', 'verb', 'formal', 'school', false, NULL, 'ai_a1_master_v3');
-
-insert into public.vocabulary_master (
-  source_key,
-  cefr_level,
-  thai_script,
-  paiboon,
-  english_gloss,
-  part_of_speech,
-  register,
-  default_theme,
-  is_multifunctional,
-  usage_note,
-  source_note
-)
-values
-  (
-    'pleased_glad',
-    'A1',
-    'ยินดี',
-    'yin-dii',
-    'pleased',
-    'adjective',
-    'formal',
-    'greetings',
-    true,
-    'used in polite expressions such as ยินดีที่ได้รู้จัก and can mean glad pleased or willing depending on context.',
-    'manual_dialogue_seed_v1'
-  ),
-  (
-    'know_meet',
-    'A1',
-    'รู้จัก',
-    'rúu-jàk',
-    'know',
-    'verb',
-    'formal',
-    'people',
-    true,
-    'often means know be acquainted with or meet someone in introduction patterns such as ยินดีที่ได้รู้จัก.',
-    'manual_dialogue_seed_v1'
-  )
-on conflict (source_key) do nothing;
+('close_book', 'A1', 'ปิดหนังสือ', 'bpìt-nǎng-sʉ̌ʉ', 'close book', 'verb', 'formal', 'school', false, NULL, 'ai_a1_master_v3'),
+('pleased_glad', 'A1', 'ยินดี', 'yin-dii', 'pleased', 'adjective', 'formal', 'greetings', true, 'used in polite expressions such as ยินดีที่ได้รู้จัก and can mean glad pleased or willing depending on context', 'manual_dialogue_seed_v1'),
+('know_meet', 'A1', 'รู้จัก', 'rúu-jàk', 'know', 'verb', 'formal', 'people', true, 'often means know be acquainted with or meet someone in introduction patterns such as ยินดีที่ได้รู้จัก', 'manual_dialogue_seed_v1');
