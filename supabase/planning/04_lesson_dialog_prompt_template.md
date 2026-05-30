@@ -15,8 +15,8 @@ This is a {{cefr_level}} dialogue lesson.
 Lesson title: {{lesson_title}}
 Lesson subtitle: {{subtitle}}
 
-The communicative goal is:
-{{communicative_goal}}
+{{learning_focus}} <- dialogue_design.learning_focus
+{{scene_summary}} <- dialogue_design.scene_summary
 
 CURRICULUM CONSTRAINTS
 Use only the lesson content below as the teaching core.
@@ -119,7 +119,10 @@ Return exactly:
 
 ## dialogue_design
 
-{{communicative_goal}} <- dialogue_design.communicative_goal
+## dialogue_design
+
+{{learning_focus}} <- dialogue_design.learning_focus
+{{scene_summary}} <- dialogue_design.scene_summary
 {{scene_type}} <- dialogue_design.scene_type
 {{suggested_location}} <- dialogue_design.suggested_location
 {{allowed_register}} <- dialogue_design.allowed_register

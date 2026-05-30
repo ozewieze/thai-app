@@ -1,7 +1,3 @@
-
--- CHANGE ONLY THIS VALUE:
--- target lesson_key = 'a1-dialog-01'
-
 select jsonb_build_object(
   'lesson_identity', jsonb_build_object(
     'lesson_id', lb.lesson_id,
@@ -31,27 +27,27 @@ select jsonb_build_object(
     'function_summary', lc.function_summary,
     'allowed_progression', lc.allowed_progression,
 
- 'speaker_a', jsonb_build_object(
-  'character_id', lc.character_a_id,
-  'character_key', lc.character_a_key,
-  'display_name', lc.character_a_name,
-  'display_name_thai', lc.character_a_name_thai,
-  'role_summary', lc.character_a_role_summary,
-  'age_impression', lc.character_a_age_impression,
-  'default_tone', lc.character_a_default_tone,
-  'default_usage', lc.character_a_default_usage
-),
+    'speaker_a', jsonb_build_object(
+      'character_id', lc.character_a_id,
+      'character_key', lc.character_a_key,
+      'display_name', lc.character_a_name,
+      'display_name_thai', lc.character_a_name_thai,
+      'role_summary', lc.character_a_role_summary,
+      'age_impression', lc.character_a_age_impression,
+      'default_tone', lc.character_a_default_tone,
+      'default_usage', lc.character_a_default_usage
+    ),
 
-'speaker_b', jsonb_build_object(
-  'character_id', lc.character_b_id,
-  'character_key', lc.character_b_key,
-  'display_name', lc.character_b_name,
-  'display_name_thai', lc.character_b_name_thai,
-  'role_summary', lc.character_b_role_summary,
-  'age_impression', lc.character_b_age_impression,
-  'default_tone', lc.character_b_default_tone,
-  'default_usage', lc.character_b_default_usage
-),
+    'speaker_b', jsonb_build_object(
+      'character_id', lc.character_b_id,
+      'character_key', lc.character_b_key,
+      'display_name', lc.character_b_name,
+      'display_name_thai', lc.character_b_name_thai,
+      'role_summary', lc.character_b_role_summary,
+      'age_impression', lc.character_b_age_impression,
+      'default_tone', lc.character_b_default_tone,
+      'default_usage', lc.character_b_default_usage
+    ),
 
     'relationship_rules', lc.relationship_rules
   ),
@@ -64,27 +60,28 @@ select jsonb_build_object(
   ),
 
   'dialogue_design', jsonb_build_object(
-    'communicative_goal',
-      'Say hello, ask someone''s name, say your own name, and say nice to meet you.',
-    'scene_type', 'first meeting',
-    'suggested_location', 'quiet everyday setting',
-    'allowed_register', 'formal_polite',
-    'estimated_line_count', '6-8 lines',
-    'constraints', jsonb_build_array(
-      'short lines only',
-      'one communicative move per line',
-      'beginner-safe Thai only',
-      'Mali uses ฉัน',
-      'Narin uses ผม',
-      'use polite particles consistently',
-      'no flirting or intimacy',
-      'no important new grammar outside lesson scope'
-    )
+    'learning_focus', ds.learning_focus,
+    'scene_summary', ds.scene_summary,
+    'scene_type', ds.scene_type,
+    'suggested_location', ds.suggested_location,
+    'allowed_register', ds.allowed_register,
+    'estimated_line_count', ds.estimated_line_count,
+    'constraints',
+  jsonb_build_array(
+    'short lines only',
+    'one communicative move per line',
+    'beginner-safe Thai only',
+    'use polite particles consistently',
+    'no flirting or intimacy',
+    'no important new grammar outside lesson scope'
+  ) || coalesce(ds.extra_constraints, '[]'::jsonb)
   )
 ) as lesson_blueprint
 from public.lesson_blueprint_view lb
 join public.lesson_vocabulary_control_view lvc
   on lvc.lesson_id = lb.lesson_id
+join public.dialogue_blueprint_specs ds
+  on ds.lesson_id = lb.lesson_id
 join public.lesson_continuity_options_view lc
-  on lc.relationship_pair_id = 1
+  on lc.relationship_pair_id = ds.relationship_pair_id
 where lb.lesson_key = 'a1-dialog-01';

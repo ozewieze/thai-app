@@ -1,26 +1,30 @@
 # Thai A1 dialogue workflow guide
 
-Deze handleiding beschrijft een eenvoudige, herhaalbare workflow om voor een Thai A1 curriculum-app dialogen op te bouwen, te genereren, te controleren en op te slaan. De workflow houdt drie lagen strikt gescheiden: curriculum database, content planning en AI generation. Seedbestanden in Supabase kunnen expliciet geconfigureerd worden via `sql_paths` en worden automatisch geladen bij `db reset`; losse seed-SQL kan ook handmatig worden uitgevoerd tijdens lokale ontwikkeling.[cite:430][cite:433]
+Deze handleiding beschrijft een eenvoudige, herhaalbare workflow om voor een Thai A1 curriculum-app dialogen op te bouwen, te plannen, te genereren, te controleren en op te slaan.
+
+De workflow houdt drie lagen gescheiden:
+
+1. curriculum database
+2. content planning
+3. AI generation
+
+De workflow gebruikt de database als bron van waarheid voor curriculum- en continuity-data, maar laat ook een beperkte les-specifieke specs-laag toe voor dialoogontwerp. Die specs-laag is geen duplicaat van curriculuminhoud, maar een kleine authoringlaag voor keuzes zoals learning focus, scène en extra constraints. Architectuurdocumentatie blijft alleen bruikbaar als ze aansluit op de actuele implementatie. [cite:1037][cite:1044]
 
 ## Doel van de workflow
 
-De workflow is bedoeld om per les een dialoog te maken op basis van bestaande curriculumdata en bestaande continuity-data, zonder dat de lesson blueprint zelf een aparte bron van waarheid wordt. PostgreSQL views zijn hiervoor geschikt als afgeleide querylaag, en JSON-opbouw met `jsonb_build_object()` is geschikt om een compact planning-object samen te stellen voor prompts en QA.[cite:255][cite:317]
+De workflow is bedoeld om per les een dialoog te maken op basis van:
 
-De drie lagen zijn:
+- bestaande curriculumdata;
+- bestaande continuity-data;
+- beperkte les-specifieke dialoogspecs.
 
-- **Curriculum database**: vaste brondata en lesson links.
-- **Content planning**: afgeleide blueprint en continuity-context.
-- **AI generation**: prompt, dialoogoutput, opslag en latere revisie.
+De uiteindelijke dialoog wordt gegenereerd vanuit een samengesteld `lesson_blueprint` JSON-object. PostgreSQL views en `jsonb_build_object()` zijn geschikt om zo’n compact planning-object op te bouwen uit relationele data. [cite:1048]
 
-## Basisprincipe
-
-Gebruik altijd de database als bron van waarheid voor lesinhoud en continuity. Bouw de blueprint per les opnieuw op uit bestaande data in plaats van die blueprint als aparte persistente waarheid op te slaan. Dat houdt je model logisch, reproduceerbaar en beter onderhoudbaar.[cite:470][cite:255]
-
-## Overzicht van de drie lagen
+## De drie lagen
 
 ### 1. Curriculum database
 
-Dit zijn je inhoudelijke brontabellen:
+Vaste inhoudelijke en relationele brondata:
 
 - `lessons`
 - `vocabulary_master`
@@ -35,37 +39,35 @@ Dit zijn je inhoudelijke brontabellen:
 - `lesson_phrase`
 - `lesson_grammar`
 - `lesson_pattern`
-
-Dit zijn je continuity-bronnen:
-
 - `character_profiles`
 - `relationship_pairs`
 - `relationship_pair_rules`
 
 ### 2. Content planning
 
-Dit is de afgeleide werklaag:
+Afgeleide en authoringlaag:
 
-- lesson blueprint
-- continuity-context
+- lesson blueprint assembler
+- continuity-context view
+- `dialogue_blueprint_specs`
 - prompt template
 - lesson-specifieke prompt
 - QA-checks
 
-Hier zitten geen nieuwe waarheden in. Alles in deze laag moet opnieuw afleidbaar zijn uit curriculum- en continuity-data.[cite:255][cite:317]
-
 ### 3. AI generation
 
-Dit is de outputlaag:
+Outputlaag:
 
 - `dialogs`
 - `revisions`
 
-Gebruik `dialogs` voor de finale, goedgekeurde dialoog per les. Gebruik `revisions` alleen voor revision-output of samenvattingen, niet als versiebeheer voor dialoogvarianten.
+Gebruik `dialogs` voor de finale goedgekeurde dialoog per les. Gebruik `revisions` alleen voor revision-output of samenvattende afgeleiden, niet als versiebeheer voor meerdere kandidaatdialogen.
+
+## Basisprincipe
+
+Gebruik de database als bron van waarheid voor lesinhoud, vocabulary scope, continuity en relationship rules. Bouw de blueprint per les opnieuw op uit bestaande data en een kleine specs-tabel. De blueprint zelf is een planning-object, geen zelfstandige primaire waarheid. De expliciete keuzes in `dialogue_blueprint_specs` zijn wel persistente authoring-inputs voor de blueprint-opbouw. Documenteer zulke beslissingen expliciet zodra het model verandert, zodat workflow en implementatie niet uit elkaar lopen. [cite:1041][cite:1044]
 
 ## Aanbevolen mapstructuur
-
-Een duidelijke mapstructuur helpt om werkbestanden en definitieve seedbestanden uit elkaar te houden. Reusable prompt templates en gestandaardiseerde workflows werken beter als tussenstappen, templates en definitieve database-writes in aparte mappen blijven.[cite:467][cite:472]
 
 ```text
 supabase/
@@ -74,9 +76,10 @@ supabase/
     02_get_continuity_context.sql
     03_build_dialog_lesson_blueprint.sql
     04_lesson_dialog_prompt_template.md
-    prompts/
-      lesson_01_dialog_prompt.md
-      lesson_02_dialog_prompt.md
+
+  prompts/
+    lesson_01_dialog_prompt.md
+    lesson_02_dialog_prompt.md
 
   generation/
     dialogs/
@@ -96,26 +99,52 @@ supabase/
       phrase_master.seed.sql
     links/
       lesson_links.seed.sql
+    planning/
+      dialogue_blueprint_specs.seed.sql
     dialogs/
       a1_dialog_01.seed.sql
       a1_dialog_02.seed.sql
 ```
 
-### Wat hoort waar?
+## Wat hoort waar?
 
-| Map | Gebruik |
-|---|---|
-| `planning/` | Queries, views, blueprint-opbouw, continuity-opbouw, templates |
-| `generation/` | Prompt-output, model-output, reviewnotities, tijdelijke drafts |
-| `seed-data/` | SQL die effectief data in tabellen schrijft of updatet |
+### `planning/`
+
+- queries
+- views
+- blueprint-opbouw
+- continuity-opbouw
+- templates
+
+### `prompts/`
+
+- per-les ingevulde promptbestanden
+
+### `generation/`
+
+- prompt-output
+- model-output
+- reviewnotities
+- tijdelijke drafts
+
+### `seed-data/`
+
+- SQL die effectief data schrijft of update in tabellen
 
 ## Stap-voor-stap workflow per les
 
-## Stap 1 — Controleer of de basisdata bestaat
+### Stap 1 — Controleer of de basisdata bestaat
 
-Controleer eerst of de les bestaat in `lessons`, en of de lesson links gevuld zijn in `lesson_vocabulary`, `lesson_phrase`, `lesson_grammar` en eventueel `lesson_pattern`. Een seed- of planningworkflow is pas betrouwbaar als de onderliggende lesson-linked data compleet is.[cite:430][cite:470]
+Controleer eerst of de les bestaat in `lessons`, en of de lesson links gevuld zijn in:
 
-Voor les 1 begin je met het ophalen van de lesidentiteit:
+- `lesson_vocabulary`
+- `lesson_phrase`
+- `lesson_grammar`
+- eventueel `lesson_pattern`
+
+Een plannings- of seedworkflow is pas betrouwbaar als de onderliggende lesson-linked data compleet is.
+
+Voorbeeld:
 
 ```sql
 select
@@ -128,14 +157,14 @@ select
   sequence_number,
   section_key
 from public.lessons
-where sequence_number = 1
-order by id
-limit 1;
+where lesson_key = 'a1-dialog-01';
 ```
 
-## Stap 2 — Haal lesson content op uit de curriculumtabellen
+### Stap 2 — Haal lesson content op uit de curriculumtabellen
 
-Gebruik de lesson-link tabellen als inhoudelijke bron. Dat betekent:
+Gebruik de lesson-link tabellen als inhoudelijke bron.
+
+Dat betekent:
 
 - `lesson_vocabulary` + `vocabulary_master` + `vocabulary_status`
 - `lesson_phrase` + `phrase_master` + `phrase_status`
@@ -170,7 +199,7 @@ where lv.lesson_id = :lesson_id
 order by lv.display_order nulls last, lv.id;
 ```
 
-## Stap 3 — Haal continuity-context op
+### Stap 3 — Haal continuity-context op
 
 Gebruik hiervoor uitsluitend:
 
@@ -178,7 +207,7 @@ Gebruik hiervoor uitsluitend:
 - `relationship_pairs`
 - `relationship_pair_rules`
 
-Zorg dat `character_profiles` deze nuttige velden bevat:
+Zorg dat `character_profiles` minstens nuttige generatievelden bevat:
 
 - `character_key`
 - `display_name`
@@ -188,13 +217,11 @@ Zorg dat `character_profiles` deze nuttige velden bevat:
 - `default_tone`
 - `default_usage`
 
-Alleen `default_tone` is te beperkt als continuity-signaal; rol, leeftijdsindruk en gebruikscontext geven extra karakterconsistentie bij dialooggeneratie.[cite:370][cite:373]
+`default_tone` alleen is te beperkt als continuity-signaal; rol, leeftijdsindruk en gebruikscontext maken karakterconsistentie sterker.
 
-## Stap 4 — Update of maak `lesson_continuity_options_view`
+### Stap 4 — Maak of update `lesson_continuity_options_view`
 
-Gebruik een view om actieve relationship pairs en hun speakerdata op één plek beschikbaar te maken. PostgreSQL views zijn bedoeld als herbruikbare afgeleide querylaag bovenop tabellen.[cite:255]
-
-Voorbeeld:
+Gebruik een view om actieve relationship pairs en hun speakerdata op één plek beschikbaar te maken.
 
 ```sql
 create or replace view public.lesson_continuity_options_view as
@@ -262,11 +289,69 @@ group by
   b.default_usage;
 ```
 
-## Stap 5 — Bouw de lesson blueprint opnieuw op
+### Stap 5 — Maak of seed `dialogue_blueprint_specs`
 
-Gebruik daarna een assembler-query, bijvoorbeeld `03_build_dialog_lesson_blueprint.sql`, om alle lesson- en continuity-data samen te brengen in één JSON-object. `jsonb_build_object()` is hiervoor geschikt omdat het gestructureerde sleutel-waardeobjecten uit SQL-data kan opbouwen.[cite:317][cite:318]
+Gebruik `dialogue_blueprint_specs` als kleine authoringlaag per les. Deze tabel bewaart niet de volledige curriculuminhoud, maar alleen de les-specifieke ontwerpkeuzes die niet logisch afleidbaar zijn uit de curriculum- en continuity-tabellen.
 
-Belangrijk: de blueprint is een **planning-object**, geen aparte bron van waarheid.
+Aanbevolen tabel:
+
+```sql
+create table public.dialogue_blueprint_specs (
+  id bigint generated always as identity primary key,
+  lesson_id bigint not null unique references public.lessons(id) on delete cascade,
+  relationship_pair_id bigint not null references public.relationship_pairs(id),
+  learning_focus text not null,
+  scene_summary text not null,
+  scene_type text,
+  suggested_location text,
+  allowed_register text,
+  estimated_line_count text,
+  extra_constraints jsonb not null default '[]'::jsonb,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  check (jsonb_typeof(extra_constraints) = 'array')
+);
+```
+
+Voorbeeldseed voor les 1:
+
+```sql
+insert into public.dialogue_blueprint_specs (
+  lesson_id,
+  relationship_pair_id,
+  learning_focus,
+  scene_summary,
+  scene_type,
+  suggested_location,
+  allowed_register,
+  estimated_line_count,
+  extra_constraints
+)
+values (
+  1,
+  1,
+  'Say hello, ask someone''s name, say your own name, and say nice to meet you.',
+  'A first, polite introduction between Mali and Narin in an everyday setting.',
+  'first meeting',
+  'quiet everyday setting',
+  'formal_polite',
+  '6-8 lines',
+  '[
+    "Mali uses ฉัน",
+    "Narin uses ผม"
+  ]'::jsonb
+);
+```
+
+### Stap 6 — Bouw de lesson blueprint opnieuw op
+
+Gebruik een assembler-query, bijvoorbeeld `03_build_dialog_lesson_blueprint.sql`, om curriculumdata, continuitydata en dialogue specs samen te brengen in één JSON-object.
+
+Belangrijk:
+
+- de blueprint blijft een planning-object;
+- de blueprint wordt opnieuw opgebouwd uit views en tabellen;
+- `dialogue_blueprint_specs` levert alleen de les-specifieke ontwerpinput.
 
 Minimale blueprint-onderdelen:
 
@@ -276,133 +361,157 @@ Minimale blueprint-onderdelen:
 - `vocabulary_control`
 - `dialogue_design`
 
-Voorbeeld van het continuity-deel in de assembler:
-
 ```sql
-'continuity_context', jsonb_build_object(
-  'relationship_pair_id', lc.relationship_pair_id,
-  'start_state', lc.start_state,
-  'current_stage', lc.current_stage,
-  'function_summary', lc.function_summary,
-  'allowed_progression', lc.allowed_progression,
-
-  'speaker_a', jsonb_build_object(
-    'character_id', lc.character_a_id,
-    'character_key', lc.character_a_key,
-    'display_name', lc.character_a_name,
-    'display_name_thai', lc.character_a_name_thai,
-    'role_summary', lc.character_a_role_summary,
-    'age_impression', lc.character_a_age_impression,
-    'default_tone', lc.character_a_default_tone,
-    'default_usage', lc.character_a_default_usage
+select jsonb_build_object(
+  'lesson_identity', jsonb_build_object(
+    'lesson_id', lb.lesson_id,
+    'lesson_key', lb.lesson_key,
+    'lesson_title', lb.lesson_title,
+    'subtitle', lb.subtitle,
+    'cefr_level', lb.cefr_level,
+    'lesson_type', lb.lesson_type,
+    'sequence_number', lb.sequence_number,
+    'section_key', lb.section_key,
+    'is_published', lb.is_published
   ),
 
-  'speaker_b', jsonb_build_object(
-    'character_id', lc.character_b_id,
-    'character_key', lc.character_b_key,
-    'display_name', lc.character_b_name,
-    'display_name_thai', lc.character_b_name_thai,
-    'role_summary', lc.character_b_role_summary,
-    'age_impression', lc.character_b_age_impression,
-    'default_tone', lc.character_b_default_tone,
-    'default_usage', lc.character_b_default_usage
+  'content_scope', jsonb_build_object(
+    'all_vocabulary', lb.all_vocabulary,
+    'new_vocabulary', lvc.new_vocabulary,
+    'linked_previous_vocabulary', lvc.linked_previous_vocabulary,
+    'all_phrases', lb.all_phrases,
+    'all_grammar', lb.all_grammar,
+    'all_patterns', lb.all_patterns
   ),
 
-  'relationship_rules', lc.relationship_rules
-)
+  'continuity_context', jsonb_build_object(
+    'relationship_pair_id', lc.relationship_pair_id,
+    'start_state', lc.start_state,
+    'current_stage', lc.current_stage,
+    'function_summary', lc.function_summary,
+    'allowed_progression', lc.allowed_progression,
+
+    'speaker_a', jsonb_build_object(
+      'character_id', lc.character_a_id,
+      'character_key', lc.character_a_key,
+      'display_name', lc.character_a_name,
+      'display_name_thai', lc.character_a_name_thai,
+      'role_summary', lc.character_a_role_summary,
+      'age_impression', lc.character_a_age_impression,
+      'default_tone', lc.character_a_default_tone,
+      'default_usage', lc.character_a_default_usage
+    ),
+
+    'speaker_b', jsonb_build_object(
+      'character_id', lc.character_b_id,
+      'character_key', lc.character_b_key,
+      'display_name', lc.character_b_name,
+      'display_name_thai', lc.character_b_name_thai,
+      'role_summary', lc.character_b_role_summary,
+      'age_impression', lc.character_b_age_impression,
+      'default_tone', lc.character_b_default_tone,
+      'default_usage', lc.character_b_default_usage
+    ),
+
+    'relationship_rules', lc.relationship_rules
+  ),
+
+  'vocabulary_control', jsonb_build_object(
+    'must_use_new', lvc.new_vocabulary,
+    'may_reuse_previous', lvc.linked_previous_vocabulary,
+    'must_avoid_rule',
+      'Do not introduce vocabulary outside must_use_new and may_reuse_previous unless extremely basic and unavoidable for natural Thai.'
+  ),
+
+  'dialogue_design', jsonb_build_object(
+    'learning_focus', ds.learning_focus,
+    'scene_summary', ds.scene_summary,
+    'scene_type', ds.scene_type,
+    'suggested_location', ds.suggested_location,
+    'allowed_register', ds.allowed_register,
+    'estimated_line_count', ds.estimated_line_count,
+    'constraints',
+      jsonb_build_array(
+        'short lines only',
+        'one communicative move per line',
+        'beginner-safe Thai only',
+        'use polite particles consistently',
+        'no flirting or intimacy',
+        'no important new grammar outside lesson scope'
+      ) || coalesce(ds.extra_constraints, '[]'::jsonb)
+  )
+) as lesson_blueprint
+from public.lesson_blueprint_view lb
+join public.lesson_vocabulary_control_view lvc
+  on lvc.lesson_id = lb.lesson_id
+join public.dialogue_blueprint_specs ds
+  on ds.lesson_id = lb.lesson_id
+join public.lesson_continuity_options_view lc
+  on lc.relationship_pair_id = ds.relationship_pair_id
+where lb.lesson_key = 'a1-dialog-01';
 ```
 
-## Stap 6 — Gebruik een vaste prompt-template
+### Stap 7 — Gebruik een vaste prompt-template
 
-Gebruik een herbruikbaar prompt-templatebestand, bijvoorbeeld `04_lesson_dialog_prompt_template.md`, met placeholders die gevuld worden vanuit het blueprint JSON. Reusable prompt templates en expliciete placeholders maken generatie consistenter en minder foutgevoelig.[cite:467][cite:475]
+Gebruik een herbruikbaar prompt-templatebestand, bijvoorbeeld `04_lesson_dialog_prompt_template.md`, met placeholders die gevuld worden vanuit `lesson_blueprint`.
 
-Voorbeeld van continuity-placeholderblokken:
-
-```md
-Speaker A:
-- Name: {{speaker_a_name}}
-- Thai script name: {{speaker_a_name_thai}}
-- Character key: {{speaker_a_key}}
-- Role summary: {{speaker_a_role_summary}}
-- Age impression: {{speaker_a_age_impression}}
-- Default tone: {{speaker_a_default_tone}}
-- Default usage: {{speaker_a_default_usage}}
-
-Speaker B:
-- Name: {{speaker_b_name}}
-- Thai script name: {{speaker_b_name_thai}}
-- Character key: {{speaker_b_key}}
-- Role summary: {{speaker_b_role_summary}}
-- Age impression: {{speaker_b_age_impression}}
-- Default tone: {{speaker_b_default_tone}}
-- Default usage: {{speaker_b_default_usage}}
-```
-
-## Stap 7 — Houd een mapping checklist bij
-
-Maak onder of naast je template een mapping checklist die exact zegt welk JSON-veld naar welke placeholder gaat. Dat maakt je workflow later veel overzichtelijker.[cite:467][cite:472]
+Gebruik de actuele blueprintvelden. De prompt-template moet dus `learning_focus` en `scene_summary` gebruiken, niet de oude `communicative_goal`.
 
 Voorbeeld:
 
-```md
-## continuity_context.speaker_a
-{{speaker_a_name}} <- continuity_context.speaker_a.display_name
-{{speaker_a_name_thai}} <- continuity_context.speaker_a.display_name_thai
-{{speaker_a_key}} <- continuity_context.speaker_a.character_key
-{{speaker_a_role_summary}} <- continuity_context.speaker_a.role_summary
-{{speaker_a_age_impression}} <- continuity_context.speaker_a.age_impression
-{{speaker_a_default_tone}} <- continuity_context.speaker_a.default_tone[]
-{{speaker_a_default_usage}} <- continuity_context.speaker_a.default_usage[]
+```text
+LESDOEL
+Dit is een dialoogles op niveau {{cefr_level}}.
+Les titel: {{lesson_title}}
+Les ondertitel: {{subtitle}}
+
+Leerfocus:
+{{learning_focus}}
+
+Scènesamenvatting:
+{{scene_summary}}
 ```
 
-## Stap 8 — Vul de les-specifieke prompt in
+### Stap 8 — Houd een mapping checklist bij
 
-Maak per les een promptbestand in `planning/prompts/`, bijvoorbeeld `lesson_01_dialog_prompt.md`. Vul daar het template met de concrete blueprintdata van die les.[cite:467][cite:475]
-
-Voor les 1 leidde dat tot een compacte first-meeting prompt met:
-
-- greeting
-- self-introduction
-- asking the other person’s name
-- polite particles
-- beginner-safe Thai
-- no flirting or intimacy
-
-## Stap 9 — Genereer de dialoog
-
-Gebruik de prompt om één of meer kandidaatdialogen te genereren. Bewaar werkversies bij voorkeur eerst in `generation/`, niet direct in de database.
-
-Voor les 1 werd de finale compacte versie:
+Maak onder of naast je template een mapping checklist die exact zegt welk JSON-veld naar welke placeholder gaat.
 
 ```text
-มะลิ: สวัสดีค่ะ
-นริน: สวัสดีครับ
-มะลิ: ฉันชื่อมะลิค่ะ
-มะลิ: คุณชื่ออะไรคะ
-นริน: ผมชื่อนรินครับ
-นริน: ยินดีที่ได้รู้จักครับ
-มะลิ: ยินดีที่ได้รู้จักค่ะ
+## dialogue_design
+{{learning_focus}} <- dialogue_design.learning_focus
+{{scene_summary}} <- dialogue_design.scene_summary
+{{scene_type}} <- dialogue_design.scene_type
+{{suggested_location}} <- dialogue_design.suggested_location
+{{allowed_register}} <- dialogue_design.allowed_register
+{{estimated_line_count}} <- dialogue_design.estimated_line_count
+{{dialogue_constraints_list}} <- dialogue_design.constraints[]
 ```
 
-## Stap 10 — QA voor je opslaat
+### Stap 9 — Vul de les-specifieke prompt in
+
+Maak per les een promptbestand in `prompts/`, bijvoorbeeld `lesson_02_dialog_prompt.md`. Vul daar het template met de concrete blueprintdata van die les.
+
+### Stap 10 — Genereer de dialoog
+
+Gebruik de prompt om één of meer kandidaatdialogen te genereren. Bewaar werkversies eerst in `generation/`, niet direct in de database.
+
+### Stap 11 — QA voor je opslaat
 
 Controleer elke dialoog minstens op deze punten:
 
-- past de scène bij de lesson goal?
+- past de scène bij de learning focus?
 - zijn alle verplichte target items aanwezig?
-- is er geen belangrijke nieuwe grammar buiten de les?
-- kloppen `ครับ / ค่ะ / คะ`?
+- is er geen belangrijke nieuwe grammatica buiten de les?
+- kloppen `ครับ` / `ค่ะ` / `คะ`?
 - past de toon bij de character profiles?
 - past de relatie bij `relationship_pair_rules`?
 - is de dialoog beginner-proof en niet te lang?
 - is transliteratie consistent?
 - is de Engelse vertaling trouw aan het Thai?
 
-## Stap 11 — Sla de finale dialoog op in `dialogs`
+### Stap 12 — Sla de finale dialoog op in `dialogs`
 
-Gebruik een eigen seedbestand per dialoog onder `seed-data/dialogs/`, bijvoorbeeld `a1_dialog_01.seed.sql`. Finale databasewrites horen in `seed-data/`, niet in `planning/` of `generation/`.[cite:430][cite:470]
-
-Voorbeeld:
+Gebruik een eigen seedbestand per dialoog onder `seed-data/dialogs/`, bijvoorbeeld `a1_dialog_02.seed.sql`.
 
 ```sql
 insert into public.dialogs (
@@ -448,9 +557,9 @@ do update set
   updated_at = now();
 ```
 
-## Stap 12 — Voeg dialog seeds toe aan `config.toml`
+### Stap 13 — Voeg seedpaths toe aan `config.toml`
 
-Als je wilt dat dialog-seeds automatisch meelopen bij `db reset`, moet de dialogmap opgenomen zijn in `[db.seed].sql_paths`. Seedpaden worden expliciet en in volgorde geladen tijdens een reset.[cite:430][cite:433]
+Als je wilt dat seeds automatisch meelopen bij `db reset`, moet de relevante seedmap opgenomen zijn in `[db.seed].sql_paths`.
 
 Aanbevolen configuratie:
 
@@ -464,50 +573,31 @@ sql_paths = [
   "./seed-data/master/pattern_master.seed.sql",
   "./seed-data/master/phrase_master.seed.sql",
   "./seed-data/links/lesson_links.seed.sql",
+  "./seed-data/planning/dialogue_blueprint_specs.seed.sql",
   "./seed-data/dialogs/*.sql"
 ]
 ```
 
-Een globpatroon voor `dialogs/*.sql` is handig als je veel dialogen gaat toevoegen, omdat je dan niet telkens de TOML hoeft aan te passen.[cite:430]
+### Stap 14 — Lokaal uitvoeren zonder reset
 
-## Stap 13 — Lokaal uitvoeren zonder reset
-
-Tijdens lokale ontwikkeling hoef je niet telkens `supabase db reset` te doen. Voor kleine, gecontroleerde wijzigingen kun je seed-SQL ook gewoon handmatig uitvoeren in de SQL editor of via `psql`. Dat is minder ingrijpend en sneller dan resetten.[cite:438][cite:445]
+Tijdens lokale ontwikkeling hoef je niet telkens `supabase db reset` te doen. Voor kleine gecontroleerde wijzigingen kun je seed-SQL ook handmatig uitvoeren in de SQL editor of via `psql`.
 
 Praktische regel:
 
-- wijziging aan bestaande data of één nieuwe dialoog: handmatig uitvoeren
+- wijziging aan bestaande specs of één nieuwe dialoog: handmatig uitvoeren
 - volledige reproduceerbaarheid testen: `db reset`
-
-## Seedbeleid voor `core.seed.sql`
-
-Als je seedbestanden later opnieuw wilt kunnen draaien zonder unique-conflicts, gebruik dan bij voorkeur `insert ... on conflict (...) do update` voor tabellen met unieke sleutels zoals `character_key`. Dat maakt je seeds veiliger herbruikbaar op bestaande data.[cite:433][cite:430]
-
-Voor `character_profiles` is dat handiger dan losse inserts, zeker nadat `display_name_thai` werd toegevoegd.
 
 ## Praktische checklist per nieuwe les
 
-Gebruik deze korte routine voor elke nieuwe dialoog:
-
-1. Controleer of de les en lesson links bestaan.
-2. Haal vocabulary, phrases, grammar en patterns op.
-3. Kies een geschikt relationship pair.
-4. Controleer character profiles en relationship rules.
-5. Bouw de blueprint opnieuw op.
-6. Vul het prompt-template in.
-7. Genereer de dialoog.
-8. Doe QA.
-9. Maak een seedbestand in `seed-data/dialogs/`.
-10. Run dat lokaal handmatig.
-11. Commit planningbestanden, generation-notes en seedbestand.
-
-## Wat in de README kan
-
-Ja, deze handleiding is geschikt om in een README of projectdocument te zetten. Een README is een goede plek voor een overzicht van workflow, mapstructuur, seedstrategie en stap-voor-stap proces, zodat toekomstige jij of andere bijdragers snel begrijpen hoe de dialoogpipeline werkt.[cite:467][cite:472]
-
-Een praktische aanpak is:
-
-- `README.md` = korte projectuitleg + samenvatting workflow
-- `docs/dialog-workflow.md` = deze volledige gedetailleerde handleiding
-
-Dat houdt je hoofd-README compact, terwijl de volledige werkinstructie toch bewaard blijft.
+- Controleer of de les en lesson links bestaan.
+- Haal vocabulary, phrases, grammar en patterns op.
+- Kies een geschikt relationship pair.
+- Maak of update `dialogue_blueprint_specs`.
+- Controleer character profiles en relationship rules.
+- Bouw de blueprint opnieuw op.
+- Vul het prompt-template in.
+- Genereer de dialoog.
+- Doe QA.
+- Maak een seedbestand in `seed-data/dialogs/`.
+- Run dat lokaal handmatig.
+- Commit planningbestanden, promptbestanden, generation-notes en seedbestanden.
