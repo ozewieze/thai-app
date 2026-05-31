@@ -1,0 +1,430 @@
+{
+  "content_scope": {
+    "all_grammar": [
+      {
+        "title": "Polite sentence-final particles",
+        "register": "formal",
+        "grammar_id": 49,
+        "concept_key": "polite_particles_khrab_kha",
+        "concept_type": "politeness",
+        "lesson_notes": "Polite sentence-final particles used in first-meeting introductions.",
+        "display_order": 1,
+        "short_explanation": "Use ครับ and ค่ะ to make speech polite and socially appropriate.",
+        "requires_explanation": true
+      }
+    ],
+    "all_phrases": [
+      {
+        "title": "Introduce yourself by name",
+        "register": "polite",
+        "phrase_id": 1,
+        "phrase_key": "self_introduction_name",
+        "lesson_role": "target",
+        "phrase_type": "question_answer_exchange",
+        "lesson_notes": "Core first-meeting exchange: asking and giving a name.",
+        "display_order": 1,
+        "is_productive": true,
+        "phrase_formula": "คุณชื่ออะไร / ผมชื่อ... / ฉันชื่อ...",
+        "fixedness_level": "semi_fixed",
+        "short_explanation": "Asks someone’s name and gives your own name in a simple first-meeting exchange.",
+        "requires_explanation": true
+      },
+      {
+        "title": "Nice to meet you",
+        "register": "polite",
+        "phrase_id": 2,
+        "phrase_key": "yin_di_thi_dai_ru_jak",
+        "lesson_role": "target",
+        "phrase_type": "formulaic_expression",
+        "lesson_notes": "Polite fixed expression used when meeting someone for the first time.",
+        "display_order": 2,
+        "is_productive": false,
+        "phrase_formula": "ยินดีที่ได้รู้จัก",
+        "fixedness_level": "fixed",
+        "short_explanation": "A polite formula used when meeting someone for the first time.",
+        "requires_explanation": true
+      }
+    ],
+    "all_patterns": [],
+    "all_vocabulary": [
+      {
+        "paiboon": "sà-wàt-dii",
+        "register": "formal",
+        "source_key": "hello",
+        "usage_note": null,
+        "lesson_role": "target",
+        "thai_script": "สวัสดี",
+        "lesson_notes": "Greeting word for first contact.",
+        "display_order": 1,
+        "english_gloss": "hello",
+        "vocabulary_id": 1,
+        "part_of_speech": "particle",
+        "requires_explanation": true
+      },
+      {
+        "paiboon": "khun",
+        "register": "formal",
+        "source_key": "you",
+        "usage_note": null,
+        "lesson_role": "target",
+        "thai_script": "คุณ",
+        "lesson_notes": "You / polite address in introductions.",
+        "display_order": 2,
+        "english_gloss": "you",
+        "vocabulary_id": 8,
+        "part_of_speech": "pronoun",
+        "requires_explanation": true
+      },
+      {
+        "paiboon": "chʉ̂ʉ",
+        "register": "formal",
+        "source_key": "name",
+        "usage_note": "noun name; also used as be called in self-introductions",
+        "lesson_role": "target",
+        "thai_script": "ชื่อ",
+        "lesson_notes": "Name.",
+        "display_order": 3,
+        "english_gloss": "name",
+        "vocabulary_id": 21,
+        "part_of_speech": "noun",
+        "requires_explanation": true
+      },
+      {
+        "paiboon": "à-rai",
+        "register": "formal",
+        "source_key": "what",
+        "usage_note": null,
+        "lesson_role": "target",
+        "thai_script": "อะไร",
+        "lesson_notes": "What.",
+        "display_order": 4,
+        "english_gloss": "what",
+        "vocabulary_id": 14,
+        "part_of_speech": "question_word",
+        "requires_explanation": true
+      },
+      {
+        "paiboon": "chǎn",
+        "register": "formal",
+        "source_key": "i",
+        "usage_note": "polite first-person pronoun often used by women; male learners may later learn ผม",
+        "lesson_role": "target",
+        "thai_script": "ฉัน",
+        "lesson_notes": "I / me for female speaker.",
+        "display_order": 5,
+        "english_gloss": "I",
+        "vocabulary_id": 7,
+        "part_of_speech": "pronoun",
+        "requires_explanation": true
+      },
+      {
+        "paiboon": "phǒm",
+        "register": "formal",
+        "source_key": "i_male",
+        "usage_note": "male polite first-person pronoun; also means hair",
+        "lesson_role": "target",
+        "thai_script": "ผม",
+        "lesson_notes": "I / me for male speaker.",
+        "display_order": 6,
+        "english_gloss": "I",
+        "vocabulary_id": 206,
+        "part_of_speech": "pronoun",
+        "requires_explanation": true
+      }
+    ],
+    "new_vocabulary": [
+      {
+        "status": "introduced_core",
+        "paiboon": "sà-wàt-dii",
+        "register": "formal",
+        "source_key": "hello",
+        "lesson_role": "target",
+        "thai_script": "สวัสดี",
+        "lesson_notes": "Greeting word for first contact.",
+        "display_order": 1,
+        "english_gloss": "hello",
+        "vocabulary_id": 1,
+        "part_of_speech": "particle",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      },
+      {
+        "status": "introduced_core",
+        "paiboon": "khun",
+        "register": "formal",
+        "source_key": "you",
+        "lesson_role": "target",
+        "thai_script": "คุณ",
+        "lesson_notes": "You / polite address in introductions.",
+        "display_order": 2,
+        "english_gloss": "you",
+        "vocabulary_id": 8,
+        "part_of_speech": "pronoun",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      },
+      {
+        "status": "introduced_core",
+        "paiboon": "chʉ̂ʉ",
+        "register": "formal",
+        "source_key": "name",
+        "lesson_role": "target",
+        "thai_script": "ชื่อ",
+        "lesson_notes": "Name.",
+        "display_order": 3,
+        "english_gloss": "name",
+        "vocabulary_id": 21,
+        "part_of_speech": "noun",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      },
+      {
+        "status": "introduced_core",
+        "paiboon": "à-rai",
+        "register": "formal",
+        "source_key": "what",
+        "lesson_role": "target",
+        "thai_script": "อะไร",
+        "lesson_notes": "What.",
+        "display_order": 4,
+        "english_gloss": "what",
+        "vocabulary_id": 14,
+        "part_of_speech": "question_word",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      },
+      {
+        "status": "introduced_core",
+        "paiboon": "chǎn",
+        "register": "formal",
+        "source_key": "i",
+        "lesson_role": "target",
+        "thai_script": "ฉัน",
+        "lesson_notes": "I / me for female speaker.",
+        "display_order": 5,
+        "english_gloss": "I",
+        "vocabulary_id": 7,
+        "part_of_speech": "pronoun",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      },
+      {
+        "status": "introduced_core",
+        "paiboon": "phǒm",
+        "register": "formal",
+        "source_key": "i_male",
+        "lesson_role": "target",
+        "thai_script": "ผม",
+        "lesson_notes": "I / me for male speaker.",
+        "display_order": 6,
+        "english_gloss": "I",
+        "vocabulary_id": 206,
+        "part_of_speech": "pronoun",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      }
+    ],
+    "linked_previous_vocabulary": []
+  },
+  "prompt_render": {
+    "must_use_new_list": "- สวัสดี (sà-wàt-dii) = hello\n- คุณ (khun) = you\n- ชื่อ (chʉ̂ʉ) = name\n- อะไร (à-rai) = what\n- ฉัน (chǎn) = I\n- ผม (phǒm) = I",
+    "allowed_progression": "- acquaintance\n- comfortable_contact\n- close_bond_or_subtle_romantic_potential",
+    "required_grammar_list": "- Polite sentence-final particles: Use ครับ and ค่ะ to make speech polite and socially appropriate.",
+    "required_phrases_list": "- Introduce yourself by name: คุณชื่ออะไร / ผมชื่อ... / ฉันชื่อ... — Asks someone’s name and gives your own name in a simple first-meeting exchange.\n- Nice to meet you: ยินดีที่ได้รู้จัก — A polite formula used when meeting someone for the first time.",
+    "speaker_a_default_tone": "- calm\n- polite\n- organized\n- mature",
+    "speaker_b_default_tone": "- calm\n- approachable\n- socially_confident\n- believable",
+    "may_reuse_previous_list": "- none",
+    "relationship_rules_list": "- lesson_1_can_start_here: This pair may begin the curriculum as a first meeting in greetings and introductions.\n- keep_growth_gradual: Do not move this pair too quickly into intimacy; let familiarity develop over multiple lessons.\n- no_fast_romance: Romantic potential must remain subtle and should not appear in early A1 lessons.",
+    "speaker_a_default_usage": "- workplace_adjacent_scenes\n- cafe_scenes\n- shopping\n- scheduling\n- introductions",
+    "speaker_b_default_usage": "- first_meetings\n- practical_daily_scenes\n- bridge_between_character_clusters",
+    "required_vocabulary_list": "- สวัสดี (sà-wàt-dii) = hello\n- คุณ (khun) = you\n- ชื่อ (chʉ̂ʉ) = name\n- อะไร (à-rai) = what\n- ฉัน (chǎn) = I\n- ผม (phǒm) = I",
+    "dialogue_constraints_list": "- short lines only\n- one communicative move per line\n- beginner-safe Thai only\n- use polite particles consistently\n- no flirting or intimacy\n- no important new grammar outside lesson scope\n- Mali uses ฉัน\n- Narin uses ผม",
+    "allowed_review_vocabulary_list": "- none",
+    "required_patterns_list_or_none": "- none"
+  },
+  "dialogue_design": {
+    "scene_type": "first meeting",
+    "constraints": [
+      "short lines only",
+      "one communicative move per line",
+      "beginner-safe Thai only",
+      "use polite particles consistently",
+      "no flirting or intimacy",
+      "no important new grammar outside lesson scope",
+      "Mali uses ฉัน",
+      "Narin uses ผม"
+    ],
+    "scene_summary": "A first, polite introduction between Mali and Narin in an everyday setting.",
+    "learning_focus": "Say hello, ask someone's name, say your own name, and say nice to meet you.",
+    "allowed_register": "formal_polite",
+    "suggested_location": "quiet everyday setting",
+    "estimated_line_count": "6-8 lines"
+  },
+  "lesson_identity": {
+    "subtitle": "Greetings and introductions",
+    "lesson_id": 1,
+    "cefr_level": "A1",
+    "lesson_key": "a1-dialog-01",
+    "lesson_type": "dialog",
+    "section_key": "dialogs",
+    "is_published": true,
+    "lesson_title": "Dialog 1",
+    "sequence_number": 1
+  },
+  "continuity_context": {
+    "speaker_a": {
+      "character_id": 2,
+      "default_tone": ["calm", "polite", "organized", "mature"],
+      "display_name": "Mali",
+      "role_summary": "Adult woman with a polished, professional-adjacent presence; organized and polite.",
+      "character_key": "mali",
+      "default_usage": [
+        "workplace_adjacent_scenes",
+        "cafe_scenes",
+        "shopping",
+        "scheduling",
+        "introductions"
+      ],
+      "age_impression": "adult",
+      "display_name_thai": "มะลิ"
+    },
+    "speaker_b": {
+      "character_id": 1,
+      "default_tone": [
+        "calm",
+        "approachable",
+        "socially_confident",
+        "believable"
+      ],
+      "display_name": "Narin",
+      "role_summary": "Central anchor character; calm, socially capable, dependable, connector between groups.",
+      "character_key": "narin",
+      "default_usage": [
+        "first_meetings",
+        "practical_daily_scenes",
+        "bridge_between_character_clusters"
+      ],
+      "age_impression": "adult",
+      "display_name_thai": "นริน"
+    },
+    "start_state": "first_meeting",
+    "current_stage": "early",
+    "function_summary": "Opening introductions and polite small talk.",
+    "relationship_rules": [
+      {
+        "rule_key": "lesson_1_can_start_here",
+        "rule_text": "This pair may begin the curriculum as a first meeting in greetings and introductions."
+      },
+      {
+        "rule_key": "keep_growth_gradual",
+        "rule_text": "Do not move this pair too quickly into intimacy; let familiarity develop over multiple lessons."
+      },
+      {
+        "rule_key": "no_fast_romance",
+        "rule_text": "Romantic potential must remain subtle and should not appear in early A1 lessons."
+      }
+    ],
+    "allowed_progression": [
+      "acquaintance",
+      "comfortable_contact",
+      "close_bond_or_subtle_romantic_potential"
+    ],
+    "relationship_pair_id": 1
+  },
+  "vocabulary_control": {
+    "must_use_new": [
+      {
+        "status": "introduced_core",
+        "paiboon": "sà-wàt-dii",
+        "register": "formal",
+        "source_key": "hello",
+        "lesson_role": "target",
+        "thai_script": "สวัสดี",
+        "lesson_notes": "Greeting word for first contact.",
+        "display_order": 1,
+        "english_gloss": "hello",
+        "vocabulary_id": 1,
+        "part_of_speech": "particle",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      },
+      {
+        "status": "introduced_core",
+        "paiboon": "khun",
+        "register": "formal",
+        "source_key": "you",
+        "lesson_role": "target",
+        "thai_script": "คุณ",
+        "lesson_notes": "You / polite address in introductions.",
+        "display_order": 2,
+        "english_gloss": "you",
+        "vocabulary_id": 8,
+        "part_of_speech": "pronoun",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      },
+      {
+        "status": "introduced_core",
+        "paiboon": "chʉ̂ʉ",
+        "register": "formal",
+        "source_key": "name",
+        "lesson_role": "target",
+        "thai_script": "ชื่อ",
+        "lesson_notes": "Name.",
+        "display_order": 3,
+        "english_gloss": "name",
+        "vocabulary_id": 21,
+        "part_of_speech": "noun",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      },
+      {
+        "status": "introduced_core",
+        "paiboon": "à-rai",
+        "register": "formal",
+        "source_key": "what",
+        "lesson_role": "target",
+        "thai_script": "อะไร",
+        "lesson_notes": "What.",
+        "display_order": 4,
+        "english_gloss": "what",
+        "vocabulary_id": 14,
+        "part_of_speech": "question_word",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      },
+      {
+        "status": "introduced_core",
+        "paiboon": "chǎn",
+        "register": "formal",
+        "source_key": "i",
+        "lesson_role": "target",
+        "thai_script": "ฉัน",
+        "lesson_notes": "I / me for female speaker.",
+        "display_order": 5,
+        "english_gloss": "I",
+        "vocabulary_id": 7,
+        "part_of_speech": "pronoun",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      },
+      {
+        "status": "introduced_core",
+        "paiboon": "phǒm",
+        "register": "formal",
+        "source_key": "i_male",
+        "lesson_role": "target",
+        "thai_script": "ผม",
+        "lesson_notes": "I / me for male speaker.",
+        "display_order": 6,
+        "english_gloss": "I",
+        "vocabulary_id": 206,
+        "part_of_speech": "pronoun",
+        "first_lesson_id": 1,
+        "requires_explanation": true
+      }
+    ],
+    "must_avoid_rule": "Do not introduce vocabulary outside must_use_new and may_reuse_previous unless extremely basic and unavoidable for natural Thai.",
+    "may_reuse_previous": []
+  }
+}

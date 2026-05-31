@@ -1,31 +1,32 @@
 # Lesson dialogue prompt template
 
-Gebruik dit template nadat je het JSON-resultaat uit de blueprint-assembler hebt opgehaald.
-Vervang alle placeholders met concrete waarden uit het lesson_blueprint JSON-object.
+Use this template with the lesson blueprint CSV.
+Open the CSV blueprint on one side and this template on the other.
+Replace every placeholder with the value from the matching CSV column.
+For multi-line list fields, paste the full cell content as-is.
 
 ---
 
 You are generating Thai A1 curriculum dialogue content.
 
-TASK
+## Task
+
 Create the dialogue for lesson {{lesson_key}}.
 
-LESSON GOAL
+## Lesson goal
+
 This is a {{cefr_level}} dialogue lesson.
 Lesson title: {{lesson_title}}
 Lesson subtitle: {{subtitle}}
+Learning focus: {{learning_focus}}
+Scene summary: {{scene_summary}}
 
-{{learning_focus}} <- dialogue_design.learning_focus
-{{scene_summary}} <- dialogue_design.scene_summary
+## Curriculum core
 
-CURRICULUM CONSTRAINTS
 Use only the lesson content below as the teaching core.
 
 Required vocabulary:
 {{required_vocabulary_list}}
-
-Previously introduced vocabulary allowed for reuse:
-{{allowed_review_vocabulary_list}}
 
 Required phrases:
 {{required_phrases_list}}
@@ -36,7 +37,14 @@ Required grammar:
 Patterns:
 {{required_patterns_list_or_none}}
 
-CONTINUITY CONTEXT
+Previously introduced vocabulary allowed for reuse:
+{{may_reuse_previous_list}}
+
+Vocabulary restriction:
+{{must_avoid_rule}}
+
+## Continuity context
+
 Speaker A:
 
 - Name: {{speaker_a_name}}
@@ -44,8 +52,10 @@ Speaker A:
 - Character key: {{speaker_a_key}}
 - Role summary: {{speaker_a_role_summary}}
 - Age impression: {{speaker_a_age_impression}}
-- Default tone: {{speaker_a_default_tone}}
-- Default usage: {{speaker_a_default_usage}}
+- Default tone:
+  {{speaker_a_default_tone}}
+- Default usage:
+  {{speaker_a_default_usage}}
 
 Speaker B:
 
@@ -54,20 +64,23 @@ Speaker B:
 - Character key: {{speaker_b_key}}
 - Role summary: {{speaker_b_role_summary}}
 - Age impression: {{speaker_b_age_impression}}
-- Default tone: {{speaker_b_default_tone}}
-- Default usage: {{speaker_b_default_usage}}
+- Default tone:
+  {{speaker_b_default_tone}}
+- Default usage:
+  {{speaker_b_default_usage}}
 
 Relationship context:
 
-- start_state: {{start_state}}
-- current_stage: {{current_stage}}
-- function_summary: {{function_summary}}
-- allowed_progression: {{allowed_progression}}
+- Start state: {{start_state}}
+- Current stage: {{current_stage}}
+- Function summary: {{function_summary}}
+- Allowed progression:
+  {{allowed_progression}}
 
 Relationship rules:
 {{relationship_rules_list}}
 
-DIALOGUE DESIGN
+## Dialogue design
 
 - Scene type: {{scene_type}}
 - Suggested location: {{suggested_location}}
@@ -77,30 +90,20 @@ DIALOGUE DESIGN
 Constraints:
 {{dialogue_constraints_list}}
 
-VOCABULARY CONTROL
-New vocabulary for this lesson:
-{{must_use_new_list}}
+## Quality rules
 
-Previously introduced vocabulary allowed for reuse:
-{{may_reuse_previous_list}}
-
-Vocabulary restriction:
-{{must_avoid_rule}}
-
-QUALITY RULES
-
-- CEFR {{cefr_level}} only.
-- Short, clear lines.
-- One communicative move per line.
-- Natural but simple Thai.
-- No slang unless explicitly allowed.
-- No flirting or intimacy in early lessons.
+- Stay within CEFR {{cefr_level}}.
+- Keep the dialogue short and beginner-safe.
+- Use short, clear lines.
+- Use one communicative move per line.
+- Keep the Thai natural but simple.
+- Respect speaker characterization and relationship rules.
 - Do not introduce important new grammar outside lesson scope.
-- Respect all speaker and relationship guardrails.
-- Keep the scene easy to understand for a beginner.
+- Do not introduce romance, intimacy, or inappropriate familiarity in early lessons unless explicitly allowed.
 
-OUTPUT FORMAT
-Return exactly:
+## Output format
+
+Return exactly in this order:
 
 1. Title
 2. Register
@@ -108,64 +111,67 @@ Return exactly:
 4. Paiboon transliteration
 5. English translation
 
-# JSON -> prompt mapping checklist
+---
 
-## lesson_identity
+# CSV -> prompt mapping checklist
 
-{{lesson_key}} <- lesson_identity.lesson_key
-{{cefr_level}} <- lesson_identity.cefr_level
-{{lesson_title}} <- lesson_identity.lesson_title
-{{subtitle}} <- lesson_identity.subtitle
+## lesson / goal
 
-## dialogue_design
+{{lesson_key}} <- lesson_key
+{{cefr_level}} <- cefr_level
+{{lesson_title}} <- lesson_title
+{{subtitle}} <- subtitle
+{{learning_focus}} <- learning_focus
+{{scene_summary}} <- scene_summary
 
-## dialogue_design
+## curriculum core
 
-{{learning_focus}} <- dialogue_design.learning_focus
-{{scene_summary}} <- dialogue_design.scene_summary
-{{scene_type}} <- dialogue_design.scene_type
-{{suggested_location}} <- dialogue_design.suggested_location
-{{allowed_register}} <- dialogue_design.allowed_register
-{{estimated_line_count}} <- dialogue_design.estimated_line_count
-{{dialogue_constraints_list}} <- dialogue_design.constraints[]
+{{required_vocabulary_list}} <- required_vocabulary_list
+{{required_phrases_list}} <- required_phrases_list
+{{required_grammar_list}} <- required_grammar_list
+{{required_patterns_list_or_none}} <- required_patterns_list_or_none
+{{may_reuse_previous_list}} <- may_reuse_previous_list
+{{must_avoid_rule}} <- must_avoid_rule
 
-## continuity_context.speaker_a
+## continuity / speaker A
 
-{{speaker_a_name}} <- continuity_context.speaker_a.display_name
-{{speaker_a_name_thai}} <- continuity_context.speaker_a.display_name_thai
-{{speaker_a_key}} <- continuity_context.speaker_a.character_key
-{{speaker_a_role_summary}} <- continuity_context.speaker_a.role_summary
-{{speaker_a_age_impression}} <- continuity_context.speaker_a.age_impression
-{{speaker_a_default_tone}} <- continuity_context.speaker_a.default_tone[]
-{{speaker_a_default_usage}} <- continuity_context.speaker_a.default_usage[]
+{{speaker_a_name}} <- speaker_a_name
+{{speaker_a_name_thai}} <- speaker_a_name_thai
+{{speaker_a_key}} <- speaker_a_key
+{{speaker_a_role_summary}} <- speaker_a_role_summary
+{{speaker_a_age_impression}} <- speaker_a_age_impression
+{{speaker_a_default_tone}} <- speaker_a_default_tone
+{{speaker_a_default_usage}} <- speaker_a_default_usage
 
-## continuity_context.speaker_b
+## continuity / speaker B
 
-{{speaker_b_name}} <- continuity_context.speaker_b.display_name
-{{speaker_b_name_thai}} <- continuity_context.speaker_b.display_name_thai
-{{speaker_b_key}} <- continuity_context.speaker_b.character_key
-{{speaker_b_role_summary}} <- continuity_context.speaker_b.role_summary
-{{speaker_b_age_impression}} <- continuity_context.speaker_b.age_impression
-{{speaker_b_default_tone}} <- continuity_context.speaker_b.default_tone[]
-{{speaker_b_default_usage}} <- continuity_context.speaker_b.default_usage[]
+{{speaker_b_name}} <- speaker_b_name
+{{speaker_b_name_thai}} <- speaker_b_name_thai
+{{speaker_b_key}} <- speaker_b_key
+{{speaker_b_role_summary}} <- speaker_b_role_summary
+{{speaker_b_age_impression}} <- speaker_b_age_impression
+{{speaker_b_default_tone}} <- speaker_b_default_tone
+{{speaker_b_default_usage}} <- speaker_b_default_usage
 
-## continuity_context
+## relationship context
 
-{{start_state}} <- continuity_context.start_state
-{{current_stage}} <- continuity_context.current_stage
-{{function_summary}} <- continuity_context.function_summary
-{{allowed_progression}} <- continuity_context.allowed_progression[]
-{{relationship_rules_list}} <- continuity_context.relationship_rules[]
+{{start_state}} <- start_state
+{{current_stage}} <- current_stage
+{{function_summary}} <- function_summary
+{{allowed_progression}} <- allowed_progression
+{{relationship_rules_list}} <- relationship_rules_list
 
-## content_scope
+## dialogue design
 
-{{required_vocabulary_list}} <- content_scope.all_vocabulary[]
-{{required_phrases_list}} <- content_scope.all_phrases[]
-{{required_grammar_list}} <- content_scope.all_grammar[]
-{{required_patterns_list_or_none}} <- content_scope.all_patterns[]
+{{scene_type}} <- scene_type
+{{suggested_location}} <- suggested_location
+{{allowed_register}} <- allowed_register
+{{estimated_line_count}} <- estimated_line_count
+{{dialogue_constraints_list}} <- dialogue_constraints_list
 
-## vocabulary_control
+## notes for manual filling
 
-{{must_use_new_list}} <- vocabulary_control.must_use_new[]
-{{may_reuse_previous_list}} <- vocabulary_control.may_reuse_previous[]
-{{must_avoid_rule}} <- vocabulary_control.must_avoid_rule
+- Paste scalar values directly from the CSV cell.
+- Paste multi-line list cells exactly as they appear.
+- Do not paste quotes that belong only to CSV formatting.
+- Replace every placeholder before generation.
