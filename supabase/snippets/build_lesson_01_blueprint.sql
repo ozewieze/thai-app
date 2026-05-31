@@ -80,7 +80,7 @@ select jsonb_build_object(
 from public.lesson_blueprint_view lb
 join public.lesson_vocabulary_control_view lvc
   on lvc.lesson_id = lb.lesson_id
-join public.dialogue_blueprint_specs ds
+join public.dialog_blueprint_specs ds
   on ds.lesson_id = lb.lesson_id
 join public.lesson_continuity_options_view lc
   on lc.relationship_pair_id = ds.relationship_pair_id

@@ -1,4 +1,4 @@
-insert into public.dialogue_blueprint_specs (
+insert into public.dialog_blueprint_specs (
   lesson_id,
   relationship_pair_id,
   learning_focus,

@@ -49,7 +49,7 @@ Afgeleide en authoringlaag:
 
 - lesson blueprint assembler
 - continuity-context view
-- `dialogue_blueprint_specs`
+- `dialog_blueprint_specs`
 - prompt template
 - lesson-specifieke prompt
 - QA-checks
@@ -65,7 +65,7 @@ Gebruik `dialogs` voor de finale goedgekeurde dialoog per les. Gebruik `revision
 
 ## Basisprincipe
 
-Gebruik de database als bron van waarheid voor lesinhoud, vocabulary scope, continuity en relationship rules. Bouw de blueprint per les opnieuw op uit bestaande data en een kleine specs-tabel. De blueprint zelf is een planning-object, geen zelfstandige primaire waarheid. De expliciete keuzes in `dialogue_blueprint_specs` zijn wel persistente authoring-inputs voor de blueprint-opbouw. Documenteer zulke beslissingen expliciet zodra het model verandert, zodat workflow en implementatie niet uit elkaar lopen. [cite:1041][cite:1044]
+Gebruik de database als bron van waarheid voor lesinhoud, vocabulary scope, continuity en relationship rules. Bouw de blueprint per les opnieuw op uit bestaande data en een kleine specs-tabel. De blueprint zelf is een planning-object, geen zelfstandige primaire waarheid. De expliciete keuzes in `dialog_blueprint_specs` zijn wel persistente authoring-inputs voor de blueprint-opbouw. Documenteer zulke beslissingen expliciet zodra het model verandert, zodat workflow en implementatie niet uit elkaar lopen. [cite:1041][cite:1044]
 
 ## Aanbevolen mapstructuur
 
@@ -92,6 +92,9 @@ supabase/
   seed-data/
     app/
       core.seed.sql
+      specs/
+        a1_dialog_01_blueprint_specs.seed.sql
+        a1_dialog_02_blueprint_specs.seed.sql
     master/
       vocabulary_master.seed.sql
       grammar_master.seed.sql
@@ -100,7 +103,7 @@ supabase/
     links/
       lesson_links.seed.sql
     planning/
-      dialogue_blueprint_specs.seed.sql
+      dialog_blueprint_specs.seed.sql
     dialogs/
       a1_dialog_01.seed.sql
       a1_dialog_02.seed.sql
@@ -289,14 +292,14 @@ group by
   b.default_usage;
 ```
 
-### Stap 5 — Maak of seed `dialogue_blueprint_specs`
+### Stap 5 — Maak of seed `dialog_blueprint_specs`
 
-Gebruik `dialogue_blueprint_specs` als kleine authoringlaag per les. Deze tabel bewaart niet de volledige curriculuminhoud, maar alleen de les-specifieke ontwerpkeuzes die niet logisch afleidbaar zijn uit de curriculum- en continuity-tabellen.
+Gebruik `dialog_blueprint_specs` als kleine authoringlaag per les. Deze tabel bewaart niet de volledige curriculuminhoud, maar alleen de les-specifieke ontwerpkeuzes die niet logisch afleidbaar zijn uit de curriculum- en continuity-tabellen.
 
 Aanbevolen tabel:
 
 ```sql
-create table public.dialogue_blueprint_specs (
+create table public.dialog_blueprint_specs (
   id bigint generated always as identity primary key,
   lesson_id bigint not null unique references public.lessons(id) on delete cascade,
   relationship_pair_id bigint not null references public.relationship_pairs(id),
@@ -316,7 +319,7 @@ create table public.dialogue_blueprint_specs (
 Voorbeeldseed voor les 1:
 
 ```sql
-insert into public.dialogue_blueprint_specs (
+insert into public.dialog_blueprint_specs (
   lesson_id,
   relationship_pair_id,
   learning_focus,
@@ -351,7 +354,7 @@ Belangrijk:
 
 - de blueprint blijft een planning-object;
 - de blueprint wordt opnieuw opgebouwd uit views en tabellen;
-- `dialogue_blueprint_specs` levert alleen de les-specifieke ontwerpinput.
+- `dialog_blueprint_specs` levert alleen de les-specifieke ontwerpinput.
 
 Minimale blueprint-onderdelen:
 
@@ -444,7 +447,7 @@ select jsonb_build_object(
 from public.lesson_blueprint_view lb
 join public.lesson_vocabulary_control_view lvc
   on lvc.lesson_id = lb.lesson_id
-join public.dialogue_blueprint_specs ds
+join public.dialog_blueprint_specs ds
   on ds.lesson_id = lb.lesson_id
 join public.lesson_continuity_options_view lc
   on lc.relationship_pair_id = ds.relationship_pair_id
@@ -573,7 +576,7 @@ sql_paths = [
   "./seed-data/master/pattern_master.seed.sql",
   "./seed-data/master/phrase_master.seed.sql",
   "./seed-data/links/lesson_links.seed.sql",
-  "./seed-data/planning/dialogue_blueprint_specs.seed.sql",
+  "./seed-data/planning/dialog_blueprint_specs.seed.sql",
   "./seed-data/dialogs/*.sql"
 ]
 ```
@@ -592,7 +595,7 @@ Praktische regel:
 - Controleer of de les en lesson links bestaan.
 - Haal vocabulary, phrases, grammar en patterns op.
 - Kies een geschikt relationship pair.
-- Maak of update `dialogue_blueprint_specs`.
+- Maak of update `dialog_blueprint_specs`.
 - Controleer character profiles en relationship rules.
 - Bouw de blueprint opnieuw op.
 - Vul het prompt-template in.

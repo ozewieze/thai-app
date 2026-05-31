@@ -1,4 +1,4 @@
-create table public.dialogue_blueprint_specs (
+create table public.dialog_blueprint_specs (
   id bigint generated always as identity primary key,
   lesson_id bigint not null unique references public.lessons(id) on delete cascade,
   relationship_pair_id bigint not null references public.relationship_pairs(id),
