@@ -1,3 +1,6 @@
 {
-  "editor.inlineSuggest.suppressSuggestions": false
+  "github.copilot.chat.pullRequests.enabled": false,
+  "github.copilot.chat.referenceContext": "none",
+  "github.copilot.chat.useProjectTemplates": false,
+  "github.copilot.chat.codesearch.enabled": false
 }
