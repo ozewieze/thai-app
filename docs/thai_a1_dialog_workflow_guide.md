@@ -1,12 +1,12 @@
 # Thai A1 dialogue workflow guide
 
-This guide describes a repeatable workflow for building Thai A1 lesson dialogues with a strict separation between curriculum data, planning data, and AI generation output. The workflow keeps the database as the source of truth, uses views and builder queries as derived planning layers, and stores final approved dialogue content separately from temporary generation work. PostgreSQL views are intended to expose reusable query results, `CREATE OR REPLACE VIEW` is the standard way to update a view definition, and `jsonb_build_object()` is appropriate when a compact JSON planning object is needed for QA or machine-readable inspection.[cite:12][cite:6][cite:9][cite:1][cite:2]
+This guide describes a repeatable workflow for building Thai A1 lesson dialogues with a strict separation between curriculum data, planning data, and AI generation output. The workflow keeps the database as the source of truth, uses views and builder queries as derived planning layers, and stores final approved dialogue content separately from temporary generation work. PostgreSQL views are intended to expose reusable query results, `CREATE OR REPLACE VIEW` is the standard way to update a view definition, and `jsonb_build_object()` is appropriate when a compact JSON planning object is needed for QA or machine-readable inspection.
 
 ## Workflow goal
 
-The goal is to create one dialogue per lesson from existing curriculum and continuity data without turning a lesson blueprint into a separate persistent source of truth. The working rule is simple: curriculum and continuity live in tables, planning is rebuilt from queries, and only finalized dialogue output is written to `dialogs`.[cite:12][cite:9][cite:1]
+The goal is to create one dialogue per lesson from existing curriculum and continuity data without turning a lesson blueprint into a separate persistent source of truth. The working rule is simple: curriculum and continuity live in tables, planning is rebuilt from queries, and only finalized dialogue output is written to `dialogs`.
 
-The workflow now supports a practical intermediate planning format: a flat blueprint export stored as CSV. CSV is used as a human-friendly bridge between SQL output and the lesson-specific prompt file, while the prompt itself remains a Markdown document that is easier to read and edit in a split-screen workflow.[cite:12][cite:239]
+The workflow now supports a practical intermediate planning format: a flat blueprint export stored as CSV. CSV is used as a human-friendly bridge between SQL output and the lesson-specific prompt file, while the prompt itself remains a Markdown document that is easier to read and edit in a split-screen workflow.
 
 ## The three layers
 
@@ -45,7 +45,7 @@ This is the derived working layer:
 - lesson-specific prompt
 - QA checks
 
-Nothing in this layer is a new source of truth. Planning is rebuilt from tables or views each time, which matches the purpose of SQL views as reusable query abstractions rather than authoritative content stores.[cite:12][cite:9][cite:302]
+Nothing in this layer is a new source of truth. Planning is rebuilt from tables or views each time, which matches the purpose of SQL views as reusable query abstractions rather than authoritative content stores.
 
 ### 3. AI generation
 
@@ -55,7 +55,7 @@ This is the output layer:
 - `revisions`
 - generation drafts and review notes in files
 
-Use `dialogs` for the final approved lesson dialogue. Use `revisions` only for revision output or revision summaries, not as version control for multiple draft dialogues.[cite:12]
+Use `dialogs` for the final approved lesson dialogue. Use `revisions` only for revision output or revision summaries, not as version control for multiple draft dialogues.
 
 ## Updated folder structure
 
@@ -107,12 +107,12 @@ supabase/
 
 ## Updated planning model
 
-The main planning change is that the lesson builder no longer has to be used only as a nested JSON object. A flat builder query that returns one row with named columns is now the default practical planning format for manual prompt filling, because it exports cleanly to CSV and supports multi-line cells for vocabulary, grammar, phrases, rules, and constraints.[cite:1][cite:12]
+The main planning change is that the lesson builder no longer has to be used only as a nested JSON object. A flat builder query that returns one row with named columns is now the default practical planning format for manual prompt filling, because it exports cleanly to CSV and supports multi-line cells for vocabulary, grammar, phrases, rules, and constraints.
 
 That means there are now two valid planning outputs:
 
-- a JSON blueprint, useful for structure inspection, QA, or machine-readable planning objects built with `jsonb_build_object()`[cite:1][cite:2]
-- a flat builder result, useful for CSV export and manual prompt filling in VS Code split screen[cite:12][cite:239]
+- a JSON blueprint, useful for structure inspection, QA, or machine-readable planning objects built with `jsonb_build_object()`
+- a flat builder result, useful for CSV export and manual prompt filling in VS Code split screen
 
 For the current workflow, the flat builder plus CSV export is the default working method.
 
@@ -120,7 +120,7 @@ For the current workflow, the flat builder plus CSV export is the default workin
 
 ### Step 1 — Check that lesson base data exists
 
-Confirm that the lesson exists in `lessons`, and that lesson links exist in `lesson_vocabulary`, `lesson_phrase`, `lesson_grammar`, and optionally `lesson_pattern`. A planning workflow is only reliable when the lesson-linked data is complete.[cite:12]
+Confirm that the lesson exists in `lessons`, and that lesson links exist in `lesson_vocabulary`, `lesson_phrase`, `lesson_grammar`, and optionally `lesson_pattern`. A planning workflow is only reliable when the lesson-linked data is complete.
 
 Example identity query for lesson 2:
 
@@ -140,7 +140,7 @@ order by id
 limit 1;
 ```
 
-### Step 2 — Pull lesson content from curriculum tables
+### Step 2 — Pull lesson content from curriculum tables (via lesson_blueprint_view and related lesson-link views)
 
 Use the lesson-link tables as the instructional source:
 
@@ -192,7 +192,7 @@ from public.relationship_pairs rp
 
 ### Step 5 — Build the lesson blueprint
 
-The builder query assembles lesson and continuity data into a planning result. A JSON blueprint is still valid when you want a compact nested object, because `jsonb_build_object()` creates JSONB from alternating key/value pairs.[cite:1][cite:2][cite:300]
+The builder query assembles lesson and continuity data into a planning result. A JSON blueprint is still valid when you want a compact nested object, because `jsonb_build_object()` creates JSONB from alternating key/value pairs.
 
 However, the current recommended builder for daily work is a **flat builder query** that returns one row with named columns such as:
 
@@ -219,9 +219,9 @@ Export the one-row builder result as a CSV file into `planning/blueprints/`, for
 
 This CSV acts as an intermediate working layer between SQL output and the prompt. Multiline fields such as vocabulary, phrases, grammar, rules, or constraints should remain quoted CSV fields so that each block stays in one cell.[cite:239]
 
-### Step 7 — Use the updated prompt template
+### Step 7 — Use the prompt template
 
-Use `04_lesson_dialog_prompt_template.md` as the reusable template. The template is now aligned to the flat CSV builder rather than a nested `prompt_render` or JSON-path workflow.
+Use `04_lesson_dialog_prompt_template.md` as the reusable template. The template is aligned to the flat CSV builder rather than a nested `prompt_render`.
 
 Working rule:
 
@@ -244,11 +244,11 @@ The prompt template should be organized around these sections:
 - Output format
 - CSV-to-prompt mapping checklist
 
-The mapping should point directly from placeholders to flat CSV column names, not to JSON paths or `prompt_render` keys.
+The mapping should point directly from placeholders to flat CSV column names.
 
 ### Step 9 — Naming conventions in the builder
 
-Use human-readable instructional labels in the final prompt text, even if the CSV column names remain technical. For example, the vocabulary restriction text should refer to **Required vocabulary** and **Previously introduced vocabulary allowed for reuse**, instead of internal names like `must_use_new` and `may_reuse_previous`.[cite:292][cite:297][cite:299]
+Use human-readable instructional labels in the final prompt text, even if the CSV column names remain technical. For example, the vocabulary restriction text should refer to **Required vocabulary** and **Previously introduced vocabulary allowed for reuse**, instead of internal names like `must_use_new` and `may_reuse_previous`.
 
 Recommended wording for `must_avoid_rule`:
 
@@ -266,7 +266,7 @@ Avoid names like `required_patterns_list_or_none`, because phrases, grammar, and
 
 ### Step 10 — Generate the dialogue
 
-Use the filled lesson-specific prompt to generate one or more dialogue candidates. Save draft outputs first in `generation/`, not directly in the database.[cite:12]
+Use the filled lesson-specific prompt to generate one or more dialogue candidates. Save draft outputs first in `generation/`, not directly in the database.
 
 ### Step 11 — QA before saving
 
@@ -316,7 +316,7 @@ do update set
 
 ### Step 13 — Add dialog seeds to `config.toml`
 
-If dialogue seeds should run automatically on `db reset`, include the dialog path in `[db.seed].sql_paths`. Explicit seed paths and glob patterns are loaded in order during reset.[cite:12]
+If dialogue seeds should run automatically on `db reset`, include the dialog path in `[db.seed].sql_paths`. Explicit seed paths and glob patterns are loaded in order during reset.
 
 Recommended configuration:
 
@@ -336,7 +336,7 @@ sql_paths = [
 
 ### Step 14 — Run locally without reset
 
-For small, controlled changes during development, run seed SQL manually in the SQL editor or with `psql` instead of resetting the whole database each time. Use `db reset` only when testing full reproducibility.[cite:12]
+For small, controlled changes during development, run seed SQL manually in the SQL editor or with `psql` instead of resetting the whole database each time. Use `db reset` only when testing full reproducibility.
 
 Practical rule:
 

@@ -1,11 +1,15 @@
-# Lesson dialogue prompt template
+# Lesson Dialogue Prompt Template
 
 Use this template with the lesson blueprint CSV.
-Open the CSV blueprint on one side and this template on the other.
-Replace every placeholder with the value from the matching CSV column.
-For multi-line list fields, paste the full cell content as-is.
 
----
+## Instructions
+
+- Open the lesson blueprint CSV and this template side by side.
+- Replace every placeholder with the value from the matching CSV column.
+- For multi-line list fields, paste the complete cell content unchanged.
+- Replace every placeholder before generation.
+
+## Role
 
 You are generating Thai A1 curriculum dialogue content.
 
@@ -13,39 +17,67 @@ You are generating Thai A1 curriculum dialogue content.
 
 Create the dialogue for lesson {{lesson_key}}.
 
-## Lesson goal
+## Curriculum Priority Order
 
-This is a {{cefr_level}} dialogue lesson.
-Lesson title: {{lesson_title}}
-Lesson subtitle: {{subtitle}}
-Learning focus: {{learning_focus}}
+Apply these priorities in order:
+
+1. Curriculum accuracy
+2. Vocabulary control
+3. Pattern visibility
+4. Naturalness
+
+## Pedagogical Preference
+
+- The dialogue exists to teach the curriculum content, not to simulate realistic conversation.
+- For early A1 lessons, prioritize clarity, pattern visibility, and learnability over conversational realism.
+- Prefer pedagogical clarity over conversational naturalness when the two conflict.
+- Keep the dialogue tightly aligned with the lesson goal and curriculum scope.
+- When multiple valid dialogues are possible, choose the version that introduces the fewest additional Thai words.
+
+## Lesson Goal
+
+This is a {{cefr_level}} dialogue lesson.  
+Lesson title: {{lesson_title}}  
+Lesson subtitle: {{subtitle}}  
+Learning focus: {{learning_focus}}  
 Scene summary: {{scene_summary}}
 
-## Curriculum core
+## Curriculum Core
 
 Use only the lesson content below as the teaching core.
 
-Required vocabulary:
+### Required Vocabulary
+
 {{required_vocabulary_list}}
 
-Required phrases:
+### Required Phrases
+
 {{required_phrases_list}}
 
-Required grammar:
+### Required Grammar
+
 {{required_grammar_list}}
 
-Patterns:
-{{required_patterns_list_or_none}}
+### Patterns
 
-Previously introduced vocabulary allowed for reuse:
+{{required_patterns_list}}
+
+### Previously Introduced Vocabulary Allowed for Reuse
+
 {{may_reuse_previous_list}}
 
-Vocabulary restriction:
-{{must_avoid_rule}}
+### Vocabulary Restriction
 
-## Continuity context
+Only use vocabulary from:
 
-Speaker A:
+- Required vocabulary
+- Previously introduced vocabulary allowed for reuse
+
+Do not introduce additional vocabulary unless it is extremely basic and unavoidable for natural Thai.
+
+## Continuity Context
+
+### Speaker A
 
 - Name: {{speaker_a_name}}
 - Thai script name: {{speaker_a_name_thai}}
@@ -57,7 +89,7 @@ Speaker A:
 - Default usage:
   {{speaker_a_default_usage}}
 
-Speaker B:
+### Speaker B
 
 - Name: {{speaker_b_name}}
 - Thai script name: {{speaker_b_name_thai}}
@@ -69,28 +101,32 @@ Speaker B:
 - Default usage:
   {{speaker_b_default_usage}}
 
-Relationship context:
+## Relationship Context
 
 - Start state: {{start_state}}
 - Current stage: {{current_stage}}
 - Function summary: {{function_summary}}
-- Allowed progression:
-  {{allowed_progression}}
 
-Relationship rules:
+### Allowed Progression
+
+{{allowed_progression}}
+
+### Relationship Rules
+
 {{relationship_rules_list}}
 
-## Dialogue design
+## Dialogue Design
 
 - Scene type: {{scene_type}}
 - Suggested location: {{suggested_location}}
 - Allowed register: {{allowed_register}}
 - Estimated line count: {{estimated_line_count}}
 
-Constraints:
+### Constraints
+
 {{dialogue_constraints_list}}
 
-## Quality rules
+## Quality Rules
 
 - Stay within CEFR {{cefr_level}}.
 - Keep the dialogue short and beginner-safe.
@@ -99,19 +135,50 @@ Constraints:
 - Keep the Thai natural but simple.
 - Respect speaker characterization and relationship rules.
 - Do not introduce important new grammar outside lesson scope.
-- Do not introduce romance, intimacy, or inappropriate familiarity in early lessons unless explicitly allowed.
+- Do not introduce romance, intimacy, or inappropriate familiarity unless explicitly allowed.
+- Do not add scene details that are not supported by the lesson blueprint.
 
-## Output format
+## Dialogue Validation
 
-Return exactly in this order:
+Before producing the dialogue, verify that:
+
+- Every required phrase appears at least once.
+- Every required grammar point appears at least once.
+- Every required vocabulary item appears at least once, unless it is already contained inside a required phrase.
+- The lesson goal is fully achieved.
+- No prohibited vocabulary has been introduced unnecessarily.
+- The dialogue follows the character roles and relationship rules.
+- The dialogue is beginner-safe and stays within the target line count.
+- Required phrases are not repeated unnecessarily.
+
+## Output Format
+
+Use these section headings exactly, in this order:
 
 1. Title
-2. Register
-3. Thai dialogue
-4. Paiboon transliteration
-5. English translation
+2. Subtitle
+3. Learning focus
+4. Scene summary
+5. Register
+6. Thai dialogue
+7. Paiboon transliteration
+8. English translation
 
----
+Return exactly these sections and no additional sections.
+
+## Output Rules
+
+- Title must exactly match the lesson title.
+- Subtitle must exactly match the lesson subtitle.
+- Learning focus must exactly match the lesson learning focus.
+- Scene summary must exactly match the lesson scene summary.
+- Register must exactly match the register specified in Dialogue Design.
+- Thai dialogue must contain speaker labels using the character names.
+- Paiboon transliteration must preserve line order exactly.
+- English translation must preserve line order exactly.
+- Keep the dialogue as short as possible while satisfying all lesson requirements.
+- Do not explain your reasoning.
+- Do not add notes, commentary, metadata, or extra sections.
 
 # CSV -> prompt mapping checklist
 

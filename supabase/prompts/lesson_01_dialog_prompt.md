@@ -131,20 +131,26 @@ Return exactly:
 4. Paiboon transliteration
 5. English translation -->
 
-# Lesson dialogue prompt template
-
-Use this template with the lesson blueprint CSV.
-Open the CSV blueprint on one side and this template on the other.
-Replace every placeholder with the value from the matching CSV column.
-For multi-line list fields, paste the full cell content as-is.
-
----
-
 You are generating Thai A1 curriculum dialogue content.
 
 ## Task
 
 Create the dialogue for lesson a1-dialog-01.
+
+## Curriculum priority order
+
+1. Curriculum accuracy
+2. Vocabulary control
+3. Pattern visibility
+4. Naturalness
+
+## Pedagogical preference
+
+- The dialogue exists to teach the curriculum content, not to simulate realistic conversation.
+- For early A1 lessons, prioritize clarity, pattern visibility, and learnability over conversational realism.
+- Prefer pedagogical clarity over conversational naturalness when the two conflict.
+- Keep the dialogue tightly aligned with the lesson goal and curriculum scope.
+- When multiple valid dialogues are possible, choose the version that introduces the fewest additional Thai words.
 
 ## Lesson goal
 
@@ -183,75 +189,140 @@ Previously introduced vocabulary allowed for reuse:
 none
 
 Vocabulary restriction:
-Do not introduce vocabulary outside must_use_new and may_reuse_previous unless extremely basic and unavoidable for natural Thai
+Only use vocabulary from Required vocabulary and Previously introduced vocabulary allowed for reuse. Do not introduce additional vocabulary unless it is extremely basic and unavoidable for natural Thai.
 
 ## Continuity context
 
 Speaker A:
 
-- Name: {{speaker_a_name}}
-- Thai script name: {{speaker_a_name_thai}}
-- Character key: {{speaker_a_key}}
-- Role summary: {{speaker_a_role_summary}}
-- Age impression: {{speaker_a_age_impression}}
+- Name: Mali
+- Thai script name: มะลิ
+- Character key: mali
+- Role summary: Adult woman with a polished, professional-adjacent presence; organized and polite.
+- Age impression: Adult
 - Default tone:
-  {{speaker_a_default_tone}}
+  - calm
+  - polite
+  - organized
+  - mature
+
 - Default usage:
-  {{speaker_a_default_usage}}
+  - workplace adjacent scenes
+  - cafe scenes
+  - shopping
+  - scheduling
+  - introductions
 
 Speaker B:
 
-- Name: {{speaker_b_name}}
-- Thai script name: {{speaker_b_name_thai}}
-- Character key: {{speaker_b_key}}
-- Role summary: {{speaker_b_role_summary}}
-- Age impression: {{speaker_b_age_impression}}
+- Name: Narin
+- Thai script name: นริน
+- Character key: narin
+- Role summary: Central anchor character; calm, socially capable, dependable, connector between groups.
+- Age impression: adult
 - Default tone:
-  {{speaker_b_default_tone}}
+  - calm
+  - approachable
+  - socially_confident
+  - believable
 - Default usage:
-  {{speaker_b_default_usage}}
+  - first_meetings
+  - practical_daily_scenes
+  - bridge_between_character_clusters,
 
 Relationship context:
 
-- Start state: {{start_state}}
-- Current stage: {{current_stage}}
-- Function summary: {{function_summary}}
+- Start state: first meeting
+- Current stage: early
+- Function summary: Opening introductions and polite small talk.
 - Allowed progression:
-  {{allowed_progression}}
+- acquaintance
+- comfortable contact
+- close bond or subtle romantic potential
+
+Allowed progression
+
+- acquaintance
+- comfortable_contact
+- close bond or subtle romantic potential
 
 Relationship rules:
-{{relationship_rules_list}}
+
+- lesson 1 can start here: This pair may begin the curriculum as a first meeting in greetings and introductions.
+- keep growth gradual: Do not move this pair too quickly into intimacy; let familiarity develop over multiple lessons.
+- no fast romance: Romantic potential must remain subtle and should not appear in early A1 lessons.
 
 ## Dialogue design
 
-- Scene type: {{scene_type}}
-- Suggested location: {{suggested_location}}
-- Allowed register: {{allowed_register}}
-- Estimated line count: {{estimated_line_count}}
+- Scene type: First meeting
+- Suggested location: quiet everyday setting
+- Allowed register: formal polite
+- Estimated line count: 6 - 8 lines
 
 Constraints:
-{{dialogue_constraints_list}}
+
+- short lines only
+- one communicative move per line
+- beginner-safe Thai only
+- use polite particles consistently
+- no flirting or intimacy
+- no important new grammar outside lesson scope
+- Mali uses ฉัน
+- Narin uses ผม"
 
 ## Quality rules
 
-- Stay within CEFR {{cefr_level}}.
+- Stay within CEFR A1.
 - Keep the dialogue short and beginner-safe.
 - Use short, clear lines.
 - Use one communicative move per line.
 - Keep the Thai natural but simple.
 - Respect speaker characterization and relationship rules.
 - Do not introduce important new grammar outside lesson scope.
-- Do not introduce romance, intimacy, or inappropriate familiarity in early lessons unless explicitly allowed.
+- Do not introduce romance, intimacy, or inappropriate familiarity unless explicitly allowed.
+- Do not add scene details that are not supported by the lesson blueprint.
+
+## Dialogue validation
+
+Before producing the dialogue, verify that:
+
+- Every required phrase appears at least once.
+- Every required grammar point appears at least once.
+- Every required vocabulary item appears at least once, unless it is already contained inside a required phrase.
+- The lesson goal is fully achieved.
+- No prohibited vocabulary has been introduced unnecessarily.
+- The dialogue follows the character roles and relationship rules.
+- The dialogue is beginner-safe and stays within the target line count.
+- Required phrases are not repeated unnecessarily.
 
 ## Output format
 
-Return exactly in this order:
+Use these section headings exactly, in this order:
 
 1. Title
-2. Register
-3. Thai dialogue
-4. Paiboon transliteration
-5. English translation
+2. Subtitle
+3. Learning focus
+4. Scene summary
+5. Register
+6. Thai dialogue
+7. Paiboon transliteration
+8. English translation
+
+Return exactly these sections and no additional sections.
+
+## Output rules
+
+- Title must be the lesson title exactly.
+- Subtitle must be the lesson subtitle exactly.
+- Learning focus must be the lesson learning focus exactly.
+- Scene summary must be the lesson scene summary exactly.
+- Register must be the value from Dialogue design exactly.
+- Thai dialogue must contain speaker labels using the character names.
+- Paiboon transliteration must preserve line order exactly.
+- English translation must preserve line order exactly.
+- Keep the dialogue as short as possible while still satisfying all lesson requirements.
+- Do not explain your reasoning.
+- Do not add notes, commentary, or metadata outside the required output.
 
 ---
 

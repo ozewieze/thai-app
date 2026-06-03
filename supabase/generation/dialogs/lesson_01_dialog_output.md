@@ -1,10 +1,22 @@
 Title
 
-Dialog 1 — Greetings and introductions
+Dialog 1
+
+Subtitle
+
+Greetings and introductions
+
+Learning focus
+
+Say hello, ask someone's name, say your own name, and say nice to meet you.
+
+Scene summary
+
+A first, polite introduction between Mali and Narin in an everyday setting.
 
 Register
 
-Formal polite
+formal polite
 
 Thai dialogue
 
