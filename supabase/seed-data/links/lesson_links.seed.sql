@@ -105,85 +105,33 @@ values
 insert into public.phrase_status (
   phrase_id,
   status,
-  first_lesson_id,
-  last_seen_lesson_id
+  first_lesson_id
 )
 values
   (
     (select id from public.phrase_master where phrase_key = 'self_introduction_name'),
     'introduced_core',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01'),
     (select id from public.lessons where lesson_key = 'a1-dialog-01')
   ),
   (
     (select id from public.phrase_master where phrase_key = 'yin_di_thi_dai_ru_jak'),
     'introduced_core',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01'),
     (select id from public.lessons where lesson_key = 'a1-dialog-01')
   );
 
 insert into public.grammar_status (
   grammar_id,
   status,
-  first_lesson_id,
-  last_seen_lesson_id
+  first_lesson_id
 )
 values
   (
     (select id from public.grammar_master where concept_key = 'polite_particles_khrab_kha'),
     'introduced_core',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01'),
     (select id from public.lessons where lesson_key = 'a1-dialog-01')
   );
 
-insert into public.vocabulary_status (
-  vocabulary_id,
-  status,
-  first_exposure_type,
-  first_lesson_id,
-  last_seen_lesson_id
-)
-values
-  (
-    (select id from public.vocabulary_master where source_key = 'hello' limit 1),
-    'introduced_core',
-    'core',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  ),
-  (
-    (select id from public.vocabulary_master where source_key = 'you' limit 1),
-    'introduced_core',
-    'core',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  ),
-  (
-    (select id from public.vocabulary_master where source_key = 'name' limit 1),
-    'introduced_core',
-    'core',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  ),
-  (
-    (select id from public.vocabulary_master where source_key = 'what' limit 1),
-    'introduced_core',
-    'core',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  ),
-  (
-    (select id from public.vocabulary_master where source_key = 'i' limit 1),
-    'introduced_core',
-    'core',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  ),
-  (
-    (select id from public.vocabulary_master where source_key = 'i_male' limit 1),
-    'introduced_core',
-    'core',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  );
+-- vocabulary_status wordt automatisch bijgewerkt door de trigger
+-- trg_lesson_vocabulary_state_machine op het moment dat lesson_vocabulary
+-- wordt geseed. Expliciete inserts hier zijn niet langer nodig.
 
