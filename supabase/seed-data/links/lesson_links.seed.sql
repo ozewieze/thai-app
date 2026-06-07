@@ -1,5 +1,7 @@
 -- Auto-generated lesson-to-master links. Seeded after lessons, vocabulary, grammar, and patterns.
 
+-- TODO deze seed mag verwijderd worden zodra de state machine is geïmplementeerd en er een geautomatiseerde manier is om deze links te genereren op basis van de status van de lesinhoud. De huidige inhoud van deze seed is handmatig gemaakt op basis van de eerste les, maar in de toekomst zou dit automatisch moeten gebeuren op basis van de status van de inhoud in de lessen.
+
 insert into public.lesson_grammar (
   lesson_id,
   grammar_id,
