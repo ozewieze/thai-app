@@ -110,14 +110,15 @@ insert into public.phrase_status (
 values
   (
     (select id from public.phrase_master where phrase_key = 'self_introduction_name'),
-    'introduced_core',
+    'introduced',
     (select id from public.lessons where lesson_key = 'a1-dialog-01')
   ),
   (
     (select id from public.phrase_master where phrase_key = 'yin_di_thi_dai_ru_jak'),
-    'introduced_core',
+    'introduced',
     (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  );
+  )
+on conflict (phrase_id) do nothing;
 
 insert into public.grammar_status (
   grammar_id,
@@ -127,9 +128,10 @@ insert into public.grammar_status (
 values
   (
     (select id from public.grammar_master where concept_key = 'polite_particles_khrab_kha'),
-    'introduced_core',
+    'introduced',
     (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  );
+  )
+on conflict (grammar_id) do nothing;
 
 -- vocabulary_status wordt automatisch bijgewerkt door de trigger
 -- trg_lesson_vocabulary_state_machine op het moment dat lesson_vocabulary

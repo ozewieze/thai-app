@@ -57,7 +57,7 @@ This is the output layer:
 
 Use `dialogs` for the final approved lesson dialogue. Use `revisions` only for revision output or revision summaries, not as version control for multiple draft dialogues.
 
-## Updated folder structure
+## Folder structure
 
 ```text
 supabase/
@@ -105,11 +105,11 @@ supabase/
 | `generation/` | Model outputs, review notes, temporary drafts                          |
 | `seed-data/`  | SQL that inserts or updates actual database content                    |
 
-## Updated planning model
+## Planning model
 
-The main planning change is that the lesson builder no longer has to be used only as a nested JSON object. A flat builder query that returns one row with named columns is now the default practical planning format for manual prompt filling, because it exports cleanly to CSV and supports multi-line cells for vocabulary, grammar, phrases, rules, and constraints.
+A flat builder query that returns one row with named columns is the default practical planning format for manual prompt filling, it exports cleanly to CSV and supports multi-line cells for vocabulary, grammar, phrases, rules, and constraints.
 
-That means there are now two valid planning outputs:
+That means there are two valid planning outputs:
 
 - a JSON blueprint, useful for structure inspection, QA, or machine-readable planning objects built with `jsonb_build_object()`
 - a flat builder result, useful for CSV export and manual prompt filling in VS Code split screen
