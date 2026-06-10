@@ -1,10 +1,8 @@
 -- Auto-generated lesson-to-master links. Seeded after lessons, vocabulary, grammar, and patterns.
-
--- TODO deze seed mag verwijderd worden zodra de state machine is geïmplementeerd en er een geautomatiseerde manier is om deze links te genereren op basis van de status van de lesinhoud. De huidige inhoud van deze seed is handmatig gemaakt op basis van de eerste les, maar in de toekomst zou dit automatisch moeten gebeuren op basis van de status van de inhoud in de lessen.
-
 insert into public.lesson_grammar (
   lesson_id,
   grammar_id,
+  role,
   requires_explanation,
   display_order,
   notes
@@ -12,6 +10,7 @@ insert into public.lesson_grammar (
 values (
   (select id from public.lessons where lesson_key = 'a1-dialog-01'),
   (select id from public.grammar_master where concept_key = 'polite_particles_khrab_kha'),
+  'target',
   true,
   1,
   'Polite sentence-final particles used in first-meeting introductions.'
@@ -102,38 +101,8 @@ values
     'Polite fixed expression used when meeting someone for the first time.'
   );
 
-insert into public.phrase_status (
-  phrase_id,
-  status,
-  first_lesson_id
-)
-values
-  (
-    (select id from public.phrase_master where phrase_key = 'self_introduction_name'),
-    'introduced',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  ),
-  (
-    (select id from public.phrase_master where phrase_key = 'yin_di_thi_dai_ru_jak'),
-    'introduced',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  )
-on conflict (phrase_id) do nothing;
-
-insert into public.grammar_status (
-  grammar_id,
-  status,
-  first_lesson_id
-)
-values
-  (
-    (select id from public.grammar_master where concept_key = 'polite_particles_khrab_kha'),
-    'introduced',
-    (select id from public.lessons where lesson_key = 'a1-dialog-01')
-  )
-on conflict (grammar_id) do nothing;
-
--- vocabulary_status wordt automatisch bijgewerkt door de trigger
--- trg_lesson_vocabulary_state_machine op het moment dat lesson_vocabulary
--- wordt geseed. Expliciete inserts hier zijn niet langer nodig.
+-- vocabulary_status, phrase_status en grammar_status worden automatisch
+-- bijgewerkt door de respectieve state machine triggers op het moment dat
+-- lesson_vocabulary, lesson_phrase en lesson_grammar worden geseed.
+-- Expliciete inserts hier zijn niet langer nodig.
 

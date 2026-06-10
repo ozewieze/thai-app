@@ -69,7 +69,7 @@ sql_paths = [
   "./seed-data/master/grammar_master.seed.sql",
   "./seed-data/master/pattern_master.seed.sql",
   "./seed-data/master/phrase_master.seed.sql",
-  "./seed-data/links/lesson_links.seed.sql",
+  "./seed-data/links/*.sql",
   "./seed-data/dialogs/*.sql"
 ]
 
