@@ -25,7 +25,7 @@ This is a A1 dialogue lesson.
 Lesson title: Dialog 1
 Lesson subtitle: Greetings and introductions
 Learning focus: Say hello, ask someone's name, say your own name, and say nice to meet you.
-Scene summary: A first, polite introduction between Mali and Narin in an everyday setting.
+Scene summary: A quiet public area in Bangkok. Mali and Narin happen to meet for the first time while waiting in the same place. They begin a polite introduction.
 
 ## Curriculum core
 

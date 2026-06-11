@@ -1,3 +1,3 @@
 select *
 from grammar_master
-where concept_key ilike '%ค่ะ%';
+where concept_key ilike '%ไหม%';

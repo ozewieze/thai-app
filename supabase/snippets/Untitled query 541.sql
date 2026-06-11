@@ -13,7 +13,7 @@ insert into public.dialogs (
   'Dialog 1',
   'Greetings and introductions',
   'Say hello, ask someone''s name, say your own name, and say nice to meet you.',
-  'A first, polite introduction between Mali and Narin in an everyday setting.',
+  'A quiet public area in Bangkok. Mali and Narin happen to meet for the first time while waiting in the same place. They begin a polite introduction.',
 'polite',
   'มะลิ: สวัสดีค่ะ
 นริน: สวัสดีครับ
