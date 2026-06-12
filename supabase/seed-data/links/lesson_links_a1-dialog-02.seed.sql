@@ -60,11 +60,11 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
-    (select id from public.vocabulary_master where source_key = 'pleased_glad' limit 1),
+    (select id from public.vocabulary_master where source_key = 'can' limit 1),
     'target',
     true,
     5,
-    'Expresses willingness or gladness; appears in social invitations.'
+    'Modal verb for ability, possibility, and permission; also marks completed actions.'
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),

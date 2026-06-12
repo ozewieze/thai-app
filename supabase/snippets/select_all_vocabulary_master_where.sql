@@ -1,3 +1,3 @@
 select *
 from vocabulary_master
-where thai_script ilike '%ด้วยกัน%';
+where thai_script ilike '%ได้%';
