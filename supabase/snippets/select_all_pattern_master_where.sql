@@ -1,3 +1,3 @@
 select *
 from pattern_master
-where pattern_formula ilike '%ครับ%';
+where pattern_formula ilike '%จะ%';

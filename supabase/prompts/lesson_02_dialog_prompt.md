@@ -52,13 +52,8 @@ Use only the lesson content below as the teaching core.
 - ไป (bpai) = go
 - ดื่ม (dʉ̀ʉm) = drink
 - กาแฟ (gaa-faae) = coffee
-- ยินดี (yin-dii) = pleased
-- ด้วยกัน (dûai-gan) = together","- คุณ (khun) = you
-- ฉัน (chǎn) = I
-- ชื่อ (chʉ̂ʉ) = name
-- ผม (phǒm) = I
-- สวัสดี (sà-wàt-dii) = hello
-- อะไร (à-rai) = what
+- ได้ (dâai) = can
+- ด้วยกัน (dûai-gan) = together
 
 ### Previously Introduced Vocabulary Allowed for Reuse
 
