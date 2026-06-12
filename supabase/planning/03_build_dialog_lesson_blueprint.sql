@@ -21,64 +21,63 @@
 -- ============================================================
 
 select
-  lb.lesson_id,
+
+  -- ── Lesson goal (volgorde = prompt template §Lesson Goal) ──────────────────
   lb.lesson_key,
+  lb.cefr_level,
   lb.lesson_title,
   lb.subtitle,
-  lb.cefr_level,
-  lb.lesson_type,
-  lb.sequence_number,
-  lb.section_key,
-  lb.is_published,
-
   ds.learning_focus,
   ds.scene_summary,
-  ds.scene_type,
-  ds.suggested_location,
-  ds.allowed_register,
-  ds.estimated_line_count,
 
-  lc.relationship_pair_id,
-  lc.start_state,
-  lc.current_stage,
-  lc.function_summary,
-
-  lc.character_a_id,
-  lc.character_a_key          as speaker_a_key,
-  lc.character_a_name         as speaker_a_name,
-  lc.character_a_name_thai    as speaker_a_name_thai,
-  lc.character_a_role_summary as speaker_a_role_summary,
-  lc.character_a_age_impression as speaker_a_age_impression,
-
-  lc.character_b_id,
-  lc.character_b_key          as speaker_b_key,
-  lc.character_b_name         as speaker_b_name,
-  lc.character_b_name_thai    as speaker_b_name_thai,
-  lc.character_b_role_summary as speaker_b_role_summary,
-  lc.character_b_age_impression as speaker_b_age_impression,
-
-  -- Verplicht te gebruiken: de nieuwe target-woorden voor deze les
+  -- ── Curriculum core (volgorde = prompt template §Curriculum Core) ──────────
   coalesce(rv.required_vocabulary_list,  '- none') as required_vocabulary_list,
-
-  -- Toegelaten als vulling: alle woorden die de leerling al kent
   coalesce(av.allowed_vocabulary_list,   '- none') as allowed_vocabulary_list,
-
   coalesce(rp.required_phrases_list,     '- none') as required_phrases_list,
   coalesce(rg.required_grammar_list,     '- none') as required_grammar_list,
   coalesce(rpat.required_patterns_list,  '- none') as required_patterns_list,
 
+  -- ── Speaker A (volgorde = prompt template §Speaker A) ──────────────────────
+  lc.character_a_name           as speaker_a_name,
+  lc.character_a_name_thai      as speaker_a_name_thai,
+  lc.character_a_key            as speaker_a_key,
+  lc.character_a_role_summary   as speaker_a_role_summary,
+  lc.character_a_age_impression as speaker_a_age_impression,
   coalesce(sa.speaker_a_default_tone,    '- none') as speaker_a_default_tone,
   coalesce(sau.speaker_a_default_usage,  '- none') as speaker_a_default_usage,
+
+  -- ── Speaker B (volgorde = prompt template §Speaker B) ──────────────────────
+  lc.character_b_name           as speaker_b_name,
+  lc.character_b_name_thai      as speaker_b_name_thai,
+  lc.character_b_key            as speaker_b_key,
+  lc.character_b_role_summary   as speaker_b_role_summary,
+  lc.character_b_age_impression as speaker_b_age_impression,
   coalesce(sb.speaker_b_default_tone,    '- none') as speaker_b_default_tone,
   coalesce(sbu.speaker_b_default_usage,  '- none') as speaker_b_default_usage,
 
+  -- ── Relationship context (volgorde = prompt template §Relationship Context) ─
+  lc.start_state,
+  lc.current_stage,
+  lc.function_summary,
   coalesce(ap.allowed_progression,       '- none') as allowed_progression,
   coalesce(rr.relationship_rules_list,   '- none') as relationship_rules_list,
+
+  -- ── Dialogue design (volgorde = prompt template §Dialogue Design) ───────────
+  ds.scene_type,
+  ds.suggested_location,
+  ds.allowed_register,
+  ds.estimated_line_count,
   coalesce(dc.dialogue_constraints_list, '- none') as dialogue_constraints_list,
 
-  'Only use vocabulary from Required vocabulary and Previously introduced vocabulary. '
-  'Do not introduce additional vocabulary unless it is extremely basic and unavoidable for natural Thai.'
-    as must_avoid_rule
+  -- ── Intern / meta (niet nodig voor prompt, handig voor QA) ─────────────────
+  lb.lesson_id,
+  lb.lesson_type,
+  lb.sequence_number,
+  lb.section_key,
+  lb.is_published,
+  lc.relationship_pair_id,
+  lc.character_a_id,
+  lc.character_b_id
 
 from public.lesson_blueprint_view lb
 
@@ -210,4 +209,4 @@ left join lateral (
   ) with ordinality as t(value, ord)
 ) dc on true
 
-where lb.lesson_key = 'a1-dialog-01';
+where lb.lesson_key = 'a1-dialog-02';

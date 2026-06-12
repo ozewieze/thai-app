@@ -50,6 +50,10 @@ Use only the lesson content below as the teaching core.
 
 {{required_vocabulary_list}}
 
+### Previously Introduced Vocabulary Allowed for Reuse
+
+{{allowed_vocabulary_list}}
+
 ### Required Phrases
 
 {{required_phrases_list}}
@@ -61,10 +65,6 @@ Use only the lesson content below as the teaching core.
 ### Patterns
 
 {{required_patterns_list}}
-
-### Previously Introduced Vocabulary Allowed for Reuse
-
-{{may_reuse_previous_list}}
 
 ### Vocabulary Restriction
 
@@ -197,7 +197,7 @@ Return exactly these sections and no additional sections.
 {{required_phrases_list}} <- required_phrases_list
 {{required_grammar_list}} <- required_grammar_list
 {{required_patterns_list_or_none}} <- required_patterns_list_or_none
-{{may_reuse_previous_list}} <- may_reuse_previous_list
+{{allowed_vocabulary_list}} <- allowed_vocabulary_list
 {{must_avoid_rule}} <- must_avoid_rule
 
 ## continuity / speaker A

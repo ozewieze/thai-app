@@ -1,69 +1,74 @@
 select
-  lb.lesson_id,
+
+  -- ── Lesson goal (volgorde = prompt template §Lesson Goal) ──────────────────
   lb.lesson_key,
+  lb.cefr_level,
   lb.lesson_title,
   lb.subtitle,
-  lb.cefr_level,
-  lb.lesson_type,
-  lb.sequence_number,
-  lb.section_key,
-  lb.is_published,
-
   ds.learning_focus,
   ds.scene_summary,
+
+  -- ── Curriculum core (volgorde = prompt template §Curriculum Core) ──────────
+  coalesce(rv.required_vocabulary_list,  '- none') as required_vocabulary_list,
+  coalesce(av.allowed_vocabulary_list,   '- none') as allowed_vocabulary_list,
+  coalesce(rp.required_phrases_list,     '- none') as required_phrases_list,
+  coalesce(rg.required_grammar_list,     '- none') as required_grammar_list,
+  coalesce(rpat.required_patterns_list,  '- none') as required_patterns_list,
+
+  -- ── Speaker A (volgorde = prompt template §Speaker A) ──────────────────────
+  lc.character_a_name           as speaker_a_name,
+  lc.character_a_name_thai      as speaker_a_name_thai,
+  lc.character_a_key            as speaker_a_key,
+  lc.character_a_role_summary   as speaker_a_role_summary,
+  lc.character_a_age_impression as speaker_a_age_impression,
+  coalesce(sa.speaker_a_default_tone,    '- none') as speaker_a_default_tone,
+  coalesce(sau.speaker_a_default_usage,  '- none') as speaker_a_default_usage,
+
+  -- ── Speaker B (volgorde = prompt template §Speaker B) ──────────────────────
+  lc.character_b_name           as speaker_b_name,
+  lc.character_b_name_thai      as speaker_b_name_thai,
+  lc.character_b_key            as speaker_b_key,
+  lc.character_b_role_summary   as speaker_b_role_summary,
+  lc.character_b_age_impression as speaker_b_age_impression,
+  coalesce(sb.speaker_b_default_tone,    '- none') as speaker_b_default_tone,
+  coalesce(sbu.speaker_b_default_usage,  '- none') as speaker_b_default_usage,
+
+  -- ── Relationship context (volgorde = prompt template §Relationship Context) ─
+  lc.start_state,
+  lc.current_stage,
+  lc.function_summary,
+  coalesce(ap.allowed_progression,       '- none') as allowed_progression,
+  coalesce(rr.relationship_rules_list,   '- none') as relationship_rules_list,
+
+  -- ── Dialogue design (volgorde = prompt template §Dialogue Design) ───────────
   ds.scene_type,
   ds.suggested_location,
   ds.allowed_register,
   ds.estimated_line_count,
-
-  lc.relationship_pair_id,
-  lc.start_state,
-  lc.current_stage,
-  lc.function_summary,
-
-  lc.character_a_id,
-  lc.character_a_key as speaker_a_key,
-  lc.character_a_name as speaker_a_name,
-  lc.character_a_name_thai as speaker_a_name_thai,
-  lc.character_a_role_summary as speaker_a_role_summary,
-  lc.character_a_age_impression as speaker_a_age_impression,
-
-  lc.character_b_id,
-  lc.character_b_key as speaker_b_key,
-  lc.character_b_name as speaker_b_name,
-  lc.character_b_name_thai as speaker_b_name_thai,
-  lc.character_b_role_summary as speaker_b_role_summary,
-  lc.character_b_age_impression as speaker_b_age_impression,
-
-  coalesce(rv.required_vocabulary_list, '- none') as required_vocabulary_list,
-  coalesce(arv.allowed_review_vocabulary_list, '- none') as allowed_review_vocabulary_list,
-  coalesce(rp.required_phrases_list, '- none') as required_phrases_list,
-  coalesce(rg.required_grammar_list, '- none') as required_grammar_list,
-  coalesce(rpat.required_patterns_list, '- none') as required_patterns_list,
-
-  coalesce(sa.speaker_a_default_tone, '- none') as speaker_a_default_tone,
-  coalesce(sau.speaker_a_default_usage, '- none') as speaker_a_default_usage,
-  coalesce(sb.speaker_b_default_tone, '- none') as speaker_b_default_tone,
-  coalesce(sbu.speaker_b_default_usage, '- none') as speaker_b_default_usage,
-
-  coalesce(ap.allowed_progression, '- none') as allowed_progression,
-  coalesce(rr.relationship_rules_list, '- none') as relationship_rules_list,
   coalesce(dc.dialogue_constraints_list, '- none') as dialogue_constraints_list,
 
-  coalesce(mun.must_use_new_list, '- none') as must_use_new_list,
-  coalesce(mrp.may_reuse_previous_list, '- none') as may_reuse_previous_list,
-
-  'Only use vocabulary from Required vocabulary and Previously introduced vocabulary allowed for reuse. Do not introduce additional vocabulary unless it is extremely basic and unavoidable for natural Thai..'
-    as must_avoid_rule
+  -- ── Intern / meta (niet nodig voor prompt, handig voor QA) ─────────────────
+  lb.lesson_id,
+  lb.lesson_type,
+  lb.sequence_number,
+  lb.section_key,
+  lb.is_published,
+  lc.relationship_pair_id,
+  lc.character_a_id,
+  lc.character_b_id
 
 from public.lesson_blueprint_view lb
-join public.lesson_vocabulary_control_view lvc
-  on lvc.lesson_id = lb.lesson_id
+
+join public.lesson_available_vocabulary_view lav
+  on lav.lesson_id = lb.lesson_id
+
 join public.dialog_blueprint_specs ds
   on ds.lesson_id = lb.lesson_id
+
 join public.lesson_continuity_options_view lc
   on lc.relationship_pair_id = ds.relationship_pair_id
 
+-- Verplichte vocabulaire: de target-woorden voor deze les
 left join lateral (
   select string_agg(
     concat('- ', x->>'thai_script', ' (', x->>'paiboon', ') = ', x->>'english_gloss'),
@@ -73,15 +78,17 @@ left join lateral (
   from jsonb_array_elements(coalesce(lb.all_vocabulary, '[]'::jsonb)) x
 ) rv on true
 
+-- Toegelaten vocabulaire: alle eerder geïntroduceerde woorden (curriculum-volgorde)
 left join lateral (
   select string_agg(
     concat('- ', x->>'thai_script', ' (', x->>'paiboon', ') = ', x->>'english_gloss'),
     E'\n'
-    order by coalesce((x->>'display_order')::int, 9999), x->>'thai_script'
-  ) as allowed_review_vocabulary_list
-  from jsonb_array_elements(coalesce(lvc.linked_previous_vocabulary, '[]'::jsonb)) x
-) arv on true
+    order by coalesce((x->>'intro_sequence_number')::int, 9999), x->>'thai_script'
+  ) as allowed_vocabulary_list
+  from jsonb_array_elements(coalesce(lav.previously_introduced_vocabulary, '[]'::jsonb)) x
+) av on true
 
+-- Verplichte phrases
 left join lateral (
   select string_agg(
     concat(
@@ -101,6 +108,7 @@ left join lateral (
   from jsonb_array_elements(coalesce(lb.all_phrases, '[]'::jsonb)) x
 ) rp on true
 
+-- Verplichte grammatica
 left join lateral (
   select string_agg(
     concat(
@@ -118,6 +126,7 @@ left join lateral (
   from jsonb_array_elements(coalesce(lb.all_grammar, '[]'::jsonb)) x
 ) rg on true
 
+-- Verplichte patronen
 left join lateral (
   select string_agg(
     concat('- ', coalesce(x->>'title', x->>'pattern_key', 'pattern')),
@@ -125,8 +134,9 @@ left join lateral (
     order by coalesce((x->>'display_order')::int, 9999), coalesce(x->>'title', x->>'pattern_key', '')
   ) as required_patterns_list
   from jsonb_array_elements(coalesce(lb.all_patterns, '[]'::jsonb)) x
-) as rpat(required_patterns_list) on true
+) rpat on true
 
+-- Karaktereigenschappen
 left join lateral (
   select string_agg(concat('- ', value), E'\n' order by ord) as speaker_a_default_tone
   from unnest(coalesce(lc.character_a_default_tone, array[]::text[])) with ordinality as t(value, ord)
@@ -147,6 +157,7 @@ left join lateral (
   from unnest(coalesce(lc.character_b_default_usage, array[]::text[])) with ordinality as t(value, ord)
 ) sbu on true
 
+-- Relatie-informatie
 left join lateral (
   select string_agg(concat('- ', value), E'\n' order by ord) as allowed_progression
   from unnest(coalesce(lc.allowed_progression, array[]::text[])) with ordinality as t(value, ord)
@@ -161,6 +172,7 @@ left join lateral (
   from jsonb_array_elements(coalesce(lc.relationship_rules, '[]'::jsonb)) with ordinality as t(x, ord)
 ) rr on true
 
+-- Dialoogbeperkingen (vaste lijst + extra constraints uit dialog_blueprint_specs)
 left join lateral (
   select string_agg(concat('- ', value), E'\n' order by ord) as dialogue_constraints_list
   from jsonb_array_elements_text(
@@ -175,22 +187,4 @@ left join lateral (
   ) with ordinality as t(value, ord)
 ) dc on true
 
-left join lateral (
-  select string_agg(
-    concat('- ', x->>'thai_script', ' (', x->>'paiboon', ') = ', x->>'english_gloss'),
-    E'\n'
-    order by coalesce((x->>'display_order')::int, 9999), x->>'thai_script'
-  ) as must_use_new_list
-  from jsonb_array_elements(coalesce(lvc.new_vocabulary, '[]'::jsonb)) x
-) mun on true
-
-left join lateral (
-  select string_agg(
-    concat('- ', x->>'thai_script', ' (', x->>'paiboon', ') = ', x->>'english_gloss'),
-    E'\n'
-    order by coalesce((x->>'display_order')::int, 9999), x->>'thai_script'
-  ) as may_reuse_previous_list
-  from jsonb_array_elements(coalesce(lvc.linked_previous_vocabulary, '[]'::jsonb)) x
-) mrp on true
-
-where lb.lesson_key = 'a1-dialog-01';
+where lb.lesson_key = 'a1-dialog-02';

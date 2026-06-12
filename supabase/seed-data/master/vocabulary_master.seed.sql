@@ -506,4 +506,7 @@ insert into public.vocabulary_master (source_key, cefr_level, thai_script, paibo
 ('open_book', 'A1', 'เปิดหนังสือ', 'bpə̀ət-nǎng-sʉ̌ʉ', 'open book', 'verb', 'formal', 'school', false, NULL, 'ai_a1_master_v3'),
 ('close_book', 'A1', 'ปิดหนังสือ', 'bpìt-nǎng-sʉ̌ʉ', 'close book', 'verb', 'formal', 'school', false, NULL, 'ai_a1_master_v3'),
 ('pleased_glad', 'A1', 'ยินดี', 'yin-dii', 'pleased', 'adjective', 'formal', 'greetings', true, 'used in polite expressions such as ยินดีที่ได้รู้จัก and can mean glad pleased or willing depending on context', 'manual_dialogue_seed_v1'),
-('know_meet', 'A1', 'รู้จัก', 'rúu-jàk', 'know', 'verb', 'formal', 'people', true, 'often means know be acquainted with or meet someone in introduction patterns such as ยินดีที่ได้รู้จัก', 'manual_dialogue_seed_v1');
+('know_meet', 'A1', 'รู้จัก', 'rúu-jàk', 'know', 'verb', 'formal', 'people', true, 'often means know be acquainted with or meet someone in introduction patterns such as ยินดีที่ได้รู้จัก', 'manual_dialogue_seed_v1'),
+('together', 'A1', 'ด้วยกัน', 'dûai-gan', 'together', 'adverb', 'formal', 'social', false, NULL, 'ai_a1_master_v3'),
+('also', 'A1', 'ด้วย', 'dûai', 'also / too', 'particle', 'formal', 'essentials', true, 'placed at the end of a sentence to mean also or too; also means with or by means of', 'ai_a1_master_v3'),
+('each_other', 'A1', 'กัน', 'gan', 'each other', 'particle', 'formal', 'social', true, 'marks mutual or shared action; also appears in ด้วยกัน (together) and กันเอง (among ourselves)', 'ai_a1_master_v3');

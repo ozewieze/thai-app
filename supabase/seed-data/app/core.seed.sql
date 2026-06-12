@@ -31,12 +31,12 @@ values
   ),
   (
     'a1-dialog-02',
-    'how-are-you',
+    'where-are-you-going',
     'A1',
     'dialogs',
     'dialog',
     'Dialog 2',
-    'How are you?',
+    'Where are you going?',
     2,
     'free',
     true

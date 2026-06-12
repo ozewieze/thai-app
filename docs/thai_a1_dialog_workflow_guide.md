@@ -169,7 +169,7 @@ Useful fields in `character_profiles` include:
 - `default_tone`
 - `default_usage`
 
-`default_tone` alone is too thin as a continuity signal; role summary, age impression, and usage context help keep generated dialogue voice and interaction more consistent.[cite:12]
+`default_tone` alone is too thin as a continuity signal; role summary, age impression, and usage context help keep generated dialogue voice and interaction more consistent.
 
 ### Step 4 — Maintain `lesson_continuity_options_view`
 
@@ -217,7 +217,7 @@ Export the one-row builder result as a CSV file into `planning/blueprints/`, for
 
 - `planning/blueprints/lesson_02_dialog_blueprint.csv`
 
-This CSV acts as an intermediate working layer between SQL output and the prompt. Multiline fields such as vocabulary, phrases, grammar, rules, or constraints should remain quoted CSV fields so that each block stays in one cell.[cite:239]
+This CSV acts as an intermediate working layer between SQL output and the prompt. Multiline fields such as vocabulary, phrases, grammar, rules, or constraints should remain quoted CSV fields so that each block stays in one cell.
 
 ### Step 7 — Use the prompt template
 
