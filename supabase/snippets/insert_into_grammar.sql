@@ -1,0 +1,2 @@
+INSERT INTO public.grammar_master (concept_key, cefr_level, title, short_explanation, concept_type, register, source_note) VALUES
+('adjective_after_noun', 'A1', 'Adjective after noun', 'In Thai adjectives follow the noun they describe using the pattern Noun + Adjective in both simple descriptions and conversational sentences.', 'modifier_pattern', 'formal', 'ai_a1_grammar_master_v3_final');

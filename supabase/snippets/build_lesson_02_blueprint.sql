@@ -187,4 +187,4 @@ left join lateral (
   ) with ordinality as t(value, ord)
 ) dc on true
 
-where lb.lesson_key = 'a1-dialog-02';
+where lb.lesson_key = 'a1-dialog-03';

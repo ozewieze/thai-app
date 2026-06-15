@@ -99,12 +99,12 @@ supabase/
 
 ### Wat hoort waar
 
-| Map           | Gebruik                                                                |
-| ------------- | ---------------------------------------------------------------------- |
-| `planning/`   | Builder-SQL, debug-queries, CSV-blueprints, prompttemplate             |
-| `prompts/`    | Ingevulde, lesspecifieke prompts                                       |
-| `generation/` | Modeloutputs, reviewnotities, tijdelijke drafts                        |
-| `seed-data/`  | SQL die echte database-inhoud insert of updatet                        |
+| Map           | Gebruik                                                    |
+| ------------- | ---------------------------------------------------------- |
+| `planning/`   | Builder-SQL, debug-queries, CSV-blueprints, prompttemplate |
+| `prompts/`    | Ingevulde, lesspecifieke prompts                           |
+| `generation/` | Modeloutputs, reviewnotities, tijdelijke drafts            |
+| `seed-data/`  | SQL die echte database-inhoud insert of updatet            |
 
 ## Debug-queries vs. builder-query
 
@@ -150,7 +150,11 @@ Maak `seed-data/links/lesson_links_a1-dialog-XX.seed.sql` aan met inserts voor:
 - `lesson_pattern` (indien van toepassing)
 - `lesson_phrase` (indien van toepassing)
 
-Voer de seed uit. De state machine-triggers updaten `vocabulary_status` en `grammar_status` automatisch.
+Voer de seed uit met het commando:
+
+psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -f supabase/seed-data/links/lesson_links_a1-dialog-02.seed.sql
+
+De state machine-triggers updaten `vocabulary_status` en `grammar_status` automatisch.
 
 ### Stap 4 — Maak `dialog_blueprint_specs` aan
 

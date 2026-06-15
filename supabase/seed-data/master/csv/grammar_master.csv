@@ -82,3 +82,4 @@ clock_time_basic,A1,Basic clock time expressions,Use time expressions with numbe
 time_sequence_before_after,A1,Before and after with ก่อน and หลัง,Use ก่อน and หลัง to place events in sequence.,time_expression,formal,ai_a1_grammar_master_v3_final
 time_duration_nan,A1,Duration with นาน,Use นาน to talk about how long something lasts.,time_expression,formal,ai_a1_grammar_master_v3_final
 frequency_basic,A1,Basic frequency expressions,Use common words like บ่อย and every day to say how often something happens.,time_expression,formal,ai_a1_grammar_master_v3_final
+adjective_after_noun,A1,Adjective after noun,In Thai adjectives follow the noun they describe using the pattern Noun + Adjective in both simple descriptions and conversational sentences.,modifier_pattern,formal,ai_a1_grammar_master_v3_final

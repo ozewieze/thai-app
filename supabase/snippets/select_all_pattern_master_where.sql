@@ -1,3 +1,2 @@
-select *
-from pattern_master
-where pattern_formula ilike '%จะ%';
+select * from pattern_master
+where pattern_formula ilike '%จะ%'

@@ -43,12 +43,12 @@ values
   ),
   (
     'a1-dialog-03',
-    'where-are-you',
+    'at-the-café',
     'A1',
     'dialogs',
     'dialog',
     'Dialog 3',
-    'Where are you?',
+    'At the café',
     3,
     'free',
     true

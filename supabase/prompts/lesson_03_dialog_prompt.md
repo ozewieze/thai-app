@@ -15,7 +15,7 @@ You are generating Thai A1 curriculum dialogue content.
 
 ## Task
 
-Create the dialogue for lesson {{lesson_key}}.
+Create the dialogue for lesson a1-dialog-03.
 
 ## Curriculum Priority Order
 
@@ -36,11 +36,11 @@ Apply these priorities in order:
 
 ## Lesson Goal
 
-This is an {{cefr_level}} dialogue lesson.  
-Lesson title: {{lesson_title}}  
-Lesson subtitle: {{subtitle}}  
-Learning focus: {{learning_focus}}  
-Scene summary: {{scene_summary}}
+This is an A1 dialogue lesson.  
+Lesson title: Dialog 3
+Lesson subtitle: At the café  
+Learning focus: Ask what someone will drink and talk about drink choices.  
+Scene summary: Mali and Narin are seated at a café after deciding to have coffee together. They talk about what they will drink.
 
 ## Curriculum Core
 
@@ -48,23 +48,37 @@ Use only the lesson content below as the teaching core.
 
 ### Required Vocabulary
 
-{{required_vocabulary_list}}
+ชา (chaa) = tea
+ร้อน (rɔ́ɔn) = hot
+เย็น (yen) = cool
+หรือ (rʉ̌ʉ) = or
 
 ### Previously Introduced Vocabulary Allowed for Reuse
 
-{{allowed_vocabulary_list}}
+คุณ (khun) = you
+ฉัน (chǎn) = I
+ชื่อ (chʉ̂ʉ) = name
+ผม (phǒm) = I
+สวัสดี (sà-wàt-dii) = hello
+อะไร (à-rai) = what
+กาแฟ (gaa-faae) = coffee
+ด้วยกัน (dûai-gan) = together
+ดื่ม (dʉ̀ʉm) = drink
+ได้ (dâai) = can
+ที่ไหน (thîi-nǎi) = where
+ไป (bpai) = go
 
 ### Required Phrases
 
-{{required_phrases_list}}
+- none
 
 ### Required Grammar
 
-{{required_grammar_list}}
+- Adjective after noun: In Thai adjectives follow the noun they describe using the pattern Noun + Adjective in both simple descriptions and conversational sentences.
 
 ### Patterns
 
-{{required_patterns_list}}
+- Will do
 
 ### Vocabulary Restriction
 
@@ -79,52 +93,75 @@ Do not introduce additional vocabulary unless it is extremely basic and unavoida
 
 ### Speaker A
 
-- Name: {{speaker_a_name}}
-- Thai script name: {{speaker_a_name_thai}}
-- Character key: {{speaker_a_key}}
-- Role summary: {{speaker_a_role_summary}}
-- Age impression: {{speaker_a_age_impression}}
+- Name: Mali
+- Thai script name: มะลิ
+- Character key: mali
+- Role summary: Adult woman with a polished, professional-adjacent presence; organized and polite.
+- Age impression: adult
 - Default tone:
-  {{speaker_a_default_tone}}
+  calm
+  polite
+  organized
+  mature
 - Default usage:
-  {{speaker_a_default_usage}}
+  workplace_adjacent_scenes
+  cafe_scenes
+  shopping
+  scheduling
+  introductions
 
 ### Speaker B
 
-- Name: {{speaker_b_name}}
-- Thai script name: {{speaker_b_name_thai}}
-- Character key: {{speaker_b_key}}
-- Role summary: {{speaker_b_role_summary}}
-- Age impression: {{speaker_b_age_impression}}
+- Name: Narin
+- Thai script name: นริน
+- Character key: narin
+- Role summary: Central anchor character; calm, socially capable, dependable, connector between groups.
+- Age impression: adult
 - Default tone:
-  {{speaker_b_default_tone}}
+  calm
+  approachable
+  socially_confident
+  believable
 - Default usage:
-  {{speaker_b_default_usage}}
+  first_meetings
+  practical_daily_scenes
+  bridge_between_character_clusters
 
 ## Relationship Context
 
-- Start state: {{start_state}}
-- Current stage: {{current_stage}}
-- Function summary: {{function_summary}}
+- Start state: first_meeting
+- Current stage: early
+- Function summary: Opening introductions and polite small talk.
 
 ### Allowed Progression
 
-{{allowed_progression}}
+acquaintance
+comfortable_contact
+close_bond_or_subtle_romantic_potential
 
 ### Relationship Rules
 
-{{relationship_rules_list}}
+lesson_1_can_start_here: This pair may begin the curriculum as a first meeting in greetings and introductions.
+keep_growth_gradual: Do not move this pair too quickly into intimacy; let familiarity develop over multiple lessons.
+no_fast_romance: Romantic potential must remain subtle and should not appear in early A1 lessons.
 
 ## Dialogue Design
 
-- Scene type: {{scene_type}}
-- Suggested location: {{suggested_location}}
-- Allowed register: {{allowed_register}}
-- Estimated line count: {{estimated_line_count}}
+- Scene type: first meeting
+- Suggested location: quiet everyday setting
+- Allowed register: formal_polite
+- Estimated line count: 6-8 lines
 
 ### Constraints
 
-{{dialogue_constraints_list}}
+- short lines only
+- one communicative move per line
+- beginner-safe Thai only
+- use polite particles consistently
+- no flirting or intimacy
+- no important new grammar outside lesson scope
+- Mali uses ฉัน
+- Narin uses ผม
 
 ## Quality Rules
 
