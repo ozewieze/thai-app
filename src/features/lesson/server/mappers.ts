@@ -10,6 +10,7 @@ import type { DialogData, LessonWithDialog } from "../types";
  * De velden die we uit de `lessons` tabel ophalen.
  * Namen zijn in snake_case, precies zoals de database ze terugstuurt.
  */
+// TODO de types LessonRow en DialogRow staan nu in deze mapper-file, maar misschien is het beter om ze in types.ts te zetten. Dan kunnen we ze overal hergebruiken.
 export type LessonRow = {
   id: number;
   lesson_key: string;

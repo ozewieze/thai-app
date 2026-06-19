@@ -3,16 +3,6 @@ import type { LessonWithDialog } from "../types";
 import type { LessonRow, DialogRow } from "./mappers";
 import { mapLessonRowToLessonWithDialog } from "./mappers";
 
-/**
- * getLessonBySlug
- *
- * Haalt een lesson op via zijn slug, inclusief de bijbehorende dialog.
- * Geeft null terug als er geen gepubliceerde lesson bestaat met deze slug.
- *
- * De nested select laat Supabase in een query zowel de lesson-velden
- * als de gekoppelde dialog-velden ophalen via de foreign key
- * (dialogs.lesson_id -> lessons.id).
- */
 export async function getLessonBySlug(
   slug: string,
 ): Promise<LessonWithDialog | null> {
@@ -52,11 +42,10 @@ export async function getLessonBySlug(
     return null;
   }
 
-  // Supabase stuurt gerelateerde rijen terug als een array,
-  // ook al is er door de UNIQUE constraint maar een dialog per lesson.
-  // We pakken het eerste element, of null als de array leeg is.
-  const rawDialogs = data.dialogs as DialogRow[] | null;
-  const dialogRow = Array.isArray(rawDialogs) ? (rawDialogs[0] ?? null) : null;
-
+  // Supabase herkent de UNIQUE constraint op dialogs.lesson_id
+  // en geeft de dialog terug als een enkel object, niet als array.
+  // De Supabase TypeScript-types weten dit niet en typen het als array[].
+  // Via `unknown` vertellen we TypeScript dat wij dit beter weten.
+  const dialogRow = (data.dialogs as unknown as DialogRow | null) ?? null;
   return mapLessonRowToLessonWithDialog(data as LessonRow, dialogRow);
 }
