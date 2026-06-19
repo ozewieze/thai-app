@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import type { LessonWithDialog } from "../types";
-import type { LessonRow, DialogRow } from "./mappers";
+import type { LessonRow, DialogRow, LessonWithDialog } from "../types";
 import { mapLessonRowToLessonWithDialog } from "./mappers";
 
 export async function getLessonBySlug(
@@ -47,5 +46,6 @@ export async function getLessonBySlug(
   // De Supabase TypeScript-types weten dit niet en typen het als array[].
   // Via `unknown` vertellen we TypeScript dat wij dit beter weten.
   const dialogRow = (data.dialogs as unknown as DialogRow | null) ?? null;
+
   return mapLessonRowToLessonWithDialog(data as LessonRow, dialogRow);
 }

@@ -1,15 +1,53 @@
 // ============================================================
-// Dialog types
+// Raw database row types (snake_case, zoals Supabase ze stuurt)
+// ============================================================
+
+/**
+ * LessonRow
+ *
+ * De velden die we uit de `lessons` tabel ophalen.
+ * Namen zijn in snake_case, precies zoals de database ze terugstuurt.
+ */
+export type LessonRow = {
+  id: number;
+  lesson_key: string;
+  slug: string;
+  title: string;
+  subtitle: string | null;
+  cefr_level: string;
+  lesson_type: "dialog" | "revision" | "theme" | "story";
+  section_key: string | null;
+  access_tier: "free" | "premium";
+};
+
+/**
+ * DialogRow
+ *
+ * De velden die we uit de `dialogs` tabel ophalen.
+ * De database geeft één dialoog per lesson (UNIQUE constraint op lesson_id).
+ * Supabase geeft dit terug als een enkel object (niet als array) vanwege die constraint.
+ */
+export type DialogRow = {
+  id: number;
+  title: string | null;
+  subtitle: string | null;
+  thai_text: string;
+  transliteration: string | null;
+  translation_en: string | null;
+  register: "neutral" | "formal" | "informal" | "polite" | "colloquial" | null;
+  scene_summary: string | null;
+  learning_focus: string | null;
+};
+
+// ============================================================
+// Frontend types (camelCase, zoals de UI ze gebruikt)
 // ============================================================
 
 /**
  * DialogData
  *
- * De ruwe dialog-data zoals die uit de database komt.
- * Eén lesson heeft maximaal één dialog (UNIQUE constraint in de DB).
- *
- * Velden zoals `thaiText`, `transliteration` en `translationEn` bevatten
- * de volledige tekst voor de gehele dialoog — nog niet opgesplitst in blokken.
+ * De dialog-data na de mapper: velden zijn omgezet naar camelCase.
+ * Bevat de volledige dialoogtekst, nog niet opgesplitst in blokken.
  */
 export type DialogData = {
   id: number;
@@ -26,7 +64,7 @@ export type DialogData = {
 /**
  * DialogBlock
  *
- * Één blok (één regel / uitwisseling) van de dialoog.
+ * Een enkel blok (een regel of uitwisseling) van de dialoog.
  * Ontstaat door de volledige dialoogtekst op te splitsen op regelafbrekingen.
  *
  * `index` is 0-gebaseerd (het eerste blok heeft index 0).
@@ -38,15 +76,11 @@ export type DialogBlock = {
   translationLine: string | null;
 };
 
-// ============================================================
-// Lesson types
-// ============================================================
-
 /**
  * LessonWithDialog
  *
  * De volledige lesson-data zoals die op de lesson-pagina wordt gebruikt.
- * Bevat alle basisvelden van de lesson + de bijbehorende dialog (als die bestaat).
+ * Bevat alle basisvelden van de lesson plus de bijbehorende dialog.
  *
  * `dialog` is `null` als er nog geen dialog in de database staat voor deze lesson.
  */
