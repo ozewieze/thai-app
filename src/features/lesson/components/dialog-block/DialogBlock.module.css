@@ -1,0 +1,37 @@
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-32);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  margin-bottom: var(--spacing-24);
+  color: var(--color-text-muted);
+  font-size: var(--size-14);
+  font-weight: var(--medium);
+}
+
+.thaiText {
+  font-family: var(--font-thai);
+  font-size: var(--size-30);
+  font-weight: var(--medium);
+  color: var(--color-heading);
+  line-height: 1.4;
+  margin-bottom: var(--spacing-12);
+}
+
+.transliteration {
+  font-style: italic;
+  font-size: var(--size-16);
+  color: var(--color-text-soft);
+  margin-bottom: var(--spacing-8);
+}
+
+.translation {
+  font-size: var(--size-16);
+  color: var(--color-text-soft);
+}
