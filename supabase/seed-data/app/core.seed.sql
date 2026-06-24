@@ -43,7 +43,7 @@ values
   ),
   (
     'a1-dialog-03',
-    'at-the-café',
+    'at-the-cafe',
     'A1',
     'dialogs',
     'dialog',
