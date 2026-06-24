@@ -5,49 +5,6 @@
   padding: var(--spacing-32);
 }
 
-/* ---- Toggle buttons ---- */
-
-.toggles {
-  display: flex;
-  gap: var(--spacing-8);
-  margin-bottom: var(--spacing-24);
-}
-
-.toggleBtn {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-8);
-  padding: var(--spacing-8) var(--spacing-16);
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--color-border-default);
-  background: var(--color-surface);
-  color: var(--color-text-soft);
-  font-size: var(--size-14);
-  font-weight: var(--medium);
-  cursor: pointer;
-  transition:
-    background var(--transition-fast),
-    color var(--transition-fast);
-}
-
-.toggleBtn:hover {
-  background: var(--color-surface-muted);
-  color: var(--color-heading);
-}
-
-.toggleBtnActive {
-  background: var(--color-brand-soft);
-  border-color: transparent;
-  color: var(--color-brand);
-}
-
-.toggleBtnActive:hover {
-  background: var(--color-brand-soft-hover);
-  color: var(--color-brand);
-}
-
-/* ---- Block header ---- */
-
 .header {
   display: flex;
   align-items: center;
@@ -58,15 +15,19 @@
   font-weight: var(--medium);
 }
 
-/* ---- Content layers ---- */
-
 .thaiText {
   font-family: var(--font-thai);
-  font-size: var(--size-30);
-  font-weight: var(--medium);
+  font-size: var(--size-24);
+  font-weight: var(--medium-bold);
   color: var(--color-heading);
   line-height: 1.4;
-  margin-bottom: var(--spacing-12);
+  margin-bottom: var(--spacing-16);
+}
+
+@media (min-width: 640px) {
+  .thaiText {
+    font-size: var(--size-30);
+  }
 }
 
 .transliteration {

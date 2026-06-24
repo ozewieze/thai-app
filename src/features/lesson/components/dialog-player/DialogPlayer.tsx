@@ -32,19 +32,12 @@ export default function DialogPlayer({ blocks }: DialogPlayerProps) {
     setVisible((prev) => ({ ...prev, [layer]: !prev[layer] }));
   }
 
-  function goToPrev() {
-    if (!isFirst) setCurrentIndex((i) => i - 1);
-  }
-
-  function goToNext() {
-    if (!isLast) setCurrentIndex((i) => i + 1);
-  }
-
   if (!currentBlock) return null;
 
   return (
     <div className={styles.wrapper}>
-      {/* Visibility toggles */}
+
+      {/* Toggles: gecenterd op mobile, rechts op desktop */}
       <div className={styles.toggles}>
         {LAYERS.map(({ key, label }) => (
           <button
@@ -61,11 +54,7 @@ export default function DialogPlayer({ blocks }: DialogPlayerProps) {
       </div>
 
       {/* Dialog block */}
-      <DialogBlock
-        block={currentBlock}
-        totalBlocks={blocks.length}
-        visible={visible}
-      />
+      <DialogBlock block={currentBlock} visible={visible} />
 
       {/* Dot indicators */}
       <div className={styles.dots} aria-hidden="true">
@@ -81,7 +70,7 @@ export default function DialogPlayer({ blocks }: DialogPlayerProps) {
       <div className={styles.nav}>
         <button
           className={styles.navBtn}
-          onClick={goToPrev}
+          onClick={() => setCurrentIndex((i) => i - 1)}
           disabled={isFirst}
           aria-label="Previous block"
         >
@@ -95,7 +84,7 @@ export default function DialogPlayer({ blocks }: DialogPlayerProps) {
 
         <button
           className={`${styles.navBtn} ${styles.navNext}`}
-          onClick={goToNext}
+          onClick={() => setCurrentIndex((i) => i + 1)}
           disabled={isLast}
           aria-label="Next block"
         >
@@ -103,6 +92,7 @@ export default function DialogPlayer({ blocks }: DialogPlayerProps) {
           <ChevronRight size={16} />
         </button>
       </div>
+
     </div>
   );
 }
