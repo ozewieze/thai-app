@@ -1,6 +1,6 @@
 import type { LessonWithDialog } from "@/features/lesson/types";
 import { splitDialogIntoBlocks } from "@/features/lesson/utils";
-import DialogBlock from "@/features/lesson/components/dialog-block/DialogBlock";
+import DialogPlayer from "@/features/lesson/components/dialog-player/DialogPlayer";
 
 type LessonPageViewProps = {
   lesson: LessonWithDialog;
@@ -8,7 +8,6 @@ type LessonPageViewProps = {
 
 export default function LessonPageView({ lesson }: LessonPageViewProps) {
   const blocks = lesson.dialog ? splitDialogIntoBlocks(lesson.dialog) : [];
-  const firstBlock = blocks[0] ?? null;
 
   return (
     <div style={{ maxWidth: "720px", margin: "0 auto", padding: "2rem" }}>
@@ -16,8 +15,8 @@ export default function LessonPageView({ lesson }: LessonPageViewProps) {
       {lesson.subtitle && <p>{lesson.subtitle}</p>}
 
       <div style={{ marginTop: "2rem" }}>
-        {firstBlock ? (
-          <DialogBlock block={firstBlock} totalBlocks={blocks.length} />
+        {blocks.length > 0 ? (
+          <DialogPlayer blocks={blocks} />
         ) : (
           <p>Geen dialog gevonden voor deze lesson.</p>
         )}

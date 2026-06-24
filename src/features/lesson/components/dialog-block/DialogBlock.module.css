@@ -25,7 +25,9 @@
   font-size: var(--size-14);
   font-weight: var(--medium);
   cursor: pointer;
-  transition: background var(--transition-fast), color var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
 }
 
 .toggleBtn:hover {
@@ -61,7 +63,7 @@
 .thaiText {
   font-family: var(--font-thai);
   font-size: var(--size-30);
-  font-weight: var(--bold);
+  font-weight: var(--medium);
   color: var(--color-heading);
   line-height: 1.4;
   margin-bottom: var(--spacing-12);
