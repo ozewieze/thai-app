@@ -24,12 +24,16 @@ export async function getLessonBySlug(
         id,
         title,
         subtitle,
-        thai_text,
-        transliteration,
-        translation_en,
         register,
         scene_summary,
-        learning_focus
+        learning_focus,
+        dialog_blocks (
+          id,
+          block_index,
+          thai_text,
+          transliteration,
+          translation_en
+        )
       )
     `,
     )

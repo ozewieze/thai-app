@@ -21,22 +21,37 @@ export type LessonRow = {
 };
 
 /**
+ * DialogBlockRow
+ *
+ * Één rij uit de `dialog_blocks` tabel.
+ * Elke rij is één blok (regel/uitwisseling) van de dialoog.
+ * `block_index` is 0-gebaseerd en bepaalt de volgorde.
+ */
+export type DialogBlockRow = {
+  id: number;
+  dialog_id: number;
+  block_index: number;
+  thai_text: string;
+  transliteration: string | null;
+  translation_en: string | null;
+};
+
+/**
  * DialogRow
  *
  * De velden die we uit de `dialogs` tabel ophalen.
  * De database geeft één dialoog per lesson (UNIQUE constraint op lesson_id).
  * Supabase geeft dit terug als een enkel object (niet als array) vanwege die constraint.
+ * Bevat de geneste `dialog_blocks` als array.
  */
 export type DialogRow = {
   id: number;
   title: string | null;
   subtitle: string | null;
-  thai_text: string;
-  transliteration: string | null;
-  translation_en: string | null;
   register: "neutral" | "formal" | "informal" | "polite" | "colloquial" | null;
   scene_summary: string | null;
   learning_focus: string | null;
+  dialog_blocks: DialogBlockRow[];
 };
 
 // ============================================================
@@ -44,36 +59,36 @@ export type DialogRow = {
 // ============================================================
 
 /**
+ * DialogBlock
+ *
+ * Een enkel blok (een regel of uitwisseling) van de dialoog.
+ * Komt rechtstreeks uit de `dialog_blocks` tabel via de mapper.
+ *
+ * `index` is 0-gebaseerd (het eerste blok heeft index 0).
+ * `id` is de stabiele database-id, nodig voor audio-URL-koppeling (stap 2).
+ */
+export type DialogBlock = {
+  id: number;
+  index: number;
+  thaiLine: string;
+  transliterationLine: string | null;
+  translationLine: string | null;
+};
+
+/**
  * DialogData
  *
  * De dialog-data na de mapper: velden zijn omgezet naar camelCase.
- * Bevat de volledige dialoogtekst, nog niet opgesplitst in blokken.
+ * Bevat de geneste blokken gesorteerd op index.
  */
 export type DialogData = {
   id: number;
   title: string | null;
   subtitle: string | null;
-  thaiText: string;
-  transliteration: string | null;
-  translationEn: string | null;
   register: "neutral" | "formal" | "informal" | "polite" | "colloquial" | null;
   sceneSummary: string | null;
   learningFocus: string | null;
-};
-
-/**
- * DialogBlock
- *
- * Een enkel blok (een regel of uitwisseling) van de dialoog.
- * Ontstaat door de volledige dialoogtekst op te splitsen op regelafbrekingen.
- *
- * `index` is 0-gebaseerd (het eerste blok heeft index 0).
- */
-export type DialogBlock = {
-  index: number;
-  thaiLine: string;
-  transliterationLine: string | null;
-  translationLine: string | null;
+  blocks: DialogBlock[];
 };
 
 /**
