@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Play, ChevronLeft } from "lucide-react";
 import styles from "./LessonPageView.module.css";
 import type { LessonWithDialog } from "@/features/lesson/types";
-import { splitDialogIntoBlocks } from "@/features/lesson/utils";
 import DialogPlayer from "@/features/lesson/components/dialog-player/DialogPlayer";
 import { getLevelById } from "@/features/level/lib/getLevelById";
 
@@ -19,7 +18,7 @@ const REGISTER_LABELS: Record<string, string> = {
 };
 
 export default function LessonPageView({ lesson }: LessonPageViewProps) {
-  const blocks = lesson.dialog ? splitDialogIntoBlocks(lesson.dialog) : [];
+  const blocks = lesson.dialog?.blocks ?? [];
   const levelData = getLevelById(lesson.cefrLevel);
   const backHref = `/learn/${lesson.cefrLevel.toLowerCase()}/${lesson.sectionKey ?? "dialogs"}`;
   const levelTitle = levelData?.title ?? lesson.cefrLevel;
