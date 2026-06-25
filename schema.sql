@@ -90,9 +90,6 @@ CREATE TABLE IF NOT EXISTS "public"."dialogs" (
     "id" bigint NOT NULL,
     "lesson_id" bigint NOT NULL,
     "title" "text",
-    "thai_text" "text" NOT NULL,
-    "transliteration" "text",
-    "translation_en" "text",
     "register" "text",
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
@@ -104,6 +101,34 @@ CREATE TABLE IF NOT EXISTS "public"."dialogs" (
 
 
 ALTER TABLE "public"."dialogs" OWNER TO "postgres";
+
+
+
+CREATE TABLE IF NOT EXISTS "public"."dialog_blocks" (
+    "id" bigint NOT NULL,
+    "dialog_id" bigint NOT NULL,
+    "block_index" integer NOT NULL,
+    "thai_text" "text" NOT NULL,
+    "transliteration" "text",
+    "translation_en" "text",
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    CONSTRAINT "dialog_blocks_block_index_check" CHECK (("block_index" >= 0))
+);
+
+
+ALTER TABLE "public"."dialog_blocks" OWNER TO "postgres";
+
+
+ALTER TABLE "public"."dialog_blocks" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "public"."dialog_blocks_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
 
 
 ALTER TABLE "public"."dialogs" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
@@ -689,6 +714,16 @@ ALTER TABLE ONLY "public"."character_profiles"
 
 
 
+ALTER TABLE ONLY "public"."dialog_blocks"
+    ADD CONSTRAINT "dialog_blocks_dialog_block_unique" UNIQUE ("dialog_id", "block_index");
+
+
+
+ALTER TABLE ONLY "public"."dialog_blocks"
+    ADD CONSTRAINT "dialog_blocks_pkey" PRIMARY KEY ("id");
+
+
+
 ALTER TABLE ONLY "public"."dialog_blueprint_specs"
     ADD CONSTRAINT "dialog_blueprint_specs_lesson_id_key" UNIQUE ("lesson_id");
 
@@ -874,6 +909,11 @@ ALTER TABLE ONLY "public"."vocabulary_status"
 
 
 
+ALTER TABLE ONLY "public"."dialog_blocks"
+    ADD CONSTRAINT "dialog_blocks_dialog_fk" FOREIGN KEY ("dialog_id") REFERENCES "public"."dialogs"("id") ON DELETE CASCADE;
+
+
+
 ALTER TABLE ONLY "public"."dialog_blueprint_specs"
     ADD CONSTRAINT "dialog_blueprint_specs_lesson_id_fkey" FOREIGN KEY ("lesson_id") REFERENCES "public"."lessons"("id") ON DELETE CASCADE;
 
@@ -1017,6 +1057,13 @@ CREATE POLICY "Character profiles are readable by everyone" ON "public"."charact
 
 
 
+CREATE POLICY "Blocks of published dialogs are readable by everyone" ON "public"."dialog_blocks" FOR SELECT TO "authenticated", "anon" USING ((EXISTS ( SELECT 1
+   FROM ("public"."dialogs" "d"
+     JOIN "public"."lessons" "l" ON (("l"."id" = "d"."lesson_id")))
+  WHERE (("d"."id" = "dialog_blocks"."dialog_id") AND ("l"."is_published" = true)))));
+
+
+
 CREATE POLICY "Dialogs of published lessons are readable by everyone" ON "public"."dialogs" FOR SELECT TO "authenticated", "anon" USING ((EXISTS ( SELECT 1
    FROM "public"."lessons" "l"
   WHERE (("l"."id" = "dialogs"."lesson_id") AND ("l"."is_published" = true)))));
@@ -1091,6 +1138,9 @@ CREATE POLICY "Vocabulary used in published lessons is readable by everyone" ON 
 
 
 
+ALTER TABLE "public"."dialog_blocks" ENABLE ROW LEVEL SECURITY;
+
+
 ALTER TABLE "public"."character_profiles" ENABLE ROW LEVEL SECURITY;
 
 
@@ -1149,6 +1199,18 @@ GRANT USAGE ON SCHEMA "public" TO "postgres";
 GRANT USAGE ON SCHEMA "public" TO "anon";
 GRANT USAGE ON SCHEMA "public" TO "authenticated";
 GRANT USAGE ON SCHEMA "public" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."dialog_blocks" TO "anon";
+GRANT ALL ON TABLE "public"."dialog_blocks" TO "authenticated";
+GRANT ALL ON TABLE "public"."dialog_blocks" TO "service_role";
+
+
+
+GRANT ALL ON SEQUENCE "public"."dialog_blocks_id_seq" TO "anon";
+GRANT ALL ON SEQUENCE "public"."dialog_blocks_id_seq" TO "authenticated";
+GRANT ALL ON SEQUENCE "public"."dialog_blocks_id_seq" TO "service_role";
 
 
 
