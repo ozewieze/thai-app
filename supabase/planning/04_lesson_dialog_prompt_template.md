@@ -160,9 +160,19 @@ Use these section headings exactly, in this order:
 3. Learning focus
 4. Scene summary
 5. Register
-6. Thai dialogue
-7. Paiboon transliteration
-8. English translation
+6. Blocks
+
+For the Blocks section, output one numbered block per dialogue line, using exactly this format:
+
+Block 1
+Thai: [Thai line with speaker label]
+Transliteration: [Paiboon transliteration with speaker label]
+English: [English translation with speaker label]
+
+Block 2
+Thai: ...
+Transliteration: ...
+English: ...
 
 Return exactly these sections and no additional sections.
 
@@ -173,9 +183,9 @@ Return exactly these sections and no additional sections.
 - Learning focus must exactly match the lesson learning focus.
 - Scene summary must exactly match the lesson scene summary.
 - Register must exactly match the register specified in Dialogue Design.
-- Thai dialogue must contain speaker labels using the character names.
-- Paiboon transliteration must preserve line order exactly.
-- English translation must preserve line order exactly.
+- Each block contains exactly one Thai line, one Transliteration line, and one English line.
+- Every line within a block must carry a speaker label using the character name.
+- Blocks must be numbered sequentially starting from 1.
 - Keep the dialogue as short as possible while satisfying all lesson requirements.
 - Do not explain your reasoning.
 - Do not add notes, commentary, metadata, or extra sections.

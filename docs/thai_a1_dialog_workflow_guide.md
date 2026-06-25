@@ -213,6 +213,8 @@ Werkwijze:
 
 Gebruik de ingevulde lesspecifieke prompt. Sla de ruwe output op in `generation/dialogs/lesson_XX_dialog_output.md`.
 
+De output bestaat uit vijf metadata-secties (Title, Subtitle, Learning focus, Scene summary, Register) gevolgd door genummerde blokken. Elk blok bevat precies één Thai-regel, één Transliteration-regel en één English-regel.
+
 ### Stap 9 — QA vóór opslaan
 
 Controleer minstens:
@@ -227,38 +229,68 @@ Controleer minstens:
 - Is de transliteratie consistent?
 - Is de Engelse vertaling trouw aan het Thais?
 
-### Stap 10 — Sla de definitieve dialoog op in `dialogs`
+### Stap 10 — Sla de definitieve dialoog op in `dialogs` en `dialog_blocks`
 
-Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan:
+Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan. Het bestand bestaat uit twee delen in één transactie.
+
+**Deel 1** insert de dialoog-metadata. **Deel 2** haalt het zojuist geïnserte `dialog_id` op via een CTE en insert alle blokken via `cross join (values ...)`.
 
 ```sql
+begin;
+
+-- 1. dialoog-metadata
 insert into public.dialogs (
   lesson_id,
   title,
   subtitle,
-  thai_text,
-  transliteration,
-  translation_en,
+  learning_focus,
+  scene_summary,
   register
 ) values (
   (select id from public.lessons where lesson_key = 'a1-dialog-XX'),
-  'Dialoog X — ...',
   '...',
-  '...thai text...',
-  '...transliteratie...',
-  '...vertaling...',
+  '...',
+  '...',
+  '...',
   'polite'
 )
-on conflict (lesson_id)
-do update set
-  title            = excluded.title,
-  subtitle         = excluded.subtitle,
-  thai_text        = excluded.thai_text,
-  transliteration  = excluded.transliteration,
-  translation_en   = excluded.translation_en,
-  register         = excluded.register,
-  updated_at       = now();
+on conflict (lesson_id) do update set
+  title          = excluded.title,
+  subtitle       = excluded.subtitle,
+  learning_focus = excluded.learning_focus,
+  scene_summary  = excluded.scene_summary,
+  register       = excluded.register,
+  updated_at     = now();
+
+-- 2. dialoogblokken
+with dialog as (
+  select id
+  from public.dialogs
+  where lesson_id = (select id from public.lessons where lesson_key = 'a1-dialog-XX')
+)
+insert into public.dialog_blocks (dialog_id, block_index, thai_text, transliteration, translation_en)
+select
+  dialog.id,
+  block.block_index,
+  block.thai_text,
+  block.transliteration,
+  block.translation_en
+from dialog
+cross join (values
+  (0, 'Thai regel 1',  'Translit 1',  'English 1'),
+  (1, 'Thai regel 2',  'Translit 2',  'English 2')
+  -- voeg hier één rij per blok toe
+) as block(block_index, thai_text, transliteration, translation_en)
+on conflict (dialog_id, block_index) do update set
+  thai_text       = excluded.thai_text,
+  transliteration = excluded.transliteration,
+  translation_en  = excluded.translation_en,
+  updated_at      = now();
+
+commit;
 ```
+
+`block_index` is 0-gebaseerd. De volgorde van de rijen in `values` bepaalt de volgorde in de player. Enkelvoudige aanhalingstekens in de tekst escapeer je als `''` (twee enkele quotes).
 
 ### Stap 11 — Voer lokaal uit
 
@@ -306,5 +338,5 @@ sql_paths = [
 7. Vul `supabase/prompts/lesson_XX_dialog_prompt.md` in (scalars vanuit CSV, multiline vanuit Studio-cel).
 8. Genereer de dialoog en sla op in `generation/dialogs/`.
 9. Voer QA uit.
-10. Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan en voer uit.
+10. Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan (dialoog-metadata + blokken) en voer uit.
 11. Commit alle bestanden.
