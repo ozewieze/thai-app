@@ -23,7 +23,6 @@
 .subHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding-bottom: var(--spacing-16);
   border-bottom: 1px solid var(--color-border-subtle);
 }
@@ -45,6 +44,7 @@
 .registerLabel {
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   padding: var(--spacing-4) var(--spacing-12);
   border-radius: var(--radius-pill);
   border: 1px solid var(--color-border-standout);
@@ -53,6 +53,108 @@
   font-size: var(--size-12);
   font-weight: var(--medium-bold);
   letter-spacing: 0.02em;
+}
+
+/* ---- Lesson header ---- */
+
+.lessonHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/* Nav + titel als één visuele eenheid */
+.lessonTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.lessonNav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.lessonNavBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-surface);
+  color: var(--color-text-soft);
+  text-decoration: none;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.lessonNavBtn:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-heading);
+}
+
+.lessonNavBtnDisabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+.lessonNavLabel {
+  font-size: var(--size-13);
+  font-weight: var(--medium-bold);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lessonTitle {
+  font-size: var(--size-30);
+  font-weight: var(--bold);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-heading);
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .lessonTitle {
+    font-size: var(--size-36);
+  }
+}
+
+.lessonSubtitle {
+  font-size: var(--size-16);
+  color: var(--color-text-soft);
+  margin: 0;
+}
+
+.lessonMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-12);
+  padding-top: var(--spacing-4);
+}
+
+.learningFocus {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  font-size: var(--size-14);
+  color: var(--color-text-soft);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.learningFocusLabel {
+  font-size: var(--size-12);
+  font-weight: var(--medium-bold);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 /* ---- Image ---- */

@@ -92,6 +92,18 @@ export type DialogData = {
 };
 
 /**
+ * LessonNav
+ *
+ * Slugs van de vorige en volgende les binnen dezelfde sectie.
+ * Gebruikt voor de prev/next navigatie op de lesson-pagina.
+ * Waarden zijn `null` als er geen vorige of volgende les bestaat.
+ */
+export type LessonNav = {
+  prevSlug: string | null;
+  nextSlug: string | null;
+};
+
+/**
  * LessonWithDialog
  *
  * De volledige lesson-data zoals die op de lesson-pagina wordt gebruikt.

@@ -1,5 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
-import type { LessonRow, DialogRow, LessonWithDialog } from "../types";
+import type {
+  LessonRow,
+  DialogRow,
+  LessonWithDialog,
+  LessonNav,
+} from "../types";
 import { mapLessonRowToLessonWithDialog } from "./mappers";
 
 export async function getLessonBySlug(
@@ -52,4 +57,39 @@ export async function getLessonBySlug(
   const dialogRow = (data.dialogs as unknown as DialogRow | null) ?? null;
 
   return mapLessonRowToLessonWithDialog(data as LessonRow, dialogRow);
+}
+
+export async function getLessonNav(
+  lessonId: number,
+  sectionKey: string | null,
+): Promise<LessonNav> {
+  if (!sectionKey) return { prevSlug: null, nextSlug: null };
+
+  const supabase = await createClient();
+
+  const [prevResult, nextResult] = await Promise.all([
+    supabase
+      .from("lessons")
+      .select("slug")
+      .eq("is_published", true)
+      .eq("section_key", sectionKey) //de section_key wordt gebruikt om de vorige les te vinden binnen dezelfde sectie
+      .lt("id", lessonId) //lt betekent "less than" en wordt gebruikt om de vorige les te vinden op basis van de ID
+      .order("id", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+    supabase
+      .from("lessons")
+      .select("slug")
+      .eq("is_published", true)
+      .eq("section_key", sectionKey)
+      .gt("id", lessonId) //
+      .order("id", { ascending: true })
+      .limit(1)
+      .maybeSingle(),
+  ]);
+
+  return {
+    prevSlug: prevResult.data?.slug ?? null,
+    nextSlug: nextResult.data?.slug ?? null,
+  };
 }
