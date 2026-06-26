@@ -32,12 +32,14 @@ export async function getLessonBySlug(
         register,
         scene_summary,
         learning_focus,
+        audio_url,
         dialog_blocks (
           id,
           block_index,
           thai_text,
           transliteration,
-          translation_en
+          translation_en,
+          audio_url
         )
       )
     `,

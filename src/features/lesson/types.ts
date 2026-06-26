@@ -34,6 +34,7 @@ export type DialogBlockRow = {
   thai_text: string;
   transliteration: string | null;
   translation_en: string | null;
+  audio_url: string | null;
 };
 
 /**
@@ -51,6 +52,7 @@ export type DialogRow = {
   register: "neutral" | "formal" | "informal" | "polite" | "colloquial" | null;
   scene_summary: string | null;
   learning_focus: string | null;
+  audio_url: string | null;
   dialog_blocks: DialogBlockRow[];
 };
 
@@ -73,6 +75,7 @@ export type DialogBlock = {
   thaiLine: string;
   transliterationLine: string | null;
   translationLine: string | null;
+  audioUrl: string | null;
 };
 
 /**
@@ -88,6 +91,7 @@ export type DialogData = {
   register: "neutral" | "formal" | "informal" | "polite" | "colloquial" | null;
   sceneSummary: string | null;
   learningFocus: string | null;
+  audioUrl: string | null;
   blocks: DialogBlock[];
 };
 

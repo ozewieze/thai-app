@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS "public"."dialogs" (
     "scene_summary" "text",
     "learning_focus" "text",
     "subtitle" "text",
+    "audio_url" "text",
     CONSTRAINT "dialogs_register_check" CHECK ((("register" IS NULL) OR ("register" = ANY (ARRAY['neutral'::"text", 'formal'::"text", 'informal'::"text", 'polite'::"text", 'colloquial'::"text"]))))
 );
 
@@ -111,6 +112,7 @@ CREATE TABLE IF NOT EXISTS "public"."dialog_blocks" (
     "thai_text" "text" NOT NULL,
     "transliteration" "text",
     "translation_en" "text",
+    "audio_url" "text",
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     CONSTRAINT "dialog_blocks_block_index_check" CHECK (("block_index" >= 0))

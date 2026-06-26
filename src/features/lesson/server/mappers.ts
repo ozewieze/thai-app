@@ -13,6 +13,7 @@ export function mapDialogRowToDialogData(row: DialogRow): DialogData {
     register: row.register,
     sceneSummary: row.scene_summary,
     learningFocus: row.learning_focus,
+    audioUrl: row.audio_url,
     blocks: row.dialog_blocks
       .sort((a, b) => a.block_index - b.block_index)
       .map((block) => ({
@@ -21,6 +22,7 @@ export function mapDialogRowToDialogData(row: DialogRow): DialogData {
         thaiLine: block.thai_text,
         transliterationLine: block.transliteration,
         translationLine: block.translation_en,
+        audioUrl: block.audio_url,
       })),
   };
 }
