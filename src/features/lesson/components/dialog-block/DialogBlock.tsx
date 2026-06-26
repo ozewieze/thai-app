@@ -1,4 +1,4 @@
-import { Volume2 } from "lucide-react";
+import { Volume2, Pause } from "lucide-react";
 import styles from "./DialogBlock.module.css";
 import type { DialogBlock as DialogBlockType } from "@/features/lesson/types";
 
@@ -11,13 +11,27 @@ export type Visibility = {
 type DialogBlockProps = {
   block: DialogBlockType;
   visible: Visibility;
+  isPlaying: boolean;
+  onAudioToggle: () => void;
 };
 
-export default function DialogBlock({ block, visible }: DialogBlockProps) {
+export default function DialogBlock({ block, visible, isPlaying, onAudioToggle }: DialogBlockProps) {
+  const hasAudio = block.audioUrl !== null;
+
   return (
     <div className={styles.card}>
       <div className={styles.header}>
-        <Volume2 size={15} />
+        {/* Knop is disabled als er geen audioUrl is voor dit blok.
+            aria-label geeft schermlezers een beschrijvende tekst. */}
+        <button
+          className={`${styles.audioBtn} ${isPlaying ? styles.audioBtnActive : ""} ${!hasAudio ? styles.audioBtnDisabled : ""}`}
+          onClick={onAudioToggle}
+          disabled={!hasAudio}
+          aria-label={isPlaying ? "Pause audio" : "Play audio"}
+          title={hasAudio ? undefined : "No audio available yet"}
+        >
+          {isPlaying ? <Pause size={15} /> : <Volume2 size={15} />}
+        </button>
         <span>Block {block.index + 1}</span>
       </div>
 
