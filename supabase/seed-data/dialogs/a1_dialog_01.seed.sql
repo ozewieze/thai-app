@@ -21,7 +21,7 @@ insert into public.dialogs (
   'polite'
 )
 on conflict (lesson_id) do update set
-  title          = excluded.title, 
+  title          = excluded.title,
   subtitle       = excluded.subtitle,
   learning_focus = excluded.learning_focus,
   scene_summary  = excluded.scene_summary,
@@ -34,24 +34,26 @@ with dialog as (
   from public.dialogs
   where lesson_id = (select id from public.lessons where lesson_key = 'a1-dialog-01')
 )
-insert into public.dialog_blocks (dialog_id, block_index, thai_text, transliteration, translation_en)
+insert into public.dialog_blocks (dialog_id, block_index, speaker_key, thai_text, transliteration, translation_en)
 select
   dialog.id,
   block.block_index,
+  block.speaker_key,
   block.thai_text,
   block.transliteration,
   block.translation_en
 from dialog
 cross join (values
-  (0, 'มะลิ: สวัสดีค่ะ',                'Mali: sà-wàt-dii khâ',                    'Mali: Hello.'),
-  (1, 'นริน: สวัสดีครับ',               'Narin: sà-wàt-dii khráp',                 'Narin: Hello.'),
-  (2, 'มะลิ: ฉันชื่อมะลิค่ะ',           'Mali: chǎn chʉ̂ʉ Mali khâ',                'Mali: My name is Mali.'),
-  (3, 'มะลิ: คุณชื่ออะไรคะ',            'Mali: khun chʉ̂ʉ à-rai khá',               'Mali: What is your name?'),
-  (4, 'นริน: ผมชื่อนรินครับ',            'Narin: phǒm chʉ̂ʉ Narin khráp',            'Narin: My name is Narin.'),
-  (5, 'นริน: ยินดีที่ได้รู้จักครับ',    'Narin: yin-dii thîi dâai rúu-jàk khráp',  'Narin: Nice to meet you.'),
-  (6, 'มะลิ: ยินดีที่ได้รู้จักค่ะ',    'Mali: yin-dii thîi dâai rúu-jàk khâ',     'Mali: Nice to meet you.')
-) as block(block_index, thai_text, transliteration, translation_en)
+  (0, 'mali',  'มะลิ: สวัสดีค่ะ',             'Mali: sà-wàt-dii khâ',                    'Mali: Hello.'),
+  (1, 'narin', 'นริน: สวัสดีครับ',             'Narin: sà-wàt-dii khráp',                 'Narin: Hello.'),
+  (2, 'mali',  'มะลิ: ฉันชื่อมะลิค่ะ',         'Mali: chǎn chʉ̂ʉ Mali khâ',                'Mali: My name is Mali.'),
+  (3, 'mali',  'มะลิ: คุณชื่ออะไรคะ',          'Mali: khun chʉ̂ʉ à-rai khá',               'Mali: What is your name?'),
+  (4, 'narin', 'นริน: ผมชื่อนรินครับ',          'Narin: phǒm chʉ̂ʉ Narin khráp',            'Narin: My name is Narin.'),
+  (5, 'narin', 'นริน: ยินดีที่ได้รู้จักครับ',  'Narin: yin-dii thîi dâai rúu-jàk khráp',  'Narin: Nice to meet you.'),
+  (6, 'mali',  'มะลิ: ยินดีที่ได้รู้จักค่ะ',  'Mali: yin-dii thîi dâai rúu-jàk khâ',     'Mali: Nice to meet you.')
+) as block(block_index, speaker_key, thai_text, transliteration, translation_en)
 on conflict (dialog_id, block_index) do update set
+  speaker_key     = excluded.speaker_key,
   thai_text       = excluded.thai_text,
   transliteration = excluded.transliteration,
   translation_en  = excluded.translation_en,
