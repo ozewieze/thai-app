@@ -1,5 +1,8 @@
 import { notFound } from "next/navigation";
-import { getLessonBySlug, getLessonNav } from "@/features/lesson/server/queries";
+import {
+  getLessonBySlug,
+  getLessonNav,
+} from "@/features/lesson/server/queries";
 import LessonPageView from "@/features/lesson/components/lesson-page-view/LessonPageView";
 
 type PageProps = { params: Promise<{ lessonSlug: string }> };

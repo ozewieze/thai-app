@@ -78,13 +78,13 @@ export async function getLessonNav(
       .lt("id", lessonId) //lt betekent "less than" en wordt gebruikt om de vorige les te vinden op basis van de ID
       .order("id", { ascending: false })
       .limit(1)
-      .maybeSingle(),
+      .maybeSingle(), // gebruikt in plaats van single omdat maybeSingle null kan teruggeven als er geen vorige les is, in plaats van een fout te gooien.
     supabase
       .from("lessons")
       .select("slug")
       .eq("is_published", true)
       .eq("section_key", sectionKey)
-      .gt("id", lessonId) //
+      .gt("id", lessonId)
       .order("id", { ascending: true })
       .limit(1)
       .maybeSingle(),
