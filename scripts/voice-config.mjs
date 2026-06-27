@@ -26,7 +26,7 @@ export const VOICE_MAP = {
   },
   narin: {
     languageCode: "th-TH",
-    name: "th-TH-Neural2-D", // mannelijk
+    name: "th-TH-Chirp3-HD-Fenrir", // mannelijk (Chirp3 — Neural2 heeft geen Thaise mannenstem)
   },
 };
 
