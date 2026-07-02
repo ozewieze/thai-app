@@ -36,7 +36,7 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { execSync } from "child_process"; //hiermee kan Node externe commando's uitvoeren (ffmpeg, ffprobe, etc.)
-import { writeFileSync, mkdirSync, rmSync, readFileSync } from "fs";
+import { writeFileSync, mkdirSync, rmSync, readFileSync } from "fs"; //fs is de Node File System module
 import { join } from "path"; //join() maakt een OS-specifiek pad van losse segmenten, bv. join("a", "b", "c") → "a/b/c" op Mac/Linux, "a\b\c" op Windows
 import { tmpdir } from "os"; //tmpdir() geeft het pad naar de tijdelijke map van het OS (C:\Users\<user>\AppData\Local\Temp op Windows, /tmp op Mac/Linux)
 

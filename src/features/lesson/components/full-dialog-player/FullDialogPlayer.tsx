@@ -3,9 +3,16 @@
 import { useState, useRef } from "react";
 import { Play, Pause } from "lucide-react";
 import styles from "./FullDialogPlayer.module.css";
+import type { DialogSlide } from "@/features/lesson/types";
 
 type FullDialogPlayerProps = {
   audioUrl: string | null;
+  // Slides zijn optioneel: de player werkt ook zonder synchronisatie.
+  // Worden gevuld zodra dialog_slides rijen en block-timestamps beschikbaar zijn.
+  slides?: DialogSlide[];
+  // Callback die vuurt wanneer de actieve slide wisselt tijdens afspelen.
+  // Wordt beheerd door de parent (DialogFullSection), niet door de player zelf.
+  onSlideChange?: (slideIndex: number) => void;
 };
 
 // Zet seconden om naar "m:ss" formaat (bv. 63 -> "1:03").
@@ -18,11 +25,19 @@ function formatTime(seconds: number): string {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
-export default function FullDialogPlayer({ audioUrl }: FullDialogPlayerProps) {
+export default function FullDialogPlayer({
+  audioUrl,
+  slides = [],
+  onSlideChange,
+}: FullDialogPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(NaN);
-  const audioRef = useRef<HTMLAudioElement>(null); //HTMLAudioElement is gewoon het Javascript obçject dat de browser maakt voor <audio> tags, bvb <audio src="song.mp3"></audio> . useRef houdt een referentie bij naar dat DOM-element, zodat we er later mee kunnen interageren (bv. play/pause).
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Ref om dubbele callback-aanroepen te vermijden: onTimeUpdate vuurt ~4x/sec,
+  // maar we roepen onSlideChange alleen aan als de slide daadwerkelijk wisselt.
+  const prevActiveSlideRef = useRef<number>(-1); //HTMLAudioElement is gewoon het Javascript obçject dat de browser maakt voor <audio> tags, bvb <audio src="song.mp3"></audio> . useRef houdt een referentie bij naar dat DOM-element, zodat we er later mee kunnen interageren (bv. play/pause).
 
   const hasAudio = audioUrl !== null;
   // Voortgang als percentage (0-100), veilig afgevangen bij NaN/0.
@@ -60,15 +75,36 @@ export default function FullDialogPlayer({ audioUrl }: FullDialogPlayerProps) {
   }
 
   // onTimeUpdate vuurt ~4x per seconde tijdens afspelen.
+  // We updaten currentTime en berekenen de actieve slide op basis van timestamps.
   function handleTimeUpdate() {
     const audio = audioRef.current;
     if (!audio) return;
     setCurrentTime(audio.currentTime);
+
+    // Bereken de actieve slide op basis van currentTime (in ms).
+    // Alleen als er slides met timestamps beschikbaar zijn.
+    if (slides.length > 0) {
+      const currentMs = audio.currentTime * 1000;
+      const newIndex = slides.findIndex(
+        (s) =>
+          s.startMs !== null &&
+          s.endMs !== null &&
+          currentMs >= s.startMs &&
+          currentMs < s.endMs,
+      );
+      // Update state alleen als de slide daadwerkelijk gewisseld is.
+      if (newIndex !== prevActiveSlideRef.current) {
+        prevActiveSlideRef.current = newIndex;
+        onSlideChange?.(newIndex);
+      }
+    }
   }
 
   function handleEnded() {
     setIsPlaying(false);
     setCurrentTime(0);
+    prevActiveSlideRef.current = -1;
+    onSlideChange?.(-1);
   }
 
   return (

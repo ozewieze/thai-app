@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "./LessonPageView.module.css";
 import type { LessonWithDialog, LessonNav } from "@/features/lesson/types";
 import DialogPlayer from "@/features/lesson/components/dialog-player/DialogPlayer";
-import FullDialogPlayer from "@/features/lesson/components/full-dialog-player/FullDialogPlayer";
+import DialogFullSection from "@/features/lesson/components/dialog-full-section/DialogFullSection";
 import { getLevelById } from "@/features/level/lib/getLevelById";
 
 type LessonPageViewProps = {
@@ -100,11 +100,12 @@ export default function LessonPageView({
           </div>
         </div>
 
-        {/* Image */}
-        <div className={styles.imageCard}>Illustration coming soon</div>
-
-        {/* Full dialogue audio player */}
-        <FullDialogPlayer audioUrl={lesson.dialog?.audioUrl ?? null} />
+        {/* Slideshow + full-dialog audioplayer (gecombineerd in één client component) */}
+        <DialogFullSection
+          audioUrl={lesson.dialog?.audioUrl ?? null}
+          slides={lesson.dialog?.slides ?? []}
+          imageCardClassName={styles.imageCard}
+        />
 
         {/* Dialog player */}
         {lesson.dialog && lesson.dialog.blocks.length > 0 ? (

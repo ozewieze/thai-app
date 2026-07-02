@@ -39,7 +39,16 @@ export async function getLessonBySlug(
           thai_text,
           transliteration,
           translation_en,
-          audio_url
+          audio_url,
+          full_start_ms,
+          full_end_ms
+        ),
+        dialog_slides (
+          id,
+          slide_index,
+          first_block_index,
+          last_block_index,
+          image_url
         )
       )
     `,
