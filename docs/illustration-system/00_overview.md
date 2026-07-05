@@ -50,6 +50,17 @@ docs/illustration-system/
       slide_02_prompt.md
       slide_03_prompt.md
     ...
+  slides/
+    a1_dialog_01/
+      slide_01.png                     ← goedgekeurde afbeelding, lokale kopie vóór upload (zie 04, Stap 6b)
+      slide_02.png
+      slide_03.png
+    ...
+  cast-references/
+    [character_key]/
+      face-lock.png                    ← verplicht vóór eerste dialoog met dit personage (zie 04, Stap 0)
+      full-body.png
+    ...
 ```
 
 ## Naamgevingsconventie

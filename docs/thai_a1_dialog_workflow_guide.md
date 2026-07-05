@@ -65,18 +65,18 @@ supabase/
     03_build_dialog_lesson_blueprint.sql ← de enige builder-query
     04_lesson_dialog_prompt_template.md
     blueprints/
-      lesson_01_dialog_blueprint.csv
-      lesson_02_dialog_blueprint.csv
+      a1_dialog_01_blueprint.csv
+      a1_dialog_02_blueprint.csv
 
   prompts/
-    lesson_01_dialog_prompt.md
-    lesson_02_dialog_prompt.md
+    a1_dialog_01_prompt.md
+    a1_dialog_02_prompt.md
 
   generation/
     dialogs/
-      lesson_01_dialog_output.md
-      lesson_02_dialog_output.md
-      lesson_01_dialog_review.md  ← optioneel, alleen aanmaken als er iets te documenteren valt
+      a1_dialog_01_output.md
+      a1_dialog_02_output.md
+      a1_dialog_01_review.md  ← optioneel, alleen aanmaken als er iets te documenteren valt
 
   seed-data/
     app/
@@ -195,13 +195,13 @@ De kolommen staan in exact dezelfde volgorde als de secties in `04_lesson_dialog
 
 ### Stap 6 — Exporteer als CSV (optioneel)
 
-Exporteer het one-row-resultaat als CSV naar `planning/blueprints/lesson_XX_dialog_blueprint.csv`.
+Exporteer het one-row-resultaat als CSV naar `planning/blueprints/a1_dialog_XX_blueprint.csv`.
 
 **Let op multiline-velden.** Velden zoals `required_vocabulary_list`, `allowed_vocabulary_list` en `speaker_a_default_tone` bevatten newlines. De meeste teksteditors (VS Code, Notepad) tonen die fout als extra rijen, waardoor kolomposities verschuiven. Gebruik voor multiline-velden de **cel-klik in Studio** om de volledige inhoud te kopiëren. Scalarvelden (lesson_key, scene_type, allowed_register, etc.) werken wel betrouwbaar uit de CSV.
 
 ### Stap 7 — Vul de prompt in
 
-Maak `supabase/prompts/lesson_XX_dialog_prompt.md` aan op basis van `04_lesson_dialog_prompt_template.md`. Vervang elke placeholder met de waarde uit het Studio-resultaat of de CSV.
+Maak `supabase/prompts/a1_dialog_XX_prompt.md` aan op basis van `04_lesson_dialog_prompt_template.md`. Vervang elke placeholder met de waarde uit het Studio-resultaat of de CSV.
 
 Werkwijze:
 
@@ -211,7 +211,7 @@ Werkwijze:
 
 ### Stap 8 — Genereer de dialoog
 
-Gebruik de ingevulde lesspecifieke prompt. Sla de ruwe output op in `generation/dialogs/lesson_XX_dialog_output.md`.
+Gebruik de ingevulde lesspecifieke prompt. Sla de ruwe output op in `generation/dialogs/a1_dialog_XX_output.md`.
 
 De output bestaat uit vijf metadata-secties (Title, Subtitle, Learning focus, Scene summary, Register) gevolgd door genummerde blokken. Elk blok bevat precies één Thai-regel, één Transliteration-regel en één English-regel.
 
@@ -292,6 +292,8 @@ commit;
 
 `block_index` is 0-gebaseerd. De volgorde van de rijen in `values` bepaalt de volgorde in de player. Enkelvoudige aanhalingstekens in de tekst escapeer je als `''` (twee enkele quotes).
 
+Als er later een illustratielaag voor deze dialoog bijkomt, verschijnt er nog een apart bestand `seed-data/dialogs/a1_dialog_XX_slides.seed.sql` (voor `dialog_slides`) — dat hoort bij `docs/illustration-system/04_illustration_workflow_guide.md` en niet bij deze stap, omdat de slide-segmentatie pas ná goedkeuring van de dialoog wordt bepaald.
+
 ### Stap 11 — Voer lokaal uit
 
 Voor kleine wijzigingen of een nieuwe dialoog: voer de seed-SQL handmatig uit in de SQL-editor. Gebruik `supabase db reset` alleen voor een volledige reproducibiliteitstest.
@@ -300,9 +302,9 @@ Voor kleine wijzigingen of een nieuwe dialoog: voer de seed-SQL handmatig uit in
 
 Commit de plannings-, generatie- en seed-bestanden samen:
 
-- `planning/blueprints/lesson_XX_dialog_blueprint.csv`
-- `supabase/prompts/lesson_XX_dialog_prompt.md`
-- `generation/dialogs/lesson_XX_dialog_output.md`
+- `planning/blueprints/a1_dialog_XX_blueprint.csv`
+- `supabase/prompts/a1_dialog_XX_prompt.md`
+- `generation/dialogs/a1_dialog_XX_output.md`
 - `seed-data/app/specs/a1_dialog_XX_blueprint_specs.seed.sql`
 - `seed-data/links/lesson_links_a1-dialog-XX.seed.sql`
 - `seed-data/dialogs/a1_dialog_XX.seed.sql`
@@ -335,7 +337,7 @@ sql_paths = [
 4. Maak `dialog_blueprint_specs` aan en seed.
 5. Voer `03_build_dialog_lesson_blueprint.sql` uit — verwacht één rij.
 6. Exporteer als CSV naar `planning/blueprints/`.
-7. Vul `supabase/prompts/lesson_XX_dialog_prompt.md` in (scalars vanuit CSV, multiline vanuit Studio-cel).
+7. Vul `supabase/prompts/a1_dialog_XX_prompt.md` in (scalars vanuit CSV, multiline vanuit Studio-cel).
 8. Genereer de dialoog en sla op in `generation/dialogs/`.
 9. Voer QA uit.
 10. Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan (dialoog-metadata + blokken) en voer uit.

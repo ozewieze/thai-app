@@ -36,6 +36,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# illustratiesysteem: lokale staging-map vóór upload naar Supabase Storage
+# (scripts/upload-slides.mjs) -- wegwerpbaar, zie docs/illustration-system/05_storage_strategy.md
+/illustration-staging
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

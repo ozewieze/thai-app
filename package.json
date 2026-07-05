@@ -10,7 +10,8 @@
     "seed:vocab": "node scripts/generate-vocabulary-seed.mjs",
     "seed:grammar": "node scripts/generate-grammar-seed.mjs",
     "seed:pattern": "node scripts/generate-pattern-seed.mjs",
-    "db:reset": "npm run seed:vocab && npm run seed:grammar && npm run seed:pattern && npx supabase db reset"
+    "db:reset": "npm run seed:vocab && npm run seed:grammar && npm run seed:pattern && npx supabase db reset",
+    "db:reset:full": "npm run db:reset && node --env-file=.env.local scripts/generate-audio.mjs && node --env-file=.env.local scripts/merge-audio.mjs && node --env-file=.env.local scripts/upload-slides.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",

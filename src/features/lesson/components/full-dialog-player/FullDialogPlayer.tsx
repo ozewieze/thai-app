@@ -37,7 +37,7 @@ export default function FullDialogPlayer({
 
   // Ref om dubbele callback-aanroepen te vermijden: onTimeUpdate vuurt ~4x/sec,
   // maar we roepen onSlideChange alleen aan als de slide daadwerkelijk wisselt.
-  const prevActiveSlideRef = useRef<number>(-1); //HTMLAudioElement is gewoon het Javascript obçject dat de browser maakt voor <audio> tags, bvb <audio src="song.mp3"></audio> . useRef houdt een referentie bij naar dat DOM-element, zodat we er later mee kunnen interageren (bv. play/pause).
+  const prevActiveSlideRef = useRef<number>(-1); //useRef is een manier om een mutable value te bewaren die niet opnieuw renderen veroorzaakt. Hier gebruiken we het om de vorige actieve slide-index bij te houden, zodat we onSlideChange alleen aanroepen als de index verandert.
 
   const hasAudio = audioUrl !== null;
   // Voortgang als percentage (0-100), veilig afgevangen bij NaN/0.
