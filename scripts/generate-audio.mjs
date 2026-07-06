@@ -93,13 +93,13 @@ async function callTTS(spokenText, voice) {
     }),
   });
 
-  const data = await response.json();
+  const data = await response.json(); //geeft een object terug met audioContent (base64) of error, dus geen echte mp3 buffer. We moeten de base64 decoderen naar een buffer.
 
   if (data.error) {
     throw new Error(`TTS API fout: ${data.error.message}`);
   }
 
-  return Buffer.from(data.audioContent, "base64");
+  return Buffer.from(data.audioContent, "base64"); // dit converteert naar een echte binaire mp3 buffer in RAM geheugen.
 }
 
 /**
@@ -185,7 +185,9 @@ async function generateAudio() {
     // Controleer of speaker_key bekend is in de voice-config
     const voice = VOICE_MAP[block.speaker_key];
     if (!voice) {
-      console.warn(`WAARSCHUWING: ${label} onbekende speaker_key '${block.speaker_key}' — overgeslagen`);
+      console.warn(
+        `WAARSCHUWING: ${label} onbekende speaker_key '${block.speaker_key}' — overgeslagen`,
+      );
       overgeslagen++;
       continue;
     }
@@ -204,7 +206,7 @@ async function generateAudio() {
     }
 
     try {
-      process.stdout.write(`${label} genereren...`);
+      process.stdout.write(`${label} genereren...`); // schrijft rechtsteeks naar stdout zonder line break, zodat we "OK" of "MISLUKT" erachter kunnen printen
 
       const mp3Buffer = await callTTS(spokenText, voice);
       await uploadToStorage(storagePath, mp3Buffer);

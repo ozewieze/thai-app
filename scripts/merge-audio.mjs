@@ -146,8 +146,8 @@ async function downloadFile(url, destPath) {
   if (!response.ok) {
     throw new Error(`Download mislukt (HTTP ${response.status}): ${url}`);
   }
-  const buffer = Buffer.from(await response.arrayBuffer());
-  writeFileSync(destPath, buffer);
+  const buffer = Buffer.from(await response.arrayBuffer()); //Zet de gedownloade bytes in geheugen.
+  writeFileSync(destPath, buffer); // Schrijf die bytes naar een bestand op schijf
 }
 
 /**
@@ -328,10 +328,10 @@ async function mergeDialogAudio() {
       for (const block of blocks) {
         const fileName = `block-${String(block.block_index).padStart(2, "0")}.mp3`; //bvb block-00.mp3, block-01.mp3, etc.
         const dest = join(tempDir, fileName); //dit bouwt een pad naar de tijdelijke map bvb C:\Users\<user>\AppData\Local\Temp\thai-merge-a1-dialog-01-1699999999999\block-00.mp3
-        await downloadFile(block.audio_url, dest); //download de audio_url van het blok naar de tijdelijke map
-        blockPaths.push(dest);
+        await downloadFile(block.audio_url, dest); //creëert het binare mp3-bestand in de tijdelijke map
+        blockPaths.push(dest); //inhoud array bvb [C:\Users\<user>\AppData\Local\Temp\thai-merge-a1-dialog-01-1699999999999\block-00.mp3, C:\Users\<user>\AppData\Local\Temp\thai-merge-a1-dialog-01-1699999999999\block-01.mp3, ...]
       }
-      console.log(" OK");
+      console.log(" OK"); //dus je hebt een array van alle gedownloade blok-MP3-bestanden in de tijdelijke map, klaar om samengevoegd te worden
 
       // ── Stap 2: bereken timestamps via ffprobe ──────────────
       process.stdout.write(`${label} timestamps berekenen...`);
@@ -356,7 +356,7 @@ async function mergeDialogAudio() {
       process.stdout.write(`${label} samenvoegen...`);
 
       const silencePath = join(tempDir, "silence.mp3");
-      const concatPath = join(tempDir, "concat.txt");
+      const concatPath = join(tempDir, "concat.txt"); //tekstbestand met de volgorde dat ffmpeg kan gebruiken als concat-lijst
       const fullDialogPath = join(tempDir, "full-dialog.mp3");
 
       generateSilence(silencePath);
@@ -373,7 +373,7 @@ async function mergeDialogAudio() {
       }
       writeFileSync(concatPath, concatLines.join("\n"), "utf8");
 
-      runFfmpegConcat(concatPath, fullDialogPath);
+      runFfmpegConcat(concatPath, fullDialogPath); //geeft terug een mp3-bestand in de tijdelijke map dat alle blokken + stiltes samenvoegt en kopieert naar fullDialogPath
       console.log(" OK");
 
       // ── Stap 4: upload naar Storage ─────────────────────────
