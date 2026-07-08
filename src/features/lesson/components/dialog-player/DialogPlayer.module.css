@@ -13,7 +13,7 @@
   flex-wrap: wrap;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 40rem) {
   .toggles {
     justify-content: flex-end;
   }
@@ -36,7 +36,7 @@
     color var(--transition-fast);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 40rem) {
   .toggleBtn {
     gap: var(--spacing-8);
     padding: var(--spacing-8) var(--spacing-16);
@@ -69,8 +69,8 @@
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: var(--radius-pill);
   background: var(--color-border-strong);
   transition:
@@ -79,7 +79,7 @@
 }
 
 .dotActive {
-  width: 24px;
+  width: 1.5rem;
   background: var(--color-brand);
 }
 

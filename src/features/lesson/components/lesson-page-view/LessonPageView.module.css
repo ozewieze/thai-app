@@ -11,7 +11,7 @@
   gap: var(--spacing-32);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 40rem) {
   .content {
     gap: var(--spacing-48);
     padding-top: var(--spacing-32);
@@ -80,8 +80,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 1.75rem;
+  height: 1.75rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border-default);
   background: var(--color-surface);
@@ -121,7 +121,7 @@
   margin: 0;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 40rem) {
   .lessonTitle {
     font-size: var(--size-36);
   }

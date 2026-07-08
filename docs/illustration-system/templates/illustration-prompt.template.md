@@ -54,9 +54,15 @@ Moment: [Narrative Moment]. [Interaction]. [Body Language]. [Facial
 Expressions]. [Conversation Energy].
 
 Composition: medium-wide, horizontal, full-body, feet and shoes visible,
-optimized for a wide slideshow card. Avoid extreme close-ups or
-movie-poster compositions.
+optimized for a wide slideshow card, 3:2 aspect ratio (1536x1024 landscape).
+Avoid extreme close-ups or movie-poster compositions.
 ```
+
+Genereer op **landscape-formaat (1536x1024, 3:2)** — dit is de generator-instelling,
+niet enkel tekst in de prompt. De site toont de afbeelding in een `.imageCard`
+met `aspect-ratio: 3/2` (zie `LessonPageView.module.css`), dus deze twee
+moeten in sync blijven: wijzigt de CSS-ratio ooit, werk dan ook hier de ratio
+en het genoemde pixelformaat bij.
 
 Als de gezichten na generatie nog niet duidelijk Thai zijn: gebruik het correctieprotocol in `04_illustration_workflow_guide.md` (Stap 6a) in plaats van de prompt opnieuw vanaf nul te versturen.
 
