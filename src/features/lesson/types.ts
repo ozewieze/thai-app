@@ -74,6 +74,10 @@ export type DialogRow = {
   scene_summary: string | null;
   learning_focus: string | null;
   audio_url: string | null;
+  // Exacte totale duur (ms) van de samengevoegde full-dialog audio, gezet
+  // door scripts/merge-audio.mjs. Null zolang deze dialoog nog niet (met
+  // de bijgewerkte scriptversie) samengevoegd is.
+  audio_duration_ms: number | null;
   dialog_blocks: DialogBlockRow[];
   dialog_slides: DialogSlideRow[];
 };
@@ -138,6 +142,9 @@ export type DialogData = {
   sceneSummary: string | null;
   learningFocus: string | null;
   audioUrl: string | null;
+  // Zie DialogRow.audio_duration_ms — null zolang nog niet (opnieuw)
+  // samengevoegd sinds deze kolom bestaat.
+  audioDurationMs: number | null;
   blocks: DialogBlock[];
   slides: DialogSlide[];
 };

@@ -103,6 +103,7 @@ export default function LessonPageView({
         {/* Slideshow + full-dialog audioplayer (gecombineerd in één client component) */}
         <DialogFullSection
           audioUrl={lesson.dialog?.audioUrl ?? null}
+          audioDurationMs={lesson.dialog?.audioDurationMs ?? null}
           slides={lesson.dialog?.slides ?? []}
           imageCardClassName={styles.imageCard}
         />

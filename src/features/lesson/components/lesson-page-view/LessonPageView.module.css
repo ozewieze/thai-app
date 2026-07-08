@@ -162,8 +162,22 @@
 /* ---- Image ---- */
 
 .imageCard {
+  /*
+   * Vaste height: 500px zorgde ervoor dat de box op smalle schermen
+   * (waar width al krimpt naar de viewportbreedte) een heel ander
+   * hoogte/breedte-verhouding kreeg dan de afbeeldingen zelf (3:2,
+   * bv. 1536x1024 -- zie illustration-staging/). object-fit: cover in
+   * DialogFullSection.module.css vult de box altijd volledig, dus bij
+   * een afwijkende boxverhouding werd een steeds groter deel van de
+   * afbeelding weggesneden naarmate het scherm smaller werd.
+   * aspect-ratio: 3/2 i.p.v. een vaste height laat de box zelf meegroeien/
+   * -krimpen met de breedte, in dezelfde verhouding als de bron-
+   * afbeeldingen. Daardoor blijft cover nagenoeg een 1-op-1 fit (minimale
+   * crop) op elke schermgrootte, in plaats van contain te moeten
+   * gebruiken (wat lege balken zou geven) of alsnog te croppen.
+   */
   width: 100%;
-  height: 500px;
+  aspect-ratio: 3 / 2;
   background: var(--color-surface-muted);
   border-radius: var(--radius-lg);
   overflow: hidden;

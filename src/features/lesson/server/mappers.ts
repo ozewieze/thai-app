@@ -51,6 +51,7 @@ export function mapDialogRowToDialogData(row: DialogRow): DialogData {
     sceneSummary: row.scene_summary,
     learningFocus: row.learning_focus,
     audioUrl: row.audio_url,
+    audioDurationMs: row.audio_duration_ms,
     blocks,
     slides,
   };

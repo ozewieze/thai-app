@@ -8,7 +8,7 @@
 
 .toggles {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--spacing-8);
   flex-wrap: wrap;
 }
@@ -31,7 +31,9 @@
   font-size: var(--size-12);
   font-weight: var(--medium);
   cursor: pointer;
-  transition: background var(--transition-fast), color var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
 }
 
 @media (min-width: 640px) {
@@ -71,7 +73,9 @@
   height: 8px;
   border-radius: var(--radius-pill);
   background: var(--color-border-strong);
-  transition: background var(--transition-fast), width var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    width var(--transition-fast);
 }
 
 .dotActive {
@@ -99,7 +103,9 @@
   font-size: var(--size-14);
   font-weight: var(--medium-bold);
   cursor: pointer;
-  transition: background var(--transition-fast), color var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
 }
 
 .navBtn:hover:not(:disabled) {

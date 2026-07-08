@@ -1,0 +1,106 @@
+/*
+ * DialogFullSection.module.css
+ *
+ * Visuele laag bovenop de instante slide-wissel (zie de comments in
+ * DialogFullSection.tsx voor de mislukte crossfade/fade-experimenten).
+ *
+ * .slideImage: trage Ken Burns-achtige scale(1.00 -> 1.02) die de
+ * volledige zichtbare duur van een slide-afbeelding loopt. Losstaand
+ * van het wisselmoment zelf (de afbeelding wisselt nog steeds instant).
+ * Getriggerd via een verse DOM-mount (key-prop op het element in
+ * DialogFullSection.tsx) i.p.v. een transition + class-toggle op een
+ * hergebruikt element — dat laatste patroon bleek in dit project
+ * onbetrouwbaar (geen animatie-start-timing garantie bij het opnieuw
+ * toepassen van een class).
+ *
+ * (Een eerdere korte donkere overlay-flash op het wisselmoment is weer
+ * verwijderd — voegde in de praktijk niets toe.)
+ *
+ * De 12s hieronder in .slideImage is enkel de fallback-duur. In de praktijk
+ * wordt animation-duration per slide overschreven via een inline style in
+ * DialogFullSection.tsx (getSlideAnimationDurationSeconds), zodat de zoom
+ * exact zo lang loopt als de slide daadwerkelijk zichtbaar is.
+ *
+ * .preloadImage: "voorverwarm"-afbeelding van alle resterende slides (zie
+ * DialogFullSection.tsx, PRIORITY_LOOKAHEAD). Doel: de browser dwingen om
+ * diezelfde afbeelding al te decoderen én te schalen naar exact dezelfde
+ * box-grootte (object-fit: cover, position: absolute; inset: 0, dus
+ * identiek aan .slideImage) vóórdat die slide daadwerkelijk actief wordt.
+ *
+ * Zichtbaarheid via z-index i.p.v. opacity: 0 — .preloadImage staat op
+ * volle opacity maar met een lagere z-index dan .slideImage, dat er
+ * bovenop ligt en 'm dus volledig visueel afdekt. Een volledig ondoorzichtig
+ * maar visueel afgedekt element geeft de browser geen enkele aanwijzing dat
+ * het "onbelangrijk" is, dus wordt het gegarandeerd normaal/volledig
+ * gerenderd — betrouwbaarder dan opacity: 0, waarbij niet met zekerheid
+ * te zeggen is of elke browser het element altijd volledig rasterizeert.
+ * Bij een slidewissel verdwijnt de bovenste laag en komt de al lang
+ * klaarstaande laag eronder instant tevoorschijn, zonder nieuw decode/
+ * schaalmoment. Aanname: de slide-afbeeldingen zelf hebben geen
+ * transparante gebieden (anders zou de laag eronder erdoorheen kunnen
+ * schemeren zolang die afbeelding de bovenste/actieve laag is).
+ *
+ * (next/image-experiment teruggedraaid — zie comments in
+ * DialogFullSection.tsx. Beide classes zetten hier weer zelf position/
+ * width/height, i.p.v. dat aan een fill-prop over te laten.)
+ */
+
+/*
+ * .combinedCard: wrapper rond de imageCard-div én de FullDialogPlayer.
+ * Bestaat enkel om deze twee elementen als één direct kind te laten tellen
+ * voor de flex-gap in LessonPageView.module.css (.content). Zonder deze
+ * wrapper zag de flex-gap twee losse children (via het eerder gebruikte
+ * Fragment) en kreeg dat paar de standaard (grotere) sectie-tussenruimte.
+ * De eigen gap hieronder (8px) is bewust kleiner dan die sectie-gap: het
+ * signaleert dat imageCard en player bij elkaar horen, terwijl de rest van
+ * de pagina duidelijk als aparte secties oogt.
+ */
+.combinedCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slideImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  object-fit: cover;
+  transform-origin: center center;
+  will-change: transform; /* hint voor de browser dat er een animatie op transform komt, zodat het element op een aparte compositing layer kan worden geplaatst en de animatie vloeiender verloopt */
+  animation: kenBurnsScale 12s ease-out forwards;
+}
+
+@keyframes kenBurnsScale {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slideImage {
+    animation: none;
+  }
+}
+
+.preloadImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  object-fit: cover;
+  pointer-events: none;
+}

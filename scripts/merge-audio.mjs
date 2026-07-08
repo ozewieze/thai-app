@@ -118,7 +118,7 @@ function buildFullDialogPath(lessonKey) {
 function getAudioDurationMs(filePath) {
   const output = execSync(
     `ffprobe -v quiet -print_format json -show_format -show_streams "${filePath}"`,
-    { encoding: "utf8" },
+    { encoding: "utf8" }, //geeft de uitvoer van ffprobe terug als een string in plaats van een Buffer bvb '{"streams":[{"index":0,"codec_name":"mp3","codec_type":"audio","duration":"3.456000"}],"format":{"filename":"C:\\Users\\<user>\\AppData\\Local\\Temp\\thai-merge-a1-dialog-01-1699999999999\\block-00.mp3","duration":"3.456000"}}'
   );
   const data = JSON.parse(output); //dit geeft een object met streams en format terug, bv. { streams: [...], format: {...} }
 
@@ -387,12 +387,12 @@ async function mergeDialogAudio() {
 
       const { error: dialogError } = await supabase
         .from("dialogs")
-        .update({ audio_url: publicUrl })
+        .update({ audio_url: publicUrl, audio_duration_ms: cursor })
         .eq("id", dialog.id);
 
       if (dialogError)
         throw new Error(
-          `dialogs.audio_url update mislukt: ${dialogError.message}`,
+          `dialogs.audio_url/audio_duration_ms update mislukt: ${dialogError.message}`,
         );
 
       for (const { blockId, startMs, endMs } of timestamps) {

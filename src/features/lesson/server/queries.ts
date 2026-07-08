@@ -33,6 +33,7 @@ export async function getLessonBySlug(
         scene_summary,
         learning_focus,
         audio_url,
+        audio_duration_ms,
         dialog_blocks (
           id,
           block_index,
