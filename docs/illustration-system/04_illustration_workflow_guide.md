@@ -4,6 +4,8 @@ Deze gids beschrijft de herhaalbare workflow om illustraties te produceren voor 
 
 Deze workflow start pas **nadat** een dialoog volledig is goedgekeurd en opgeslagen in `dialogs`/`dialog_blocks` (stap 10 van de dialoogworkflowgids).
 
+**Waarom volstaat een korte prompt als "genereer de slides voor dialoog X"?** Dit bestand wordt permanent geladen via `CLAUDE.md` (`@docs/illustration-system/04_illustration_workflow_guide.md`). Alle overige input die nodig is (dialoogtekst, cast sheet, face-locks, scene bibles) staat al in de database of in bestanden onder `docs/illustration-system/`.
+
 ## De vier stappen
 
 ```
