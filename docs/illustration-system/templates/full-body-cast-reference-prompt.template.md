@@ -87,4 +87,3 @@ elements that establish the setting without distracting from the characters.
 
 1. Personage-specifieke beschrijving en scene-specifieke beschrijving invullen, prompt uitvoeren (evt. meerdere correctierondes, zie Stap 6a-stijl correctietaal in `04_illustration_workflow_guide.md`).
 2. Alleen het eindresultaat opslaan als `docs/illustration-system/cast-references/[character_key]/full-body.png` — de ingevulde/gecorrigeerde prompt zelf wordt niet bewaard.
-3. Statusoverzicht in `02_locked_cast_sheet.md` bijwerken.

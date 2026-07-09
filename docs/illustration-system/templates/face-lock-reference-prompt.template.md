@@ -79,8 +79,4 @@ Kies consequent dezelfde kijkrichting (hier: naar links) voor alle personages, z
 
 1. Visuele QA: is het gezicht duidelijk Thai? Toets tegen `01_master_style_system.md` → Thai Facial Identity — Strict Requirements en de Negative Prompt. Twijfel? Gebruik het correctieprotocol in `04_illustration_workflow_guide.md` (Stap 6a).
 2. Komen front-, 3/4- en profielversie overeen (zelfde gezicht, zelfde stijl)?
-3. Opslaan als:
-   - `docs/illustration-system/cast-references/[character_key]/front.png`
-   - `docs/illustration-system/cast-references/[character_key]/three-quarter.png`
-   - `docs/illustration-system/cast-references/[character_key]/profile.png`
-4. Statusoverzicht in `02_locked_cast_sheet.md` afvinken voor `[character_key]`.
+3. Opslaan als: `docs/illustration-system/cast-references/[character_key]/face-lock.png`
