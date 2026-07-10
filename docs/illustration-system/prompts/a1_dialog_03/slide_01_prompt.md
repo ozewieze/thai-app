@@ -1,18 +1,20 @@
-# Illustration Prompt — a1_dialog_01 / Slide 1
+# Illustration Prompt — a1_dialog_03 / Slide 1
 
 ## Samenstelling (ter controle, niet meesturen naar de generator)
 
 - Master Style Prompt: `01_master_style_system.md`
 - Cast-entries: `02_locked_cast_sheet.md` → `mali`, `narin`
-- Scene Bible: `scene-bibles/a1_dialog_01_scene_bible.md`
-- Slide Specification: `slide-specs/a1_dialog_01_slide_specs.md` → Slide 1
+- Scene Bible: `scene-bibles/a1_dialog_03_scene_bible.md`
+- Slide Specification: `slide-specs/a1_dialog_03_slide_specs.md` → Slide 1
 
 ## Verplicht mee te sturen referentieafbeeldingen (niet optioneel)
 
 1. `public/hero-image.png` — stijl-/paletreferentie
-2. Face lock-referenties van Mali en Narin.Gezien de aard van dit Moment (twee personages die elkaar begroeten, typisch bijna-profiel) is de **profielreferentie hier de belangrijkste van de drie** — zie openstaand punt hierboven. Stuur alle drie hoeken.
+2. Face lock-referenties van Mali en Narin (front + 3/4 + profiel). Dit Moment is een net-gezeten opening aan het cafétafeltje, met Narin licht naar Mali gekeerd — driekwart is hier de belangrijkste hoek, stuur alle drie mee.
 3. Goedgekeurde full-body cast-referentie-afbeeldingen van Mali en Narin — aanvullende referentie (dezelfde afbeeldingen als gebruikt voor de hero image)
-4. n.v.t. — dit is de eerste slide van de dialoog, geen vorige slide om als continuïteitsreferentie te gebruiken
+4. n.v.t. — dit is de eerste slide van deze dialoog, geen vorige slide binnen `a1_dialog_03` om als continuïteitsreferentie te gebruiken. (Optioneel, niet verplicht: omdat dialoog 3 direct aansluit op dialoog 2 kan de laatste goedgekeurde slide van `a1_dialog_02` meegestuurd worden als extra locatie-/sfeercontinuïteit.)
+
+**Let op:** deze slide legt de vaste achtergrond (camerahoek, framing, meubels, lichtinval) vast waar Slide 2 en Slide 3 van deze dialoog pixelconsistent op moeten aansluiten (zie Background Lock Rule in `01_master_style_system.md`, meegenomen in de prompts van Slide 2 en 3).
 
 ## Finale prompt
 
@@ -104,38 +106,41 @@ redesign them.
 
 Scene (this dialogue's own setting — do not reuse the hero image's living
 room, furniture, or architecture, only its rendering philosophy): a quiet
-everyday indoor setting (a simple, modern living room or a calm corner of a
-café), daytime with soft natural light, minimal furniture, softly detailed.
-A richer selection of Thai decorative touches is welcome — for example
-patterned cushions or textile details, warm teak or rattan wood tones, a
-small tabletop fountain, framed Thai-style artwork or botanical prints, or
-decorative Thai ceramics — as long as it reads as a considered,
-contemporary interior rather than a cluttered souvenir shop. Avoid literal
-shop signage, tourist-market clichés, religious imagery (e.g. Buddha
-statues, spirit houses, or altars), or visual clutter that would date or
-over-localize the scene. Clean and uncluttered overall. Color palette:
-warm off-whites, muted warm neutrals, soft sand tones, restrained
-saturation.
+corner of a coffee shop, seated at a small café table, daytime with soft
+natural light, minimal furniture (a chair, a small table, perhaps a plant),
+softly detailed. A richer selection of Thai decorative touches is welcome
+— for example patterned cushions or textile details, warm teak or rattan
+wood tones, a small tabletop fountain, framed Thai-style artwork or
+botanical prints, or decorative Thai ceramics — as long as it reads as a
+considered, contemporary interior rather than a cluttered souvenir shop.
+Avoid literal shop signage, tourist-market clichés, religious imagery
+(e.g. Buddha statues, spirit houses, or altars), or visual clutter that
+would date or over-localize the scene. Clean and uncluttered overall.
+Color palette: warm off-whites, muted warm neutrals, soft sand tones,
+restrained saturation.
 
-Moment: Mali and Narin greet each other for the first time. Mali speaks
-first with a polite greeting; Narin returns the greeting immediately after.
-Both characters are actively performing a traditional Thai wai greeting. Hands are pressed together in front of the chest-to-chin area, fingertips near the chin, accompanied by a small respectful forward head inclination. The wai must be clearly visible and readable as a Thai greeting gesture. No waving, no handshake, no raised-hand greeting, and no other substitute gesture.
-Comfortable conversational distance, open upright posture from both, slight
-forward inclination as a polite greeting cue. Warm, polite smiles from both
-characters. Calm, respectful opening energy — first contact between two
-adults meeting for the first time.
+Moment: Now seated together at the café table, Narin asks Mali what she
+would like to drink; she answers simply that she would like coffee. There has not yet been served anything, so there are no coffee cups or other drinks on the table. Narin
+turns toward Mali with a light, attentive question, perhaps a small gesture
+toward her or the table; Mali answers easily, with a small relaxed nod. Both
+seated upright and relaxed at the small café table, comfortable
+conversational distance; Narin slightly turned toward Mali in an attentive,
+hosting posture. Narin friendly and mildly inquiring; Mali calm and
+pleasant. Easy, polite opening — the natural first exchange right after
+sitting down together.
 
-Composition: medium-wide, horizontal format, full-body figures from head to
-toe, feet and shoes clearly visible, optimized for a wide slideshow card on
-a language-learning lesson page. Avoid extreme close-ups or movie-poster
-compositions.
-
-
+Composition: medium-wide, horizontal, full-body, feet and shoes visible,
+optimized for a wide slideshow card, 3:2 aspect ratio (1536x1024 landscape).
+Avoid extreme close-ups or movie-poster compositions.
 ```
+
+Genereer op **landscape-formaat (1536x1024, 3:2)**.
+
+Als de gezichten na generatie nog niet duidelijk Thai zijn: gebruik het correctieprotocol in `04_illustration_workflow_guide.md` (Stap 6a) in plaats van de prompt opnieuw vanaf nul te versturen.
 
 ## Na generatie
 
 1. Visuele QA (identiteit, stijl, continuïteit — zie `04_illustration_workflow_guide.md` stap 6).
-2. Afbeelding downloaden en hernoemen: `greetings-and-introductions-slide-01.png`
-3. Uploaden naar Supabase Storage bucket `illustrations`, pad `illustrations/dialogs/a1/greetings-and-introductions/slides/slide-01.png`.
-4. `dialog_slides.image_url` bijwerken voor `slide_index = 0`.
+2. Afbeelding downloaden en hernoemen: `slide-00.png` (zero-padded, `slide_index = 0`).
+3. Zetten in `illustration-staging/a1-dialog-03/slide-00.png`.
+4. Uploaden via `scripts/upload-slides.mjs` (Stap 7-8) → pad `illustrations/dialogs/a1/dialog-03/slides/slide-00.png`, werkt `dialog_slides.image_url` bij voor `slide_index = 0`.

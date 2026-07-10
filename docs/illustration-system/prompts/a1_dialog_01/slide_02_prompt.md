@@ -84,11 +84,18 @@ redesign them.
 Scene (this dialogue's own setting, continued from Slide 1 — never the hero
 image's living room): the same quiet everyday indoor setting as the previous
 slide (a simple, modern living room or a calm corner of a café), daytime with soft
-natural light, minimal and softly detailed environment, clean and
-uncluttered. Same color palette: warm off-whites, muted warm neutrals, soft
-sand tones, restrained saturation. Do not change camera angle, environment,
-mood, or lighting from the previous slide — treat this moment as occurring
-only seconds after slide 1.
+natural light, minimal furniture, softly detailed. A richer selection of
+Thai decorative touches is welcome — for example patterned cushions or
+textile details, warm teak or rattan wood tones, a small tabletop fountain,
+framed Thai-style artwork or botanical prints, or decorative Thai ceramics
+— as long as it reads as a considered, contemporary interior rather than a
+cluttered souvenir shop. Avoid literal shop signage, tourist-market
+clichés, religious imagery (e.g. Buddha statues, spirit houses, or
+altars), or visual clutter that would date or over-localize the scene.
+Clean and uncluttered overall. Same color palette: warm off-whites, muted
+warm neutrals, soft sand tones, restrained saturation. Do
+not change camera angle, environment, mood, or lighting from the previous
+slide — treat this moment as occurring only seconds after slide 1.
 
 Moment: Mali states her own name and then asks Narin for his name. Mali
 gestures gently toward herself while introducing her name, then tilts her

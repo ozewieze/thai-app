@@ -9,8 +9,8 @@
 ## Herkomst
 
 - Lesson key: `[a1-dialog-XX]` **(DB: `lessons.lesson_key`)**
-- Dialog ID: `[id]` **(DB: `dialogs.id`)**
-- Personages in deze dialoog: `[character_key, character_key]` **(DB: afgeleid van `dialog_blocks.speaker_key` / `dialogs`)**
+- Titel/subtitel: `[Dialog X]` / `[short text]` **(DB: `dialogs.title`/`dialogs.subtitle`)**
+- Personages in deze dialoog: `[character_key, character_key]` \*_(DB: afgeleid van `dialog_blocks.speaker_key` / `dialogs`)_
 
 ## Scene Bible
 

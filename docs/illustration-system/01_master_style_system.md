@@ -189,6 +189,38 @@ degrades significantly across angles the reference does not cover.
 
 **Les uit de praktijk (na kleurcorrectie van Dialog 1):** nadat de kleur-/lichtregels waren aangescherpt, bleef de generator toch de specifieke omgeving van de hero image (woonkamer, vensterboog, wandrek) hergebruiken voor andere scènes, ook wanneer de Scene Bible een andere locatie voorschreef (bv. een koffieshop voor Dialog 3). De oorspronkelijke zin "not... a composition reference" stond te kort en te laat in de prompt om voldoende gewicht te krijgen tegenover de veel uitgebreidere kleur-/lichtinstructies ervoor. Vandaar de expliciete, herhaalde regel hierboven: de omgeving komt altíjd uit de Scene Bible van de betreffende dialoog, nooit uit de hero image.
 
+## Background Lock Rule (Multi-Slide Dialogues)
+
+**Toegevoegd na een waarneming bij Dialog 3:** ook met de vorige slide als continuïteitsreferentie meegestuurd, tekende de generator de achtergrond bij elke volgende slide net iets anders — een lichte verschuiving in compositie/objectplaatsing en een lichte verandering in lichtinval, net zichtbaar genoeg bij naast-elkaar vergelijking. De bestaande continuïteitsformulering ("same location, lighting, furniture, and camera framing") bleek te zacht: de generator interpreteerde dit als "vergelijkbaar", niet als "pixelidentiek". Dit blok is de aangescherpte versie en moet **verbatim** worden meegestuurd in élke Illustration Prompt vanaf Slide 2 van een dialoog (d.w.z. zodra een vorige slide van dezelfde dialoog als continuïteitsreferentie wordt bijgevoegd) — nooit als vervanging van de Reference Image Usage Rules hierboven, maar als aanvulling erop.
+
+```
+This illustration is one slide in a multi-slide dialogue sequence. The
+attached previous slide of the same dialogue is the background lock
+reference: the background environment must remain pixel-consistent with
+it — identical camera angle, identical framing, identical furniture
+placement and scale, identical light source direction and intensity,
+identical color grading and shadow pattern. Do not subtly redraw, shift,
+resize, recompose, or relight the environment between slides. Treat the
+background as a fixed, unchanging set, as if the same photograph of the
+room or location were reused and only the characters were repositioned
+and re-posed within it.
+
+The only elements allowed to change between slides are: character pose,
+gesture, gaze direction, facial expression, body orientation, and
+conversational distance. Every other element in the frame — walls,
+furniture, windows, light source, shadows, and color grading — must
+match the previous slide exactly, not approximately.
+```
+
+Bijbehorende aanvulling op de Negative Prompt, verbatim mee te sturen naast de bestaande Negative Prompt (Thai Identity) zodra deze regel van toepassing is:
+
+```
+no background drift, no environment redraw between slides, no relighting
+between slides, no camera or framing shift between slides
+```
+
+Voor Slide 1 van een dialoog (nog geen vorige slide om naar te verwijzen) is dit blok niet van toepassing — die slide legt zelf de vaste achtergrond vast waar alle volgende slides van dezelfde dialoog exact op moeten aansluiten.
+
 ## Adult Tone Rules
 
 Maintain a clearly adult tone in:

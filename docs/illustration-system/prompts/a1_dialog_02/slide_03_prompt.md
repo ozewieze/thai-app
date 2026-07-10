@@ -109,9 +109,17 @@ redesign them.
 Scene (this dialogue's own setting — do not reuse the hero image's living
 room, furniture, or architecture, only its rendering philosophy): a quiet
 everyday indoor setting (a simple, modern living room or a calm corner of a
-café), daytime with soft natural light, minimal and softly detailed
-environment, clean and uncluttered. Color palette: warm off-whites, muted
-warm neutrals, soft sand tones, restrained saturation.
+café), daytime with soft natural light, minimal furniture, softly detailed.
+A richer selection of Thai decorative touches is welcome — for example
+patterned cushions or textile details, warm teak or rattan wood tones, a
+small tabletop fountain, framed Thai-style artwork or botanical prints, or
+decorative Thai ceramics — as long as it reads as a considered,
+contemporary interior rather than a cluttered souvenir shop. Avoid literal
+shop signage, tourist-market clichés, religious imagery (e.g. Buddha
+statues, spirit houses, or altars), or visual clutter that would date or
+over-localize the scene. Clean and uncluttered overall. Color palette:
+warm off-whites, muted warm neutrals, soft sand tones,
+restrained saturation.
 
 Moment: Mali confirms they will go together; Narin gives a simple,
 agreeable closing response. Mali gestures toward the direction they will
@@ -121,10 +129,9 @@ suggesting they are about to walk off together, comfortable, easy
 proximity. Both smiling, content and at ease. Warm resolution — the
 exchange closes on easy companionship as they set off together.
 
-Composition: medium-wide, horizontal format, full-body figures from head to
-toe, feet and shoes clearly visible, optimized for a wide slideshow card on
-a language-learning lesson page. Avoid extreme close-ups or movie-poster
-compositions.
+Composition: medium-wide, horizontal, full-body, feet and shoes visible,
+optimized for a wide slideshow card, 3:2 aspect ratio (1536x1024 landscape).
+Avoid extreme close-ups or movie-poster compositions.
 ```
 
 ## Na generatie

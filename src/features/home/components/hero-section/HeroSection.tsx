@@ -14,11 +14,10 @@ export default function HeroSection() {
         >
           CEFR-structured learning path
         </SectionEyebrow>
-        <h1 className={styles.title}>Master Thai With Confidence</h1>
+        <h1 className={styles.title}>Your Cozy Corner To Learn Thai</h1>
         <p>
-          Learn Thai through structured dialogs, thematic vocabulary, and
-          contextual practice. Progress from A1 to C2 with a method designed for
-          adult learners.
+          Learn through dialogues, stories, vocabulary, and real-life
+          conversations — from A1 to C2.
         </p>
         <div className={styles.actions}>
           <ActionLink href="/lessons" variant="primary" size="lg">

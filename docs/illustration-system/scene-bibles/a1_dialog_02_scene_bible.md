@@ -23,7 +23,14 @@ meeting.
 
 Environment
 Minimal furniture (a chair, a small table, perhaps a plant), softly
-detailed, no signage or clutter that would date or over-localize the scene.
+detailed. A richer selection of Thai decorative touches is welcome — for
+example patterned cushions or textile details, warm teak or rattan wood
+tones, a small tabletop fountain, framed Thai-style artwork or botanical
+prints, or decorative Thai ceramics — as long as it reads as a considered,
+contemporary interior rather than a cluttered souvenir shop. Avoid literal
+shop signage, tourist-market clichés, religious imagery (e.g. Buddha
+statues, spirit houses, or altars), or visual clutter that would date or
+over-localize the scene.
 
 Mood
 Polite, calm, warm first-meeting energy.            (verfijning van dialogs.scene_summary: "A first, polite introduction between Mali and Narin in an everyday setting.")

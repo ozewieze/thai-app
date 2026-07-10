@@ -21,9 +21,11 @@ Tekst alleen garandeert geen exacte kleur-/toonmatch en bleek in de praktijk ook
 1. `public/hero-image.png` — stijl-/paletreferentie (kleurtemperatuur, licht, rendering)
 2. **Face lock**-referenties (front + 3/4 + profiel) van `[character_key, character_key]` — zie `02_locked_cast_sheet.md` → Face Lock Referenties — primaire gezichtsanker, verplicht zodra aangemaakt. **Kies minstens de hoek die het dichtst bij de pose in het Moment ligt** (front/3-4/profiel); stuur bij twijfel meerdere hoeken mee.
 3. Goedgekeurde full-body/cast-referentie-afbeeldingen van `[character_key, character_key]` — aanvullende referentie voor hairstyle/outfit/silhouet (dezelfde afbeeldingen als gebruikt voor de hero image)
-4. Vorige goedgekeurde slide van dezelfde dialoog, indien Slide `[nn]` > 1 — continuïteitsreferentie
+4. Vorige goedgekeurde slide van dezelfde dialoog, indien Slide `[nn]` > 1 — continuïteitsreferentie én **background lock**-referentie (zie hieronder); de achtergrond moet pixelconsistent blijven, niet slechts vergelijkbaar
 
 Zie `01_master_style_system.md` → Reference Image Usage Rules voor hoe deze vier referentietypes uit elkaar gehouden worden in de generator (stijl vs. gezicht vs. identiteit vs. continuïteit). Genereer alle slides van dezelfde dialoog bij voorkeur in dezelfde chatsessie.
+
+**Vanaf Slide `[nn]` > 1** (zodra een vorige slide als continuïteitsreferentie wordt meegestuurd): neem ook de `Background Lock Rule (Multi-Slide Dialogues)` uit `01_master_style_system.md` verbatim op in de Finale prompt (inclusief de bijbehorende Negative Prompt-aanvulling) — zie hieronder waar dit blok in de opbouw hoort.
 
 ## Finale prompt
 
@@ -41,6 +43,10 @@ ligt) van character_key(s) als primaire gezichtsanker; full-body
 cast-referenties als identiteitsreferentie; vorige slide als
 continuïteitsreferentie indien van toepassing]" toe zodat de generator weet
 welke bijlage welk doel dient]
+
+[Alleen indien Slide [nn] > 1: Background Lock Rule (Multi-Slide Dialogues)
+— verbatim uit 01_master_style_system.md — direct gevolgd door de
+bijbehorende Negative Prompt-aanvulling, eveneens verbatim]
 
 [Relevante Locked Cast entries — verbatim, alleen de personages die in deze
 slide voorkomen]
