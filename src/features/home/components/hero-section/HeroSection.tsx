@@ -20,7 +20,7 @@ export default function HeroSection() {
           conversations — from A1 to C2.
         </p>
         <div className={styles.actions}>
-          <ActionLink href="/lessons" variant="primary" size="lg">
+          <ActionLink href="/learn/a1/dialogs" variant="primary" size="lg">
             Try free lessons
           </ActionLink>
 
