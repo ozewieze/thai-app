@@ -58,13 +58,25 @@ Use only the lesson content below as the teaching core.
 
 {{required_phrases_list}}
 
+### Previously Introduced Phrases Allowed for Reuse
+
+{{allowed_phrases_list}}
+
 ### Required Grammar
 
 {{required_grammar_list}}
 
+### Previously Introduced Grammar Allowed for Reuse
+
+{{allowed_grammar_list}}
+
 ### Patterns
 
 {{required_patterns_list}}
+
+### Previously Introduced Patterns Allowed for Reuse
+
+{{allowed_patterns_list}}
 
 ### Vocabulary Restriction
 
@@ -74,6 +86,10 @@ Only use vocabulary from:
 - Previously introduced vocabulary allowed for reuse
 
 Do not introduce additional vocabulary unless it is extremely basic and unavoidable for natural Thai.
+
+### Concept Restriction
+
+Treat any item listed under "Previously introduced ... allowed for reuse" (vocabulary, phrases, grammar, or patterns) as already known to the learner — it is not new and does not count as new content. Only introduce a phrase, grammar point, or pattern that is not in a required or previously-introduced list if it is extremely basic and unavoidable for natural Thai.
 
 ## Continuity Context
 
@@ -204,10 +220,13 @@ Return exactly these sections and no additional sections.
 ## curriculum core
 
 {{required_vocabulary_list}} <- required_vocabulary_list
-{{required_phrases_list}} <- required_phrases_list
-{{required_grammar_list}} <- required_grammar_list
-{{required_patterns_list_or_none}} <- required_patterns_list_or_none
 {{allowed_vocabulary_list}} <- allowed_vocabulary_list
+{{required_phrases_list}} <- required_phrases_list
+{{allowed_phrases_list}} <- allowed_phrases_list
+{{required_grammar_list}} <- required_grammar_list
+{{allowed_grammar_list}} <- allowed_grammar_list
+{{required_patterns_list}} <- required_patterns_list
+{{allowed_patterns_list}} <- allowed_patterns_list
 {{must_avoid_rule}} <- must_avoid_rule
 
 ## continuity / speaker A

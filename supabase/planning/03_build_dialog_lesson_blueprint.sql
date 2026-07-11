@@ -12,12 +12,30 @@
 --                               (ALLE woorden die de leerling al kent uit vorige lessen,
 --                                gesorteerd op curriculum-positie via sequence_number)
 --
+--   required_phrases_list     ← lesson_blueprint_view.all_phrases
+--   allowed_phrases_list      ← lesson_available_phrase_view.previously_introduced_phrases
+--
+--   required_grammar_list     ← lesson_blueprint_view.all_grammar
+--   allowed_grammar_list      ← lesson_available_grammar_view.previously_introduced_grammar
+--
+--   required_patterns_list    ← lesson_blueprint_view.all_patterns
+--   allowed_patterns_list     ← lesson_available_pattern_view.previously_introduced_patterns
+--
 -- Vereenvoudigd t.o.v. vorige versie:
 --   - lesson_vocabulary_control_view verwijderd (niet nodig voor dialoglessen)
 --   - lesson_available_vocabulary_view toegevoegd als bron voor allowed vocabulary
 --   - must_use_new_list verwijderd (zelfde inhoud als required_vocabulary_list)
 --   - may_reuse_previous_list verwijderd (was dubbel van allowed_review_vocabulary_list)
 --   - allowed_review_vocabulary_list hernoemd naar allowed_vocabulary_list
+--
+-- Update 2026-07-10:
+--   - allowed_phrases_list, allowed_grammar_list en allowed_patterns_list
+--     toegevoegd, naar analogie van allowed_vocabulary_list. Reden: de AI kreeg
+--     voor grammar/phrases/patterns geen signaal welke concepten al eerder zijn
+--     geïntroduceerd, waardoor soms een reeds gezien concept als nieuw werd
+--     voorgesteld. Bron: lesson_available_grammar_view / lesson_available_phrase_view /
+--     lesson_available_pattern_view (migratie
+--     20260710120000_create_lesson_available_grammar_phrase_pattern_views.sql).
 -- ============================================================
 
 select
@@ -34,8 +52,11 @@ select
   coalesce(rv.required_vocabulary_list,  '- none') as required_vocabulary_list,
   coalesce(av.allowed_vocabulary_list,   '- none') as allowed_vocabulary_list,
   coalesce(rp.required_phrases_list,     '- none') as required_phrases_list,
+  coalesce(ap2.allowed_phrases_list,     '- none') as allowed_phrases_list,
   coalesce(rg.required_grammar_list,     '- none') as required_grammar_list,
+  coalesce(ag.allowed_grammar_list,      '- none') as allowed_grammar_list,
   coalesce(rpat.required_patterns_list,  '- none') as required_patterns_list,
+  coalesce(apat.allowed_patterns_list,   '- none') as allowed_patterns_list,
 
   -- ── Speaker A (volgorde = prompt template §Speaker A) ──────────────────────
   lc.character_a_name           as speaker_a_name,
@@ -84,6 +105,15 @@ from public.lesson_blueprint_view lb
 join public.lesson_available_vocabulary_view lav
   on lav.lesson_id = lb.lesson_id
 
+join public.lesson_available_phrase_view lapv
+  on lapv.lesson_id = lb.lesson_id
+
+join public.lesson_available_grammar_view lagv
+  on lagv.lesson_id = lb.lesson_id
+
+join public.lesson_available_pattern_view lapatv
+  on lapatv.lesson_id = lb.lesson_id
+
 join public.dialog_blueprint_specs ds
   on ds.lesson_id = lb.lesson_id
 
@@ -130,6 +160,21 @@ left join lateral (
   from jsonb_array_elements(coalesce(lb.all_phrases, '[]'::jsonb)) x
 ) rp on true
 
+-- Toegelaten phrases: alle eerder geïntroduceerde phrases (curriculum-volgorde)
+left join lateral (
+  select string_agg(
+    concat(
+      '- ',
+      coalesce(x->>'title', 'Untitled phrase'),
+      ': ',
+      coalesce(x->>'phrase_formula', '')
+    ),
+    E'\n'
+    order by coalesce((x->>'intro_sequence_number')::int, 9999), coalesce(x->>'title', '')
+  ) as allowed_phrases_list
+  from jsonb_array_elements(coalesce(lapv.previously_introduced_phrases, '[]'::jsonb)) x
+) ap2 on true
+
 -- Verplichte grammatica
 left join lateral (
   select string_agg(
@@ -148,6 +193,24 @@ left join lateral (
   from jsonb_array_elements(coalesce(lb.all_grammar, '[]'::jsonb)) x
 ) rg on true
 
+-- Toegelaten grammatica: alle eerder geïntroduceerde grammaticaconcepten (curriculum-volgorde)
+left join lateral (
+  select string_agg(
+    concat(
+      '- ',
+      coalesce(x->>'title', 'Untitled grammar'),
+      case
+        when coalesce(x->>'short_explanation', '') <> ''
+        then concat(': ', x->>'short_explanation')
+        else ''
+      end
+    ),
+    E'\n'
+    order by coalesce((x->>'intro_sequence_number')::int, 9999), coalesce(x->>'title', '')
+  ) as allowed_grammar_list
+  from jsonb_array_elements(coalesce(lagv.previously_introduced_grammar, '[]'::jsonb)) x
+) ag on true
+
 -- Verplichte patronen
 left join lateral (
   select string_agg(
@@ -157,6 +220,16 @@ left join lateral (
   ) as required_patterns_list
   from jsonb_array_elements(coalesce(lb.all_patterns, '[]'::jsonb)) x
 ) rpat on true
+
+-- Toegelaten patronen: alle eerder geïntroduceerde patronen (curriculum-volgorde)
+left join lateral (
+  select string_agg(
+    concat('- ', coalesce(x->>'title', x->>'pattern_key', 'pattern')),
+    E'\n'
+    order by coalesce((x->>'intro_sequence_number')::int, 9999), coalesce(x->>'title', x->>'pattern_key', '')
+  ) as allowed_patterns_list
+  from jsonb_array_elements(coalesce(lapatv.previously_introduced_patterns, '[]'::jsonb)) x
+) apat on true
 
 -- Karaktereigenschappen
 left join lateral (
