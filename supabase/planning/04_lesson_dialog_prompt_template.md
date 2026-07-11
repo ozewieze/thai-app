@@ -32,7 +32,7 @@ Apply these priorities in order:
 - For early A1 lessons, prioritize clarity, pattern visibility, and learnability over conversational realism.
 - Prefer pedagogical clarity over conversational naturalness when the two conflict.
 - Keep the dialogue tightly aligned with the lesson goal and curriculum scope.
-- When multiple valid dialogues are possible, choose the version that introduces the fewest additional Thai words.
+- Aim for the estimated line count given in Dialogue Design — do not compress the dialogue below that target just to minimize word count. When multiple valid dialogues are possible within that target, prefer the version that stays inside required and previously-introduced vocabulary over one that adds extra unlisted words.
 
 ## Lesson Goal
 
@@ -145,7 +145,7 @@ Treat any item listed under "Previously introduced ... allowed for reuse" (vocab
 ## Quality Rules
 
 - Stay within CEFR {{cefr_level}}.
-- Keep the dialogue short and beginner-safe.
+- Keep the dialogue within the estimated line count for this lesson ({{estimated_line_count}}) and beginner-safe.
 - Use short, clear lines.
 - Use one communicative move per line.
 - Keep the Thai natural but simple.
@@ -164,7 +164,7 @@ Before producing the dialogue, verify that:
 - The lesson goal is fully achieved.
 - No prohibited vocabulary has been introduced unnecessarily.
 - The dialogue follows the character roles and relationship rules.
-- The dialogue is beginner-safe and stays within the target line count.
+- The dialogue is beginner-safe and matches the target line count in Dialogue Design — not just under it, but reasonably close to it.
 - Required phrases are not repeated unnecessarily.
 
 ## Output Format
@@ -202,7 +202,7 @@ Return exactly these sections and no additional sections.
 - Each block contains exactly one Thai line, one Transliteration line, and one English line.
 - Every line within a block must carry a speaker label using the character name.
 - Blocks must be numbered sequentially starting from 1.
-- Keep the dialogue as short as possible while satisfying all lesson requirements.
+- Keep the dialogue within the estimated line count for this lesson while satisfying all lesson requirements — do not artificially shorten it below that target.
 - Do not explain your reasoning.
 - Do not add notes, commentary, metadata, or extra sections.
 

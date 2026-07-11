@@ -117,13 +117,32 @@ De enige query die je per les gebruikt is `03_build_dialog_lesson_blueprint.sql`
 
 ## Vocabulaire selecteren vóór seeden
 
-Een veelgemaakte fout is te vroeg committen aan een vaste woordenlijst. Als je 5 woorden seed en de AI stelt een beter alternatief voor tijdens generatie, moet je achteraf `lesson_vocabulary` aanpassen.
+Een veelgemaakte fout is te vroeg committen aan een vaste woordenlijst. Als je woorden seedt en de AI stelt een beter alternatief voor tijdens generatie, moet je achteraf `lesson_vocabulary` aanpassen.
 
 Betere aanpak: gebruik een **shortlist van 10–12 kandidaatwoorden** die passen bij het lesonderwerp en A1-niveau. Stel de selectievraag apart, los van de dialoogprompt:
 
-> "Welke 5–6 van deze kandidaatwoorden vormen samen de sterkste lesset voor dit doel en deze scène?"
+> "Welke [doelaantal] van deze kandidaatwoorden vormen samen de sterkste lesset voor dit doel en deze scène?"
+
+Vul `[doelaantal]` in met het bereik uit de tabel in "Hoeveel nieuwe woorden en regels per lesfase" hieronder, afhankelijk van waar de les zich in het curriculum bevindt.
 
 Keur de aanbeveling goed en seed dan pas naar `lesson_vocabulary`. Zo blijft de database de curriculumbron van waarheid terwijl je betere input geeft aan de selectie.
+
+## Hoeveel nieuwe woorden en regels per lesfase
+
+De oorspronkelijke regel "maximaal 5 nieuwe woorden, dialoog zo kort mogelijk" werkt goed voor de allereerste lessen, maar schaalt niet naar een volledig A1-traject van rond de 50 lessen: latere dialogen mogen en moeten meer woorden bevatten en meer op een natuurlijk gesprek lijken. Gebruik onderstaande richtlijn per lesfase (op basis van `sequence_number` van de les) in plaats van één vast getal voor het hele traject:
+
+| Lesfase (`sequence_number`) | Nieuwe woorden per les | Richtlijn `estimated_line_count` |
+| ---------------------------- | ----------------------- | --------------------------------- |
+| 1–10                          | 4–5                      | 4–6 lines                          |
+| 11–30                         | 6–8                      | 6–8 lines                          |
+| 31+                           | 8–10                     | 8–10 lines                         |
+
+Praktisch:
+
+- Bepaal de lesfase via `sequence_number` van de les in `lessons`.
+- Kies de shortlist-omvang en het doelaantal in Stap 2 volgens deze tabel.
+- Vul `estimated_line_count` in `dialog_blueprint_specs` (Stap 4) in met de bijhorende richtlijn, bijvoorbeeld `'6-8 lines'`.
+- Dit is een richtlijn, geen harde databasebeperking: bij een scène die iets meer of minder nodig heeft, mag je afwijken. De tabel is een startpunt voor de shortlist-vraag en voor `estimated_line_count`, niet een constraint in het schema.
 
 ## Stapsgewijze workflow per les
 
@@ -139,7 +158,7 @@ where lesson_key = 'a1-dialog-02';
 
 ### Stap 2 — Selecteer vocabulaire (shortlist-aanpak)
 
-Stel een shortlist op van 10–12 kandidaatwoorden uit `vocabulary_master` die passen bij het lesonderwerp. Vraag de AI om er 5–6 uit te kiezen. Keur goed voordat je iets seed.
+Stel een shortlist op van 10–12 kandidaatwoorden uit `vocabulary_master` die passen bij het lesonderwerp. Vraag de AI om er een aantal uit te kiezen volgens de lesfase-tabel in "Hoeveel nieuwe woorden en regels per lesfase" (4–5 voor les 1–10, 6–8 voor les 11–30, 8–10 vanaf les 31). Keur goed voordat je iets seed.
 
 ### Stap 3 — Seed de leslinks
 
@@ -332,7 +351,7 @@ sql_paths = [
 ## Praktische checklist per nieuwe les
 
 1. Bevestig dat de les bestaat in `lessons`.
-2. Stel een shortlist van 10–12 kandidaatwoorden op en kies er 5–6.
+2. Stel een shortlist van 10–12 kandidaatwoorden op en kies het aantal volgens de lesfase-tabel (4–5 voor les 1–10, 6–8 voor les 11–30, 8–10 vanaf les 31).
 3. Seed `lesson_vocabulary`, `lesson_grammar`, `lesson_pattern`, `lesson_phrase`.
 4. Maak `dialog_blueprint_specs` aan en seed.
 5. Voer `03_build_dialog_lesson_blueprint.sql` uit — verwacht één rij.
