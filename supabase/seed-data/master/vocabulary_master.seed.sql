@@ -1,4 +1,4 @@
--- Auto-generated from supabase\seed-data\vocabulary_master.csv. Do not edit manually.
+-- Auto-generated from supabase\seed-data\master\csv\vocabulary_master.csv. Do not edit manually.
 insert into public.vocabulary_master (source_key, cefr_level, thai_script, paiboon, english_gloss, part_of_speech, register, default_theme, is_multifunctional, usage_note, source_note) values
 ('hello', 'A1', 'สวัสดี', 'sà-wàt-dii', 'hello', 'particle', 'formal', 'greetings', false, NULL, 'ai_a1_master_v3'),
 ('thank_you', 'A1', 'ขอบคุณ', 'khɔ̀ɔp-khun', 'thank you', 'particle', 'formal', 'greetings', false, NULL, 'ai_a1_master_v3'),

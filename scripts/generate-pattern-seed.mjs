@@ -1,10 +1,17 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-const INPUT_CSV = path.join("supabase", "seed-data", "pattern_master.csv");
+const INPUT_CSV = path.join(
+  "supabase",
+  "seed-data",
+  "master",
+  "csv",
+  "pattern_master.csv",
+);
 const OUTPUT_SQL = path.join(
   "supabase",
   "seed-data",
+  "master",
   "pattern_master.seed.sql",
 );
 

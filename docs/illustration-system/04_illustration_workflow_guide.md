@@ -183,7 +183,7 @@ Zodra een slide de QA (Stap 6/6a) doorstaat, staat de afbeelding nog alleen exte
 1. Download de goedgekeurde afbeelding uit ChatGPT (of de gekozen generator).
 2. Hernoem het bestand naar `slide-{nn}.png`, zero-padded, overeenkomend met `dialog_slides.slide_index` van die slide. **`slide_index` is 0-based**, net als `block_index` in dezelfde tabel-familie — de eerste slide van een dialoog heeft dus `slide_index = 0` en wordt `slide-00.png`, niet `slide-01.png`. Controleer het exacte nummer in de bijbehorende `slide-specs/a1_dialog_XX_slide_specs.md` (sectie "Herkomst" per slide). **Dit nummer is de enige manier waarop het script weet welke afbeelding bij welke slide hoort** — het gokt nooit op bestandsvolgorde of downloaddatum, omdat geen van beide betrouwbaar de bedoelde slide-index weergeeft.
 3. Zet het bestand in `illustration-staging/{lesson_key}/` (bv. `illustration-staging/a1-dialog-01/slide-00.png`). Deze map staat in `.gitignore` en wordt dus nooit gecommit.
-4. Controleer dat het bestand voldoet aan de bucket-restricties uit de migratie (`supabase/migrations/20260702120000_create_illustrations_storage_bucket.sql`): type `image/png`, `image/jpeg` of `image/webp`, max. 10 MB. Het script controleert dit ook zelf en weigert te grote bestanden met een duidelijke melding.
+4. Controleer dat het bestand voldoet aan de bucket-restricties uit de migratie (`supabase/migrations/20260702120000_create_illustrations_storage_bucket.sql`): type `image/png`, `image/jpeg` of `image/webp`, max. 10 MB. Deze 10 MB-limiet geldt in de praktijk nauwelijks meer als risico: het script verkleint en converteert elk bestand eerst naar WebP (zie Stap 7) vóór het uploadt, en controleert daarna zelf de grootte van dát verwerkte bestand — een ruime bron-PNG wordt dus niet meer geweigerd, enkel een resultaat dat ook ná verkleining/compressie nog te groot is.
 5. Bewaar tijdens iteratieve correctie (Stap 6a) desgewenst meerdere pogingen naast elkaar met een tijdelijke naam **buiten** de staging-map, maar zet voor upload alleen de uiteindelijk goedgekeurde versie onder de definitieve naam ín de staging-map.
 6. Zodra Stap 7 geslaagd is, heeft het lokale bestand geen functie meer buiten Supabase Storage. Het script verwijdert het echter **niet automatisch** (bewuste keuze) — ruim het zelf op wanneer je daar klaar voor bent.
 
@@ -218,10 +218,12 @@ node --env-file=.env.local scripts/upload-slides.mjs --dialog a1-dialog-01 --for
 node --env-file=.env.local scripts/upload-slides.mjs --dry-run
 ```
 
+Vóór het uploaden verkleint het script elke afbeelding via `sharp` naar max. 1200×800 (`fit: "cover"`, geen vervorming) en zet het om naar WebP (kwaliteit 85) — de bron-PNG's uit ChatGPT (1536×1024) zijn ruim groter dan de daadwerkelijke weergavegrootte in de UI en onnodig zwaar als lossless PNG. Dit gebeurt volledig in-memory: het lokale bestand in de staging-map blijft ongewijzigd staan (zie Stap 6b) — bewust, want een lokale `supabase db reset` veegt de storage-bucket leeg, en de staging-map is dan de enige plek vanwaar opnieuw geüpload kan worden.
+
 Padstructuur binnen de bucket (analoog aan `buildStoragePath()` in `scripts/generate-audio.mjs`):
 
 ```
-illustrations/dialogs/{level}/{dialogPart}/slides/slide-{nn}.png
+illustrations/dialogs/{level}/{dialogPart}/slides/slide-{nn}.webp
 ```
 
 `{level}` en `{dialogPart}` zijn geen vrije titel-slug maar rechtstreeks afgeleid van `lesson_key`, met dezelfde split als in `generate-audio.mjs` (splits op de eerste `-`):
@@ -230,7 +232,7 @@ illustrations/dialogs/{level}/{dialogPart}/slides/slide-{nn}.png
 lesson_key 'a1-dialog-01' → level = 'a1', dialogPart = 'dialog-01'
 ```
 
-Bijvoorbeeld (eerste slide, `slide_index = 0`): `illustrations/dialogs/a1/dialog-01/slides/slide-00.png`
+Bijvoorbeeld (eerste slide, `slide_index = 0`): `illustrations/dialogs/a1/dialog-01/slides/slide-00.webp` — ongeacht of het lokale staging-bestand `.png`, `.jpg` of `.webp` was, de bucket bevat altijd `.webp`.
 
 Het script roept zelf geen enkele generatie-API aan — het verwerkt alleen wat al lokaal staat, ná Stap 5/6.
 

@@ -1,4 +1,4 @@
--- Auto-generated from supabase\seed-data\grammar_master.csv. Do not edit manually.
+-- Auto-generated from supabase\seed-data\master\csv\grammar_master.csv. Do not edit manually.
 insert into public.grammar_master (concept_key, cefr_level, title, short_explanation, concept_type, register, source_note) values
 ('basic_svo_order', 'A1', 'Basic SVO word order', 'Thai basic statements usually follow subject verb object order.', 'sentence_pattern', 'formal', 'ai_a1_grammar_master_v3_final'),
 ('subject_omission_when_clear', 'A1', 'Subject omission when clear', 'Leave out the subject when context already makes it obvious.', 'sentence_pattern', 'formal', 'ai_a1_grammar_master_v3_final'),

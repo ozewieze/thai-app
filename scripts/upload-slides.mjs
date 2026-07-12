@@ -23,6 +23,18 @@
 // want geen van beide is een betrouwbare bron voor de bedoelde
 // slide-index.
 //
+// Vóór het uploaden wordt elk bestand via sharp verkleind naar
+// max 1200x800 (crop, geen vervorming) en omgezet naar WebP
+// (kwaliteit 85) -- de bron-PNG's uit ChatGPT zijn met 1536x1024
+// ruim groter dan de daadwerkelijke weergavegrootte in de UI (zie
+// LessonPageView.module.css, .imageCard) en onnodig zwaar als
+// lossless PNG. Dit gebeurt volledig in-memory: het bestand in de
+// staging-map blijft ongewijzigd staan (zie hieronder, "Ruimt nooit
+// zelf lokale bestanden op") -- dat is bewust, want een lokale
+// `supabase db reset` veegt de storage-bucket leeg en de staging-map
+// is dan de enige plek vanwaar opnieuw geüpload kan worden (zie ook
+// db:reset:full in package.json).
+//
 // Uitvoeren (alle dialogen met openstaande slides):
 //   node --env-file=.env.local scripts/upload-slides.mjs
 //
@@ -46,8 +58,9 @@
 // ============================================================
 
 import { createClient } from "@supabase/supabase-js";
-import { readFileSync, readdirSync, statSync, existsSync } from "fs";
+import { readFileSync, readdirSync, existsSync } from "fs";
 import { join } from "path";
+import sharp from "sharp";
 
 // ── Configuratie ────────────────────────────────────────────
 
@@ -68,14 +81,21 @@ const DEFAULT_STAGING_ROOT = "illustration-staging";
 
 // Zelfde limiet als de bucket-migratie
 // (supabase/migrations/20260702120000_create_illustrations_storage_bucket.sql).
+// Geldt voor het geüploade (dus reeds naar WebP omgezette) bestand --
+// zie processImage/validateBufferSize hieronder.
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 
-const MIME_TYPES = {
-  png: "image/png",
-  jpg: "image/jpeg",
-  jpeg: "image/jpeg",
-  webp: "image/webp",
-};
+// Doelformaat voor de upload: de bron-PNG's (1536x1024) zijn ruim groter
+// dan de daadwerkelijke weergavegrootte in de UI. fit: "cover" voorkomt
+// vervorming, mocht een bronbestand niet exact 3:2 zijn; withoutEnlargement
+// voorkomt dat een kleiner bronbestand alsnog wordt opgeschaald.
+const TARGET_WIDTH = 1200;
+const TARGET_HEIGHT = 800;
+const WEBP_QUALITY = 85;
+// Alle geüploade bestanden zijn na de sharp-verwerking WebP, ongeacht
+// het bronformaat in de staging-map (png/jpg/webp, zie SLIDE_FILENAME_PATTERN).
+const OUTPUT_EXT = "webp";
+const OUTPUT_CONTENT_TYPE = "image/webp";
 
 // Verplicht patroon: 'slide-{nn}.{ext}', exact 2 cijfers, geen andere vorm
 // wordt herkend.
@@ -174,29 +194,45 @@ function scanStagingDir(dir) {
 }
 
 /**
- * Controleer bestandsgrootte tegen de bucket-limiet (10 MB).
+ * Controleer buffergrootte tegen de bucket-limiet (10 MB). Wordt pas ná
+ * de sharp-verwerking aangeroepen, want de limiet geldt voor wat er
+ * daadwerkelijk geüpload wordt -- niet voor de (grotere) bron-PNG in
+ * de staging-map.
  * Gooit een fout i.p.v. false terug te geven, zodat de aanroeper
  * de fout direct in de catch kan loggen met een consistente stijl.
  */
-function validateFileSize(filePath) {
-  const { size } = statSync(filePath);
-  if (size > MAX_FILE_SIZE_BYTES) {
+function validateBufferSize(buffer) {
+  if (buffer.length > MAX_FILE_SIZE_BYTES) {
     throw new Error(
-      `bestand is ${(size / 1024 / 1024).toFixed(1)} MB, limiet is 10 MB`,
+      `verwerkt bestand is ${(buffer.length / 1024 / 1024).toFixed(1)} MB, limiet is 10 MB`,
     );
   }
 }
 
 /**
- * Upload een lokaal bestand naar de 'illustrations' bucket.
+ * Verkleint en converteert een lokaal staging-bestand naar WebP, volledig
+ * in-memory -- het bronbestand in de staging-map wordt niet aangeraakt
+ * (zie header-comment: dat blijft de enige lokale kopie na een
+ * `supabase db reset`).
+ */
+async function processImage(filePath) {
+  return sharp(readFileSync(filePath))
+    .resize(TARGET_WIDTH, TARGET_HEIGHT, {
+      fit: "cover",
+      withoutEnlargement: true,
+    })
+    .webp({ quality: WEBP_QUALITY })
+    .toBuffer();
+}
+
+/**
+ * Upload een buffer naar de 'illustrations' bucket.
  * Geeft de publieke URL terug.
  */
-async function uploadToStorage(storagePath, filePath, contentType) {
-  const fileBuffer = readFileSync(filePath);
-
+async function uploadToStorage(storagePath, buffer, contentType) {
   const { error } = await supabase.storage
     .from("illustrations")
-    .upload(storagePath, fileBuffer, {
+    .upload(storagePath, buffer, {
       contentType,
       upsert: true, // overschrijf als het bestand al bestaat (bv. bij --force)
     });
@@ -345,36 +381,29 @@ async function uploadSlides() {
         (s) => s.slide_index === file.slideIndex,
       ); //geeft bvb terug: {id: 1, slide_index: 0, image_url: null}
       const filePath = join(stagingDir, file.fileName);
-      const contentType = MIME_TYPES[file.ext];
       const storagePath = buildStoragePath(
         lessonKey,
         file.slideIndex,
-        file.ext,
-      ); //geeft terug: 'dialogs/a1/dialog-01/slides/slide-00.png'
-
-      try {
-        validateFileSize(filePath);
-      } catch (err) {
-        console.log(`${slideLabel} MISLUKT — ${err.message}`);
-        mislukt++;
-        continue;
-      }
+        OUTPUT_EXT,
+      ); //geeft terug: 'dialogs/a1/dialog-01/slides/slide-00.webp'
 
       if (DRY_RUN) {
         console.log(
-          `${slideLabel} — ${file.fileName} → illustrations/${storagePath} (dry-run, niet geüpload)`,
+          `${slideLabel} — ${file.fileName} → illustrations/${storagePath} (verkleind + WebP, dry-run, niet geüpload)`,
         );
         geslaagd++;
         continue;
       }
-      //Stap5 upload bestand naar Supabase Storage
+      //Stap 5: verkleinen/converteren, dan uploaden naar Supabase Storage
 
       try {
-        process.stdout.write(`${slideLabel} uploaden...`);
+        process.stdout.write(`${slideLabel} verwerken + uploaden...`);
+        const processedBuffer = await processImage(filePath);
+        validateBufferSize(processedBuffer);
         const publicUrl = await uploadToStorage(
           storagePath,
-          filePath,
-          contentType,
+          processedBuffer,
+          OUTPUT_CONTENT_TYPE,
         );
         //Stap 6: schrijf publieke URL terug naar dialog_slides.image_url
         const { error: updateError } = await supabase

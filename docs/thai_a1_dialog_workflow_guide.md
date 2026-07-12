@@ -34,7 +34,7 @@ Deze tabellen blijven de continuïteitsbron van waarheid:
 
 ### 2. Inhoudsplanning
 
-Dit is de afgeleide werkladag:
+Dit is de afgeleide werklaag:
 
 - `dialog_blueprint_specs` (lesspecifieke scène- en ontwerpdata)
 - lesblueprint-queryresultaat
@@ -132,10 +132,10 @@ Keur de aanbeveling goed en seed dan pas naar `lesson_vocabulary`. Zo blijft de 
 De oorspronkelijke regel "maximaal 5 nieuwe woorden, dialoog zo kort mogelijk" werkt goed voor de allereerste lessen, maar schaalt niet naar een volledig A1-traject van rond de 50 lessen: latere dialogen mogen en moeten meer woorden bevatten en meer op een natuurlijk gesprek lijken. Gebruik onderstaande richtlijn per lesfase (op basis van `sequence_number` van de les) in plaats van één vast getal voor het hele traject:
 
 | Lesfase (`sequence_number`) | Nieuwe woorden per les | Richtlijn `estimated_line_count` |
-| ---------------------------- | ----------------------- | --------------------------------- |
-| 1–10                          | 4–5                      | 4–6 lines                          |
-| 11–30                         | 6–8                      | 6–8 lines                          |
-| 31+                           | 8–10                     | 8–10 lines                         |
+| --------------------------- | ---------------------- | -------------------------------- |
+| 1–10                        | 4–5                    | 4–6 lines                        |
+| 11–30                       | 6–8                    | 6–8 lines                        |
+| 31+                         | 8–10                   | 8–10 lines                       |
 
 Praktisch:
 

@@ -1,10 +1,17 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 //Het Node-script zet de CSV om naar een SQL-bestand met INSERT-regels.
-const INPUT_CSV = path.join("supabase", "seed-data", "vocabulary_master.csv");
+const INPUT_CSV = path.join(
+  "supabase",
+  "seed-data",
+  "master",
+  "csv",
+  "vocabulary_master.csv",
+);
 const OUTPUT_SQL = path.join(
   "supabase",
   "seed-data",
+  "master",
   "vocabulary_master.seed.sql",
 );
 
