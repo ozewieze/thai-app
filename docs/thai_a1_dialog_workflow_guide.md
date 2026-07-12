@@ -60,10 +60,12 @@ Gebruik `dialogs` voor de definitief goedgekeurde lesdialoog. Gebruik `revisions
 ```text
 supabase/
   planning/
+    00_build_curriculum_sequencer_context.sql ← Stap 1 (standaard): input voor "wat wordt de volgende les"
     01_debug_lesson_blueprint.sql        ← inspectie, geen workflow-stap
     02_debug_continuity_options.sql      ← inspectie, geen workflow-stap
     03_build_dialog_lesson_blueprint.sql ← de enige builder-query
     04_lesson_dialog_prompt_template.md
+    05_curriculum_sequencer_prompt_template.md ← hoort bij Stap 1
     blueprints/
       a1_dialog_01_blueprint.csv
       a1_dialog_02_blueprint.csv
@@ -140,15 +142,87 @@ De oorspronkelijke regel "maximaal 5 nieuwe woorden, dialoog zo kort mogelijk" w
 Praktisch:
 
 - Bepaal de lesfase via `sequence_number` van de les in `lessons`.
-- Kies de shortlist-omvang en het doelaantal in Stap 2 volgens deze tabel.
-- Vul `estimated_line_count` in `dialog_blueprint_specs` (Stap 4) in met de bijhorende richtlijn, bijvoorbeeld `'6-8 lines'`.
+- Kies de shortlist-omvang en het doelaantal in Stap 3 volgens deze tabel.
+- Vul `estimated_line_count` in `dialog_blueprint_specs` (Stap 5) in met de bijhorende richtlijn, bijvoorbeeld `'6-8 lines'`.
 - Dit is een richtlijn, geen harde databasebeperking: bij een scène die iets meer of minder nodig heeft, mag je afwijken. De tabel is een startpunt voor de shortlist-vraag en voor `estimated_line_count`, niet een constraint in het schema.
+
+## Nieuw woord/concept toevoegen aan de masterlijst
+
+De masterlijsten (`vocabulary_master`, `grammar_master`, `phrase_master`, `pattern_master`) zijn een vooraf gecureerde kandidatenpool, maar in de praktijk — al vanaf de eerste dialogen — zal je toch af en toe een woord of concept nodig hebben dat er nog niet in staat, omdat de scène anders niet inhoudelijk zinvol wordt. Dat is een **normaal, verwacht onderdeel** van het proces, geen uitzondering. Gebruik deze korte, snelle route in plaats van iets te forceren binnen de bestaande pool:
+
+1. **Controleer eerst of het niet al onder een andere naam bestaat**, om duplicaten te vermijden:
+
+   ```sql
+   select * from public.vocabulary_master
+   where thai_script = '...' or english_gloss ilike '%...%';
+
+   select * from public.grammar_master where title ilike '%...%';
+   select * from public.phrase_master  where title ilike '%...%';
+   select * from public.pattern_master where title ilike '%...%';
+   ```
+
+2. **Voeg toe met een directe insert** (snel genoeg voor tijdens actieve ontwikkeling):
+
+   ```sql
+   insert into public.vocabulary_master
+     (source_key, cefr_level, thai_script, paiboon, english_gloss, part_of_speech, register, default_theme)
+   values
+     ('...', 'A1', '...', '...', '...', '...', '...', '...');
+   ```
+
+   De bijhorende initialisatietrigger (`trg_initialize_vocabulary_status` en de grammar-/phrase-/pattern-varianten) maakt automatisch de status-rij aan met `status = 'new'`. Je hoeft dus niets extra te doen om het woord bruikbaar te maken — het verschijnt meteen in de ongebruikte kandidatenpool (zie Stap 1 hieronder).
+
+3. **Werk periodiek de brondata bij** in `supabase/seed-data/master/csv/*.csv`, zodat `npm run seed:vocab` / `seed:grammar` / `seed:pattern` consistent blijft bij een `db reset`. Dit is opruimwerk dat je kan groeperen (bijvoorbeeld na elke 5–10 dialogen) — het hoeft niet bij elk nieuw woord meteen te gebeuren.
 
 ## Stapsgewijze workflow per les
 
-### Stap 1 — Controleer of de lesdata bestaat
+### Stap 1 — Laat AI de volgende les voorstellen (curriculumsequencer)
 
-Bevestig dat de les bestaat in `lessons`. Als de les er niet is, stop hier.
+Dit is het standaardproces: je verzint scène, titel en woordenlijst niet meer zelf vooraf, maar laat AI een voorstel doen op basis van alles wat al gekend is en wat er nog beschikbaar is. Enkel wanneer er bewust al een vooraf geplande `lessons`-rij bestaat die je ongewijzigd wil gebruiken, mag je deze stap overslaan en rechtstreeks naar Stap 2 gaan.
+
+> De 12 lessen die oorspronkelijk in `core.seed.sql` zijn geseed (`a1-dialog-01` t/m `a1-revision-premium-01`) waren een voorlopige skeletplanning uit een vroeg stadium van het project, vóór dit sequencer-proces bestond. Vanaf nu geldt Stap 1 als het vaste proces: ook voor die bestaande rijen mag je Stap 1 gebruiken om ze te herzien en te overschrijven zodra je eraan toe bent, in plaats van de oorspronkelijke placeholder-titel klakkeloos over te nemen.
+
+1. Voer `00_build_curriculum_sequencer_context.sql` uit in Supabase Studio — dit zijn 7 losse secties (voortgang, reeds-geïntroduceerde concepten, ongebruikte kandidatenpool per categorie, laatste dialogen, continuïteitscontext).
+2. Vul `05_curriculum_sequencer_prompt_template.md` in met die resultaten.
+3. Laat AI een voorstel doen: titel, subtitel, scène, lesdoel, en doelconcepten (gelabeld als `[EXISTING]` of `[NEW]`).
+4. **Keur het voorstel goed of stuur het bij** — dit is een voorstel, geen bron van waarheid. Let vooral op:
+   - Klopt de scène inhoudelijk en past ze bij de vorige dialoog(en)?
+   - Is het aantal nieuwe items in lijn met de lesfase-richtlijn?
+   - Voor elk `[NEW]`-item: wil je dit echt toevoegen, of bestaat er al een alternatief in de pool?
+5. Voor elk goedgekeurd `[NEW]`-item: volg "Nieuw woord/concept toevoegen aan de masterlijst" hierboven.
+6. **Maak of werk de `lessons`-rij aan** met de goedgekeurde titel, subtitel en sequence_number uit het voorstel:
+
+   ```sql
+   insert into public.lessons (
+     lesson_key, slug, cefr_level, section_key, lesson_type,
+     title, subtitle, sequence_number, access_tier, is_published
+   )
+   values (
+     'a1-dialog-XX',
+     'slug-op-basis-van-titel',
+     'A1',
+     'dialogs',
+     'dialog',
+     '...',                    -- goedgekeurde titel uit het voorstel
+     '...',                    -- goedgekeurde subtitel uit het voorstel
+     4,                        -- goedgekeurde sequence_number uit het voorstel
+     'free',
+     true
+   )
+   on conflict (lesson_key) do update set
+     title           = excluded.title,
+     subtitle        = excluded.subtitle,
+     sequence_number = excluded.sequence_number,
+     updated_at      = now();
+   ```
+
+   `on conflict (lesson_key) do update` maakt dit ook veilig om een bestaande, voorlopige placeholder-rij te overschrijven met een beter onderbouwd voorstel — zonder eerst iets te moeten verwijderen.
+
+Pas na deze stap ga je verder met Stap 2.
+
+### Stap 2 — Controleer of de lesdata bestaat
+
+Bevestig dat de `lessons`-rij klopt — aangemaakt of bijgewerkt via Stap 1, of (bij uitzondering) al eerder bewust vastgelegd. Is het resultaat leeg en heb je Stap 1 niet gebruikt? Ga dan eerst terug naar Stap 1.
 
 ```sql
 select id, lesson_key, title, subtitle, cefr_level, lesson_type, sequence_number, section_key
@@ -156,11 +230,11 @@ from public.lessons
 where lesson_key = 'a1-dialog-02';
 ```
 
-### Stap 2 — Selecteer vocabulaire (shortlist-aanpak)
+### Stap 3 — Selecteer vocabulaire (shortlist-aanpak)
 
 Stel een shortlist op van 10–12 kandidaatwoorden uit `vocabulary_master` die passen bij het lesonderwerp. Vraag de AI om er een aantal uit te kiezen volgens de lesfase-tabel in "Hoeveel nieuwe woorden en regels per lesfase" (4–5 voor les 1–10, 6–8 voor les 11–30, 8–10 vanaf les 31). Keur goed voordat je iets seed.
 
-### Stap 3 — Seed de leslinks
+### Stap 4 — Seed de leslinks
 
 Maak `seed-data/links/lesson_links_a1-dialog-XX.seed.sql` aan met inserts voor:
 
@@ -175,7 +249,7 @@ psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -f supabase/seed-dat
 
 De state machine-triggers updaten `vocabulary_status` en `grammar_status` automatisch.
 
-### Stap 4 — Maak `dialog_blueprint_specs` aan
+### Stap 5 — Maak `dialog_blueprint_specs` aan
 
 Dit is een **verplichte stap** vóór de builder-query. Zonder een record in `dialog_blueprint_specs` voor de les geeft `03` geen rijen terug.
 
@@ -206,19 +280,21 @@ values (
 );
 ```
 
-### Stap 5 — Voer de builder-query uit
+**Eenmalige personages horen niet in `character_profiles`.** Een kelner, marktkramer of ander figuur dat maar in één scène opduikt en geen invloed heeft op een relatie, hoeft niet als personage aangemaakt te worden. Beschrijf de eenmalige rol gewoon in `scene_summary` of als extra regel in `extra_constraints` (bv. `'a waiter briefly takes the order and says something like "here you go..."'`). `dialog_blocks.speaker_key` is vrije tekst zonder foreign key naar `character_profiles`, dus zo'n figuur kan gewoon een sprekerlabel krijgen (bv. "Waiter") zonder ooit in de database te bestaan.
+
+### Stap 6 — Voer de builder-query uit
 
 Open `03_build_dialog_lesson_blueprint.sql`, verander de WHERE naar de juiste `lesson_key` en voer uit in Supabase Studio. Je zou één rij moeten zien.
 
 De kolommen staan in exact dezelfde volgorde als de secties in `04_lesson_dialog_prompt_template.md`. Je kan van links naar rechts door het resultaat werken terwijl je de prompt invult.
 
-### Stap 6 — Exporteer als CSV (optioneel)
+### Stap 7 — Exporteer als CSV (optioneel)
 
 Exporteer het one-row-resultaat als CSV naar `planning/blueprints/a1_dialog_XX_blueprint.csv`.
 
 **Let op multiline-velden.** Velden zoals `required_vocabulary_list`, `allowed_vocabulary_list` en `speaker_a_default_tone` bevatten newlines. De meeste teksteditors (VS Code, Notepad) tonen die fout als extra rijen, waardoor kolomposities verschuiven. Gebruik voor multiline-velden de **cel-klik in Studio** om de volledige inhoud te kopiëren. Scalarvelden (lesson_key, scene_type, allowed_register, etc.) werken wel betrouwbaar uit de CSV.
 
-### Stap 7 — Vul de prompt in
+### Stap 8 — Vul de prompt in
 
 Maak `supabase/prompts/a1_dialog_XX_prompt.md` aan op basis van `04_lesson_dialog_prompt_template.md`. Vervang elke placeholder met de waarde uit het Studio-resultaat of de CSV.
 
@@ -228,13 +304,13 @@ Werkwijze:
 - Multiline-velden: klik de cel aan in Studio en kopieer de volledige inhoud
 - Plak geen CSV-aanhalingstekens die niet bij de inhoud horen
 
-### Stap 8 — Genereer de dialoog
+### Stap 9 — Genereer de dialoog
 
 Gebruik de ingevulde lesspecifieke prompt. Sla de ruwe output op in `generation/dialogs/a1_dialog_XX_output.md`.
 
 De output bestaat uit vijf metadata-secties (Title, Subtitle, Learning focus, Scene summary, Register) gevolgd door genummerde blokken. Elk blok bevat precies één Thai-regel, één Transliteration-regel en één English-regel.
 
-### Stap 9 — QA vóór opslaan
+### Stap 10 — QA vóór opslaan
 
 Controleer minstens:
 
@@ -248,7 +324,7 @@ Controleer minstens:
 - Is de transliteratie consistent?
 - Is de Engelse vertaling trouw aan het Thais?
 
-### Stap 10 — Sla de definitieve dialoog op in `dialogs` en `dialog_blocks`
+### Stap 11 — Sla de definitieve dialoog op in `dialogs` en `dialog_blocks`
 
 Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan. Het bestand bestaat uit twee delen in één transactie.
 
@@ -313,11 +389,11 @@ commit;
 
 Als er later een illustratielaag voor deze dialoog bijkomt, verschijnt er nog een apart bestand `seed-data/dialogs/a1_dialog_XX_slides.seed.sql` (voor `dialog_slides`) — dat hoort bij `docs/illustration-system/04_illustration_workflow_guide.md` en niet bij deze stap, omdat de slide-segmentatie pas ná goedkeuring van de dialoog wordt bepaald.
 
-### Stap 11 — Voer lokaal uit
+### Stap 12 — Voer lokaal uit
 
 Voor kleine wijzigingen of een nieuwe dialoog: voer de seed-SQL handmatig uit in de SQL-editor. Gebruik `supabase db reset` alleen voor een volledige reproducibiliteitstest.
 
-### Stap 12 — Commit
+### Stap 13 — Commit
 
 Commit de plannings-, generatie- en seed-bestanden samen:
 
@@ -350,14 +426,15 @@ sql_paths = [
 
 ## Praktische checklist per nieuwe les
 
-1. Bevestig dat de les bestaat in `lessons`.
-2. Stel een shortlist van 10–12 kandidaatwoorden op en kies het aantal volgens de lesfase-tabel (4–5 voor les 1–10, 6–8 voor les 11–30, 8–10 vanaf les 31).
-3. Seed `lesson_vocabulary`, `lesson_grammar`, `lesson_pattern`, `lesson_phrase`.
-4. Maak `dialog_blueprint_specs` aan en seed.
-5. Voer `03_build_dialog_lesson_blueprint.sql` uit — verwacht één rij.
-6. Exporteer als CSV naar `planning/blueprints/`.
-7. Vul `supabase/prompts/a1_dialog_XX_prompt.md` in (scalars vanuit CSV, multiline vanuit Studio-cel).
-8. Genereer de dialoog en sla op in `generation/dialogs/`.
-9. Voer QA uit.
-10. Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan (dialoog-metadata + blokken) en voer uit.
-11. Commit alle bestanden.
+1. Laat AI de volgende les voorstellen via de curriculumsequencer (Stap 1): titel, subtitel, scène en doelconcepten. Keur goed, voeg goedgekeurde `[NEW]`-items toe aan de masterlijst, en maak/werk de `lessons`-rij bij.
+2. Bevestig dat de les bestaat in `lessons`.
+3. Stel een shortlist van 10–12 kandidaatwoorden op en kies het aantal volgens de lesfase-tabel (4–5 voor les 1–10, 6–8 voor les 11–30, 8–10 vanaf les 31).
+4. Seed `lesson_vocabulary`, `lesson_grammar`, `lesson_pattern`, `lesson_phrase`.
+5. Maak `dialog_blueprint_specs` aan en seed.
+6. Voer `03_build_dialog_lesson_blueprint.sql` uit — verwacht één rij.
+7. Exporteer als CSV naar `planning/blueprints/`.
+8. Vul `supabase/prompts/a1_dialog_XX_prompt.md` in (scalars vanuit CSV, multiline vanuit Studio-cel).
+9. Genereer de dialoog en sla op in `generation/dialogs/`.
+10. Voer QA uit.
+11. Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan (dialoog-metadata + blokken) en voer uit.
+12. Commit alle bestanden.
