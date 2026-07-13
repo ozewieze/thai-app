@@ -172,7 +172,33 @@ De masterlijsten (`vocabulary_master`, `grammar_master`, `phrase_master`, `patte
 
    De bijhorende initialisatietrigger (`trg_initialize_vocabulary_status` en de grammar-/phrase-/pattern-varianten) maakt automatisch de status-rij aan met `status = 'new'`. Je hoeft dus niets extra te doen om het woord bruikbaar te maken — het verschijnt meteen in de ongebruikte kandidatenpool (zie Stap 1 hieronder).
 
-3. **Werk periodiek de brondata bij** in `supabase/seed-data/master/csv/*.csv`, zodat `npm run seed:vocab` / `seed:grammar` / `seed:pattern` consistent blijft bij een `db reset`. Dit is opruimwerk dat je kan groeperen (bijvoorbeeld na elke 5–10 dialogen) — het hoeft niet bij elk nieuw woord meteen te gebeuren.
+3. **Werk periodiek de brondata bij** met de sync-scripts hieronder, zodat `supabase/seed-data/master/csv/*.csv` en de gegenereerde `.seed.sql` consistent blijven bij een `db reset`. Dit is opruimwerk dat je kan groeperen (bijvoorbeeld na elke 5–10 dialogen) — het hoeft niet bij elk nieuw woord meteen te gebeuren.
+
+## Sync-scripts voor masterlijsten
+
+Als je vaak rechtstreeks in de mastertabellen werkt (stap 2 hierboven), is een apart sync-script de beste aanvulling op deze workflow. `scripts/export-vocabulary-master.mjs`, `export-grammar-master.mjs` en `export-pattern-master.mjs` schrijven de huidige database-inhoud terug naar de bijhorende CSV; de bestaande `seed:vocab` / `seed:grammar` / `seed:pattern` genereren daarna de `.seed.sql` opnieuw uit die CSV.
+
+Draai per masterlijst:
+
+```
+npm run sync:vocab      # export vocabulary_master -> csv, daarna seed-SQL regenereren
+npm run sync:grammar    # idem voor grammar_master
+npm run sync:pattern    # idem voor pattern_master
+npm run sync:master     # alle drie na elkaar
+```
+
+(`.env.local` moet `NEXT_PUBLIC_SUPABASE_URL` en `SUPABASE_SERVICE_ROLE_KEY` bevatten, net als bij `upload-slides.mjs`.)
+
+De bedoeling is expliciet:
+
+- je draait het script **handmatig** zodra je een batch nieuwe records hebt toegevoegd;
+- het script is een **DB-to-CSV back-sync**, geen onderdeel van `db reset`;
+- `db reset` blijft de andere richting volgen: CSV -> generated seed -> database;
+- na sync commit je de aangepaste CSV en de opnieuw gegenereerde `.seed.sql` samen.
+
+Praktisch betekent dit dat de authoring-flow DB-first blijft: voeg een nieuw woord of concept toe met een insert/upsert, en laat de sync-scriptstap pas daarna volgen wanneer je de masterlijst wil normaliseren voor reset/reproducibility.
+
+**Let op:** `db reset` (en dus ook `npm run db:reset`) wist de lokale database en herbouwt ze volledig uit de CSV's — niet uit de live database-inhoud. Een woord of concept dat je via stap 2 rechtstreeks hebt geïnsert, bestaat dus alleen in de live database totdat je het bijbehorende `sync:*`-script hebt gedraaid. Draai je `db reset` daarvóór, dan verdwijnt die insert stilzwijgend (geen foutmelding). Behandel `npm run sync:master` daarom als een vereiste stap vóór elke `db reset` waarin je recent rechtstreeks hebt geïnsert, niet enkel als periodieke opruiming.
 
 ## Stapsgewijze workflow per les
 
@@ -247,7 +273,7 @@ Voer de seed uit met het commando:
 
 psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -f supabase/seed-data/links/lesson_links_a1-dialog-02.seed.sql
 
-De state machine-triggers updaten `vocabulary_status` en `grammar_status` automatisch.
+De state machine-triggers updaten `vocabulary_status`, `grammar_status`, `phrase_status` en `pattern_status` automatisch.
 
 ### Stap 5 — Maak `dialog_blueprint_specs` aan
 
@@ -406,29 +432,30 @@ Commit de plannings-, generatie- en seed-bestanden samen:
 
 ## `config.toml` seed-configuratie
 
-Als dialoog-seeds automatisch moeten draaien bij `db reset`:
+Dialoog-seeds draaien al automatisch bij `db reset`, via `supabase/config.toml`:
 
 ```toml
 [db.seed]
 enabled = true
 sql_paths = [
   "./seed-data/app/core.seed.sql",
+  "./seed-data/app/specs/*.sql",
   "./seed-data/master/vocabulary_master.seed.sql",
   "./seed-data/master/grammar_master.seed.sql",
   "./seed-data/master/pattern_master.seed.sql",
   "./seed-data/master/phrase_master.seed.sql",
-  "./seed-data/links/lesson_links_a1-dialog-01.seed.sql",
-  "./seed-data/links/lesson_links_a1-dialog-02.seed.sql",
-  "./seed-data/app/specs/*.seed.sql",
+  "./seed-data/links/*.sql",
   "./seed-data/dialogs/*.sql"
 ]
 ```
+
+`links/*.sql` en `dialogs/*.sql` zijn globs, dus een nieuw bestand zoals `lesson_links_a1-dialog-XX.seed.sql` of `a1_dialog_XX.seed.sql` wordt automatisch meegenomen bij de volgende `db reset` — je hoeft dit bestand niet bij te werken per nieuwe dialoog.
 
 ## Praktische checklist per nieuwe les
 
 1. Laat AI de volgende les voorstellen via de curriculumsequencer (Stap 1): titel, subtitel, scène en doelconcepten. Keur goed, voeg goedgekeurde `[NEW]`-items toe aan de masterlijst, en maak/werk de `lessons`-rij bij.
 2. Bevestig dat de les bestaat in `lessons`.
-3. Stel een shortlist van 10–12 kandidaatwoorden op en kies het aantal volgens de lesfase-tabel (4–5 voor les 1–10, 6–8 voor les 11–30, 8–10 vanaf les 31).
+3. Stel een shortlist van 10–12 kandidaatwoorden op en kies het aantal volgens de lesfase-tabel (4–5 voor les 1–10, 6–8 voor les 11–30, 8–10 vanaf les 31). Voeg nieuwe master-items direct toe met insert/upsert, en draai pas later het sync-script om CSV en seed-SQL bij te werken.
 4. Seed `lesson_vocabulary`, `lesson_grammar`, `lesson_pattern`, `lesson_phrase`.
 5. Maak `dialog_blueprint_specs` aan en seed.
 6. Voer `03_build_dialog_lesson_blueprint.sql` uit — verwacht één rij.
