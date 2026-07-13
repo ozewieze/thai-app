@@ -214,7 +214,7 @@ Dit is het standaardproces: je verzint scène, titel en woordenlijst niet meer z
 
 1. Voer `00_build_curriculum_sequencer_context.sql` uit in Supabase Studio — dit zijn 7 losse secties (voortgang, reeds-geïntroduceerde concepten, ongebruikte kandidatenpool per categorie, laatste dialogen, continuïteitscontext).
 2. Vul `05_curriculum_sequencer_prompt_template.md` in met die resultaten en sla het ingevulde resultaat op als `supabase/prompts/sequencer/a1_dialog_XX_sequencer_prompt.md` (audit trail van waarop het voorstel gebaseerd was; `XX` is op dit punt nog een schatting van het volgnummer, corrigeer de bestandsnaam indien nodig zodra de definitieve `sequence_number` bekend is in Stap 6).
-3. Laat AI een voorstel doen: titel, subtitel, scène, lesdoel, en doelconcepten (gelabeld als `[EXISTING]` of `[NEW]`).
+3. Laat AI een voorstel doen: titel, subtitel, scène, lesdoel, en doelconcepten (bestaande items onvermeld, nieuwe items expliciet gelabeld als `[NEW]`).
 4. **Keur het voorstel goed of stuur het bij** — dit is een voorstel, geen bron van waarheid. Let vooral op:
    - Klopt de scène inhoudelijk en past ze bij de vorige dialoog(en)?
    - Is het aantal nieuwe items in lijn met de lesfase-richtlijn?

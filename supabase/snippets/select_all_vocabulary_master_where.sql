@@ -1,2 +1,2 @@
-select * from vocabulary_master
-where thai_script ilike '%หรือ%';
+select * from public.vocabulary_master
+   where thai_script = 'ค'

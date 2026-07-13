@@ -167,6 +167,16 @@ Before producing the dialogue, verify that:
 - The dialogue is beginner-safe and matches the target line count in Dialogue Design — not just under it, but reasonably close to it.
 - Required phrases are not repeated unnecessarily.
 
+## Romanization Convention (Paiboon)
+
+All Paiboon transliteration in this dialogue must strictly follow the Paiboon Publishing / ThaiDict romanization system. Do not use RTGS, IPA, or any other romanization convention, even if it looks more familiar.
+
+- Unaspirated stops: ก = g, ต = dt, ป = bp
+- Aspirated stops: ข, ค = k · ท, ถ = t · พ, ผ, ภ = p — never write "kh", "th", or "ph"
+- ง = ng, จ = j, ช = ch
+- Syllable-final ย is written "i" (not "y"); syllable-final ว is written "o" or "u" depending on the vowel pattern (not "w")
+- For words with the อัว/อวย vowel pattern (e.g. สวย, ครัว, ช่วย, ป่วย), whether it is spelled with a single or double "u" cannot be derived from the script alone and varies per word. Match whatever spelling that exact word already has in the Required/Allowed Vocabulary lists above. If the word does not appear there, mark that transliteration as uncertain rather than guessing.
+
 ## Output Format
 
 Use these section headings exactly, in this order:
@@ -205,6 +215,7 @@ Return exactly these sections and no additional sections.
 - Keep the dialogue within the estimated line count for this lesson while satisfying all lesson requirements — do not artificially shorten it below that target.
 - Do not explain your reasoning.
 - Do not add notes, commentary, metadata, or extra sections.
+- Follow the Romanization Convention above exactly for every Transliteration line; do not fall back to RTGS or IPA.
 
 # CSV -> prompt mapping checklist
 

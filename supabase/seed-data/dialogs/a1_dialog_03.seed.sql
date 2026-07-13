@@ -44,12 +44,12 @@ select
   block.translation_en
 from dialog
 cross join (values
-  (0, 'narin', 'นริน: จะดื่มอะไรครับ',           'Narin: jà dʉ̀ʉm à-rai khráp',                  'Narin: What will you drink?'),
-  (1, 'mali',  'มะลิ: กาแฟค่ะ',                  'Mali: gaa-faae khâ',                             'Mali: Coffee.'),
-  (2, 'narin', 'นริน: กาแฟร้อนหรือกาแฟเย็นครับ', 'Narin: gaa-faae rɔ́ɔn rʉ̌ʉ gaa-faae yen khráp',  'Narin: Hot coffee or iced coffee?'),
-  (3, 'mali',  'มะลิ: กาแฟเย็นค่ะ',              'Mali: gaa-faae yen khâ',                         'Mali: Iced coffee.'),
-  (4, 'mali',  'มะลิ: คุณจะดื่มอะไรคะ',          'Mali: khun jà dʉ̀ʉm à-rai khá',                 'Mali: What will you drink?'),
-  (5, 'narin', 'นริน: ชาครับ',                   'Narin: chaa khráp',                              'Narin: Tea.')
+  (0, 'narin', 'นริน: จะดื่มอะไรครับ',           'Narin: jà dʉ̀ʉm à-rai kráp',                  'Narin: What will you drink?'),
+  (1, 'mali',  'มะลิ: กาแฟค่ะ',                  'Mali: gaa-faae kâ',                             'Mali: Coffee.'),
+  (2, 'narin', 'นริน: กาแฟร้อนหรือกาแฟเย็นครับ', 'Narin: gaa-faae rɔ́ɔn rʉ̌ʉ gaa-faae yen kráp',  'Narin: Hot coffee or iced coffee?'),
+  (3, 'mali',  'มะลิ: กาแฟเย็นค่ะ',              'Mali: gaa-faae yen kâ',                         'Mali: Iced coffee.'),
+  (4, 'mali',  'มะลิ: คุณจะดื่มอะไรคะ',          'Mali: kun jà dʉ̀ʉm à-rai ká',                 'Mali: What will you drink?'),
+  (5, 'narin', 'นริน: ชาครับ',                   'Narin: chaa kráp',                              'Narin: Tea.')
 ) as block(block_index, speaker_key, thai_text, transliteration, translation_en)
 on conflict (dialog_id, block_index) do update set
   speaker_key     = excluded.speaker_key,

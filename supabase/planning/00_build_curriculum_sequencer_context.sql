@@ -118,73 +118,103 @@ left join lateral (
 -- ============================================================
 -- SECTIE 3 — Ongebruikte kandidatenpool: vocabulaire
 -- ============================================================
--- Woorden met status = 'new', gegroepeerd per thema en woordsoort
--- zodat je snel kan filteren op wat past bij de volgende scène.
+-- Woorden met status = 'new', gegroepeerd per thema en woordsoort.
+-- De buitenste string_agg verzamelt alle groepen tot één cel, zodat
+-- je het resultaat in één keer kan kopiëren en direct kan plakken
+-- op {{vocabulary_candidate_pool}} in de sequencer-prompt-template
+-- — zonder elk van de N groep-rijen apart te moeten overnemen.
 
-select
-  vm.default_theme,
-  vm.part_of_speech,
-  string_agg(
-    concat(vm.thai_script, ' (', vm.paiboon, ') = ', vm.english_gloss),
-    E'\n' order by vm.thai_script
-  ) as candidates
-from public.vocabulary_master vm
-join public.vocabulary_status vs on vs.vocabulary_id = vm.id
-where vs.status = 'new'
-group by vm.default_theme, vm.part_of_speech
-order by vm.default_theme nulls last, vm.part_of_speech nulls last;
+with pool as (
+  select
+    vm.default_theme,
+    vm.part_of_speech,
+    string_agg(
+      concat(vm.thai_script, ' (', vm.paiboon, ') = ', vm.english_gloss),
+      E'\n' order by vm.thai_script
+    ) as candidates
+  from public.vocabulary_master vm
+  join public.vocabulary_status vs on vs.vocabulary_id = vm.id
+  where vs.status = 'new'
+  group by vm.default_theme, vm.part_of_speech
+)
+select string_agg(
+  concat(
+    '**', coalesce(default_theme, '(geen thema)'), ' — ',
+    coalesce(part_of_speech, '(geen woordsoort)'), '**', E'\n', candidates
+  ),
+  E'\n\n' order by default_theme nulls last, part_of_speech nulls last
+) as vocabulary_candidate_pool
+from pool;
 
 
 -- ============================================================
 -- SECTIE 3b — Ongebruikte kandidatenpool: grammatica
 -- ============================================================
 
-select
-  gm.concept_type,
-  string_agg(
-    concat(gm.title, case when coalesce(gm.short_explanation, '') <> ''
-      then concat(': ', gm.short_explanation) else '' end),
-    E'\n' order by gm.title
-  ) as candidates
-from public.grammar_master gm
-join public.grammar_status gs on gs.grammar_id = gm.id
-where gs.status = 'new'
-group by gm.concept_type
-order by gm.concept_type nulls last;
+with pool as (
+  select
+    gm.concept_type,
+    string_agg(
+      concat(gm.title, case when coalesce(gm.short_explanation, '') <> ''
+        then concat(': ', gm.short_explanation) else '' end),
+      E'\n' order by gm.title
+    ) as candidates
+  from public.grammar_master gm
+  join public.grammar_status gs on gs.grammar_id = gm.id
+  where gs.status = 'new'
+  group by gm.concept_type
+)
+select string_agg(
+  concat('**', coalesce(concept_type, '(geen type)'), '**', E'\n', candidates),
+  E'\n\n' order by concept_type nulls last
+) as grammar_candidate_pool
+from pool;
 
 
 -- ============================================================
 -- SECTIE 3c — Ongebruikte kandidatenpool: phrases
 -- ============================================================
 
-select
-  pm.phrase_type,
-  string_agg(
-    concat(pm.title, ': ', coalesce(pm.phrase_formula, '')),
-    E'\n' order by pm.title
-  ) as candidates
-from public.phrase_master pm
-join public.phrase_status ps on ps.phrase_id = pm.id
-where ps.status = 'new'
-group by pm.phrase_type
-order by pm.phrase_type nulls last;
+with pool as (
+  select
+    pm.phrase_type,
+    string_agg(
+      concat(pm.title, ': ', coalesce(pm.phrase_formula, '')),
+      E'\n' order by pm.title
+    ) as candidates
+  from public.phrase_master pm
+  join public.phrase_status ps on ps.phrase_id = pm.id
+  where ps.status = 'new'
+  group by pm.phrase_type
+)
+select string_agg(
+  concat('**', coalesce(phrase_type, '(geen type)'), '**', E'\n', candidates),
+  E'\n\n' order by phrase_type nulls last
+) as phrase_candidate_pool
+from pool;
 
 
 -- ============================================================
 -- SECTIE 3d — Ongebruikte kandidatenpool: patterns
 -- ============================================================
 
-select
-  pam.pattern_type,
-  string_agg(
-    concat(pam.title, ': ', coalesce(pam.pattern_formula, '')),
-    E'\n' order by pam.title
-  ) as candidates
-from public.pattern_master pam
-join public.pattern_status pas on pas.pattern_id = pam.id
-where pas.status = 'new'
-group by pam.pattern_type
-order by pam.pattern_type nulls last;
+with pool as (
+  select
+    pam.pattern_type,
+    string_agg(
+      concat(pam.title, ': ', coalesce(pam.pattern_formula, '')),
+      E'\n' order by pam.title
+    ) as candidates
+  from public.pattern_master pam
+  join public.pattern_status pas on pas.pattern_id = pam.id
+  where pas.status = 'new'
+  group by pam.pattern_type
+)
+select string_agg(
+  concat('**', coalesce(pattern_type, '(geen type)'), '**', E'\n', candidates),
+  E'\n\n' order by pattern_type nulls last
+) as pattern_candidate_pool
+from pool;
 
 
 -- ============================================================
@@ -197,35 +227,92 @@ order by pam.pattern_type nulls last;
 -- dialoog" moet de vorige les IN DIT TRAJECT zijn, anders kan een les
 -- uit een ander niveau/sectie hier tussenkomen zodra die ooit bestaat.
 
-select
-  l.sequence_number,
-  l.lesson_key,
-  d.title,
-  d.scene_summary,
-  string_agg(
-    concat(
-      coalesce(db.speaker_key, '?'), ': ',
-      db.thai_text, ' (', coalesce(db.transliteration, ''), ') — ',
-      coalesce(db.translation_en, '')
-    ),
-    E'\n' order by db.block_index
-  ) as dialog_text
-from public.dialogs d
-join public.lessons l on l.id = d.lesson_id
-join public.dialog_blocks db on db.dialog_id = d.id
-where l.cefr_level = 'A1' and l.section_key = 'dialogs'
-group by l.sequence_number, l.lesson_key, d.title, d.scene_summary
-order by l.sequence_number desc
-limit 2;
+-- De binnenste query gebruikt DESC + LIMIT om de MEEST RECENTE 2
+-- dialogen te selecteren. De buitenste query sorteert die selectie
+-- daarna weer ASC, zodat de uiteindelijke leesvolgorde chronologisch
+-- is (oudste eerst, nieuwste laatst) — prettiger leesbaar voor de AI
+-- die de volgende les voorstelt, als doorlopend verhaal.
+select * from (
+  select
+    l.sequence_number,
+    l.lesson_key,
+    d.title,
+    d.scene_summary,
+    string_agg(
+      concat(
+        coalesce(db.speaker_key, '?'), ': ',
+        db.thai_text, ' (', coalesce(db.transliteration, ''), ') — ',
+        coalesce(db.translation_en, '')
+      ),
+      E'\n' order by db.block_index
+    ) as dialog_text
+  from public.dialogs d
+  join public.lessons l on l.id = d.lesson_id
+  join public.dialog_blocks db on db.dialog_id = d.id
+  where l.cefr_level = 'A1' and l.section_key = 'dialogs'
+  group by l.sequence_number, l.lesson_key, d.title, d.scene_summary
+  order by l.sequence_number desc
+  limit 2
+) recent
+order by sequence_number asc;
 
 
 -- ============================================================
 -- SECTIE 5 — Actieve relatie-/personagecontext
 -- ============================================================
--- Zelfde bron als 02_debug_continuity_options.sql, hier herhaald
--- zodat dit bestand op zichzelf staat als één-stop input voor de
--- sequencer-prompt.
+-- Zelfde bron als 02_debug_continuity_options.sql, maar hier
+-- samengevat tot leesbare tekst per relatiepaar (i.p.v. de ruwe
+-- view-rijen met interne ids en een jsonb-kolom) en tot één cel
+-- geaggregeerd, zodat je het resultaat weer in één keer kan
+-- kopiëren naar {{continuity_options}}.
 
-select *
-from public.lesson_continuity_options_view
-order by relationship_pair_id;
+with rules_flat as (
+  select
+    lco.relationship_pair_id,
+    string_agg(
+      concat('  - ', r ->> 'rule_key', ': ', r ->> 'rule_text'),
+      E'\n' order by r ->> 'rule_key'
+    ) as rules_text
+  from public.lesson_continuity_options_view lco
+  cross join lateral jsonb_array_elements(lco.relationship_rules) as r
+  group by lco.relationship_pair_id
+),
+pairs as (
+  select
+    lco.relationship_pair_id,
+    lco.character_a_name,
+    lco.character_a_name_thai,
+    lco.character_a_role_summary,
+    lco.character_a_age_impression,
+    lco.character_a_default_tone,
+    lco.character_a_default_usage,
+    lco.character_b_name,
+    lco.character_b_name_thai,
+    lco.character_b_role_summary,
+    lco.character_b_age_impression,
+    lco.character_b_default_tone,
+    lco.character_b_default_usage,
+    lco.current_stage,
+    lco.start_state,
+    lco.function_summary,
+    lco.allowed_progression,
+    coalesce(rf.rules_text, '  - (geen regels)') as rules_text
+  from public.lesson_continuity_options_view lco
+  left join rules_flat rf on rf.relationship_pair_id = lco.relationship_pair_id
+)
+select string_agg(
+  concat(
+    '**Pair ', relationship_pair_id, ': ', character_a_name, ' (', character_a_name_thai, ') & ',
+    character_b_name, ' (', character_b_name_thai, ')**', E'\n',
+    '- ', character_a_name, ': ', character_a_role_summary, ' — ', character_a_age_impression,
+    ', tone: ', character_a_default_tone, ', usage: ', character_a_default_usage, E'\n',
+    '- ', character_b_name, ': ', character_b_role_summary, ' — ', character_b_age_impression,
+    ', tone: ', character_b_default_tone, ', usage: ', character_b_default_usage, E'\n',
+    '- Current stage: ', current_stage, ' (start: ', start_state, ')', E'\n',
+    '- Function: ', function_summary, E'\n',
+    '- Allowed progression: ', allowed_progression, E'\n',
+    '- Relationship rules:', E'\n', rules_text
+  ),
+  E'\n\n' order by relationship_pair_id
+) as continuity_options
+from pairs;

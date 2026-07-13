@@ -44,13 +44,13 @@ select
   block.translation_en
 from dialog
 cross join (values
-  (0, 'mali',  'มะลิ: สวัสดีค่ะ',             'Mali: sà-wàt-dii khâ',                    'Mali: Hello.'),
-  (1, 'narin', 'นริน: สวัสดีครับ',             'Narin: sà-wàt-dii khráp',                 'Narin: Hello.'),
-  (2, 'mali',  'มะลิ: ฉันชื่อมะลิค่ะ',         'Mali: chǎn chʉ̂ʉ Mali khâ',                'Mali: My name is Mali.'),
-  (3, 'mali',  'มะลิ: คุณชื่ออะไรคะ',          'Mali: khun chʉ̂ʉ à-rai khá',               'Mali: What is your name?'),
-  (4, 'narin', 'นริน: ผมชื่อนรินครับ',          'Narin: phǒm chʉ̂ʉ Narin khráp',            'Narin: My name is Narin.'),
-  (5, 'narin', 'นริน: ยินดีที่ได้รู้จักครับ',  'Narin: yin-dii thîi dâai rúu-jàk khráp',  'Narin: Nice to meet you.'),
-  (6, 'mali',  'มะลิ: ยินดีที่ได้รู้จักค่ะ',  'Mali: yin-dii thîi dâai rúu-jàk khâ',     'Mali: Nice to meet you.')
+  (0, 'mali',  'มะลิ: สวัสดีค่ะ',             'Mali: sà-wàt-dii kâ',                    'Mali: Hello.'),
+  (1, 'narin', 'นริน: สวัสดีครับ',             'Narin: sà-wàt-dii kráp',                 'Narin: Hello.'),
+  (2, 'mali',  'มะลิ: ฉันชื่อมะลิค่ะ',         'Mali: chǎn chʉ̂ʉ Mali kâ',                'Mali: My name is Mali.'),
+  (3, 'mali',  'มะลิ: คุณชื่ออะไรคะ',          'Mali: kun chʉ̂ʉ à-rai ká',               'Mali: What is your name?'),
+  (4, 'narin', 'นริน: ผมชื่อนรินครับ',          'Narin: pǒm chʉ̂ʉ Narin kráp',            'Narin: My name is Narin.'),
+  (5, 'narin', 'นริน: ยินดีที่ได้รู้จักครับ',  'Narin: yin-dii tîi dâai rúu-jàk kráp',  'Narin: Nice to meet you.'),
+  (6, 'mali',  'มะลิ: ยินดีที่ได้รู้จักค่ะ',  'Mali: yin-dii tîi dâai rúu-jàk kâ',     'Mali: Nice to meet you.')
 ) as block(block_index, speaker_key, thai_text, transliteration, translation_en)
 on conflict (dialog_id, block_index) do update set
   speaker_key     = excluded.speaker_key,

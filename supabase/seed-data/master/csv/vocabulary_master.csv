@@ -1,51 +1,51 @@
 source_key,cefr_level,thai_script,paiboon,english_gloss,part_of_speech,register,default_theme,is_multifunctional,usage_note,source_note
 hello,A1,สวัสดี,sà-wàt-dii,hello,particle,formal,greetings,false,,ai_a1_master_v3
-thank_you,A1,ขอบคุณ,khɔ̀ɔp-khun,thank you,particle,formal,greetings,false,,ai_a1_master_v3
+thank_you,A1,ขอบคุณ,kɔ̀ɔp-kun,thank you,particle,formal,greetings,false,,ai_a1_master_v3
 yes,A1,ใช่,châi,yes,particle,formal,essentials,true,also used to confirm or agree,ai_a1_master_v3
 no,A1,ไม่,mâi,no,adverb,formal,essentials,true,basic negation; also used in answers and before verbs or adjectives,ai_a1_master_v3
-excuse_me,A1,ขอโทษ,khɔ̌ɔ-thôot,excuse me,particle,formal,greetings,true,used to apologize and to get attention politely,ai_a1_master_v3
+excuse_me,A1,ขอโทษ,kɔ̌ɔ-tôot,excuse me,particle,formal,greetings,true,used to apologize and to get attention politely,ai_a1_master_v3
 goodbye,A1,ลาก่อน,laa-gɔ̀ɔn,goodbye,particle,formal,greetings,false,,ai_a1_master_v3
 i,A1,ฉัน,chǎn,I,pronoun,formal,people,false,polite first-person pronoun often used by women; male learners may later learn ผม,ai_a1_master_v3
-you,A1,คุณ,khun,you,pronoun,formal,people,false,,ai_a1_master_v3
-he_she_they,A1,เขา,khǎo,he or she,pronoun,formal,people,true,also commonly refers to they depending on context,ai_a1_master_v3
+you,A1,คุณ,kun,you,pronoun,formal,people,false,,ai_a1_master_v3
+he_she_they,A1,เขา,kǎo,he or she,pronoun,formal,people,true,also commonly refers to they depending on context,ai_a1_master_v3
 we,A1,เรา,rao,we,pronoun,formal,people,true,also used in some casual speech as I,ai_a1_master_v3
-they,A1,พวกเขา,phûuak-khǎo,they,pronoun,formal,people,false,,ai_a1_master_v3
+they,A1,พวกเขา,pûuak-kǎo,they,pronoun,formal,people,false,,ai_a1_master_v3
 this,A1,นี่,nîi,this,pronoun,formal,questions,true,used for this person or thing; also in pointing and identification,ai_a1_master_v3
 that,A1,นั่น,nân,that,pronoun,formal,questions,true,used for that person or thing; also in pointing and identification,ai_a1_master_v3
 what,A1,อะไร,à-rai,what,question_word,formal,questions,false,,ai_a1_master_v3
-who,A1,ใคร,khrai,who,question_word,formal,questions,false,,ai_a1_master_v3
-where,A1,ที่ไหน,thîi-nǎi,where,question_word,formal,questions,false,,ai_a1_master_v3
+who,A1,ใคร,krai,who,question_word,formal,questions,false,,ai_a1_master_v3
+where,A1,ที่ไหน,tîi-nǎi,where,question_word,formal,questions,false,,ai_a1_master_v3
 when,A1,เมื่อไร,mʉ̂a-rai,when,question_word,formal,questions,false,,ai_a1_master_v3
 how,A1,อย่างไร,yàang-rai,how,question_word,formal,questions,false,,ai_a1_master_v3
-how_much,A1,เท่าไร,thâo-rai,how much,question_word,formal,questions,true,used for price quantity or amount,ai_a1_master_v3
+how_much,A1,เท่าไร,tâo-rai,how much,question_word,formal,questions,true,used for price quantity or amount,ai_a1_master_v3
 which,A1,ไหน,nǎi,which,question_word,formal,questions,true,also used in simple where-like questions depending on pattern,ai_a1_master_v3
 name,A1,ชื่อ,chʉ̂ʉ,name,noun,formal,people,true,noun name; also used as be called in self-introductions,ai_a1_master_v3
-man,A1,ผู้ชาย,phûu-chaai,man,noun,formal,people,false,,ai_a1_master_v3
-woman,A1,ผู้หญิง,phûu-yǐng,woman,noun,formal,people,false,,ai_a1_master_v3
+man,A1,ผู้ชาย,pûu-chaai,man,noun,formal,people,false,,ai_a1_master_v3
+woman,A1,ผู้หญิง,pûu-yǐng,woman,noun,formal,people,false,,ai_a1_master_v3
 child,A1,เด็ก,dèk,child,noun,formal,people,false,,ai_a1_master_v3
-friend,A1,เพื่อน,phʉ̂an,friend,noun,formal,people,false,,ai_a1_master_v3
-teacher,A1,ครู,khruu,teacher,noun,formal,school,false,,ai_a1_master_v3
+friend,A1,เพื่อน,pʉ̂an,friend,noun,formal,people,false,,ai_a1_master_v3
+teacher,A1,ครู,kruu,teacher,noun,formal,school,false,,ai_a1_master_v3
 student,A1,นักเรียน,nák-riian,student,noun,formal,school,false,,ai_a1_master_v3
 doctor,A1,หมอ,mɔ̌ɔ,doctor,noun,formal,health,false,,ai_a1_master_v3
 mother,A1,แม่,mâae,mother,noun,formal,family,false,,ai_a1_master_v3
-father,A1,พ่อ,phɔ̂ɔ,father,noun,formal,family,false,,ai_a1_master_v3
-older_sibling,A1,พี่,phîi,older sibling,noun,formal,family,true,used for older brother or older sister; also as a polite self-reference in some contexts,ai_a1_master_v3
+father,A1,พ่อ,pɔ̂ɔ,father,noun,formal,family,false,,ai_a1_master_v3
+older_sibling,A1,พี่,pîi,older sibling,noun,formal,family,true,used for older brother or older sister; also as a polite self-reference in some contexts,ai_a1_master_v3
 younger_sibling,A1,น้อง,nɔ́ɔng,younger sibling,noun,formal,family,true,used for younger brother or younger sister; also for addressing a younger person,ai_a1_master_v3
-family,A1,ครอบครัว,khrɔ̂ɔp-khruua,family,noun,formal,family,false,,ai_a1_master_v3
-person,A1,คน,khon,person,noun,formal,people,true,common noun person; also classifier for people,ai_a1_master_v3
+family,A1,ครอบครัว,krɔ̂ɔp-kruua,family,noun,formal,family,false,,ai_a1_master_v3
+person,A1,คน,kon,person,noun,formal,people,true,common noun person; also classifier for people,ai_a1_master_v3
 house,A1,บ้าน,bâan,house,noun,formal,home,true,also means home,ai_a1_master_v3
 room,A1,ห้อง,hɔ̂ng,room,noun,formal,home,false,,ai_a1_master_v3
 school,A1,โรงเรียน,roong-riian,school,noun,formal,school,false,,ai_a1_master_v3
-hospital,A1,โรงพยาบาล,roong-phá-yaa-baan,hospital,noun,formal,health,false,,ai_a1_master_v3
+hospital,A1,โรงพยาบาล,roong-pá-yaa-baan,hospital,noun,formal,health,false,,ai_a1_master_v3
 shop,A1,ร้าน,rán,shop,noun,formal,shopping,true,also used in names of businesses like restaurants or stores,ai_a1_master_v3
 market,A1,ตลาด,dtà-làat,market,noun,formal,shopping,false,,ai_a1_master_v3
 toilet,A1,ห้องน้ำ,hɔ̂ng-náam,toilet,noun,formal,essentials,true,can mean bathroom or restroom,ai_a1_master_v3
 water,A1,น้ำ,náam,water,noun,formal,drinks,false,,ai_a1_master_v3
 food,A1,อาหาร,aa-hǎan,food,noun,formal,food,false,,ai_a1_master_v3
-rice,A1,ข้าว,khâao,rice,noun,formal,food,true,can mean cooked rice or a meal in simple contexts,ai_a1_master_v3
-bread,A1,ขนมปัง,khà-nǒm-bpang,bread,noun,formal,food,false,,ai_a1_master_v3
-egg,A1,ไข่,khài,egg,noun,formal,food,false,,ai_a1_master_v3
-fruit,A1,ผลไม้,phǒn-lá-máai,fruit,noun,formal,food,false,,ai_a1_master_v3
+rice,A1,ข้าว,kâao,rice,noun,formal,food,true,can mean cooked rice or a meal in simple contexts,ai_a1_master_v3
+bread,A1,ขนมปัง,kà-nǒm-bpang,bread,noun,formal,food,false,,ai_a1_master_v3
+egg,A1,ไข่,kài,egg,noun,formal,food,false,,ai_a1_master_v3
+fruit,A1,ผลไม้,pǒn-lá-máai,fruit,noun,formal,food,false,,ai_a1_master_v3
 coffee,A1,กาแฟ,gaa-faae,coffee,noun,formal,drinks,false,,ai_a1_master_v3
 tea,A1,ชา,chaa,tea,noun,formal,drinks,false,,ai_a1_master_v3
 milk,A1,นม,nom,milk,noun,formal,drinks,false,,ai_a1_master_v3
@@ -64,14 +64,14 @@ run,A1,วิ่ง,wîng,run,verb,formal,actions,false,,ai_a1_master_v3
 see,A1,เห็น,hěn,see,verb,formal,actions,true,can also mean notice in simple speech,ai_a1_master_v3
 look,A1,ดู,duu,look,verb,formal,actions,true,also means watch,ai_a1_master_v3
 listen,A1,ฟัง,fang,listen,verb,formal,actions,false,,ai_a1_master_v3
-speak,A1,พูด,phûut,speak,verb,formal,actions,false,,ai_a1_master_v3
+speak,A1,พูด,pûut,speak,verb,formal,actions,false,,ai_a1_master_v3
 tell,A1,บอก,bɔ̀ɔk,tell,verb,formal,actions,true,also means say or inform,ai_a1_master_v3
 read,A1,อ่าน,àan,read,verb,formal,school,false,,ai_a1_master_v3
-write,A1,เขียน,khǐian,write,verb,formal,school,false,,ai_a1_master_v3
-work,A1,ทำงาน,tham-ngaan,work,verb,formal,work,false,,ai_a1_master_v3
+write,A1,เขียน,kǐian,write,verb,formal,school,false,,ai_a1_master_v3
+work,A1,ทำงาน,tam-ngaan,work,verb,formal,work,false,,ai_a1_master_v3
 study,A1,เรียน,riian,study,verb,formal,school,true,also means learn,ai_a1_master_v3
 buy,A1,ซื้อ,sʉ́ʉ,buy,verb,formal,shopping,false,,ai_a1_master_v3
-sell,A1,ขาย,khǎai,sell,verb,formal,shopping,false,,ai_a1_master_v3
+sell,A1,ขาย,kǎai,sell,verb,formal,shopping,false,,ai_a1_master_v3
 pay,A1,จ่าย,jàai,pay,verb,formal,shopping,false,,ai_a1_master_v3
 want,A1,อยาก,yàak,want,verb,formal,essentials,false,,ai_a1_master_v3
 like,A1,ชอบ,chɔ̂ɔp,like,verb,formal,essentials,true,also commonly expresses preference,ai_a1_master_v3
@@ -100,7 +100,7 @@ four,A1,สี่,sìi,four,numeral,formal,numbers,false,,ai_a1_master_v3
 five,A1,ห้า,hâa,five,numeral,formal,numbers,false,,ai_a1_master_v3
 day,A1,วัน,wan,day,noun,formal,time,true,also used in dates and named days,ai_a1_master_v3
 today,A1,วันนี้,wan-níi,today,noun,formal,time,false,,ai_a1_master_v3
-tomorrow,A1,พรุ่งนี้,phrûng-níi,tomorrow,noun,formal,time,false,,ai_a1_master_v3
+tomorrow,A1,พรุ่งนี้,prûng-níi,tomorrow,noun,formal,time,false,,ai_a1_master_v3
 yesterday,A1,เมื่อวาน,mʉ̂a-waan,yesterday,noun,formal,time,false,,ai_a1_master_v3
 now,A1,ตอนนี้,dtɔɔn-níi,now,adverb,formal,time,false,,ai_a1_master_v3
 morning,A1,เช้า,cháao,morning,noun,formal,time,false,,ai_a1_master_v3
@@ -110,24 +110,24 @@ eight,A1,แปด,bpɛ̀ɛt,eight,numeral,formal,numbers,false,,ai_a1_master_v3
 nine,A1,เก้า,gâao,nine,numeral,formal,numbers,false,,ai_a1_master_v3
 ten,A1,สิบ,sìp,ten,numeral,formal,numbers,false,,ai_a1_master_v3
 monday,A1,วันจันทร์,wan-jan,Monday,noun,formal,days,false,,ai_a1_master_v3
-tuesday,A1,วันอังคาร,wan-ang-khaan,Tuesday,noun,formal,days,false,,ai_a1_master_v3
-wednesday,A1,วันพุธ,wan-phút,Wednesday,noun,formal,days,false,,ai_a1_master_v3
-thursday,A1,วันพฤหัสบดี,wan-phá-rʉ́e-hàt-sà-bɔɔ-dii,Thursday,noun,formal,days,false,,ai_a1_master_v3
+tuesday,A1,วันอังคาร,wan-ang-kaan,Tuesday,noun,formal,days,false,,ai_a1_master_v3
+wednesday,A1,วันพุธ,wan-pút,Wednesday,noun,formal,days,false,,ai_a1_master_v3
+thursday,A1,วันพฤหัสบดี,wan-pá-rʉ́e-hàt-sà-bɔɔ-dii,Thursday,noun,formal,days,false,,ai_a1_master_v3
 friday,A1,วันศุกร์,wan-sùk,Friday,noun,formal,days,false,,ai_a1_master_v3
 saturday,A1,วันเสาร์,wan-sǎo,Saturday,noun,formal,days,false,,ai_a1_master_v3
-sunday,A1,วันอาทิตย์,wan-aa-thít,Sunday,noun,formal,days,false,,ai_a1_master_v3
+sunday,A1,วันอาทิตย์,wan-aa-tít,Sunday,noun,formal,days,false,,ai_a1_master_v3
 red,A1,แดง,dɛɛng,red,adjective,formal,colors,false,,ai_a1_master_v3
 yellow,A1,เหลือง,lʉ̌ang,yellow,adjective,formal,colors,false,,ai_a1_master_v3
-green,A1,เขียว,khǐiao,green,adjective,formal,colors,false,,ai_a1_master_v3
+green,A1,เขียว,kǐiao,green,adjective,formal,colors,false,,ai_a1_master_v3
 blue,A1,น้ำเงิน,náam-ngən,blue,adjective,formal,colors,false,,ai_a1_master_v3
 black,A1,ดำ,dam,black,adjective,formal,colors,false,,ai_a1_master_v3
-white,A1,ขาว,khǎao,white,adjective,formal,colors,false,,ai_a1_master_v3
+white,A1,ขาว,kǎao,white,adjective,formal,colors,false,,ai_a1_master_v3
 brown,A1,น้ำตาล,náam-dtaan,brown,adjective,formal,colors,true,also commonly means sugar,ai_a1_master_v3
-gray,A1,เทา,thao,gray,adjective,formal,colors,false,,ai_a1_master_v3
+gray,A1,เทา,tao,gray,adjective,formal,colors,false,,ai_a1_master_v3
 orange,A1,ส้ม,sôm,orange,adjective,formal,colors,true,also commonly means orange fruit,ai_a1_master_v3
-pink,A1,ชมพู,chom-phuu,pink,adjective,formal,colors,false,,ai_a1_master_v3
+pink,A1,ชมพู,chom-puu,pink,adjective,formal,colors,false,,ai_a1_master_v3
 purple,A1,ม่วง,mûuang,purple,adjective,formal,colors,false,,ai_a1_master_v3
-head,A1,หัว,hǔa,head,noun,formal,body,false,,ai_a1_master_v3
+head,A1,หัว,hǔua,head,noun,formal,body,false,,ai_a1_master_v3
 eye,A1,ตา,dtaa,eye,noun,formal,body,true,also commonly means eyes in plural-free usage,ai_a1_master_v3
 ear,A1,หู,hǔu,ear,noun,formal,body,true,also commonly means ears in plural-free usage,ai_a1_master_v3
 nose,A1,จมูก,jà-mùuk,nose,noun,formal,body,false,,ai_a1_master_v3
@@ -135,35 +135,35 @@ mouth,A1,ปาก,bpàak,mouth,noun,formal,body,false,,ai_a1_master_v3
 tooth,A1,ฟัน,fan,tooth,noun,formal,body,true,also commonly means teeth in plural-free usage,ai_a1_master_v3
 face,A1,หน้า,nâa,face,noun,formal,body,true,also commonly means front depending on context,ai_a1_master_v3
 hand,A1,มือ,mʉʉ,hand,noun,formal,body,true,also commonly means hands in plural-free usage,ai_a1_master_v3
-arm,A1,แขน,khǎaen,arm,noun,formal,body,true,also commonly means arms in plural-free usage,ai_a1_master_v3
-leg,A1,ขา,khǎa,leg,noun,formal,body,true,also commonly means legs; also used for animal legs,ai_a1_master_v3
-foot,A1,เท้า,tháao,foot,noun,formal,body,true,also commonly means feet in plural-free usage,ai_a1_master_v3
+arm,A1,แขน,kǎaen,arm,noun,formal,body,true,also commonly means arms in plural-free usage,ai_a1_master_v3
+leg,A1,ขา,kǎa,leg,noun,formal,body,true,also commonly means legs; also used for animal legs,ai_a1_master_v3
+foot,A1,เท้า,táao,foot,noun,formal,body,true,also commonly means feet in plural-free usage,ai_a1_master_v3
 shirt,A1,เสื้อ,sʉ̂a,shirt,noun,formal,clothing,true,also used broadly for top or upper-body clothing,ai_a1_master_v3
 pants,A1,กางเกง,gaang-geeng,pants,noun,formal,clothing,false,,ai_a1_master_v3
-shoes,A1,รองเท้า,rɔɔng-tháao,shoes,noun,formal,clothing,false,,ai_a1_master_v3
+shoes,A1,รองเท้า,rɔɔng-táao,shoes,noun,formal,clothing,false,,ai_a1_master_v3
 hat,A1,หมวก,mùuak,hat,noun,formal,clothing,false,,ai_a1_master_v3
 bag,A1,กระเป๋า,grà-bpǎo,bag,noun,formal,essentials,true,can mean bag purse or pocket depending on context,ai_a1_master_v3
 wear,A1,ใส่,sài,wear,verb,formal,clothing,true,also means put in or put on depending on context,ai_a1_master_v3
 vehicle,A1,รถ,rót,vehicle,noun,formal,transport,true,broad word for car bus and other vehicles depending on context,ai_a1_master_v3
 bus,A1,รถเมล์,rót-mee,bus,noun,informal,transport,false,,ai_a1_master_v3
 train,A1,รถไฟ,rót-fai,train,noun,formal,transport,false,,ai_a1_master_v3
-airplane,A1,เครื่องบิน,khrʉ̂ang-bin,airplane,noun,formal,transport,false,,ai_a1_master_v3
+airplane,A1,เครื่องบิน,krʉ̂ang-bin,airplane,noun,formal,transport,false,,ai_a1_master_v3
 boat,A1,เรือ,rʉa,boat,noun,formal,transport,false,,ai_a1_master_v3
 bicycle,A1,จักรยาน,jàk-grà-yaan,bicycle,noun,formal,transport,false,,ai_a1_master_v3
-road,A1,ถนน,thà-nǒn,road,noun,formal,directions,false,,ai_a1_master_v3
+road,A1,ถนน,tà-nǒn,road,noun,formal,directions,false,,ai_a1_master_v3
 left,A1,ซ้าย,sáai,left,noun,formal,directions,false,,ai_a1_master_v3
-right,A1,ขวา,khwǎa,right,noun,formal,directions,false,,ai_a1_master_v3
-straight,A1,ตรง,dtroŋ,straight,adjective,formal,directions,true,can mean straight direct or exactly depending on context,ai_a1_master_v3
+right,A1,ขวา,kwǎa,right,noun,formal,directions,false,,ai_a1_master_v3
+straight,A1,ตรง,dtrong,straight,adjective,formal,directions,true,can mean straight direct or exactly depending on context,ai_a1_master_v3
 near,A1,ใกล้,glâi,near,adjective,formal,directions,false,,ai_a1_master_v3
 far,A1,ไกล,glai,far,adjective,formal,directions,false,,ai_a1_master_v3
 in,A1,ใน,nai,in,preposition,formal,directions,false,,ai_a1_master_v3
-outside,A1,ข้างนอก,khâang-nɔ̂ɔk,outside,adverb,formal,places,false,,ai_a1_master_v3
+outside,A1,ข้างนอก,kâang-nɔ̂ɔk,outside,adverb,formal,places,false,,ai_a1_master_v3
 on,A1,บน,bon,on,preposition,formal,directions,false,,ai_a1_master_v3
 under,A1,ใต้,dtâai,under,preposition,formal,directions,false,,ai_a1_master_v3
 with,A1,กับ,gàp,with,preposition,formal,essentials,true,also used as and in some noun-linking patterns,ai_a1_master_v3
 or,A1,หรือ,rʉ̌ʉ,or,conjunction,formal,essentials,false,,ai_a1_master_v3
 but,A1,แต่,dtàae,but,conjunction,formal,essentials,false,,ai_a1_master_v3
-because,A1,เพราะ,phrɔ́,because,conjunction,formal,essentials,false,,ai_a1_master_v3
+because,A1,เพราะ,prɔ́,because,conjunction,formal,essentials,false,,ai_a1_master_v3
 book,A1,หนังสือ,nǎng-sʉ̌ʉ,book,noun,formal,school,false,,ai_a1_master_v3
 pen,A1,ปากกา,bpàak-gaa,pen,noun,formal,school,false,,ai_a1_master_v3
 table,A1,โต๊ะ,dtó,table,noun,formal,school,false,,ai_a1_master_v3
@@ -171,59 +171,59 @@ chair,A1,เก้าอี้,gâo-îi,chair,noun,formal,school,false,,ai_a1_ma
 door,A1,ประตู,bprà-dtuu,door,noun,formal,home,false,,ai_a1_master_v3
 window,A1,หน้าต่าง,nâa-dtàang,window,noun,formal,home,false,,ai_a1_master_v3
 bed,A1,เตียง,dtiiang,bed,noun,formal,home,false,,ai_a1_master_v3
-phone,A1,โทรศัพท์,thoo-rá-sàp,phone,noun,formal,essentials,false,,ai_a1_master_v3
+phone,A1,โทรศัพท์,too-rá-sàp,phone,noun,formal,essentials,false,,ai_a1_master_v3
 money,A1,เงิน,ngən,money,noun,formal,shopping,false,,ai_a1_master_v3
-ticket,A1,ตั๋ว,dtǔa,ticket,noun,formal,travel,false,,ai_a1_master_v3
+ticket,A1,ตั๋ว,dtǔua,ticket,noun,formal,travel,false,,ai_a1_master_v3
 hotel,A1,โรงแรม,roong-raaem,hotel,noun,formal,travel,false,,ai_a1_master_v3
 restaurant,A1,ร้านอาหาร,rán-aa-hǎan,restaurant,noun,formal,food,false,,ai_a1_master_v3
-station,A1,สถานี,sà-thǎa-nii,station,noun,formal,transport,false,,ai_a1_master_v3
+station,A1,สถานี,sà-tǎa-nii,station,noun,formal,transport,false,,ai_a1_master_v3
 city,A1,เมือง,mʉang,city,noun,formal,places,false,,ai_a1_master_v3
-country,A1,ประเทศ,bprà-thêet,country,noun,formal,places,false,,ai_a1_master_v3
-thailand,A1,ประเทศไทย,bprà-thêet-thai,Thailand,noun,formal,places,false,,ai_a1_master_v3
-thai_language,A1,ภาษาไทย,phaa-sǎa-thai,Thai,noun,formal,school,false,,ai_a1_master_v3
-english_language,A1,ภาษาอังกฤษ,phaa-sǎa-ang-grìt,English,noun,formal,school,false,,ai_a1_master_v3
-understand,A1,เข้าใจ,khâo-jai,understand,verb,formal,school,false,,ai_a1_master_v3
+country,A1,ประเทศ,bprà-têet,country,noun,formal,places,false,,ai_a1_master_v3
+thailand,A1,ประเทศไทย,bprà-têet-tai,Thailand,noun,formal,places,false,,ai_a1_master_v3
+thai_language,A1,ภาษาไทย,paa-sǎa-tai,Thai,noun,formal,school,false,,ai_a1_master_v3
+english_language,A1,ภาษาอังกฤษ,paa-sǎa-ang-grìt,English,noun,formal,school,false,,ai_a1_master_v3
+understand,A1,เข้าใจ,kâo-jai,understand,verb,formal,school,false,,ai_a1_master_v3
 know,A1,รู้,rúu,know,verb,formal,school,false,,ai_a1_master_v3
 question_particle,A1,ไหม,mǎi,question particle,particle,formal,questions,false,,ai_a1_master_v3
 very,A1,มาก,mâak,very,adverb,formal,descriptions,false,,ai_a1_master_v3
 again,A1,อีก,ìik,again,adverb,formal,daily_life,true,can mean again another or more depending on context,ai_a1_master_v3
 already,A1,แล้ว,lɛ́ɛo,already,adverb,formal,time,true,also marks completed or changed state in simple patterns,ai_a1_master_v3
 still,A1,ยัง,yang,still,adverb,formal,time,true,also used in not yet patterns with ไม่,ai_a1_master_v3
-night,A1,กลางคืน,glaang-khʉʉn,night,noun,formal,time,false,,ai_a1_master_v3
+night,A1,กลางคืน,glaang-kʉʉn,night,noun,formal,time,false,,ai_a1_master_v3
 daytime,A1,กลางวัน,glaang-wan,daytime,noun,formal,time,false,,ai_a1_master_v3
-minute,A1,นาที,naa-thii,minute,noun,formal,time,false,,ai_a1_master_v3
-hour,A1,ชั่วโมง,chûa-moong,hour,noun,formal,time,false,,ai_a1_master_v3
+minute,A1,นาที,naa-tii,minute,noun,formal,time,false,,ai_a1_master_v3
+hour,A1,ชั่วโมง,chûua-moong,hour,noun,formal,time,false,,ai_a1_master_v3
 week,A1,สัปดาห์,sàp-daa,week,noun,formal,time,false,,ai_a1_master_v3
 month,A1,เดือน,dʉan,month,noun,formal,time,false,,ai_a1_master_v3
 year,A1,ปี,bpii,year,noun,formal,time,false,,ai_a1_master_v3
 before,A1,ก่อน,gɔ̀ɔn,before,preposition,formal,time,false,,ai_a1_master_v3
 after,A1,หลัง,lǎng,after,preposition,formal,time,false,,ai_a1_master_v3
 wait,A1,รอ,rɔɔ,wait,verb,formal,essentials,false,,ai_a1_master_v3
-help,A1,ช่วย,chûuay,help,verb,formal,essentials,true,also often softens requests in polite speech,ai_a1_master_v3
-call,A1,โทร,thoo,call,verb,formal,essentials,false,,ai_a1_master_v3
-enter,A1,เข้า,khâo,enter,verb,formal,actions,true,also means go in come in or approach depending on context,ai_a1_master_v3
+help,A1,ช่วย,chûuai,help,verb,formal,essentials,true,also often softens requests in polite speech,ai_a1_master_v3
+call,A1,โทร,too,call,verb,formal,essentials,false,,ai_a1_master_v3
+enter,A1,เข้า,kâo,enter,verb,formal,actions,true,also means go in come in or approach depending on context,ai_a1_master_v3
 exit,A1,ออก,ɔ̀ɔk,exit,verb,formal,actions,true,also means go out leave or come out depending on context,ai_a1_master_v3
 a_little,A1,นิดหน่อย,nít-nɔ̀i,a little,adverb,informal,essentials,false,,ai_a1_master_v3
-i_male,A1,ผม,phǒm,I,pronoun,formal,people,true,male polite first-person pronoun; also means hair,ai_a1_master_v3
+i_male,A1,ผม,pǒm,I,pronoun,formal,people,true,male polite first-person pronoun; also means hair,ai_a1_master_v3
 love,A1,รัก,rák,love,verb,formal,family,false,,ai_a1_master_v3
-older_brother,A1,พี่ชาย,phîi-chaai,older brother,noun,formal,family,false,,ai_a1_master_v3
-older_sister,A1,พี่สาว,phîi-sǎao,older sister,noun,formal,family,false,,ai_a1_master_v3
+older_brother,A1,พี่ชาย,pîi-chaai,older brother,noun,formal,family,false,,ai_a1_master_v3
+older_sister,A1,พี่สาว,pîi-sǎao,older sister,noun,formal,family,false,,ai_a1_master_v3
 younger_brother,A1,น้องชาย,nɔ́ɔng-chaai,younger brother,noun,formal,family,false,,ai_a1_master_v3
 younger_sister,A1,น้องสาว,nɔ́ɔng-sǎao,younger sister,noun,formal,family,false,,ai_a1_master_v3
 husband,A1,สามี,sǎa-mii,husband,noun,formal,family,false,,ai_a1_master_v3
-wife,A1,ภรรยา,phan-rá-yaa,wife,noun,formal,family,false,,ai_a1_master_v3
+wife,A1,ภรรยา,pan-rá-yaa,wife,noun,formal,family,false,,ai_a1_master_v3
 son,A1,ลูกชาย,lûuk-chaai,son,noun,formal,family,false,,ai_a1_master_v3
 daughter,A1,ลูกสาว,lûuk-sǎao,daughter,noun,formal,family,false,,ai_a1_master_v3
 child_offspring,A1,ลูก,lûuk,child,noun,formal,family,true,can mean child son daughter or offspring depending on context,ai_a1_master_v3
-parents,A1,พ่อแม่,phɔ̂ɔ-mâae,parents,noun,formal,family,false,,ai_a1_master_v3
+parents,A1,พ่อแม่,pɔ̂ɔ-mâae,parents,noun,formal,family,false,,ai_a1_master_v3
 tall,A1,สูง,sǔung,tall,adjective,formal,descriptions,false,,ai_a1_master_v3
 short_height,A1,เตี้ย,dtîia,short,adjective,formal,descriptions,false,used for height,ai_a1_master_v3
 long,A1,ยาว,yaao,long,adjective,formal,descriptions,false,,ai_a1_master_v3
 short_length,A1,สั้น,sân,short,adjective,formal,descriptions,false,used for length,ai_a1_master_v3
 heavy,A1,หนัก,nàk,heavy,adjective,formal,descriptions,false,,ai_a1_master_v3
 light_weight,A1,เบา,bao,light,adjective,formal,descriptions,false,used for weight,ai_a1_master_v3
-expensive,A1,แพง,phaaeng,expensive,adjective,formal,shopping,false,,ai_a1_master_v3
-cheap,A1,ถูก,thùuk,cheap,adjective,formal,shopping,true,also commonly means correct or right,ai_a1_master_v3
+expensive,A1,แพง,paaeng,expensive,adjective,formal,shopping,false,,ai_a1_master_v3
+cheap,A1,ถูก,tùuk,cheap,adjective,formal,shopping,true,also commonly means correct or right,ai_a1_master_v3
 clean,A1,สะอาด,sà-àat,clean,adjective,formal,home,false,,ai_a1_master_v3
 dirty,A1,สกปรก,sòk-gà-bpròk,dirty,adjective,formal,home,false,,ai_a1_master_v3
 easy,A1,ง่าย,ngâai,easy,adjective,formal,descriptions,false,,ai_a1_master_v3
@@ -231,39 +231,39 @@ difficult,A1,ยาก,yâak,difficult,adjective,formal,descriptions,false,,ai_a
 hungry,A1,หิว,hǐu,hungry,adjective,formal,health,false,,ai_a1_master_v3
 thirsty,A1,หิวน้ำ,hǐu-náam,thirsty,adjective,formal,health,false,,ai_a1_master_v3
 tired,A1,เหนื่อย,nʉ̀ai,tired,adjective,formal,health,false,,ai_a1_master_v3
-sick,A1,ป่วย,bpùuay,sick,adjective,formal,health,false,,ai_a1_master_v3
+sick,A1,ป่วย,bpùai,sick,adjective,formal,health,false,,ai_a1_master_v3
 hurt,A1,เจ็บ,jèp,hurt,verb,formal,health,true,can describe pain injury or being painful,ai_a1_master_v3
-headache,A1,ปวดหัว,bpuat-hǔa,headache,noun,formal,health,false,,ai_a1_master_v3
-fever,A1,ไข้,khâi,fever,noun,formal,health,false,,ai_a1_master_v3
+headache,A1,ปวดหัว,bpùuat-hǔua,headache,noun,formal,health,false,,ai_a1_master_v3
+fever,A1,ไข้,kâi,fever,noun,formal,health,false,,ai_a1_master_v3
 medicine,A1,ยา,yaa,medicine,noun,formal,health,true,can mean medicine or drug depending on context,ai_a1_master_v3
 pharmacy,A1,ร้านยา,rán-yaa,pharmacy,noun,formal,health,false,,ai_a1_master_v3
 chicken,A1,ไก่,gài,chicken,noun,formal,food,false,,ai_a1_master_v3
 pork,A1,หมู,mǔu,pork,noun,formal,food,false,,ai_a1_master_v3
 fish,A1,ปลา,bplaa,fish,noun,formal,food,false,,ai_a1_master_v3
 meat,A1,เนื้อ,nʉ́a,meat,noun,formal,food,true,can mean meat flesh or beef depending on context,ai_a1_master_v3
-vegetable,A1,ผัก,phàk,vegetable,noun,formal,food,false,,ai_a1_master_v3
+vegetable,A1,ผัก,pàk,vegetable,noun,formal,food,false,,ai_a1_master_v3
 curry,A1,แกง,gaaeng,curry,noun,formal,food,true,broad food word for curry or curry-like dish,ai_a1_master_v3
-noodles,A1,ก๋วยเตี๋ยว,gǔay-dtǐao,noodles,noun,formal,food,false,,ai_a1_master_v3
+noodles,A1,ก๋วยเตี๋ยว,gǔuai-dtǐiao,noodles,noun,formal,food,false,,ai_a1_master_v3
 breakfast,A1,อาหารเช้า,aa-hǎan-cháao,breakfast,noun,formal,food,false,,ai_a1_master_v3
 lunch,A1,อาหารกลางวัน,aa-hǎan-glaang-wan,lunch,noun,formal,food,false,,ai_a1_master_v3
 dinner,A1,อาหารเย็น,aa-hǎan-yen,dinner,noun,formal,food,false,,ai_a1_master_v3
 delicious,A1,อร่อย,à-rɔ̀i,delicious,adjective,formal,food,false,,ai_a1_master_v3
 sweet,A1,หวาน,wǎan,sweet,adjective,formal,food,false,,ai_a1_master_v3
-salty,A1,เค็ม,khem,salty,adjective,formal,food,false,,ai_a1_master_v3
-spicy,A1,เผ็ด,phèt,spicy,adjective,formal,food,false,,ai_a1_master_v3
+salty,A1,เค็ม,kem,salty,adjective,formal,food,false,,ai_a1_master_v3
+spicy,A1,เผ็ด,pèt,spicy,adjective,formal,food,false,,ai_a1_master_v3
 sour,A1,เปรี้ยว,bprîiao,sour,adjective,formal,food,false,,ai_a1_master_v3
-juice,A1,น้ำผลไม้,náam-phǒn-lá-máai,juice,noun,formal,drinks,false,,ai_a1_master_v3
-bottle,A1,ขวด,khùuat,bottle,classifier,formal,drinks,true,used as a container noun and also as a classifier for bottles,ai_a1_master_v3
+juice,A1,น้ำผลไม้,náam-pǒn-lá-máai,juice,noun,formal,drinks,false,,ai_a1_master_v3
+bottle,A1,ขวด,kùuat,bottle,classifier,formal,drinks,true,used as a container noun and also as a classifier for bottles,ai_a1_master_v3
 glass,A1,แก้ว,gâaeo,glass,noun,formal,drinks,true,can mean drinking glass cup or classifier depending on context,ai_a1_master_v3
 plate,A1,จาน,jaan,plate,noun,formal,food,false,,ai_a1_master_v3
 spoon,A1,ช้อน,cháawn,spoon,noun,formal,food,false,,ai_a1_master_v3
 fork,A1,ส้อม,sâawm,fork,noun,formal,food,false,,ai_a1_master_v3
 knife,A1,มีด,mîit,knife,noun,formal,food,false,,ai_a1_master_v3
-kitchen,A1,ครัว,khruua,kitchen,noun,formal,home,false,,ai_a1_master_v3
+kitchen,A1,ครัว,kruua,kitchen,noun,formal,home,false,,ai_a1_master_v3
 refrigerator,A1,ตู้เย็น,dtûu-yen,refrigerator,noun,formal,home,false,,ai_a1_master_v3
-television,A1,โทรทัศน์,thoo-rá-thát,television,noun,formal,home,false,,ai_a1_master_v3
-computer,A1,คอมพิวเตอร์,khɔɔm-phiw-dtɔ̂ɔ,computer,noun,formal,work,false,,ai_a1_master_v3
-fan,A1,พัดลม,phát-lom,fan,noun,formal,home,false,,ai_a1_master_v3
+television,A1,โทรทัศน์,too-rá-tát,television,noun,formal,home,false,,ai_a1_master_v3
+computer,A1,คอมพิวเตอร์,kɔm-píu-dtə̂ə,computer,noun,formal,work,false,,ai_a1_master_v3
+fan,A1,พัดลม,pát-lom,fan,noun,formal,home,false,,ai_a1_master_v3
 air_conditioner,A1,แอร์,aae,air conditioner,noun,informal,home,false,,ai_a1_master_v3
 light,A1,ไฟ,fai,light,noun,formal,home,true,can mean light fire or electric light depending on context,ai_a1_master_v3
 electricity,A1,ไฟฟ้า,fai-fáa,electricity,noun,formal,home,false,,ai_a1_master_v3
@@ -273,13 +273,13 @@ afternoon,A1,บ่าย,bàai,afternoon,noun,formal,time,false,,ai_a1_master_v
 late,A1,สาย,sǎai,late,adjective,formal,time,false,,ai_a1_master_v3
 always,A1,เสมอ,sà-mə̌ə,always,adverb,formal,daily_life,false,,ai_a1_master_v3
 often,A1,บ่อย,bɔ̀i,often,adverb,formal,daily_life,false,,ai_a1_master_v3
-sometimes,A1,บางครั้ง,baang-khráng,sometimes,adverb,formal,daily_life,false,,ai_a1_master_v3
+sometimes,A1,บางครั้ง,baang-kráng,sometimes,adverb,formal,daily_life,false,,ai_a1_master_v3
 start,A1,เริ่ม,rə̂əm,start,verb,formal,actions,false,,ai_a1_master_v3
 finish,A1,เสร็จ,sèt,finish,verb,formal,actions,true,can mean finish be finished or be done depending on context,ai_a1_master_v3
-arrive,A1,ถึง,thʉ̌ng,arrive,verb,formal,travel,true,can mean arrive reach or to depending on context,ai_a1_master_v3
+arrive,A1,ถึง,tʉ̌ng,arrive,verb,formal,travel,true,can mean arrive reach or to depending on context,ai_a1_master_v3
 send,A1,ส่ง,sòng,send,verb,formal,actions,true,can mean send deliver or take someone somewhere depending on context,ai_a1_master_v3
 meet,A1,เจอ,jəə,meet,verb,informal,people,true,can mean meet find or come across depending on context,ai_a1_master_v3
-ask,A1,ถาม,thǎam,ask,verb,formal,questions,false,,ai_a1_master_v3
+ask,A1,ถาม,tǎam,ask,verb,formal,questions,false,,ai_a1_master_v3
 answer_verb,A1,ตอบ,dtɔ̀ɔp,answer,verb,formal,questions,false,,ai_a1_master_v3
 teach,A1,สอน,sɔ̌ɔn,teach,verb,formal,school,false,,ai_a1_master_v3
 practice,A1,ฝึก,fʉ̀k,practice,verb,formal,school,false,,ai_a1_master_v3
@@ -289,33 +289,33 @@ find,A1,หา,hǎa,find,verb,formal,actions,true,can mean find look for or seek
 use,A1,ใช้,chái,use,verb,formal,actions,true,can mean use spend or employ depending on context,ai_a1_master_v3
 need_must,A1,ต้อง,dtɔ̂ng,need,verb,formal,essentials,true,can mean need must or have to depending on context,ai_a1_master_v3
 try,A1,ลอง,lɔɔng,try,verb,formal,actions,true,can mean try test or try doing something,ai_a1_master_v3
-carry,A1,ถือ,thʉ̌ʉ,carry,verb,formal,actions,true,can mean hold carry or regard depending on context,ai_a1_master_v3
+carry,A1,ถือ,tʉ̌ʉ,carry,verb,formal,actions,true,can mean hold carry or regard depending on context,ai_a1_master_v3
 put,A1,วาง,waang,put,verb,formal,actions,false,,ai_a1_master_v3
 turn,A1,เลี้ยว,líiao,turn,verb,formal,directions,false,,ai_a1_master_v3
 stop,A1,หยุด,yùt,stop,verb,formal,transport,true,can mean stop pause or quit depending on context,ai_a1_master_v3
-here,A1,ที่นี่,thîi-nîi,here,pronoun,formal,places,false,,ai_a1_master_v3
-there,A1,ที่นั่น,thîi-nân,there,pronoun,formal,places,false,,ai_a1_master_v3
+here,A1,ที่นี่,tîi-nîi,here,pronoun,formal,places,false,,ai_a1_master_v3
+there,A1,ที่นั่น,tîi-nân,there,pronoun,formal,places,false,,ai_a1_master_v3
 from,A1,จาก,jàak,from,preposition,formal,travel,false,,ai_a1_master_v3
-if,A1,ถ้า,thâa,if,conjunction,formal,essentials,false,,ai_a1_master_v3
+if,A1,ถ้า,tâa,if,conjunction,formal,essentials,false,,ai_a1_master_v3
 that_clause,A1,ว่า,wâa,that,conjunction,formal,essentials,true,also used to introduce reported speech or thoughts,ai_a1_master_v3
 many,A1,หลาย,lǎai,many,adjective,formal,descriptions,false,,ai_a1_master_v3
 few,A1,น้อย,nɔ́ɔi,few,adjective,formal,descriptions,true,can mean few little or not much depending on context,ai_a1_master_v3
-calendar,A1,ปฏิทิน,bpà-dtì-thin,calendar,noun,formal,time,false,,ai_a1_master_v3
-tonight,A1,คืนนี้,khʉʉn-níi,tonight,noun,formal,time,false,,ai_a1_master_v3
-everything,A1,ทุกอย่าง,thúk-yàang,everything,pronoun,formal,essentials,false,,ai_a1_master_v3
-never,A1,ไม่เคย,mâi-khəəi,never,adverb,formal,daily_life,true,also used to say have never done something,ai_a1_master_v3
-january,A1,มกราคม,má-ga-raa-khom,January,noun,formal,time,false,,ai_a1_master_v3
-february,A1,กุมภาพันธ์,gum-phaa-phan,February,noun,formal,time,false,,ai_a1_master_v3
-march,A1,มีนาคม,mii-naa-khom,March,noun,formal,time,false,,ai_a1_master_v3
+calendar,A1,ปฏิทิน,bpà-dtì-tin,calendar,noun,formal,time,false,,ai_a1_master_v3
+tonight,A1,คืนนี้,kʉʉn-níi,tonight,noun,formal,time,false,,ai_a1_master_v3
+everything,A1,ทุกอย่าง,túk-yàang,everything,pronoun,formal,essentials,false,,ai_a1_master_v3
+never,A1,ไม่เคย,mâi-kəəi,never,adverb,formal,daily_life,true,also used to say have never done something,ai_a1_master_v3
+january,A1,มกราคม,má-ga-raa-kom,January,noun,formal,time,false,,ai_a1_master_v3
+february,A1,กุมภาพันธ์,gum-paa-pan,February,noun,formal,time,false,,ai_a1_master_v3
+march,A1,มีนาคม,mii-naa-kom,March,noun,formal,time,false,,ai_a1_master_v3
 april,A1,เมษายน,mee-sǎa-yon,April,noun,formal,time,false,,ai_a1_master_v3
-may,A1,พฤษภาคม,phrʉ́t-sà-phaa-khom,May,noun,formal,time,false,,ai_a1_master_v3
-june,A1,มิถุนายน,mí-thù-naa-yon,June,noun,formal,time,false,,ai_a1_master_v3
-july,A1,กรกฎาคม,gà-rá-gà-daa-khom,July,noun,formal,time,false,,ai_a1_master_v3
-august,A1,สิงหาคม,sǐng-hǎa-khom,August,noun,formal,time,false,,ai_a1_master_v3
+may,A1,พฤษภาคม,prʉ́t-sà-paa-kom,May,noun,formal,time,false,,ai_a1_master_v3
+june,A1,มิถุนายน,mí-tù-naa-yon,June,noun,formal,time,false,,ai_a1_master_v3
+july,A1,กรกฎาคม,gà-rá-gà-daa-kom,July,noun,formal,time,false,,ai_a1_master_v3
+august,A1,สิงหาคม,sǐng-hǎa-kom,August,noun,formal,time,false,,ai_a1_master_v3
 september,A1,กันยายน,gan-yaa-yon,September,noun,formal,time,false,,ai_a1_master_v3
-october,A1,ตุลาคม,dtù-laa-khom,October,noun,formal,time,false,,ai_a1_master_v3
-november,A1,พฤศจิกายน,phrʉ́t-sà-jì-gaa-yon,November,noun,formal,time,false,,ai_a1_master_v3
-december,A1,ธันวาคม,than-waa-khom,December,noun,formal,time,false,,ai_a1_master_v3
+october,A1,ตุลาคม,dtù-laa-kom,October,noun,formal,time,false,,ai_a1_master_v3
+november,A1,พฤศจิกายน,prʉ́t-sà-jì-gaa-yon,November,noun,formal,time,false,,ai_a1_master_v3
+december,A1,ธันวาคม,tan-waa-kom,December,noun,formal,time,false,,ai_a1_master_v3
 rain,A1,ฝน,fǒn,rain,noun,formal,weather,false,,ai_a1_master_v3
 sun,A1,แดด,dàaet,sun,noun,formal,weather,false,,ai_a1_master_v3
 wind,A1,ลม,lom,wind,noun,formal,weather,false,,ai_a1_master_v3
@@ -330,81 +330,81 @@ season,A1,ฤดู,rʉ́-duu,season,noun,formal,weather,false,,ai_a1_master_v3
 summer,A1,ฤดูร้อน,rʉ́-duu-rɔ́ɔn,summer,noun,formal,weather,false,,ai_a1_master_v3
 rainy_season,A1,ฤดูฝน,rʉ́-duu-fǒn,rainy season,noun,formal,weather,false,,ai_a1_master_v3
 winter,A1,ฤดูหนาว,rʉ́-duu-nǎao,winter,noun,formal,weather,false,,ai_a1_master_v3
-sock,A1,ถุงเท้า,thǔng-tháao,socks,noun,formal,clothing,false,,ai_a1_master_v3
+sock,A1,ถุงเท้า,tǔng-táao,socks,noun,formal,clothing,false,,ai_a1_master_v3
 outfit,A1,ชุด,chút,outfit,noun,formal,clothing,true,can mean outfit set or suit depending on context,ai_a1_master_v3
 skirt,A1,กระโปรง,grà-bproong,skirt,noun,formal,clothing,false,,ai_a1_master_v3
-size,A1,ขนาด,khà-nàat,size,noun,formal,shopping,false,,ai_a1_master_v3
-price,A1,ราคา,raa-khaa,price,noun,formal,shopping,false,,ai_a1_master_v3
+size,A1,ขนาด,kà-nàat,size,noun,formal,shopping,false,,ai_a1_master_v3
+price,A1,ราคา,raa-kaa,price,noun,formal,shopping,false,,ai_a1_master_v3
 reduce,A1,ลด,lót,reduce,verb,formal,shopping,true,can mean reduce lower or discount depending on context,ai_a1_master_v3
-change_money,A1,เงินทอน,ngən-thɔɔn,change,noun,formal,shopping,false,,ai_a1_master_v3
-customer,A1,ลูกค้า,lûuk-kháa,customer,noun,formal,shopping,false,,ai_a1_master_v3
-seller,A1,คนขาย,khon-khǎai,seller,noun,formal,shopping,false,,ai_a1_master_v3
+change_money,A1,เงินทอน,ngən-tɔɔn,change,noun,formal,shopping,false,,ai_a1_master_v3
+customer,A1,ลูกค้า,lûuk-káa,customer,noun,formal,shopping,false,,ai_a1_master_v3
+seller,A1,คนขาย,kon-kǎai,seller,noun,formal,shopping,false,,ai_a1_master_v3
 airport,A1,สนามบิน,sà-nǎam-bin,airport,noun,formal,travel,false,,ai_a1_master_v3
 post_office,A1,ไปรษณีย์,bprai-sà-nii,post office,noun,formal,places,false,,ai_a1_master_v3
 police,A1,ตำรวจ,dtam-rùuat,police,noun,formal,places,false,,ai_a1_master_v3
-police_station,A1,สถานีตำรวจ,sà-thǎa-nii-dtam-rùuat,police station,noun,formal,places,false,,ai_a1_master_v3
-taxi,A1,แท็กซี่,tháek-sîi,taxi,noun,informal,transport,false,,ai_a1_master_v3
+police_station,A1,สถานีตำรวจ,sà-tǎa-nii-dtam-rùuat,police station,noun,formal,places,false,,ai_a1_master_v3
+taxi,A1,แท็กซี่,táek-sîi,taxi,noun,informal,transport,false,,ai_a1_master_v3
 motorbike,A1,มอเตอร์ไซค์,mɔɔ-dtəə-sai,motorbike,noun,informal,transport,false,,ai_a1_master_v3
-map,A1,แผนที่,phǎaen-thîi,map,noun,formal,directions,false,,ai_a1_master_v3
+map,A1,แผนที่,pǎaen-tîi,map,noun,formal,directions,false,,ai_a1_master_v3
 corner,A1,มุม,mum,corner,noun,formal,directions,false,,ai_a1_master_v3
 crossroad,A1,แยก,yâaek,intersection,noun,formal,directions,true,can mean intersection or split depending on context,ai_a1_master_v3
-bridge,A1,สะพาน,sà-phaan,bridge,noun,formal,places,false,,ai_a1_master_v3
+bridge,A1,สะพาน,sà-paan,bridge,noun,formal,places,false,,ai_a1_master_v3
 river,A1,แม่น้ำ,mâae-náam,river,noun,formal,places,false,,ai_a1_master_v3
-sea,A1,ทะเล,thá-lee,sea,noun,formal,places,false,,ai_a1_master_v3
-mountain,A1,ภูเขา,phuu-khǎo,mountain,noun,formal,places,false,,ai_a1_master_v3
+sea,A1,ทะเล,tá-lee,sea,noun,formal,places,false,,ai_a1_master_v3
+mountain,A1,ภูเขา,puu-kǎo,mountain,noun,formal,places,false,,ai_a1_master_v3
 temple,A1,วัด,wát,temple,noun,formal,places,false,,ai_a1_master_v3
 company,A1,บริษัท,bɔɔ-rí-sàt,company,noun,formal,work,false,,ai_a1_master_v3
-boss,A1,หัวหน้า,hǔa-nâa,boss,noun,formal,work,true,can mean boss leader or person in charge,ai_a1_master_v3
+boss,A1,หัวหน้า,hǔua-nâa,boss,noun,formal,work,true,can mean boss leader or person in charge,ai_a1_master_v3
 job,A1,งาน,ngaan,job,noun,formal,work,true,can mean job work or event depending on context,ai_a1_master_v3
 holiday,A1,วันหยุด,wan-yùt,holiday,noun,formal,time,false,,ai_a1_master_v3
 birthday,A1,วันเกิด,wan-gə̀ət,birthday,noun,formal,time,false,,ai_a1_master_v3
-gift,A1,ของขวัญ,khɔ̌ɔng-khwǎn,gift,noun,formal,daily_life,false,,ai_a1_master_v3
+gift,A1,ของขวัญ,kɔ̌ɔng-kwǎn,gift,noun,formal,daily_life,false,,ai_a1_master_v3
 photo,A1,รูป,rûup,photo,noun,formal,daily_life,true,can mean photo picture or image depending on context,ai_a1_master_v3
-music_song,A1,เพลง,phleeng,music,noun,formal,daily_life,true,can mean music or song depending on context,ai_a1_master_v3
+music_song,A1,เพลง,pleeng,music,noun,formal,daily_life,true,can mean music or song depending on context,ai_a1_master_v3
 movie,A1,หนัง,nǎng,movie,noun,informal,daily_life,true,can mean movie or film; also appears in compounds for books or leather,ai_a1_master_v3
 dance,A1,เต้น,dtên,dance,verb,formal,daily_life,true,can mean dance or bounce depending on context,ai_a1_master_v3
-sing,A1,ร้องเพลง,rɔ́ɔng-phleeng,sing,verb,formal,daily_life,false,,ai_a1_master_v3
+sing,A1,ร้องเพลง,rɔ́ɔng-pleeng,sing,verb,formal,daily_life,false,,ai_a1_master_v3
 play_game,A1,เล่นเกม,lên-geem,play games,verb,informal,daily_life,false,,ai_a1_master_v3
 play_sport,A1,เล่นกีฬา,lên-gii-laa,play sports,verb,formal,daily_life,false,,ai_a1_master_v3
 swim,A1,ว่ายน้ำ,wâai-náam,swim,verb,formal,daily_life,false,,ai_a1_master_v3
 exercise,A1,ออกกำลังกาย,ɔ̀ɔk-gam-lang-gaai,exercise,verb,formal,health,false,,ai_a1_master_v3
-rest,A1,พัก,phák,rest,verb,formal,daily_life,true,can mean rest stay briefly or take a break depending on context,ai_a1_master_v3
+rest,A1,พัก,pák,rest,verb,formal,daily_life,true,can mean rest stay briefly or take a break depending on context,ai_a1_master_v3
 wash,A1,ล้าง,láang,wash,verb,formal,daily_life,false,,ai_a1_master_v3
 bathe,A1,อาบน้ำ,àap-náam,bathe,verb,formal,daily_life,false,,ai_a1_master_v3
 brush_teeth,A1,แปรงฟัน,bpraaeng-fan,brush teeth,verb,formal,daily_life,false,,ai_a1_master_v3
-comb_hair,A1,หวีผม,wǐi-phǒm,comb hair,verb,formal,daily_life,false,,ai_a1_master_v3
+comb_hair,A1,หวีผม,wǐi-pǒm,comb hair,verb,formal,daily_life,false,,ai_a1_master_v3
 glasses,A1,แว่นตา,wâen-dtaa,glasses,noun,formal,clothing,false,,ai_a1_master_v3
 umbrella,A1,ร่ม,rôm,umbrella,noun,formal,weather,true,also means shade in some contexts,ai_a1_master_v3
 letter,A1,จดหมาย,jòt-mǎai,letter,noun,formal,daily_life,false,,ai_a1_master_v3
 email,A1,อีเมล,ii-meen,email,noun,informal,work,false,,ai_a1_master_v3
-internet,A1,อินเทอร์เน็ต,in-thəə-nét,internet,noun,informal,work,false,,ai_a1_master_v3
-question_why,A1,ทำไม,tham-mai,why,question_word,formal,questions,false,,ai_a1_master_v3
+internet,A1,อินเทอร์เน็ต,in-təə-nét,internet,noun,informal,work,false,,ai_a1_master_v3
+question_why,A1,ทำไม,tam-mai,why,question_word,formal,questions,false,,ai_a1_master_v3
 what_time,A1,กี่โมง,gìi-moong,what time,question_word,formal,questions,false,,ai_a1_master_v3
-how_old,A1,อายุเท่าไร,aa-yú-thâo-rai,how old,question_word,formal,questions,false,,ai_a1_master_v3
-how_long,A1,นานเท่าไร,naan-thâo-rai,how long,question_word,formal,questions,false,,ai_a1_master_v3
+how_old,A1,อายุเท่าไร,aa-yú-tâo-rai,how old,question_word,formal,questions,false,,ai_a1_master_v3
+how_long,A1,นานเท่าไร,naan-tâo-rai,how long,question_word,formal,questions,false,,ai_a1_master_v3
 which_one,A1,อันไหน,an-nǎi,which one,question_word,formal,questions,false,,ai_a1_master_v3
 age,A1,อายุ,aa-yú,age,noun,formal,people,true,also commonly means age in years or age of a person,ai_a1_master_v3
-years_old,A1,ขวบ,khùuap,years old,classifier,formal,people,false,,ai_a1_master_v3
+years_old,A1,ขวบ,kùuap,years old,classifier,formal,people,false,,ai_a1_master_v3
 married,A1,แต่งงาน,dtàaeng-ngaan,married,verb,formal,family,true,can mean get married or be married depending on context,ai_a1_master_v3
 single,A1,โสด,sòot,single,adjective,formal,family,false,,ai_a1_master_v3
 partner,A1,แฟน,faaen,partner,noun,informal,family,true,can mean boyfriend girlfriend or partner depending on context,ai_a1_master_v3
-neighbor,A1,เพื่อนบ้าน,phʉ̂an-bâan,neighbor,noun,formal,people,false,,ai_a1_master_v3
+neighbor,A1,เพื่อนบ้าน,pʉ̂an-bâan,neighbor,noun,formal,people,false,,ai_a1_master_v3
 born,A1,เกิด,gə̀ət,born,verb,formal,people,true,can mean be born happen or occur depending on context,ai_a1_master_v3
 return_home,A1,กลับบ้าน,glàp-bâan,go home,verb,formal,daily_life,false,,ai_a1_master_v3
-take_off,A1,ถอด,thɔ̀ɔt,take off,verb,formal,clothing,true,can mean remove take off or unplug depending on context,ai_a1_master_v3
-change_clothes,A1,เปลี่ยนเสื้อผ้า,bplìian-sʉ̂a-phâa,change clothes,verb,formal,clothing,false,,ai_a1_master_v3
-park,A1,สวนสาธารณะ,sǔan-sǎa-thaa-rá-ná,park,noun,formal,places,false,,ai_a1_master_v3
+take_off,A1,ถอด,tɔ̀ɔt,take off,verb,formal,clothing,true,can mean remove take off or unplug depending on context,ai_a1_master_v3
+change_clothes,A1,เปลี่ยนเสื้อผ้า,bplìian-sʉ̂a-pâa,change clothes,verb,formal,clothing,false,,ai_a1_master_v3
+park,A1,สวนสาธารณะ,sǔan-sǎa-taa-rá-ná,park,noun,formal,places,false,,ai_a1_master_v3
 office,A1,สำนักงาน,sǎm-nák-ngaan,office,noun,formal,work,false,,ai_a1_master_v3
-coworker,A1,เพื่อนร่วมงาน,phʉ̂an-rûuam-ngaan,coworker,noun,formal,work,false,,ai_a1_master_v3
+coworker,A1,เพื่อนร่วมงาน,pʉ̂an-rûuam-ngaan,coworker,noun,formal,work,false,,ai_a1_master_v3
 party,A1,งานเลี้ยง,ngaan-líiang,party,noun,formal,daily_life,false,,ai_a1_master_v3
-newspaper,A1,หนังสือพิมพ์,nǎng-sʉ̌ʉ-phim,newspaper,noun,formal,daily_life,false,,ai_a1_master_v3
+newspaper,A1,หนังสือพิมพ์,nǎng-sʉ̌ʉ-pim,newspaper,noun,formal,daily_life,false,,ai_a1_master_v3
 website,A1,เว็บไซต์,wép-sai,website,noun,informal,work,false,,ai_a1_master_v3
-how_often,A1,บ่อยแค่ไหน,bɔ̀i-khâae-nǎi,how often,question_word,formal,questions,false,,ai_a1_master_v3
-watch_item,A1,นาฬิกาข้อมือ,naa-lí-gaa-khɔ̂ɔ-mʉʉ,watch,noun,formal,clothing,false,,ai_a1_master_v3
+how_often,A1,บ่อยแค่ไหน,bɔ̀i-kâae-nǎi,how often,question_word,formal,questions,false,,ai_a1_master_v3
+watch_item,A1,นาฬิกาข้อมือ,naa-lí-gaa-kɔ̂ɔ-mʉʉ,watch,noun,formal,clothing,false,,ai_a1_master_v3
 airport_train,A1,รถไฟฟ้า,rót-fai-fáa,skytrain,noun,formal,transport,true,can refer to electric train or city rail transit depending on context,ai_a1_master_v3
 motorcycle_taxi,A1,วินมอเตอร์ไซค์,win-mɔɔ-dtəə-sai,motorbike taxi,noun,informal,transport,false,,ai_a1_master_v3
 calendar_month,A1,เดือน,dʉan,month,noun,formal,time,true,also used in dates and calendar expressions,ai_a1_master_v3
-fear_afraid,A1,กลัว,gluaa,afraid,adjective,formal,descriptions,true,can mean be afraid fear or be scared depending on context,ai_a1_master_v3
+fear_afraid,A1,กลัว,gluua,afraid,adjective,formal,descriptions,true,can mean be afraid fear or be scared depending on context,ai_a1_master_v3
 angry,A1,โกรธ,gròot,angry,adjective,formal,descriptions,false,,ai_a1_master_v3
 surprised,A1,ตกใจ,dtòk-jai,surprised,adjective,formal,descriptions,true,can mean be surprised startled or shocked depending on context,ai_a1_master_v3
 full,A1,อิ่ม,ìm,full,adjective,formal,food,true,used for being full after eating,ai_a1_master_v3
@@ -414,25 +414,25 @@ bad_smell,A1,เหม็น,měn,smelly,adjective,formal,food,true,can describe
 wake_up,A1,ตื่น,dtʉ̀ʉn,wake up,verb,formal,daily_life,true,can mean wake up or be awake depending on context,ai_a1_master_v3
 get_up,A1,ลุก,lúk,get up,verb,formal,actions,true,can mean get up stand up or rise,ai_a1_master_v3
 smile,A1,ยิ้ม,yím,smile,verb,formal,descriptions,false,,ai_a1_master_v3
-laugh,A1,หัวเราะ,hǔa-ráw,laugh,verb,formal,descriptions,false,,ai_a1_master_v3
+laugh,A1,หัวเราะ,hǔua-rɔ́,laugh,verb,formal,descriptions,false,,ai_a1_master_v3
 cry,A1,ร้องไห้,rɔ́ɔng-hâi,cry,verb,formal,descriptions,false,,ai_a1_master_v3
-question_noun,A1,คำถาม,kham-thǎam,question,noun,formal,questions,false,,ai_a1_master_v3
-answer_noun,A1,คำตอบ,kham-dtɔ̀ɔp,answer,noun,formal,questions,false,,ai_a1_master_v3
+question_noun,A1,คำถาม,kam-tǎam,question,noun,formal,questions,false,,ai_a1_master_v3
+answer_noun,A1,คำตอบ,kam-dtɔ̀ɔp,answer,noun,formal,questions,false,,ai_a1_master_v3
 lesson,A1,บทเรียน,bòt-riian,lesson,noun,formal,school,false,,ai_a1_master_v3
 classroom,A1,ห้องเรียน,hɔ̂ng-riian,classroom,noun,formal,school,false,,ai_a1_master_v3
 exam_test,A1,สอบ,sɔ̀ɔp,exam,verb,formal,school,true,can mean exam test or take an exam depending on context,ai_a1_master_v3
-score,A1,คะแนน,kha-naaen,score,noun,formal,school,false,,ai_a1_master_v3
+score,A1,คะแนน,ka-naaen,score,noun,formal,school,false,,ai_a1_master_v3
 homework,A1,การบ้าน,gaan-bâan,homework,noun,formal,school,false,,ai_a1_master_v3
 exercise_sheet,A1,แบบฝึกหัด,bàaep-fʉ̀k-hàt,exercise,noun,formal,school,false,,ai_a1_master_v3
-word,A1,คำ,kham,word,noun,formal,school,true,can mean word term or utterance depending on context,ai_a1_master_v3
+word,A1,คำ,kam,word,noun,formal,school,true,can mean word term or utterance depending on context,ai_a1_master_v3
 sentence,A1,ประโยค,bprà-yòok,sentence,noun,formal,school,false,,ai_a1_master_v3
-language,A1,ภาษา,phaa-sǎa,language,noun,formal,school,false,,ai_a1_master_v3
+language,A1,ภาษา,paa-sǎa,language,noun,formal,school,false,,ai_a1_master_v3
 translate,A1,แปล,bplae,translate,verb,formal,school,true,can mean translate interpret or explain depending on context,ai_a1_master_v3
 spell,A1,สะกด,sà-gòt,spell,verb,formal,school,true,can mean spell or track/follow in some contexts,ai_a1_master_v3
-correct,A1,ถูกต้อง,thùuk-dtɔ̂ng,correct,adjective,formal,school,false,,ai_a1_master_v3
-wrong,A1,ผิด,phìt,wrong,adjective,formal,school,true,can mean wrong mistaken incorrect or illegal depending on context,ai_a1_master_v3
-example,A1,ตัวอย่าง,dtua-yàang,example,noun,formal,school,false,,ai_a1_master_v3
-meaning,A1,ความหมาย,khwaam-mǎai,meaning,noun,formal,school,false,,ai_a1_master_v3
+correct,A1,ถูกต้อง,tùuk-dtɔ̂ng,correct,adjective,formal,school,false,,ai_a1_master_v3
+wrong,A1,ผิด,pìt,wrong,adjective,formal,school,true,can mean wrong mistaken incorrect or illegal depending on context,ai_a1_master_v3
+example,A1,ตัวอย่าง,dtuua-yàang,example,noun,formal,school,false,,ai_a1_master_v3
+meaning,A1,ความหมาย,kwaam-mǎai,meaning,noun,formal,school,false,,ai_a1_master_v3
 read_aloud,A1,อ่านออกเสียง,àan-ɔ̀ɔk-sǐiang,read aloud,verb,formal,school,false,,ai_a1_master_v3
 write_down,A1,จด,jòt,write down,verb,formal,school,true,can mean write down note or record depending on context,ai_a1_master_v3
 erase,A1,ลบ,lóp,erase,verb,formal,school,true,can mean erase delete or remove depending on context,ai_a1_master_v3
@@ -440,68 +440,68 @@ board,A1,กระดาน,grà-daan,board,noun,formal,school,false,,ai_a1_mast
 paper,A1,กระดาษ,grà-dàat,paper,noun,formal,school,false,,ai_a1_master_v3
 pencil,A1,ดินสอ,din-sɔ̌ɔ,pencil,noun,formal,school,false,,ai_a1_master_v3
 eraser,A1,ยางลบ,yaang-lóp,eraser,noun,formal,school,false,,ai_a1_master_v3
-ruler,A1,ไม้บรรทัด,mái-ban-thát,ruler,noun,formal,school,false,,ai_a1_master_v3
+ruler,A1,ไม้บรรทัด,mái-ban-tát,ruler,noun,formal,school,false,,ai_a1_master_v3
 box,A1,กล่อง,glɔ̀ng,box,noun,formal,home,false,,ai_a1_master_v3
-wall,A1,กำแพง,gam-phaaeng,wall,noun,formal,home,false,,ai_a1_master_v3
-floor,A1,พื้น,phʉ́ʉn,floor,noun,formal,home,true,can mean floor ground or surface depending on context,ai_a1_master_v3
-ceiling,A1,เพดาน,phay-daan,ceiling,noun,formal,home,false,,ai_a1_master_v3
+wall,A1,กำแพง,gam-paaeng,wall,noun,formal,home,false,,ai_a1_master_v3
+floor,A1,พื้น,pʉ́ʉn,floor,noun,formal,home,true,can mean floor ground or surface depending on context,ai_a1_master_v3
+ceiling,A1,เพดาน,pee-daan,ceiling,noun,formal,home,false,,ai_a1_master_v3
 stairs,A1,บันได,ban-dai,stairs,noun,formal,home,true,can mean stairs staircase or ladder depending on context,ai_a1_master_v3
 soap,A1,สบู่,sà-bùu,soap,noun,formal,home,false,,ai_a1_master_v3
-towel,A1,ผ้าเช็ดตัว,phâa-chét-dtua,towel,noun,formal,home,false,,ai_a1_master_v3
+towel,A1,ผ้าเช็ดตัว,pâa-chét-dtuua,towel,noun,formal,home,false,,ai_a1_master_v3
 toothbrush,A1,แปรงสีฟัน,bpraaeng-sǐi-fan,toothbrush,noun,formal,home,false,,ai_a1_master_v3
 toothpaste,A1,ยาสีฟัน,yaa-sǐi-fan,toothpaste,noun,formal,home,false,,ai_a1_master_v3
 mirror,A1,กระจก,grà-jòk,mirror,noun,formal,home,true,can also refer to glass depending on context,ai_a1_master_v3
 comb,A1,หวี,wǐi,comb,noun,formal,home,true,also used as a verb meaning comb,ai_a1_master_v3
-shampoo,A1,แชมพู,chaaem-phuu,shampoo,noun,informal,home,false,,ai_a1_master_v3
+shampoo,A1,แชมพู,chaaem-puu,shampoo,noun,informal,home,false,,ai_a1_master_v3
 bedroom,A1,ห้องนอน,hɔ̂ng-nɔɔn,bedroom,noun,formal,home,false,,ai_a1_master_v3
 living_room,A1,ห้องนั่งเล่น,hɔ̂ng-nâng-lên,living room,noun,formal,home,false,,ai_a1_master_v3
 garden,A1,สวน,sǔan,garden,noun,formal,home,true,can mean garden park or orchard depending on context,ai_a1_master_v3
-shopkeeper,A1,เจ้าของร้าน,jâo-khɔ̌ɔng-ráan,shopkeeper,noun,formal,shopping,false,,ai_a1_master_v3
+shopkeeper,A1,เจ้าของร้าน,jâo-kɔ̌ɔng-ráan,shopkeeper,noun,formal,shopping,false,,ai_a1_master_v3
 receipt,A1,ใบเสร็จ,bai-sèt,receipt,noun,formal,shopping,false,,ai_a1_master_v3
 cash,A1,เงินสด,ngən-sòt,cash,noun,formal,shopping,false,,ai_a1_master_v3
 card,A1,บัตร,bàt,card,noun,formal,shopping,true,can mean card pass or ticket depending on context,ai_a1_master_v3
-credit_card,A1,บัตรเครดิต,bàt-khrée-dìt,credit card,noun,informal,shopping,false,,ai_a1_master_v3
-queue,A1,คิว,khiu,queue,noun,informal,shopping,true,can mean queue line or booking slot depending on context,ai_a1_master_v3
-wait_line,A1,ต่อแถว,dtɔ̀ɔ-thǎaeo,queue up,verb,formal,shopping,false,,ai_a1_master_v3
+credit_card,A1,บัตรเครดิต,bàt-krée-dìt,credit card,noun,informal,shopping,false,,ai_a1_master_v3
+queue,A1,คิว,kiu,queue,noun,informal,shopping,true,can mean queue line or booking slot depending on context,ai_a1_master_v3
+wait_line,A1,ต่อแถว,dtɔ̀ɔ-tǎaeo,queue up,verb,formal,shopping,false,,ai_a1_master_v3
 free_no_cost,A1,ฟรี,fríi,free,adjective,informal,shopping,false,,ai_a1_master_v3
 busy,A1,ยุ่ง,yûng,busy,adjective,formal,work,true,can mean busy occupied or tangled depending on context,ai_a1_master_v3
 free_time,A1,ว่าง,wâang,free,adjective,formal,daily_life,true,can mean free available or empty depending on context,ai_a1_master_v3
 meeting_event,A1,ประชุม,bprà-chum,meeting,verb,formal,work,true,can mean have a meeting meet formally or a meeting event depending on context,ai_a1_master_v3
 document,A1,เอกสาร,èek-gà-sǎan,document,noun,formal,work,false,,ai_a1_master_v3
 sign,A1,เซ็น,sen,sign,verb,informal,work,false,,ai_a1_master_v3
-message,A1,ข้อความ,khɔ̂ɔ-khwaam,message,noun,formal,work,false,,ai_a1_master_v3
+message,A1,ข้อความ,kɔ̂ɔ-kwaam,message,noun,formal,work,false,,ai_a1_master_v3
 line_app,A1,ไลน์,lai,LINE,noun,informal,work,false,,ai_a1_master_v3
 battery,A1,แบตเตอรี่,bàaet-dtəə-rîi,battery,noun,informal,work,false,,ai_a1_master_v3
-charger,A1,ที่ชาร์จ,thîi-cháat,charger,noun,informal,work,true,literally charging place/device; used for charger,ai_a1_master_v3
+charger,A1,ที่ชาร์จ,tîi-cháat,charger,noun,informal,work,true,literally charging place/device; used for charger,ai_a1_master_v3
 broken,A1,เสีย,sǐia,broken,adjective,formal,work,true,can mean broken spoiled damaged or lost depending on context,ai_a1_master_v3
 fix,A1,ซ่อม,sɔ̂ɔm,fix,verb,formal,work,false,,ai_a1_master_v3
 problem,A1,ปัญหา,bpan-hǎa,problem,noun,formal,work,false,,ai_a1_master_v3
 dangerous,A1,อันตราย,an-dtà-raai,dangerous,adjective,formal,essentials,true,can mean danger as a noun in some contexts,ai_a1_master_v3
 careful,A1,ระวัง,rá-wang,careful,verb,formal,essentials,true,used as be careful watch out or beware,ai_a1_master_v3
-safe,A1,ปลอดภัย,bplɔ̀ɔt-phai,safe,adjective,formal,essentials,false,,ai_a1_master_v3
+safe,A1,ปลอดภัย,bplɔ̀ɔt-pai,safe,adjective,formal,essentials,false,,ai_a1_master_v3
 lost,A1,หลง,lǒng,lost,adjective,formal,travel,true,can mean be lost lose one's way or be infatuated depending on context,ai_a1_master_v3
-wrong_way,A1,ผิดทาง,phìt-thaang,wrong way,adjective,formal,directions,false,,ai_a1_master_v3
-straight_ahead,A1,ตรงไป,dtroŋ-bpai,go straight,verb,formal,directions,false,,ai_a1_master_v3
-across,A1,ข้าม,khâam,across,preposition,formal,directions,true,can mean across cross over or skip depending on context,ai_a1_master_v3
+wrong_way,A1,ผิดทาง,pìt-taang,wrong way,adjective,formal,directions,false,,ai_a1_master_v3
+straight_ahead,A1,ตรงไป,dtrong-bpai,go straight,verb,formal,directions,false,,ai_a1_master_v3
+across,A1,ข้าม,kâam,across,preposition,formal,directions,true,can mean across cross over or skip depending on context,ai_a1_master_v3
 worried,A1,กังวล,gang-won,worried,adjective,formal,descriptions,false,,ai_a1_master_v3
 taste_noun,A1,รสชาติ,rót-châat,taste,noun,formal,food,true,can mean taste or flavor,ai_a1_master_v3
-rest_relax,A1,พักผ่อน,phák-phɔ̀ɔn,rest,verb,formal,daily_life,false,,ai_a1_master_v3
+rest_relax,A1,พักผ่อน,pák-pɔ̀ɔn,rest,verb,formal,daily_life,false,,ai_a1_master_v3
 page,A1,หน้า,nâa,page,noun,formal,school,true,also commonly means face or front depending on context,ai_a1_master_v3
-repeat,A1,ทวน,thuan,repeat,verb,formal,school,true,can mean repeat review or recite again depending on context,ai_a1_master_v3
-not_understand,A1,ไม่เข้าใจ,mâi-khâo-jai,do not understand,verb,formal,school,false,,ai_a1_master_v3
-can_speak,A1,พูดได้,phûut-dâai,can speak,verb,formal,school,false,,ai_a1_master_v3
+repeat,A1,ทวน,tuan,repeat,verb,formal,school,true,can mean repeat review or recite again depending on context,ai_a1_master_v3
+not_understand,A1,ไม่เข้าใจ,mâi-kâo-jai,do not understand,verb,formal,school,false,,ai_a1_master_v3
+can_speak,A1,พูดได้,pûut-dâai,can speak,verb,formal,school,false,,ai_a1_master_v3
 kiss,A1,จูบ,jùup,kiss,verb,formal,family,false,,ai_a1_master_v3
-kitchen_room,A1,ห้องครัว,hɔ̂ng-khruua,kitchen,noun,formal,home,false,,ai_a1_master_v3
+kitchen_room,A1,ห้องครัว,hɔ̂ng-kruua,kitchen,noun,formal,home,false,,ai_a1_master_v3
 balcony,A1,ระเบียง,rá-biiang,balcony,noun,formal,home,false,,ai_a1_master_v3
-bank_account,A1,บัญชีธนาคาร,ban-chii-thá-naa-khaan,bank account,noun,formal,shopping,false,,ai_a1_master_v3
+bank_account,A1,บัญชีธนาคาร,ban-chii-tá-naa-kaan,bank account,noun,formal,shopping,false,,ai_a1_master_v3
 bill_check,A1,เช็กบิล,chék-bin,pay the bill,verb,informal,shopping,false,,ai_a1_master_v3
 closed,A1,ปิดแล้ว,bpìt-lɛ́ɛo,closed,adjective,formal,shopping,false,,ai_a1_master_v3
 open_now,A1,เปิดอยู่,bpə̀ət-yùu,open,adjective,formal,shopping,false,,ai_a1_master_v3
-send_message,A1,ส่งข้อความ,sòng-khɔ̂ɔ-khwaam,send a message,verb,formal,work,false,,ai_a1_master_v3
+send_message,A1,ส่งข้อความ,sòng-kɔ̂ɔ-kwaam,send a message,verb,formal,work,false,,ai_a1_master_v3
 download,A1,ดาวน์โหลด,daao-lòot,download,verb,informal,work,false,,ai_a1_master_v3
 upload,A1,อัปโหลด,àp-lòot,upload,verb,informal,work,false,,ai_a1_master_v3
-miss_lose,A1,พลาด,phlâat,miss,verb,formal,travel,true,can mean miss fail or make a mistake depending on context,ai_a1_master_v3
-cross_road,A1,ข้ามถนน,khâam-thà-nǒn,cross the road,verb,formal,directions,false,,ai_a1_master_v3
+miss_lose,A1,พลาด,plâat,miss,verb,formal,travel,true,can mean miss fail or make a mistake depending on context,ai_a1_master_v3
+cross_road,A1,ข้ามถนน,kâam-tà-nǒn,cross the road,verb,formal,directions,false,,ai_a1_master_v3
 open_book,A1,เปิดหนังสือ,bpə̀ət-nǎng-sʉ̌ʉ,open book,verb,formal,school,false,,ai_a1_master_v3
 close_book,A1,ปิดหนังสือ,bpìt-nǎng-sʉ̌ʉ,close book,verb,formal,school,false,,ai_a1_master_v3
 pleased_glad,A1,ยินดี,yin-dii,pleased,adjective,formal,greetings,true,used in polite expressions such as ยินดีที่ได้รู้จัก and can mean glad pleased or willing depending on context,manual_dialogue_seed_v1

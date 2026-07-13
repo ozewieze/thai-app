@@ -1,58 +1,51 @@
-select
-  coalesce(v.vocabulary_list, '- none')  as introduced_vocabulary,
-  coalesce(p.phrase_list,     '- none')  as introduced_phrases,
-  coalesce(g.grammar_list,    '- none')  as introduced_grammar,
-  coalesce(pa.pattern_list,   '- none')  as introduced_patterns
-
-from (select 1) as dummy
-
-left join lateral (
-  select string_agg(
-    concat('- ', vm.thai_script, ' (', vm.paiboon, ') = ', vm.english_gloss),
-    E'\n' order by intro.sequence_number, vm.id
-  ) as vocabulary_list
-  from public.vocabulary_status vs
-  join public.vocabulary_master vm on vm.id = vs.vocabulary_id
-  join public.lessons intro on intro.id = vs.first_lesson_id
-  where vs.first_lesson_id is not null
-) v on true
-
-left join lateral (
-  select string_agg(
-    concat('- ', pm.title, ': ', coalesce(pm.phrase_formula, '')),
-    E'\n' order by intro.sequence_number, pm.id
-  ) as phrase_list
-  from public.phrase_status ps
-  join public.phrase_master pm on pm.id = ps.phrase_id
-  join public.lessons intro on intro.id = ps.first_lesson_id
-  where ps.first_lesson_id is not null
-) p on true
-
-left join lateral (
-  select string_agg(
-    concat(
-      '- ', gm.title,
-      case when coalesce(gm.short_explanation, '') <> ''
-        then concat(': ', gm.short_explanation) else '' end
-    ),
-    E'\n' order by intro.sequence_number, gm.id
-  ) as grammar_list
-  from public.grammar_status gs
-  join public.grammar_master gm on gm.id = gs.grammar_id
-  join public.lessons intro on intro.id = gs.first_lesson_id
-  where gs.first_lesson_id is not null
-) g on true
-
-left join lateral (
-  select string_agg(
-    concat('- ', coalesce(pam.title, pam.pattern_key)),
-    E'\n' order by intro.sequence_number, pam.id
-  ) as pattern_list
-  from public.pattern_status pas
-  join public.pattern_master pam on pam.id = pas.pattern_id
-  join public.lessons intro on intro.id = pas.first_lesson_id
-  where pas.first_lesson_id is not null
-) pa on true;
-
-
+with rules_flat as (
+  select
+    lco.relationship_pair_id,
+    string_agg(
+      concat('  - ', r ->> 'rule_key', ': ', r ->> 'rule_text'),
+      E'\n' order by r ->> 'rule_key'
+    ) as rules_text
+  from public.lesson_continuity_options_view lco
+  cross join lateral jsonb_array_elements(lco.relationship_rules) as r
+  group by lco.relationship_pair_id
+),
+pairs as (
+  select
+    lco.relationship_pair_id,
+    lco.character_a_name,
+    lco.character_a_name_thai,
+    lco.character_a_role_summary,
+    lco.character_a_age_impression,
+    lco.character_a_default_tone,
+    lco.character_a_default_usage,
+    lco.character_b_name,
+    lco.character_b_name_thai,
+    lco.character_b_role_summary,
+    lco.character_b_age_impression,
+    lco.character_b_default_tone,
+    lco.character_b_default_usage,
+    lco.current_stage,
+    lco.start_state,
+    lco.function_summary,
+    lco.allowed_progression,
+    coalesce(rf.rules_text, '  - (geen regels)') as rules_text
+  from public.lesson_continuity_options_view lco
+  left join rules_flat rf on rf.relationship_pair_id = lco.relationship_pair_id
+)
+select string_agg(
+  concat(
+    '**Pair ', relationship_pair_id, ': ', character_a_name, ' (', character_a_name_thai, ') & ',
+    character_b_name, ' (', character_b_name_thai, ')**', E'\n',
+    '- ', character_a_name, ': ', character_a_role_summary, ' — ', character_a_age_impression,
+    ', tone: ', character_a_default_tone, ', usage: ', character_a_default_usage, E'\n',
+    '- ', character_b_name, ': ', character_b_role_summary, ' — ', character_b_age_impression,
+    ', tone: ', character_b_default_tone, ', usage: ', character_b_default_usage, E'\n',
+    '- Current stage: ', current_stage, ' (start: ', start_state, ')', E'\n',
+    '- Function: ', function_summary, E'\n',
+    '- Allowed progression: ', allowed_progression, E'\n',
+    '- Relationship rules:', E'\n', rules_text
+  ),
+  E'\n\n' order by relationship_pair_id
+) as continuity_options
+from pairs;
 

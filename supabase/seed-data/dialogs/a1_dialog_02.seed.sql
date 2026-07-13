@@ -44,12 +44,12 @@ select
   block.translation_en
 from dialog
 cross join (values
-  (0, 'narin', 'นริน: ไปที่ไหนครับ',           'Narin: bpai thîi-nǎi khráp',                   'Narin: Where are you going?'),
-  (1, 'mali',  'มะลิ: ไปดื่มกาแฟค่ะ',          'Mali: bpai dʉ̀ʉm gaa-faae khâ',                 'Mali: I am going to drink coffee.'),
-  (2, 'narin', 'นริน: ดื่มกาแฟด้วยกันไหมครับ', 'Narin: dʉ̀ʉm gaa-faae dûai-gan mǎi khráp',     'Narin: Would you like to drink coffee together?'),
-  (3, 'mali',  'มะลิ: ได้ค่ะ',                 'Mali: dâai khâ',                                'Mali: Yes, I''d like to.'),
-  (4, 'mali',  'มะลิ: ไปด้วยกันค่ะ',           'Mali: bpai dûai-gan khâ',                       'Mali: Let''s go together.'),
-  (5, 'narin', 'นริน: ครับ',                   'Narin: khráp',                                  'Narin: Okay.')
+  (0, 'narin', 'นริน: ไปที่ไหนครับ',           'Narin: bpai tîi-nǎi kráp',                   'Narin: Where are you going?'),
+  (1, 'mali',  'มะลิ: ไปดื่มกาแฟค่ะ',          'Mali: bpai dʉ̀ʉm gaa-faae kâ',                 'Mali: I am going to drink coffee.'),
+  (2, 'narin', 'นริน: ดื่มกาแฟด้วยกันไหมครับ', 'Narin: dʉ̀ʉm gaa-faae dûai-gan mǎi kráp',     'Narin: Would you like to drink coffee together?'),
+  (3, 'mali',  'มะลิ: ได้ค่ะ',                 'Mali: dâai kâ',                                'Mali: Yes, I''d like to.'),
+  (4, 'mali',  'มะลิ: ไปด้วยกันค่ะ',           'Mali: bpai dûai-gan kâ',                       'Mali: Let''s go together.'),
+  (5, 'narin', 'นริน: ครับ',                   'Narin: kráp',                                  'Narin: Okay.')
 ) as block(block_index, speaker_key, thai_text, transliteration, translation_en)
 on conflict (dialog_id, block_index) do update set
   speaker_key     = excluded.speaker_key,
