@@ -71,8 +71,11 @@ supabase/
       a1_dialog_02_blueprint.csv
 
   prompts/
-    a1_dialog_01_prompt.md
-    a1_dialog_02_prompt.md
+    dialogs/
+      a1_dialog_01_prompt.md
+      a1_dialog_02_prompt.md
+    sequencer/
+      a1_dialog_XX_sequencer_prompt.md
 
   generation/
     dialogs/
@@ -104,7 +107,8 @@ supabase/
 | Map           | Gebruik                                                    |
 | ------------- | ---------------------------------------------------------- |
 | `planning/`   | Builder-SQL, debug-queries, CSV-blueprints, prompttemplate |
-| `prompts/`    | Ingevulde, lesspecifieke prompts                           |
+| `prompts/dialogs/`   | Ingevulde, lesspecifieke dialoogprompts (Stap 8)      |
+| `prompts/sequencer/` | Ingevulde sequencer-prompts per voorstel (Stap 1)     |
 | `generation/` | Modeloutputs, reviewnotities, tijdelijke drafts            |
 | `seed-data/`  | SQL die echte database-inhoud insert of updatet            |
 
@@ -209,7 +213,7 @@ Dit is het standaardproces: je verzint scène, titel en woordenlijst niet meer z
 > De 12 lessen die oorspronkelijk in `core.seed.sql` zijn geseed (`a1-dialog-01` t/m `a1-revision-premium-01`) waren een voorlopige skeletplanning uit een vroeg stadium van het project, vóór dit sequencer-proces bestond. Vanaf nu geldt Stap 1 als het vaste proces: ook voor die bestaande rijen mag je Stap 1 gebruiken om ze te herzien en te overschrijven zodra je eraan toe bent, in plaats van de oorspronkelijke placeholder-titel klakkeloos over te nemen.
 
 1. Voer `00_build_curriculum_sequencer_context.sql` uit in Supabase Studio — dit zijn 7 losse secties (voortgang, reeds-geïntroduceerde concepten, ongebruikte kandidatenpool per categorie, laatste dialogen, continuïteitscontext).
-2. Vul `05_curriculum_sequencer_prompt_template.md` in met die resultaten.
+2. Vul `05_curriculum_sequencer_prompt_template.md` in met die resultaten en sla het ingevulde resultaat op als `supabase/prompts/sequencer/a1_dialog_XX_sequencer_prompt.md` (audit trail van waarop het voorstel gebaseerd was; `XX` is op dit punt nog een schatting van het volgnummer, corrigeer de bestandsnaam indien nodig zodra de definitieve `sequence_number` bekend is in Stap 6).
 3. Laat AI een voorstel doen: titel, subtitel, scène, lesdoel, en doelconcepten (gelabeld als `[EXISTING]` of `[NEW]`).
 4. **Keur het voorstel goed of stuur het bij** — dit is een voorstel, geen bron van waarheid. Let vooral op:
    - Klopt de scène inhoudelijk en past ze bij de vorige dialoog(en)?
@@ -322,7 +326,7 @@ Exporteer het one-row-resultaat als CSV naar `planning/blueprints/a1_dialog_XX_b
 
 ### Stap 8 — Vul de prompt in
 
-Maak `supabase/prompts/a1_dialog_XX_prompt.md` aan op basis van `04_lesson_dialog_prompt_template.md`. Vervang elke placeholder met de waarde uit het Studio-resultaat of de CSV.
+Maak `supabase/prompts/dialogs/a1_dialog_XX_prompt.md` aan op basis van `04_lesson_dialog_prompt_template.md`. Vervang elke placeholder met de waarde uit het Studio-resultaat of de CSV.
 
 Werkwijze:
 
@@ -424,7 +428,7 @@ Voor kleine wijzigingen of een nieuwe dialoog: voer de seed-SQL handmatig uit in
 Commit de plannings-, generatie- en seed-bestanden samen:
 
 - `planning/blueprints/a1_dialog_XX_blueprint.csv`
-- `supabase/prompts/a1_dialog_XX_prompt.md`
+- `supabase/prompts/dialogs/a1_dialog_XX_prompt.md`
 - `generation/dialogs/a1_dialog_XX_output.md`
 - `seed-data/app/specs/a1_dialog_XX_blueprint_specs.seed.sql`
 - `seed-data/links/lesson_links_a1-dialog-XX.seed.sql`
@@ -460,7 +464,7 @@ sql_paths = [
 5. Maak `dialog_blueprint_specs` aan en seed.
 6. Voer `03_build_dialog_lesson_blueprint.sql` uit — verwacht één rij.
 7. Exporteer als CSV naar `planning/blueprints/`.
-8. Vul `supabase/prompts/a1_dialog_XX_prompt.md` in (scalars vanuit CSV, multiline vanuit Studio-cel).
+8. Vul `supabase/prompts/dialogs/a1_dialog_XX_prompt.md` in (scalars vanuit CSV, multiline vanuit Studio-cel).
 9. Genereer de dialoog en sla op in `generation/dialogs/`.
 10. Voer QA uit.
 11. Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan (dialoog-metadata + blokken) en voer uit.
