@@ -121,9 +121,21 @@ Elke paiboon-romanisatie die je voorstelt (vooral bij **NEW**-vocabulaire) moet 
 - Syllabefinale ย = "i" (niet "y"); syllabefinale ว = "o" of "u" afhankelijk van het klinkerpatroon (niet "w")
 - Bij woorden met het อัว/อวย-klinkerpatroon (bv. สวย, ครัว, ช่วย, ป่วย) is enkele vs. dubbele "u" niet uit het schrift af te leiden en verschilt per woord. Sluit aan bij de spelling die dat exacte woord al heeft onder "Already Introduced" of de "Unused Candidate Pool" hierboven. Komt het woord daar niet in voor, markeer de romanisatie dan expliciet als onzeker onder "Open Questions" in plaats van te gokken.
 
+## Toegestane waarden (database-constraints)
+
+Gebruik voor elk gelabeld veld hieronder uitsluitend een van deze waarden — een andere waarde laat de insert in de masterlijst achteraf falen:
+
+- `register`: neutral, formal, informal, polite, colloquial
+- `part_of_speech` (vocabulary): noun, verb, adjective, adverb, pronoun, preposition, conjunction, particle, classifier, question_word, expression, numeral, number, other
+- `phrase_type`: sentence_frame, collocation, formulaic_expression, functional_pattern, discourse_pattern, question_answer_exchange, other
+- `pattern_type`: sentence_frame, collocation, formulaic_expression, functional_pattern, discourse_pattern, other
+- `concept_type` (grammar): pattern, particle, word_order, question_form, negation, classifier_usage, politeness, other
+- `fixedness_level` (phrases/patterns): fixed, semi_fixed, productive
+- `is_productive` (phrases/patterns): true of false
+
 ## Output Format
 
-Gebruik exact deze structuur:
+Gebruik exact deze structuur. Let op: elk **NEW**-item krijgt in elke categorie — Vocabulary, Phrases, Grammar én Patterns gelijk — een set gelabelde subvelden (`veld: waarde`), niet enkel bij Vocabulary. Zonder deze velden kan het item niet zonder navraag ingevoegd worden.
 
 ```
 ## Lesson Proposal
@@ -142,22 +154,40 @@ Gebruik exact deze structuur:
 ## Proposed Vocabulary
 
 - thai_script (paiboon) = gloss — reden waarom dit past
-- **NEW** thai_script (paiboon) = gloss — part_of_speech, register, default_theme — reden
+- **NEW** thai_script (paiboon) = gloss — reden waarom dit past
+  - part_of_speech: ...
+  - register: ...
+  - default_theme: ...
 
 ## Proposed Phrases
 
-- titel: formule — reden
-- **NEW** titel: formule — reden
+- titel: formule — reden waarom dit past
+- **NEW** titel — reden waarom dit past
+  - phrase_formula: ...
+  - short_explanation: ...
+  - phrase_type: ...
+  - register: ...
+  - fixedness_level: ...
+  - is_productive: ...
 
 ## Proposed Grammar
 
-- titel: korte uitleg — reden
-- **NEW** titel: korte uitleg — reden
+- titel: korte uitleg — reden waarom dit past
+- **NEW** titel — reden waarom dit past
+  - short_explanation: ...
+  - concept_type: ...
+  - register: ...
 
 ## Proposed Patterns
 
-- titel: formule — reden
-- **NEW** titel: formule — reden
+- titel: formule — reden waarom dit past
+- **NEW** titel — reden waarom dit past
+  - pattern_formula: ...
+  - short_explanation: ...
+  - pattern_type: ...
+  - register: ...
+  - fixedness_level: ...
+  - is_productive: ...
 
 ## Open Questions
 
@@ -171,10 +201,18 @@ Gebruik exact deze structuur:
   hierboven — die twee samen zijn de volledige masterlijst, dus meer
   hoeft niet gecontroleerd te worden. Komt het item wél in een van
   beide voor, laat het dan onvermeld (impliciet bestaand).
-- Voor **NEW**-items: geef exact de velden uit het voorbeeldformaat
-  hierboven onder "Output Format" (bijvoorbeeld part_of_speech,
-  register, default_theme voor vocabulary) — genoeg om het item
-  zonder verdere navraag te kunnen invoegen.
+- Dit geldt gelijk voor alle vier categorieën. Behandel Phrases,
+  Grammar en Patterns niet lichter dan Vocabulary: elk **NEW**-item
+  krijgt evenveel gelabelde subvelden als in het voorbeeld hierboven,
+  ook als er in de praktijk minder nieuwe phrases/grammar/patterns
+  dan nieuwe woorden zijn.
+- Voor **NEW**-items: gebruik altijd de gelabelde `veld: waarde`-vorm
+  uit "Output Format" — nooit een kale, ongelabelde opsomming van
+  waarden. Gebruik voor elk veld enkel een waarde uit "Toegestane
+  waarden" hierboven.
+- Controleer vóór je antwoordt dat elk **NEW**-item onder Phrases,
+  Grammar en Patterns exact dezelfde subvelden bevat als het
+  voorbeeld hierboven — niet enkel bij Vocabulary.
 - Stel niet meer nieuwe items voor dan de lesfase-richtlijn toelaat.
 - Herhaal geen item dat al onder "Already Introduced" staat als
   doelconcept.
