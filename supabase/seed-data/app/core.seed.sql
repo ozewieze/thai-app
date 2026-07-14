@@ -55,12 +55,12 @@ values
   ),
   (
     'a1-dialog-04',
-    'what-is-this',
+    'a-small-treat',
     'A1',
     'dialogs',
     'dialog',
     'Dialog 4',
-    'What is this?',
+    'A Small Treat',
     4,
     'free',
     true
@@ -160,7 +160,19 @@ values
     12,
     'premium',
     true
-  );
+  )
+on conflict (lesson_key) do update
+set
+  slug = excluded.slug,
+  cefr_level = excluded.cefr_level,
+  section_key = excluded.section_key,
+  lesson_type = excluded.lesson_type,
+  title = excluded.title,
+  subtitle = excluded.subtitle,
+  sequence_number = excluded.sequence_number,
+  access_tier = excluded.access_tier,
+  is_published = excluded.is_published,
+  updated_at = now();
 
 -- =========================================
 -- Lesson grammar
@@ -378,7 +390,15 @@ values
     'Hierarchy, work, and guidance.',
     array['professional_trust'],
     true
-  );
+  )
+on conflict (character_a_id, character_b_id) do update
+set
+  start_state = excluded.start_state,
+  current_stage = excluded.current_stage,
+  function_summary = excluded.function_summary,
+  allowed_progression = excluded.allowed_progression,
+  is_active = excluded.is_active,
+  updated_at = now();
 
   -- =========================================
 -- Relationship pair rules
