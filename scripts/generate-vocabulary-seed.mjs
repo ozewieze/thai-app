@@ -57,7 +57,7 @@ function parseCsvLine(line) {
   }
 
   result.push(current);
-  return result;
+  return result;//parseCsvLine is dus een functie die een CSV-regel omzet in een array van waarden. Het houdt rekening met aanhalingstekens en dubbele aanhalingstekens binnen de waarden.
 }
 
 function toSqlText(value) {
@@ -77,11 +77,11 @@ function toSqlBoolean(value, rowNumber) {
 }
 
 async function main() {
-  const raw = await readFile(INPUT_CSV, "utf8");
+  const raw = await readFile(INPUT_CSV, "utf8");//raw is een string die de inhoud van het CSV-bestand bevat. Het bestand wordt gelezen met UTF-8 codering.
   const lines = raw
-    .replace(/^\uFEFF/, "")
-    .split(/\r?\n/)
-    .filter(Boolean);
+    .replace(/^\uFEFF/, "")//
+    .split(/\r?\n/)//regex die de string splitst op nieuwe regels, ongeacht of het Windows (\r\n) of Unix (\n) stijl is.
+    .filter(Boolean);//lines is een array van strings, waarbij elke string een regel uit het CSV-bestand vertegenwoordigt. De eerste regel is de header met kolomnamen, en de volgende regels bevatten de gegevens. Lege regels worden verwijderd.
 
   if (lines.length < 2) {
     throw new Error(

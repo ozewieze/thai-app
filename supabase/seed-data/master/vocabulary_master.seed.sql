@@ -1,4 +1,4 @@
--- Auto-generated from supabase/seed-data/master/csv/vocabulary_master.csv. Do not edit manually.
+-- Auto-generated from supabase\seed-data\master\csv\vocabulary_master.csv. Do not edit manually.
 insert into public.vocabulary_master (source_key, cefr_level, thai_script, paiboon, english_gloss, part_of_speech, register, default_theme, is_multifunctional, usage_note, source_note) values
 ('hello', 'A1', 'สวัสดี', 'sà-wàt-dii', 'hello', 'particle', 'formal', 'greetings', false, NULL, 'ai_a1_master_v3'),
 ('thank_you', 'A1', 'ขอบคุณ', 'kɔ̀ɔp-kun', 'thank you', 'particle', 'formal', 'greetings', false, NULL, 'ai_a1_master_v3'),
@@ -509,4 +509,7 @@ insert into public.vocabulary_master (source_key, cefr_level, thai_script, paibo
 ('know_meet', 'A1', 'รู้จัก', 'rúu-jàk', 'know', 'verb', 'formal', 'people', true, 'often means know be acquainted with or meet someone in introduction patterns such as ยินดีที่ได้รู้จัก', 'manual_dialogue_seed_v1'),
 ('together', 'A1', 'ด้วยกัน', 'dûai-gan', 'together', 'adverb', 'formal', 'social', false, NULL, 'ai_a1_master_v3'),
 ('also', 'A1', 'ด้วย', 'dûai', 'also / too', 'particle', 'formal', 'essentials', true, 'placed at the end of a sentence to mean also or too; also means with or by means of', 'ai_a1_master_v3'),
-('each_other', 'A1', 'กัน', 'gan', 'each other', 'particle', 'formal', 'social', true, 'marks mutual or shared action; also appears in ด้วยกัน (together) and กันเอง (among ourselves)', 'ai_a1_master_v3');
+('each_other', 'A1', 'กัน', 'gan', 'each other', 'particle', 'formal', 'social', true, 'marks mutual or shared action; also appears in ด้วยกัน (together) and กันเอง (among ourselves)', 'ai_a1_master_v3'),
+('snack', 'A1', 'ขนม', 'kà-nǒm', 'snack', 'noun', 'formal', 'food', false, NULL, NULL),
+('cake', 'A1', 'เค้ก', 'kéek', 'cake', 'noun', 'formal', 'food', false, NULL, NULL),
+('ice_cream', 'A1', 'ไอศกรีม', 'ai-sà-griim', 'ice cream', 'noun', 'formal', 'food', false, NULL, NULL);

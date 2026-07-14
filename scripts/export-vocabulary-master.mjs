@@ -51,7 +51,7 @@ async function main() {
   const { data, error } = await supabase
     .from("vocabulary_master")
     .select(COLUMNS.join(","))
-    .order("id", { ascending: true });
+    .order("id", { ascending: true });//data is an array of objects, each object representing a row from the vocabulary_master table, with keys corresponding to the columns specified in COLUMNS.
 
   if (error) {
     throw new Error(`Supabase query failed: ${error.message}`);
@@ -61,7 +61,7 @@ async function main() {
 
   for (const row of data) {
     lines.push(COLUMNS.map((col) => toCsvField(row[col])).join(","));
-  }
+  }// voor elke rij wordt in de lines array een array gepusht met de waarden van de kolommen, gescheiden door komma's. De eerste regel van de CSV bevat de kolomnamen, en elke volgende regel bevat de waarden van een rij uit de database.
 
   await writeFile(OUTPUT_CSV, `${lines.join("\n")}\n`, "utf8");
   console.log(`Exported ${OUTPUT_CSV} with ${data.length} rows.`);

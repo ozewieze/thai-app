@@ -165,7 +165,9 @@ De masterlijsten (`vocabulary_master`, `grammar_master`, `phrase_master`, `patte
    select * from public.pattern_master where title ilike '%...%';
    ```
 
-2. **Voeg toe met een directe insert** (snel genoeg voor tijdens actieve ontwikkeling):
+2. **Voeg toe met een directe insert** (snel genoeg voor tijdens actieve ontwikkeling). Kies hieronder het blok voor de juiste categorie — elk blok is op zich klaar om in een lege query in Studio te plakken en in te vullen.
+
+   **Vocabulary:**
 
    ```sql
    insert into public.vocabulary_master
@@ -173,6 +175,41 @@ De masterlijsten (`vocabulary_master`, `grammar_master`, `phrase_master`, `patte
    values
      ('...', 'A1', '...', '...', '...', '...', '...', '...');
    ```
+
+   **Grammar:**
+
+   ```sql
+   insert into public.grammar_master
+     (concept_key, cefr_level, title, short_explanation, concept_type, register)
+   values
+     ('...', 'A1', '...', '...', '...', '...');
+   ```
+
+   Toegestane waarden voor `concept_type`: `pattern`, `particle`, `word_order`, `question_form`, `negation`, `classifier_usage`, `politeness`, `other`.
+
+   **Phrase:**
+
+   ```sql
+   insert into public.phrase_master
+     (phrase_key, cefr_level, title, phrase_formula, short_explanation, phrase_type, register, fixedness_level, is_productive)
+   values
+     ('...', 'A1', '...', '...', '...', '...', '...', '...', true);
+   ```
+
+   Toegestane waarden voor `phrase_type`: `sentence_frame`, `collocation`, `formulaic_expression`, `functional_pattern`, `discourse_pattern`, `question_answer_exchange`, `other`. Voor `fixedness_level`: `fixed`, `semi_fixed`, `productive`.
+
+   **Pattern:**
+
+   ```sql
+   insert into public.pattern_master
+     (pattern_key, cefr_level, title, pattern_formula, short_explanation, pattern_type, register, fixedness_level, is_productive)
+   values
+     ('...', 'A1', '...', '...', '...', '...', '...', '...', true);
+   ```
+
+   Toegestane waarden voor `pattern_type`: `sentence_frame`, `collocation`, `formulaic_expression`, `functional_pattern`, `discourse_pattern`, `other`. Voor `fixedness_level`: zelfde als bij Phrase hierboven.
+
+   Voor alle vier geldt: toegestane waarden voor `register` zijn `neutral`, `formal`, `informal`, `polite`, `colloquial`. Deze lijsten zijn dezelfde als "Toegestane waarden" in `05_curriculum_sequencer_prompt_template.md` — als je een NEW-item rechtstreeks uit een Stap 1-voorstel overneemt, kan je de daar voorgestelde waarden hier gewoon overtypen.
 
    De bijhorende initialisatietrigger (`trg_initialize_vocabulary_status` en de grammar-/phrase-/pattern-varianten) maakt automatisch de status-rij aan met `status = 'new'`. Je hoeft dus niets extra te doen om het woord bruikbaar te maken — het verschijnt meteen in de ongebruikte kandidatenpool (zie Stap 1 hieronder).
 
