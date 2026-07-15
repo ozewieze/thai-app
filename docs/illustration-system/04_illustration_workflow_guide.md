@@ -117,6 +117,9 @@ on conflict (dialog_id, slide_index) do update set
 
 commit;
 ```
+Voer de seed uit met het commando:
+
+psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -f supabase/seed-data/dialogs/a1_dialog_XX_slides.seed.sql
 
 ## Stap 4 — Genereer de Illustration Prompt(s)
 
