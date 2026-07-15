@@ -141,8 +141,8 @@ Gebruik exact deze structuur. Let op: elk **NEW**-item krijgt in elke categorie 
 ## Lesson Proposal
 
 - Proposed sequence_number: {{next_sequence_number}}
-- Lesson title:
-- Subtitle:
+- Lesson title: Dialog {{next_sequence_number}} (vaste conventie — niet zelf verzinnen, altijd "Dialog" + sequence_number)
+- Subtitle: (dit is de eigenlijke, beschrijvende scènetitel, bv. "At the café" of "Choosing a snack")
 - Learning focus:
 - Scene summary:
 - Scene type:
@@ -213,6 +213,7 @@ Gebruik exact deze structuur. Let op: elk **NEW**-item krijgt in elke categorie 
 - Controleer vóór je antwoordt dat elk **NEW**-item onder Phrases,
   Grammar en Patterns exact dezelfde subvelden bevat als het
   voorbeeld hierboven — niet enkel bij Vocabulary.
+- Lesson title is altijd exact "Dialog" + het voorgestelde sequence_number — verzin geen alternatieve titel. De subtitel is het enige element dat je zelf voorstelt als beschrijvende scènetitel.
 - Stel niet meer nieuwe items voor dan de lesfase-richtlijn toelaat.
 - Herhaal geen item dat al onder "Already Introduced" staat als
   doelconcept.

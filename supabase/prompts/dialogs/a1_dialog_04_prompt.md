@@ -1,18 +1,3 @@
-# Lesson Dialogue Prompt Template (same-chat continuation)
-
-Gebruik dit bestand in Stap 7 wanneer je in dezelfde chat zit als waar
-je Stap 1 (de curriculumsequencer,
-`05_curriculum_sequencer_prompt_template.md`) hebt gedraaid. Het model
-heeft in dat gesprek al gezien: lesdoel, scène, sprekers,
-relatiecontext, scene_type/locatie/register/regelaantal, en zijn eigen
-voorstel voor doelwoorden/phrases/grammatica/patterns. Dit bestand
-herhaalt die data niet.
-
-**Werk je in een nieuwe chat zonder die voorgeschiedenis?** Gebruik dan
-`06_lesson_dialog_coldstart_prompt_template.md` in plaats van dit
-bestand — dat bevat de volledige builder-query-output, zonder enige
-aanname over voorkennis.
-
 ## Instructions
 
 - Vul enkel de placeholders hieronder in met de finale, goedgekeurde
@@ -35,7 +20,7 @@ dialogue text for that lesson.
 
 ## Task
 
-Generate the dialogue for lesson {{lesson_key}}, using the final,
+Generate the dialogue for lesson a1-dialog-04, using the final,
 human-approved requirements below. These may differ slightly from your
 own earlier proposal — treat the lists below as authoritative.
 
@@ -63,19 +48,25 @@ use them instead of your own earlier proposal wherever they differ.
 
 ### Required Vocabulary
 
-{{required_vocabulary_list}}
+- เอา (ao) = take
+- ด้วย (dûai) = also / too
+- ไม่ (mâi) = no
+- ขนม (kà-nǒm) = snack
+- เค้ก (kéek) = cake
+- ไอศกรีม (ai-sà-griim) = ice cream
 
 ### Required Phrases
 
-{{required_phrases_list}}
+-none
 
 ### Required Grammar
 
-{{required_grammar_list}}
+- General negation with ไม่: Use ไม่ before a verb adjective or modal to make it negative.
+- Addition with ด้วย: Use ด้วย to add the meaning of also or too.
 
 ### Required Patterns
 
-{{required_patterns_list}}
+- Take or want noun
 
 ### Vocabulary Restriction
 
@@ -90,15 +81,6 @@ Do not introduce additional vocabulary unless it is extremely basic and unavoida
 
 Treat every phrase, grammar point, or pattern already discussed earlier in this conversation as previously introduced or already known — none of that counts as new content. Only introduce something that is not in the Required lists above and was not already discussed as known if it is extremely basic and unavoidable for natural Thai.
 
-## Additional Dialogue Constraints
-
-These constraints apply on top of the scene, register, and location
-already established earlier in this conversation. This list includes
-constraints added after the sequencer step (such as one-off character
-instructions from `dialog_blueprint_specs.extra_constraints`), so treat
-it as authoritative even where it overlaps with earlier discussion.
-
-{{dialogue_constraints_list}}
 
 ## Quality Rules
 

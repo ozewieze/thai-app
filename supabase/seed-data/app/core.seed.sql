@@ -55,12 +55,12 @@ values
   ),
   (
     'a1-dialog-04',
-    'a-small-treat',
+    'choosing-a-snack',
     'A1',
     'dialogs',
     'dialog',
     'Dialog 4',
-    'A Small Treat',
+    'Choosing a snack',
     4,
     'free',
     true
