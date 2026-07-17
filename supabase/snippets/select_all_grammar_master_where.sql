@@ -1,3 +1,3 @@
 select *
-from grammar_master
-where concept_key ilike '%จะ%';
+from grammar_status
+where status = 'introduced';
