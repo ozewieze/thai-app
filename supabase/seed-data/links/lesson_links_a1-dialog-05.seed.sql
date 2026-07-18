@@ -67,7 +67,7 @@ insert into public.lesson_grammar (
 values
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-05'),
-    (select id from public.grammar_master where concept_key = 'Adverbs_after_verbs_and_adjectives' limit 1),
+    (select id from public.grammar_master where concept_key = 'adverbs_after_verbs_and_adjectives' limit 1),
     'target',
     true,
     1,
