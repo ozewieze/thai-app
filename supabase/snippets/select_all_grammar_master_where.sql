@@ -1,3 +1,3 @@
 select *
-from grammar_status
-where status = 'introduced';
+from grammar_master
+where title ilike '%Basic frequency expressions%'

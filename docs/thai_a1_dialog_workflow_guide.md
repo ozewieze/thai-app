@@ -218,7 +218,7 @@ De masterlijsten (`vocabulary_master`, `grammar_master`, `phrase_master`, `patte
 
 ## Sync-scripts voor masterlijsten
 
-Als je vaak rechtstreeks in de mastertabellen werkt (stap 2 hierboven), is een apart sync-script de beste aanvulling op deze workflow. `scripts/export-vocabulary-master.mjs`, `export-grammar-master.mjs` en `export-pattern-master.mjs` schrijven de huidige database-inhoud terug naar de bijhorende CSV; de bestaande `seed:vocab` / `seed:grammar` / `seed:pattern` genereren daarna de `.seed.sql` opnieuw uit die CSV.
+Als je vaak rechtstreeks in de mastertabellen werkt (stap 2 hierboven), is een apart sync-script de beste aanvulling op deze workflow. `scripts/export-vocabulary-master.mjs`, `export-grammar-master.mjs`, `export-pattern-master.mjs` en `export-phrase-master.mjs` schrijven de huidige database-inhoud terug naar de bijhorende CSV; de bestaande `seed:vocab` / `seed:grammar` / `seed:pattern` / `seed:phrase` genereren daarna de `.seed.sql` opnieuw uit die CSV.
 
 Draai per masterlijst:
 
@@ -226,7 +226,8 @@ Draai per masterlijst:
 npm run sync:vocab      # export vocabulary_master -> csv, daarna seed-SQL regenereren
 npm run sync:grammar    # idem voor grammar_master
 npm run sync:pattern    # idem voor pattern_master
-npm run sync:master     # alle drie na elkaar
+npm run sync:phrase     # idem voor phrase_master
+npm run sync:master     # alle vier na elkaar
 ```
 
 (`.env.local` moet `NEXT_PUBLIC_SUPABASE_URL` en `SUPABASE_SERVICE_ROLE_KEY` bevatten, net als bij `upload-slides.mjs`.)
@@ -306,6 +307,92 @@ Maak `seed-data/links/lesson_links_a1-dialog-XX.seed.sql` aan met inserts voor:
 - `lesson_grammar` (doelgrammatica)
 - `lesson_pattern` (indien van toepassing)
 - `lesson_phrase` (indien van toepassing)
+
+Alle vier tabellen delen dezelfde vorm (`lesson_id`, de FK naar de masterlijst, `role`, `requires_explanation`, `display_order`, `notes`). Gebruik onderstaande templates — één insert per tabel, met één rij per goedgekeurd doelitem uit Stap 1:
+
+```sql
+insert into public.lesson_vocabulary (
+  lesson_id,
+  vocabulary_id,
+  role,
+  requires_explanation,
+  display_order,
+  notes
+)
+values
+  (
+    (select id from public.lessons where lesson_key = 'a1-dialog-XX'),
+    (select id from public.vocabulary_master where source_key = '...' limit 1),
+    'target',
+    true,
+    1,
+    '...'
+  )
+  -- voeg hier één rij per doelwoord toe
+;
+
+insert into public.lesson_grammar (
+  lesson_id,
+  grammar_id,
+  role,
+  requires_explanation,
+  display_order,
+  notes
+)
+values
+  (
+    (select id from public.lessons where lesson_key = 'a1-dialog-XX'),
+    (select id from public.grammar_master where concept_key = '...'),
+    'target',
+    true,
+    1,
+    '...'
+  )
+  -- voeg hier één rij per doelgrammaticapunt toe
+;
+
+insert into public.lesson_pattern (
+  lesson_id,
+  pattern_id,
+  role,
+  requires_explanation,
+  display_order,
+  notes
+)
+values
+  (
+    (select id from public.lessons where lesson_key = 'a1-dialog-XX'),
+    (select id from public.pattern_master where pattern_key = '...'),
+    'target',
+    true,
+    1,
+    '...'
+  )
+  -- voeg hier één rij per pattern toe, indien van toepassing
+;
+
+insert into public.lesson_phrase (
+  lesson_id,
+  phrase_id,
+  role,
+  requires_explanation,
+  display_order,
+  notes
+)
+values
+  (
+    (select id from public.lessons where lesson_key = 'a1-dialog-XX'),
+    (select id from public.phrase_master where phrase_key = '...'),
+    'target',
+    true,
+    1,
+    '...'
+  )
+  -- voeg hier één rij per phrase toe, indien van toepassing
+;
+```
+
+Laat een insert volledig weg als er voor die categorie geen doelitems zijn voor deze les (bv. geen `lesson_phrase`-insert wanneer er geen doelphrases zijn).
 
 Voer de seed uit met het commando:
 

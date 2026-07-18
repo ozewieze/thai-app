@@ -67,12 +67,12 @@ values
   ),
   (
     'a1-dialog-05',
-    'simple-plans',
+    'enjoying-the-snack',
     'A1',
     'dialogs',
     'dialog',
     'Dialog 5',
-    'Simple plans',
+    'Enjoying the snack',
     5,
     'free',
     true

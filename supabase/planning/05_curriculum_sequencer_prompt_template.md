@@ -88,6 +88,13 @@ wordt.
 - Aantal nieuwe woorden:
 - Richtlijn estimated_line_count:
 
+**Let op bij het inschatten van de haalbaarheid:** `estimated_line_count`
+is geen harde één-zin-per-lijn-beperking. Een lijn mag meer dan één
+korte zin bevatten wanneer dat nodig is om een nieuw woord natuurlijk
+te plaatsen, zolang de lijn kort en begrijpelijk blijft voor een
+beginner. Laat dit dus niet onnodig conservatief meewegen bij het
+aantal `[NEW]`-items dat je voorstelt.
+
 ## Instructions for the Proposal
 
 1. Stel een scène voor die inhoudelijk zinvol aansluit bij de vorige

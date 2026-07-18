@@ -99,6 +99,13 @@ values (
   true,
   1,
   'Used to choose or ask for something in simple situations.'
+),(
+  (select id from public.lessons where lesson_key = 'a1-dialog-04'),
+  (select id from public.pattern_master where pattern_key = 'mai_verb'),
+  'target',
+  true,
+  2,
+  'Negates an action or state.'
 );
 
 -- vocabulary_status en grammar_status worden automatisch

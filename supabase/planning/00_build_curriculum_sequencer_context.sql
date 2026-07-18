@@ -18,7 +18,7 @@
 -- Die view berekent "alles geïntroduceerd VOOR les X" — maar les X
 -- (de volgende les) bestaat hier nog niet. Sectie 2 hieronder gebruikt
 -- daarom dezelfde onderliggende logica (status-tabellen + join op
--- de introductieles se sequence_number) maar zonder bovengrens:
+-- de introductieles sequence_number) maar zonder bovengrens:
 -- "alles wat tot nu toe al ooit is geïntroduceerd".
 -- ============================================================
 

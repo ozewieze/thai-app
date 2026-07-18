@@ -43,6 +43,8 @@ Apply these priorities in order:
 - Prefer pedagogical clarity over conversational naturalness when the two conflict.
 - Keep the dialogue tightly aligned with the lesson goal and curriculum scope.
 - Aim for the estimated line count given in Dialogue Design — do not compress the dialogue below that target just to minimize word count. When multiple valid dialogues are possible within that target, prefer the version that stays inside required and previously-introduced vocabulary over one that adds extra unlisted words.
+- Once a grammar point has been introduced in an earlier lesson, prefer applying it consistently in subsequent dialogues unless there is a clear pedagogical reason to deviate. Treat a boilerplate constraint carried over from an earlier lesson's spec as suspect if it contradicts a grammar point already taught — flag it instead of silently following it.
+- Prefer natural variation in subject reference. Use explicit pronouns, omitted subjects, คุณ, or personal names according to what best fits the social context and the lesson objectives, rather than enforcing one style consistently.
 
 ## Lesson Goal
 
@@ -157,7 +159,7 @@ Treat any item listed under "Previously introduced ... allowed for reuse" (vocab
 - Stay within CEFR {{cefr_level}}.
 - Keep the dialogue within the estimated line count for this lesson ({{estimated_line_count}}) and beginner-safe.
 - Use short, clear lines.
-- Use one communicative move per line.
+- Use one communicative move per line — a line does not have to be exactly one sentence. It may contain more than one short sentence when needed to fit a required word or phrase naturally, as long as it stays concise and beginner-readable. Multi-sentence lines become more natural and more expected as lessons progress past the early A1 phase.
 - Keep the Thai natural but simple.
 - Respect speaker characterization and relationship rules.
 - Do not introduce important new grammar outside lesson scope.

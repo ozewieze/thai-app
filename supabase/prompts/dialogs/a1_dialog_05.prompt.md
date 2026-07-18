@@ -35,7 +35,7 @@ dialogue text for that lesson.
 
 ## Task
 
-Generate the dialogue for lesson {{lesson_key}}, using the final,
+Generate the dialogue for lesson a1-dialog-05, using the final,
 human-approved requirements below. These may differ slightly from your
 own earlier proposal — treat the lists below as authoritative.
 
@@ -55,8 +55,6 @@ Apply these priorities in order:
 - Prefer pedagogical clarity over conversational naturalness when the two conflict.
 - Keep the dialogue tightly aligned with the lesson goal and curriculum scope.
 - Aim for the estimated line count already established for this lesson earlier in this conversation — do not compress the dialogue below that target just to minimize word count. When multiple valid dialogues are possible within that target, prefer the version that stays inside required and previously-introduced vocabulary over one that adds extra unlisted words.
-- Once a grammar point has been introduced in an earlier lesson, prefer applying it consistently in subsequent dialogues unless there is a clear pedagogical reason to deviate. Treat a boilerplate constraint carried over from an earlier lesson's spec as suspect if it contradicts a grammar point already taught — flag it instead of silently following it.
-- Prefer natural variation in subject reference. Use explicit pronouns, omitted subjects, คุณ, or personal names according to what best fits the social context and the lesson objectives, rather than enforcing one style consistently.
 
 ## Final Approved Requirements
 
@@ -65,19 +63,24 @@ use them instead of your own earlier proposal wherever they differ.
 
 ### Required Vocabulary
 
-{{required_vocabulary_list}}
+- ชอบ (chɔ̂ɔp) = like
+- กิน (gin) = eat
+- อร่อย (à-rɔ̀i) = delicious
+- หวาน (wǎan) = sweet
+- บ่อย (bɔ̀i) = often
+- มาก (mâak) = very
 
 ### Required Phrases
 
-{{required_phrases_list}}
+- none
 
 ### Required Grammar
 
-{{required_grammar_list}}
+- Adverbs after verbs and adjectives: In Thai, many common adverbs such as บ่อย and มาก come after the verb or adjective
 
 ### Required Patterns
 
-{{required_patterns_list}}
+- none
 
 ### Vocabulary Restriction
 
@@ -100,7 +103,13 @@ constraints added after the sequencer step (such as one-off character
 instructions from `dialog_blueprint_specs.extra_constraints`), so treat
 it as authoritative even where it overlaps with earlier discussion.
 
-{{dialogue_constraints_list}}
+- short lines only
+- one communicative move per line (a line may include more than one short sentence if needed to place a required word naturally, as long as it stays beginner-readable)
+- beginner-safe Thai only
+- use polite particles consistently
+- no flirting or intimacy
+- no important new grammar outside lesson scope
+- Subject omission is already taught (Dialog 2, subject_omission_when_clear) -- keep omitting คุณ/ผม/ฉัน when context makes the subject clear, do not reintroduce them
 
 ## Quality Rules
 
@@ -119,7 +128,7 @@ it as authoritative even where it overlaps with earlier discussion.
 Before producing the dialogue, verify that:
 
 - Every required phrase above appears at least once.
-- Every required grammar point above appears at least once.
+- Every required grammar point is demonstrated naturally at least once.
 - Every required vocabulary item above appears at least once, unless it is already contained inside a required phrase.
 - The lesson goal already established earlier in this conversation is fully achieved.
 - No prohibited vocabulary has been introduced unnecessarily.

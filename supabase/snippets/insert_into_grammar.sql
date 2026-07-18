@@ -1,2 +1,2 @@
 INSERT INTO public.grammar_master (concept_key, cefr_level, title, short_explanation, concept_type, register, source_note) VALUES
-('adjective_after_noun', 'A1', 'Adjective after noun', 'In Thai adjectives follow the noun they describe using the pattern Noun + Adjective in both simple descriptions and conversational sentences.', 'modifier_pattern', 'formal', 'ai_a1_grammar_master_v3_final');
+('Adverbs_after_verbs_and_adjectives', 'A1', 'Adverbs after verbs and adjectives', 'In Thai, many common adverbs such as บ่อย and มาก come after the verb or adjective', 'modifier_pattern', 'polite', 'ai_a1_grammar_master_v3_final');

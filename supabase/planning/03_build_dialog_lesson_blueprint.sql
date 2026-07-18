@@ -273,7 +273,7 @@ left join lateral (
   from jsonb_array_elements_text(
     jsonb_build_array(
       'short lines only',
-      'one communicative move per line',
+      'one communicative move per line (a line may include more than one short sentence if needed to place a required word naturally, as long as it stays beginner-readable)',
       'beginner-safe Thai only',
       'use polite particles consistently',
       'no flirting or intimacy',
@@ -282,4 +282,4 @@ left join lateral (
   ) with ordinality as t(value, ord)
 ) dc on true
 
-where lb.lesson_key = 'a1-dialog-04';
+where lb.lesson_key = 'a1-dialog-05';

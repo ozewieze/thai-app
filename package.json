@@ -10,11 +10,13 @@
     "seed:vocab": "node scripts/generate-vocabulary-seed.mjs",
     "seed:grammar": "node scripts/generate-grammar-seed.mjs",
     "seed:pattern": "node scripts/generate-pattern-seed.mjs",
+    "seed:phrase": "node scripts/generate-phrase-seed.mjs",
     "sync:vocab": "node --env-file=.env.local scripts/export-vocabulary-master.mjs && npm run seed:vocab",
     "sync:grammar": "node --env-file=.env.local scripts/export-grammar-master.mjs && npm run seed:grammar",
     "sync:pattern": "node --env-file=.env.local scripts/export-pattern-master.mjs && npm run seed:pattern",
-    "sync:master": "npm run sync:vocab && npm run sync:grammar && npm run sync:pattern",
-    "db:reset": "npm run seed:vocab && npm run seed:grammar && npm run seed:pattern && npx supabase db reset",
+    "sync:phrase": "node --env-file=.env.local scripts/export-phrase-master.mjs && npm run seed:phrase",
+    "sync:master": "npm run sync:vocab && npm run sync:grammar && npm run sync:pattern && npm run sync:phrase",
+    "db:reset": "npm run seed:vocab && npm run seed:grammar && npm run seed:pattern && npm run seed:phrase && npx supabase db reset",
     "db:reset:full": "npm run db:reset && node --env-file=.env.local scripts/generate-audio.mjs && node --env-file=.env.local scripts/merge-audio.mjs && node --env-file=.env.local scripts/upload-slides.mjs"
   },
   "dependencies": {
