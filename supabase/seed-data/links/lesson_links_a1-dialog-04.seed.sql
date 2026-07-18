@@ -72,7 +72,7 @@ values
     'target',
     true,
     5,
-    'a sweet baked dessert; can be a small snack or a larger cake for celebrations'
+    'a sweet baked dessert, typically served as a slice in cafés or as a whole cake for celebrations.'
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
