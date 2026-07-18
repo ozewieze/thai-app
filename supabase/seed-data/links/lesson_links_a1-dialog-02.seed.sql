@@ -8,14 +8,24 @@ insert into public.lesson_grammar (
   display_order,
   notes
 )
-values (
+values
+(
   (select id from public.lessons where lesson_key = 'a1-dialog-02'),
   (select id from public.grammar_master where concept_key = 'subject_omission_when_clear'),
   'target',
   true,
   1,
   'Subject is often dropped when context makes the speaker or listener obvious.'
-);
+),
+(
+  (select id from public.lessons where lesson_key = 'a1-dialog-02'),
+  (select id from public.grammar_master where concept_key = 'movement_pai'),
+  'target',
+  true,
+  2,
+  'Use ไป with a place or verb to show movement away or going to do something.'
+)
+;
 
 insert into public.lesson_vocabulary (
   lesson_id,
