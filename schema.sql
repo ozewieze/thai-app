@@ -211,7 +211,7 @@ ALTER FUNCTION "public"."fn_lesson_phrase_state_machine"() OWNER TO "postgres";
 
 CREATE OR REPLACE FUNCTION "public"."fn_lesson_vocabulary_state_machine"() RETURNS "trigger"
     LANGUAGE "plpgsql"
-    AS $$
+    AS $$ 
 declare
   v_status     text;
   v_still_used boolean;
