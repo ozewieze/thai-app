@@ -3,23 +3,20 @@ begin;
 -- =========================================================
 -- Vocabulary Cards: lemma-audio + canonieke voorbeelden
 --
--- Architectuur goedgekeurd en bevroren (2026-07-22), na
--- consistentiereview tegen de geaccepteerde ADR's:
---   - ADR-016 vervangt de padvoorkeur uit ADR-006 (fase 1):
---     audio_url, conform de bestaande dialogtabellen; geen
+--   -  conform de bestaande dialogtabellen; geen
 --     apart storage-path-veld, geen audio_assets-tabel.
---   - ADR-017/018: functionele narrator keys
+--   - functionele narrator keys
 --     ('narrator_female' default, 'narrator_male' bij
 --     genderspecifieke taal). voice_key blijft vrije tekst,
 --     net als dialog_blocks.speaker_key: VOICE_MAP is
 --     scriptconfiguratie, geen databasereferentiedata.
---   - ADR-021: voorbeeldaudio wordt altijd apart gegenereerd,
+--   - voorbeeldaudio wordt altijd apart gegenereerd,
 --     nooit hergebruikt uit dialoogaudio (redactionele regel,
 --     geen constraint).
 --   - "Minstens 1 voorbeeld per target-woord" is een
 --     publicatieregel voor het latere publicatierapport,
 --     onafhankelijk van requires_explanation — bewust GEEN
---     constraint of trigger (ADR-040/042).
+--     constraint of trigger.
 --
 -- Additief en veilig voor bestaande data: alleen nullable
 -- kolommen op vocabulary_master en een nieuwe, lege tabel.
@@ -32,11 +29,11 @@ begin;
 -- text als type, conform elke bestaande audio_url/voice_key-
 -- kolom (dialogs, dialog_blocks, language_note_examples).
 -- Nullable: ontbrekende audio is een normale authoring-
--- toestand (ADR-043); volledigheid checkt het latere
+-- toestand; volledigheid checkt het latere
 -- publicatierapport. Indien gezet: niet leeg en geen
 -- whitespace, zelfde btrim-conventie als elders.
 -- Geen aparte audiotabel: lemma-audio is 1-op-1 met het
--- woord (ADR-015/019/020).
+-- woord.
 -- =========================================================
 
 alter table public.vocabulary_master
@@ -53,9 +50,9 @@ alter table public.vocabulary_master
 -- 2. vocabulary_examples
 --
 -- Canonieke, herbruikbare voorbeelden bij één vocabulaire-
--- item (ADR-003 nieuw / ADR-010). Master-eigendom: geen
--- lesson-kolommen (ADR-005 oud), geen fusie met
--- language_note_examples (ADR-009) — zelfde veldnamen als
+-- item. Master-eigendom: geen
+-- lesson-kolommen, geen fusie met
+-- language_note_examples — zelfde veldnamen als
 -- daar is bewust (één patroon voor audio-scripts en
 -- weergave), zelfde tabel is bewust niet (ander eigenaar-
 -- schap en andere levenscyclus).
@@ -103,7 +100,7 @@ create table public.vocabulary_examples (
   constraint vocabulary_examples_translation_not_blank
     check (btrim(translation_en) <> ''),
 
-  -- nullable tijdens authoring (ADR-043); niet leeg indien
+  -- nullable tijdens authoring; niet leeg indien
   -- gezet, zelfde conventie als language_note_examples
   constraint vocabulary_examples_audio_url_not_blank
     check (audio_url is null or btrim(audio_url) <> ''),
@@ -126,7 +123,7 @@ create trigger trg_vocabulary_examples_set_updated_at
 -- Zelfde zichtbaarheidsfilosofie als vocabulary_master zelf
 -- en als de Language Notes-tabellen: leesbaar zodra het
 -- woord in minstens één gepubliceerde les voorkomt. Geen
--- eigen is_published op masterdata (ADR-045) — publicatie
+-- eigen is_published op masterdata — publicatie
 -- van de les is de enige poort.
 -- =========================================================
 
@@ -147,8 +144,7 @@ using (
 );
 
 -- =========================================================
--- 4. Grants (least privilege, conform de afspraak van
---    2026-07-22 en de grant_api_access-conventie)
+-- 4. Grants 
 --
 -- anon/authenticated: alleen SELECT — er bestaan geen
 -- write-policies, en RLS is de tweede (niet de enige)

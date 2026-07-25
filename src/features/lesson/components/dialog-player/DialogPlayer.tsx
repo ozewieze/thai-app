@@ -3,8 +3,11 @@
 import { useState, useRef, useEffect } from "react";
 import { Eye, EyeOff, ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "./DialogPlayer.module.css";
-import DialogBlock, { type Visibility } from "../dialog-block/DialogBlock";
-import type { DialogBlock as DialogBlockType } from "@/features/lesson/types";
+import DialogBlock from "../dialog-block/DialogBlock";
+import type {
+  DialogBlock as DialogBlockType,
+  Visibility,
+} from "@/features/lesson/types";
 
 type DialogPlayerProps = {
   blocks: DialogBlockType[];

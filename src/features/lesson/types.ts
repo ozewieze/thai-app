@@ -181,3 +181,221 @@ export type LessonWithDialog = {
   accessTier: "free" | "premium";
   dialog: DialogData | null;
 };
+
+// ============================================================
+// Zichtbaarheidscontrols (gedeeld type)
+// ============================================================
+
+/**
+ * Visibility
+ *
+ * Welke van de drie leeslagen zichtbaar zijn. Gedeeld door de
+ * dialoogspeler (DialogBlock/DialogPlayer) en de instructie-content
+ * (ExampleVisibilityWrapper). Woonde vroeger in DialogBlock.tsx;
+ * hierheen verplaatst omdat twee features hem gebruiken (één type,
+ * meerdere gebruikers).
+ */
+export type Visibility = {
+  thai: boolean;
+  transliteration: boolean;
+  english: boolean;
+};
+
+// ============================================================
+// Instructiecontent — raw database row types (snake_case)
+// ============================================================
+
+/**
+ * VocabularyExampleRow
+ *
+ * Eén rij uit `vocabulary_examples`: een canoniek voorbeeld bij één
+ * woord (owner = vocabulary_master). `audio_url`/`voice_key` zijn
+ * nullable tijdens authoring; volledigheid checkt het latere
+ * publicatierapport, niet een constraint.
+ */
+export type VocabularyExampleRow = {
+  id: number;
+  display_order: number;
+  thai_script: string;
+  paiboon: string;
+  translation_en: string;
+  audio_url: string | null;
+  voice_key: string | null;
+};
+
+/**
+ * LessonVocabularyItemRow
+ *
+ * Eén `lesson_vocabulary`-rij met de geneste master-data en
+ * canonieke voorbeelden. `display_order` is nullable (EXISTING):
+ * ongenummerde items horen onderaan (query gebruikt nullsFirst:false).
+ */
+export type LessonVocabularyItemRow = {
+  id: number;
+  role: "target" | "supporting" | "review" | "bonus";
+  display_order: number | null;
+  requires_explanation: boolean;
+  notes: string | null;
+  vocabulary_master: {
+    id: number;
+    source_key: string;
+    thai_script: string;
+    paiboon: string | null;
+    english_gloss: string;
+    part_of_speech: string | null;
+    register: string | null;
+    usage_note: string | null;
+    audio_url: string | null;
+    voice_key: string | null;
+    vocabulary_examples: VocabularyExampleRow[];
+  };
+};
+
+/**
+ * LanguageNoteExampleRow
+ *
+ * Eén rij uit `language_note_examples`. Hangt uitsluitend onder een
+ * `example_group`-blok (afgedwongen door de samengestelde FK
+ * (block_id, block_type)).
+ */
+export type LanguageNoteExampleRow = {
+  id: number;
+  display_order: number;
+  thai_script: string;
+  paiboon: string;
+  translation_en: string;
+  audio_url: string | null;
+  voice_key: string | null;
+};
+
+/**
+ * LanguageNoteBlockRow
+ *
+ * Eén rij uit `language_note_blocks`. `block_type` bepaalt de vorm:
+ * tekstblokken (paragraph/subheading/formula/usage_tip) vullen
+ * `content` en laten `heading` leeg; `example_group` heeft optionele
+ * `heading` + optionele intro (`content`) en draagt de geneste
+ * examples. `language_note_examples` is leeg tenzij example_group.
+ */
+export type LanguageNoteBlockRow = {
+  id: number;
+  display_order: number;
+  block_type:
+    | "paragraph"
+    | "subheading"
+    | "formula"
+    | "example_group"
+    | "usage_tip";
+  heading: string | null;
+  content: string | null;
+  language_note_examples: LanguageNoteExampleRow[];
+};
+
+/**
+ * LanguageNoteRow
+ *
+ * Eén `language_notes`-rij met geneste, geordende blokken.
+ * `display_order` is NOT NULL, dus sortering in de query volstaat
+ * voor de notes zelf; blokken en examples worden in de mapper
+ * gesorteerd (PostgREST sorteert geneste niveaus niet betrouwbaar).
+ */
+export type LanguageNoteRow = {
+  id: number;
+  title: string;
+  display_order: number;
+  language_note_blocks: LanguageNoteBlockRow[];
+};
+
+// ============================================================
+// Instructiecontent — frontend types (camelCase)
+// ============================================================
+
+/**
+ * ExampleLine
+ *
+ * Eén voorbeeldzin (drieluik thai/paiboon/translation) na de mapper.
+ * Zowel vocabulary_examples als language_note_examples mappen hierheen:
+ * dezelfde vorm, dezelfde weergavecomponent.
+ */
+export type ExampleLine = {
+  id: number;
+  order: number;
+  thaiLine: string;
+  transliterationLine: string;
+  translationLine: string;
+  audioUrl: string | null;
+};
+
+/**
+ * LanguageNoteBlock
+ *
+ * Discriminated union op `blockType`: de compiler weet per variant
+ * welke velden bestaan (bij "example_group" de examples, bij de
+ * tekstvarianten alleen `content`). De blokrenderer moet in zijn
+ * switch alle vijf gevallen afhandelen.
+ */
+export type LanguageNoteBlock =
+  | { blockType: "paragraph"; content: string }
+  | { blockType: "subheading"; content: string }
+  | { blockType: "formula"; content: string }
+  | { blockType: "usage_tip"; content: string }
+  | {
+      blockType: "example_group";
+      heading: string | null;
+      intro: string | null;
+      examples: ExampleLine[];
+    };
+
+/**
+ * LanguageNote
+ *
+ * Eén redactionele mini-les: een titel plus geordende blokken.
+ * De koppeltabel language_note_concepts (associatie met een
+ * vocab/grammar/phrase/pattern-item) wordt in fase 1 niet opgehaald.
+ */
+export type LanguageNote = {
+  id: number;
+  order: number;
+  title: string;
+  blocks: LanguageNoteBlock[];
+};
+
+/**
+ * VocabularyItem
+ *
+ * `master` = canonieke taaldata uit vocabulary_master (herbruikbaar
+ * over lessen heen). `lesson` = lesspecifieke presentatie uit
+ * lesson_vocabulary. Die scheiding is bewust.
+ */
+export type VocabularyItem = {
+  id: number;
+  sourceKey: string;
+  master: {
+    thaiScript: string;
+    paiboon: string | null;
+    englishGloss: string;
+    partOfSpeech: string | null;
+    register: string | null;
+    usageNote: string | null;
+    audioUrl: string | null;
+  };
+  lesson: {
+    role: "target" | "supporting" | "review" | "bonus";
+    order: number | null;
+    requiresExplanation: boolean;
+    notes: string | null;
+  };
+  examples: ExampleLine[];
+};
+
+/**
+ * LessonInstructionalContent
+ *
+ * Het volledige instructiedeel van een les. Losgekoppeld van
+ * LessonWithDialog zodat beide onafhankelijk opgehaald en (later)
+ * gecached kunnen worden.
+ */
+export type LessonInstructionalContent = {
+  vocabularyItems: VocabularyItem[];
+  languageNotes: LanguageNote[];
+};

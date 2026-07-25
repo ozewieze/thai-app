@@ -1,12 +1,9 @@
 import { Volume2, Pause } from "lucide-react";
 import styles from "./DialogBlock.module.css";
-import type { DialogBlock as DialogBlockType } from "@/features/lesson/types";
-
-export type Visibility = {
-  thai: boolean;
-  transliteration: boolean;
-  english: boolean;
-};
+import type {
+  DialogBlock as DialogBlockType,
+  Visibility,
+} from "@/features/lesson/types";
 
 type DialogBlockProps = {
   block: DialogBlockType;

@@ -2,8 +2,7 @@ begin;
 
 -- =========================================================
 -- Language Notes: lesson-bound editorial mini-lessons
---
--- Ontwerp goedgekeurd in architectuurreview (2026-07-21):
+
 --   - language_notes          : een note, gebonden aan een lesson
 --   - language_note_blocks    : geordende content-blokken binnen een note
 --   - language_note_examples  : relationele voorbeelden onder een

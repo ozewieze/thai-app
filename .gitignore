@@ -45,3 +45,6 @@ yarn-error.log*
 next-env.d.ts
 
 docs/illustration-system/design-reference
+
+# persoonlijk werkdocument, tijdelijk -- niet committen, later verwijderen
+docs/lesson-instructional-content-architectuur.md
