@@ -6,8 +6,12 @@ import type {
   LessonNav,
   LessonVocabularyItemRow,
   LanguageNoteRow,
+  LessonInstructionalContent,
 } from "../types";
-import { mapLessonRowToLessonWithDialog } from "./mappers";
+import {
+  mapLessonRowToLessonWithDialog,
+  mapLessonInstructionalContent,
+} from "./mappers";
 
 export async function getLessonBySlug(
   slug: string,
@@ -241,4 +245,19 @@ export async function getLessonInstructionalContentRows(
     (notesResult.data as unknown as LanguageNoteRow[] | null) ?? [];
 
   return { vocab, notes };
+}
+
+/**
+ * getLessonInstructionalContent
+ *
+ * Publieke functie voor de lespagina: haalt de ruwe rijen op
+ * (getLessonInstructionalContentRows) en mapt ze naar de frontend-vorm
+ * (LessonInstructionalContent). Dit is wat page.tsx straks aanroept,
+ * naast getLessonBySlug en getLessonNav.
+ */
+export async function getLessonInstructionalContent(
+  lessonId: number,
+): Promise<LessonInstructionalContent> {
+  const rows = await getLessonInstructionalContentRows(lessonId);
+  return mapLessonInstructionalContent(rows);
 }
