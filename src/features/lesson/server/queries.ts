@@ -149,13 +149,7 @@ export type LessonInstructionalContentRows = {
  * functie hoeft daar niets extra voor te doen.
  *
  * De `as unknown as`-cast is nodig zolang er geen gegenereerde
- * database-types zijn (P13), net als in getLessonBySlug hierboven.
- *
- * TE VERIFIËREN OP DE LOKALE DATABASE (kan niet vanuit de sandbox):
- * de geneste embedding `language_note_blocks → language_note_examples`
- * hangt aan de samengestelde FK (block_id, block_type). Werkt de select
- * hieronder niet, gebruik dan de expliciete FK-hint:
- *   language_note_examples!language_note_examples_block_fk ( ... )
+ * database-types zijn (P13), net als in getLessonBySlug hierboven. 
  */
 export async function getLessonInstructionalContentRows(
   lessonId: number,
@@ -240,10 +234,9 @@ export async function getLessonInstructionalContentRows(
   }
 
   const vocab =
-    (vocabResult.data as unknown as LessonVocabularyItemRow[] | null) ?? [];
+    (vocabResult.data as unknown as LessonVocabularyItemRow[] | null) ?? [];   
   const notes =
     (notesResult.data as unknown as LanguageNoteRow[] | null) ?? [];
-
   return { vocab, notes };
 }
 
@@ -259,5 +252,6 @@ export async function getLessonInstructionalContent(
   lessonId: number,
 ): Promise<LessonInstructionalContent> {
   const rows = await getLessonInstructionalContentRows(lessonId);
+  // console.log(rows);
   return mapLessonInstructionalContent(rows);
 }

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import {
   getLessonBySlug,
   getLessonNav,
+  getLessonInstructionalContent,
 } from "@/features/lesson/server/queries";
 import LessonPageView from "@/features/lesson/components/lesson-page-view/LessonPageView";
 
@@ -13,7 +14,18 @@ export default async function LessonPage({ params }: PageProps) {
   const lesson = await getLessonBySlug(lessonSlug);
   if (!lesson) notFound();
 
-  const lessonNav = await getLessonNav(lesson.id, lesson.sectionKey);
+  // Nav en instructiecontent hebben geen onderlinge afhankelijkheid en
+  // hangen allebei alleen van lesson.id af -> parallel ophalen.
+  const [lessonNav, instructionalContent] = await Promise.all([
+    getLessonNav(lesson.id, lesson.sectionKey),
+    getLessonInstructionalContent(lesson.id),
+  ]);
 
-  return <LessonPageView lesson={lesson} lessonNav={lessonNav} />;
+  return (
+    <LessonPageView
+      lesson={lesson}
+      lessonNav={lessonNav}
+      instructionalContent={instructionalContent}
+    />
+  );
 }

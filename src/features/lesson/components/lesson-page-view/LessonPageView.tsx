@@ -1,14 +1,20 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "./LessonPageView.module.css";
-import type { LessonWithDialog, LessonNav } from "@/features/lesson/types";
+import type {
+  LessonWithDialog,
+  LessonNav,
+  LessonInstructionalContent,
+} from "@/features/lesson/types";
 import DialogPlayer from "@/features/lesson/components/dialog-player/DialogPlayer";
 import DialogFullSection from "@/features/lesson/components/dialog-full-section/DialogFullSection";
+import LessonVocabularySection from "@/features/lesson/components/lesson-vocabulary-section/LessonVocabularySection";
 import { getLevelById } from "@/features/level/lib/getLevelById";
 
 type LessonPageViewProps = {
   lesson: LessonWithDialog;
   lessonNav: LessonNav;
+  instructionalContent: LessonInstructionalContent;
 };
 
 const REGISTER_LABELS: Record<string, string> = {
@@ -22,6 +28,7 @@ const REGISTER_LABELS: Record<string, string> = {
 export default function LessonPageView({
   lesson,
   lessonNav,
+  instructionalContent,
 }: LessonPageViewProps) {
   const levelData = getLevelById(lesson.cefrLevel);
   const backHref = `/learn/${lesson.cefrLevel.toLowerCase()}/${lesson.sectionKey ?? "dialogs"}`;
@@ -114,6 +121,13 @@ export default function LessonPageView({
         ) : (
           <p>Geen dialog gevonden voor deze lesson.</p>
         )}
+
+        {/*
+          Instructiecontent: dialoog -> Vocabulary Cards -> Language Notes.         
+        */}
+        <LessonVocabularySection
+          items={instructionalContent.vocabularyItems}
+        />
       </div>
     </div>
   );

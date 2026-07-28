@@ -215,7 +215,8 @@ function mapLanguageNoteRow(row: LanguageNoteRow): LanguageNote {
 export function mapLessonInstructionalContent(rows: {
   vocab: LessonVocabularyItemRow[];
   notes: LanguageNoteRow[];
-}): LessonInstructionalContent {
+}): LessonInstructionalContent { 
+  // console.log( 'vocabularyItems:', rows.vocab.map(mapVocabularyItemRow),  'languageNotes:', rows.notes.map(mapLanguageNoteRow))
   return {
     vocabularyItems: rows.vocab.map(mapVocabularyItemRow),
     languageNotes: rows.notes.map(mapLanguageNoteRow),
