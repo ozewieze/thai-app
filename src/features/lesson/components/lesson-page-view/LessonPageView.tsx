@@ -9,6 +9,7 @@ import type {
 import DialogPlayer from "@/features/lesson/components/dialog-player/DialogPlayer";
 import DialogFullSection from "@/features/lesson/components/dialog-full-section/DialogFullSection";
 import LessonVocabularySection from "@/features/lesson/components/lesson-vocabulary-section/LessonVocabularySection";
+import LanguageNotesSection from "@/features/lesson/components/language-notes-section/LanguageNotesSection";
 import { getLevelById } from "@/features/level/lib/getLevelById";
 
 type LessonPageViewProps = {
@@ -128,6 +129,8 @@ export default function LessonPageView({
         <LessonVocabularySection
           items={instructionalContent.vocabularyItems}
         />
+
+        <LanguageNotesSection notes={instructionalContent.languageNotes} />
       </div>
     </div>
   );
