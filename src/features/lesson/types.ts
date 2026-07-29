@@ -189,11 +189,11 @@ export type LessonWithDialog = {
 /**
  * Visibility
  *
- * Welke van de drie leeslagen zichtbaar zijn. Gedeeld door de
- * dialoogspeler (DialogBlock/DialogPlayer) en de instructie-content
- * (ExampleVisibilityWrapper). Woonde vroeger in DialogBlock.tsx;
- * hierheen verplaatst omdat twee features hem gebruiken (één type,
- * meerdere gebruikers).
+ * Welke van de drie leeslagen zichtbaar zijn. Gebruikt door de
+ * dialoogspeler (DialogBlock/DialogPlayer) als actief studie-instrument.
+ * Woonde vroeger in DialogBlock.tsx; naar types.ts verplaatst tijdens de
+ * lespagina-refactor. (De instructiecontent gebruikt een eenvoudiger
+ * boolean-voorkeur, zie TransliterationToggle.)
  */
 export type Visibility = {
   thai: boolean;

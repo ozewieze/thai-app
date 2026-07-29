@@ -10,6 +10,7 @@ import DialogPlayer from "@/features/lesson/components/dialog-player/DialogPlaye
 import DialogFullSection from "@/features/lesson/components/dialog-full-section/DialogFullSection";
 import LessonVocabularySection from "@/features/lesson/components/lesson-vocabulary-section/LessonVocabularySection";
 import LanguageNotesSection from "@/features/lesson/components/language-notes-section/LanguageNotesSection";
+import TransliterationToggle from "@/features/lesson/components/transliteration-toggle/TransliterationToggle";
 import { getLevelById } from "@/features/level/lib/getLevelById";
 
 type LessonPageViewProps = {
@@ -37,6 +38,9 @@ export default function LessonPageView({
   const registerLabel = lesson.dialog?.register
     ? (REGISTER_LABELS[lesson.dialog.register] ?? null)
     : null;
+  const hasInstructionalContent =
+    instructionalContent.vocabularyItems.length > 0 ||
+    instructionalContent.languageNotes.length > 0;
 
   return (
     <div className={styles.page}>
@@ -124,13 +128,27 @@ export default function LessonPageView({
         )}
 
         {/*
-          Instructiecontent: dialoog -> Vocabulary Cards -> Language Notes.         
+          Instructiecontent: dialoog -> Vocabulary Cards -> Language Notes.
+          Deze server-div (data-study-area) bezit het data-translit-visible-
+          attribuut; de TransliterationToggle (client) flipt het en de CSS
+          verbergt de transliteratie. De secties zelf blijven server.
+          Alleen tonen als er iets is (anders geen losse toggle).
         */}
-        <LessonVocabularySection
-          items={instructionalContent.vocabularyItems}
-        />
-
-        <LanguageNotesSection notes={instructionalContent.languageNotes} />
+        {hasInstructionalContent && (
+          <div
+            className={styles.studyArea}
+            data-study-area
+            data-translit-visible="true"
+          >
+            <TransliterationToggle />
+            <LessonVocabularySection
+              items={instructionalContent.vocabularyItems}
+            />
+            <LanguageNotesSection
+              notes={instructionalContent.languageNotes}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

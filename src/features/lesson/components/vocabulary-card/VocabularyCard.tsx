@@ -9,9 +9,10 @@ import ExampleList from "../example-list/ExampleList";
  * (thai/paiboon/engels), optionele meta (woordsoort, register,
  * usage-note) en de canonieke voorbeelden.
  *
- * Belangrijk voor de visibility-architectuur: het LEMMA draagt géén
- * `data-study-layer` en blijft dus altijd zichtbaar. Alleen de
- * voorbeeldzinnen (via ExampleList) volgen de zichtbaarheidscontrols.
+ * Leesvoorkeur: alleen de paiboon (transliteratie) draagt
+ * `data-study-layer="transliteration"` en volgt zo de "Show
+ * transliteration"-toggle. Thai-script en Engelse gloss blijven altijd
+ * zichtbaar.
  *
  * De lemma-audioknop volgt in stap 2.7.
  */
@@ -31,7 +32,12 @@ export default function VocabularyCard({ item }: VocabularyCardProps) {
             {master.thaiScript}
           </span>
           {master.paiboon && (
-            <span className={styles.paiboon}>{master.paiboon}</span>
+            <span
+              className={styles.paiboon}
+              data-study-layer="transliteration"
+            >
+              {master.paiboon}
+            </span>
           )}
         </p>
         <p className={styles.gloss}>{master.englishGloss}</p>

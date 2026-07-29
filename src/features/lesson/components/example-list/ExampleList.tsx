@@ -20,15 +20,13 @@ export default function ExampleList({ examples }: ExampleListProps) {
     <ul className={styles.list}>
       {examples.map((example) => (
         <li key={example.id} className={styles.item}>
-          <p className={styles.thai} data-study-layer="thai" lang="th">
+          <p className={styles.thai} lang="th">
             {example.thaiLine}
           </p>
           <p className={styles.translit} data-study-layer="transliteration">
             {example.transliterationLine}
           </p>
-          <p className={styles.english} data-study-layer="english">
-            {example.translationLine}
-          </p>
+          <p className={styles.english}>{example.translationLine}</p>
         </li>
       ))}
     </ul>

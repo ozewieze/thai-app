@@ -2,6 +2,29 @@
   padding-bottom: var(--spacing-96);
 }
 
+/* ---- Instructiecontent: study-area + leesvoorkeur-CSS ----
+   De TransliterationToggle (client) flipt data-translit-visible op deze
+   div; het verbergen gebeurt puur via CSS. Selectie op "false" zodat de
+   default (geen JS / vóór hydration) "zichtbaar" is. De [data-study-layer]-
+   selector is globaal; de .studyArea-scope beperkt het effect tot deze
+   subtree. Alleen transliteratie is een keuze; Thai en Engels blijven
+   altijd staan. */
+.studyArea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+}
+
+@media (min-width: 40rem) {
+  .studyArea {
+    gap: var(--spacing-48);
+  }
+}
+
+.studyArea[data-translit-visible="false"] [data-study-layer="transliteration"] {
+  display: none;
+}
+
 .content {
   max-width: 52rem;
   margin-inline: auto;
