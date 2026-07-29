@@ -9,6 +9,7 @@ import LessonPageView from "@/features/lesson/components/lesson-page-view/Lesson
 type PageProps = { params: Promise<{ lessonSlug: string }> };
 
 export default async function LessonPage({ params }: PageProps) {
+  // await new Promise((r) => setTimeout(r, 2000)); // test de loading state
   const { lessonSlug } = await params;
 
   const lesson = await getLessonBySlug(lessonSlug);
