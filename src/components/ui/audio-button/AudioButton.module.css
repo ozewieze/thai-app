@@ -1,0 +1,29 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-brand);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.button:hover:not(:disabled) {
+  background: var(--color-brand-soft);
+}
+
+.playing {
+  background: var(--color-brand-soft);
+}
+
+.button:disabled {
+  color: var(--color-text-faint);
+  cursor: not-allowed;
+}

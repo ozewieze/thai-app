@@ -1,6 +1,7 @@
 import styles from "./VocabularyCard.module.css";
 import type { VocabularyItem } from "@/features/lesson/types";
 import ExampleList from "../example-list/ExampleList";
+import AudioButton from "@/components/ui/audio-button/AudioButton";
 
 /**
  * VocabularyCard
@@ -14,7 +15,8 @@ import ExampleList from "../example-list/ExampleList";
  * transliteration"-toggle. Thai-script en Engelse gloss blijven altijd
  * zichtbaar.
  *
- * De lemma-audioknop volgt in stap 2.7.
+ * De lemma-audioknop (AudioButton) staat links van het woord; `audioUrl`
+ * kan null zijn (nog geen audio) -> knop disabled.
  */
 type VocabularyCardProps = {
   item: VocabularyItem;
@@ -27,23 +29,26 @@ export default function VocabularyCard({ item }: VocabularyCardProps) {
   return (
     <article className={styles.card}>
       <header className={styles.lemma}>
-        <p className={styles.lemmaLine}>
-          <span className={styles.thai} lang="th">
-            {master.thaiScript}
-          </span>
-          {master.paiboon && (
-            <span
-              className={styles.paiboon}
-              data-study-layer="transliteration"
-            >
-              {master.paiboon}
+        <AudioButton audioUrl={master.audioUrl} label={master.thaiScript} />
+        <div className={styles.lemmaText}>
+          <p className={styles.lemmaLine}>
+            <span className={styles.thai} lang="th">
+              {master.thaiScript}
             </span>
+            {master.paiboon && (
+              <span
+                className={styles.paiboon}
+                data-study-layer="transliteration"
+              >
+                {master.paiboon}
+              </span>
+            )}
+          </p>
+          <p className={styles.gloss}>{master.englishGloss}</p>
+          {metaParts.length > 0 && (
+            <p className={styles.meta}>{metaParts.join(" · ")}</p>
           )}
-        </p>
-        <p className={styles.gloss}>{master.englishGloss}</p>
-        {metaParts.length > 0 && (
-          <p className={styles.meta}>{metaParts.join(" · ")}</p>
-        )}
+        </div>
       </header>
 
       {master.usageNote && <p className={styles.usageNote}>{master.usageNote}</p>}

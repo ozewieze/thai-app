@@ -10,8 +10,16 @@
 
 .lemma {
   display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-12);
+}
+
+.lemmaText {
+  display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
+  min-width: 0;
 }
 
 /* Thai + transcriptie op één regel (compact, Figma-stijl). */
