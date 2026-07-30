@@ -52,7 +52,7 @@
 
 .gloss {
   font-size: var(--size-18);
-  font-weight: var(--bold);
+  font-weight: var(--medium-bold);
   color: var(--color-text);
   margin: 0;
 }

@@ -18,9 +18,11 @@ Een Language Note is **niet**:
 
 ## Wanneer krijgt een les een Language Note?
 
-De beslissing is grotendeels al genomen vóór deze workflow begint. Bij het seeden van de leslinks (Stap 3 van de dialoogworkflow) krijgt elk doelconcept een `requires_explanation`-vlag. Die vlag is de opdrachtenlijst voor deze workflow:
+De beslissing is grotendeels al genomen vóór deze workflow begint. Bij het seeden van de leslinks (Stap 3 van de dialoogworkflow) krijgt elk lesconcept een bewust ingevulde `requires_explanation`-vlag. Die vlag is de opdrachtenlijst voor deze workflow:
 
 > **Kernregel:** elk lesconcept met `requires_explanation = true` moet door minstens één Language Note van diezelfde les behandeld worden vóór de les gepubliceerd wordt.
+
+Let op het verschil met `role`. `role = 'target'` zegt dat een concept in deze les geïntroduceerd wordt — een curriculumfeit dat de database afdwingt via de Single Introduction Rule. `requires_explanation` zegt dat het concept geschreven uitleg nodig heeft. Bij grammatica, patterns en phrases vallen die twee vrijwel altijd samen; bij vocabulaire niet, omdat de vocabulary card de basis al toont. Een doelwoord zonder note is dus normaal; een doelgrammaticapunt zonder note niet.
 
 Waarom deze richting (vlag eerst, note daarna) en niet andersom: de vlag wordt gezet op het moment dat je het curriculum plant en het beste zicht hebt op wat nieuw en moeilijk is. Als de note-behoefte pas tijdens het schrijven zou worden bepaald, sluipt er willekeur in — de ene les krijgt rijke uitleg, de andere niets, zonder inhoudelijke reden.
 
@@ -49,6 +51,8 @@ De volgorde van notes binnen een les is betekenisvol: de leerling leest ze van b
 ### Stap 1 — Bepaal de behandelde concepten
 
 Begin niet met schrijven maar met afbakenen. Verzamel de lesconcepten met `requires_explanation = true` (vocabulaire, grammatica, phrases, patterns) en verdeel ze over het geplande aantal notes: welke concepten vormen samen één uitlegbaar geheel, en welke verdienen een eigen note?
+
+Wijkt je oordeel hier af van de vlag — een gevlagd concept blijkt toch geen note nodig te hebben, of een niet-gevlagd concept juist wel — pas dan het seedbestand aan; dat is de bron van waarheid. Breng de lokale database daarna in lijn. Doe het niet omgekeerd: een correctie die alleen in de database staat, verdwijnt bij de eerstvolgende reset.
 
 Leg dit vast als een simpel lijstje per note vóór je iets anders doet. Waarom eerst: de conceptafbakening bepaalt titel, structuur én voorbeelden. Wie eerst schrijft en achteraf kijkt welke concepten "erin zaten", krijgt notes die half over twee onderwerpen gaan.
 

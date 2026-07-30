@@ -308,7 +308,25 @@ Maak `seed-data/links/lesson_links_a1-dialog-XX.seed.sql` aan met inserts voor:
 - `lesson_pattern` (indien van toepassing)
 - `lesson_phrase` (indien van toepassing)
 
-Alle vier tabellen delen dezelfde vorm (`lesson_id`, de FK naar de masterlijst, `role`, `requires_explanation`, `display_order`, `notes`). Gebruik onderstaande templates — één insert per tabel, met één rij per goedgekeurd doelitem uit Stap 1:
+Alle vier tabellen delen dezelfde vorm (`lesson_id`, de FK naar de masterlijst, `role`, `requires_explanation`, `display_order`, `notes`). Gebruik onderstaande templates — één insert per tabel, met één rij per goedgekeurd doelitem uit Stap 1.
+
+**`role` en `requires_explanation` zijn twee verschillende beslissingen.** Vul ze niet allebei reflexmatig in:
+
+- `role` is functioneel en wordt door de database afgedwongen. `'target'` promoveert het concept in de bijhorende `*_status`-tabel naar `introduced` en legt `first_lesson_id` vast. De Single Introduction Rule blokkeert daarna elke tweede target-introductie van hetzelfde concept. Dit is geen redactionele keuze maar een curriculumfeit.
+- `requires_explanation` dwingt niets af in de database. De vlag betekent één ding: *dit concept heeft geschreven uitleg nodig en die uitleg bestaat nog niet.* Het is de opdrachtenlijst voor de Language Note-workflow.
+
+Vul `requires_explanation` daarom bewust in, rij per rij, terwijl je toch al de `notes`-tekst voor dat concept schrijft. Zet hem niet standaard op `true` omdat de rol `'target'` is — dan wordt de kolom een kopie van `role` en houdt de LN-workflow niets over om op te sturen.
+
+Vuistregel per tabel:
+
+| Tabel | Vertrekwaarde | Waarom |
+| --- | --- | --- |
+| `lesson_grammar` | `true` | Grammatica heeft geen eigen kaart in de UI; een doelconcept zonder note blijft onuitgelegd. |
+| `lesson_pattern` | `true` | Een pattern is per definitie een structuur die uitleg vraagt. |
+| `lesson_phrase` | `true` | Een phrase wordt aan een les gekoppeld mét de bedoeling ze toe te lichten; ze staat daarin gelijk aan grammatica. |
+| `lesson_vocabulary` | `false` | De vocabulary card toont al script, Paiboon, gloss en audio. Zet `true` alleen waar die kaart tekortschiet: meerdere betekenissen, registerkwesties, valse vrienden, of gebruik dat afwijkt van de Nederlandse intuïtie. |
+
+Deze waarde wordt nooit achteraf via een `UPDATE` bijgesteld. Het seedbestand is de enige bron van waarheid en moet na een database-reset exact dezelfde toestand opleveren.
 
 ```sql
 insert into public.lesson_vocabulary (
@@ -324,7 +342,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-XX'),
     (select id from public.vocabulary_master where source_key = '...' limit 1),
     'target',
-    true,
+    false, -- requires_explanation: zie vuistregel hierboven
     1,
     '...'
   )
@@ -344,7 +362,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-XX'),
     (select id from public.grammar_master where concept_key = '...'),
     'target',
-    true,
+    true, -- requires_explanation: zie vuistregel hierboven
     1,
     '...'
   )
@@ -364,7 +382,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-XX'),
     (select id from public.pattern_master where pattern_key = '...'),
     'target',
-    true,
+    true, -- requires_explanation: zie vuistregel hierboven
     1,
     '...'
   )
@@ -384,7 +402,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-XX'),
     (select id from public.phrase_master where phrase_key = '...'),
     'target',
-    true,
+    true, -- requires_explanation: zie vuistregel hierboven
     1,
     '...'
   )
