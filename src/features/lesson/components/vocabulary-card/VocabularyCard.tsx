@@ -1,3 +1,4 @@
+import { StickyNote } from "lucide-react";
 import styles from "./VocabularyCard.module.css";
 import type { VocabularyItem } from "@/features/lesson/types";
 import ExampleList from "../example-list/ExampleList";
@@ -35,23 +36,29 @@ export default function VocabularyCard({ item }: VocabularyCardProps) {
             <span className={styles.thai} lang="th">
               {master.thaiScript}
             </span>
-            {master.paiboon && (
-              <span
-                className={styles.paiboon}
-                data-study-layer="transliteration"
-              >
-                {master.paiboon}
-              </span>
+            {metaParts.length > 0 && (
+              <span className={styles.meta}>{metaParts.join(" · ")}</span>
             )}
           </p>
-          <p className={styles.gloss}>{master.englishGloss}</p>
-          {metaParts.length > 0 && (
-            <p className={styles.meta}>{metaParts.join(" · ")}</p>
+          {master.paiboon && (
+            <p className={styles.paiboon} data-study-layer="transliteration">
+              {master.paiboon}
+            </p>
           )}
+          <p className={styles.gloss}>{master.englishGloss}</p>
         </div>
       </header>
 
-      {master.usageNote && <p className={styles.usageNote}>{master.usageNote}</p>}
+      {master.usageNote && (
+        <p className={styles.usageNote}>
+          <StickyNote
+            size={14}
+            className={styles.usageNoteIcon}
+            aria-hidden="true"
+          />
+          {master.usageNote}
+        </p>
+      )}
 
       <ExampleList examples={examples} />
     </article>

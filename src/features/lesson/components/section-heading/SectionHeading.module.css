@@ -11,9 +11,9 @@
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: var(--radius-pill);
-  background: var(--color-surface-muted);
-  color: var(--color-heading);
+  border-radius: var(--radius-md);
+  background: var(--color-brand-soft);
+  color: var(--color-brand);
   flex-shrink: 0;
 }
 

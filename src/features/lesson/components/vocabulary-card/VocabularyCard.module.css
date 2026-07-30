@@ -22,7 +22,8 @@
   min-width: 0;
 }
 
-/* Thai + transcriptie op één regel (compact, Figma-stijl). */
+/* Thai-woord + meta (woordsoort/register) op één regel, zoals de
+   woordsoort-aanduiding direct na het trefwoord in een woordenboek. */
 .lemmaLine {
   display: flex;
   align-items: baseline;
@@ -39,31 +40,43 @@
   line-height: 1.3;
 }
 
+/* Transcriptie op haar eigen regel onder het Thai-woord: een hele regel
+   verbergen via de transliteratie-toggle geeft een schonere overgang dan
+   een los tekstfragment midden in een regel. */
 .paiboon {
   font-style: italic;
   font-size: var(--size-14);
   color: var(--color-text-soft);
+  margin: 0;
 }
 
 .gloss {
   font-size: var(--size-18);
   font-weight: var(--bold);
-  color: var(--color-heading);
+  color: var(--color-text);
   margin: 0;
 }
 
 .meta {
   font-size: var(--size-12);
-  font-weight: var(--medium-bold);
+  font-weight: var(--medium);
   color: var(--color-text-muted);
-  letter-spacing: 0.02em;
-  text-transform: capitalize;
+  text-transform: lowercase;
   margin: 0;
 }
 
 .usageNote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-8);
   font-size: var(--size-14);
   color: var(--color-text-soft);
   line-height: 1.5;
   margin: 0;
+}
+
+.usageNoteIcon {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: var(--color-text-muted);
 }

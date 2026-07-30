@@ -128,8 +128,8 @@
 }
 
 .lessonNavLabel {
-  font-size: var(--size-13);
-  font-weight: var(--medium-bold);
+  font-size: var(--size-12);
+  font-weight: var(--medium);
   color: var(--color-text-muted);
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -176,7 +176,7 @@
 
 .learningFocusLabel {
   font-size: var(--size-12);
-  font-weight: var(--medium-bold);
+  font-weight: var(--medium);
   color: var(--color-text-muted);
   letter-spacing: 0.04em;
   text-transform: uppercase;

@@ -9,6 +9,7 @@
 
 .item {
   background: var(--color-surface-muted);
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-md);
   padding: var(--spacing-16);
   display: flex;

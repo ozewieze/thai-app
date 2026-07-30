@@ -1,21 +1,24 @@
 /* ---- Leesvoorkeur ----
-   Op mobiel niet sticky: verticale ruimte is daar kostbaar en de balk zit
-   al onder een sticky nav. Vanaf 40rem wél sticky (ruimte genoeg, handig
-   bij lange content): top = hoogte van de globale sticky nav
-   (.site-header, min-height --spacing-64); z-index onder die van de nav (40). */
+   Sticky op alle breedtes: de toggle is een set-and-forget leesvoorkeur
+   voor gevorderde gebruikers (declutter), maar wordt af en toe even aan/uit
+   geklikt bij twijfel over een woord -- ook op mobiel moet dat dan
+   bereikbaar zijn zonder helemaal terug te scrollen. Op mobiel wel
+   compactere padding, want verticale ruimte is daar het kostbaarst.
+   top = hoogte van de globale sticky nav (.site-header, min-height
+   --spacing-64); z-index onder die van de nav (40). */
 .controls {
   display: flex;
-  justify-content: flex-start;
-  padding: var(--spacing-8) 0;
+  justify-content: flex-end;
+  position: sticky;
+  top: var(--spacing-64);
+  z-index: 5;
+  background: var(--color-bg);
+  padding: var(--spacing-4) 0;
 }
 
 @media (min-width: 40rem) {
   .controls {
-    position: sticky;
-    top: var(--spacing-64);
-    z-index: 5;
-    justify-content: flex-end;
-    background: var(--color-bg);
+    padding: var(--spacing-8) 0;
   }
 }
 
