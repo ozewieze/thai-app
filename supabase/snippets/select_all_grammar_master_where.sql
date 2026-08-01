@@ -1,3 +1,2 @@
-select *
-from grammar_master
-where title ilike '%Basic frequency expressions%'
+select * from vocabulary_master
+where thai_script ilike '%ชื่อ%';

@@ -340,7 +340,7 @@ insert into public.lesson_vocabulary (
 values
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-XX'),
-    (select id from public.vocabulary_master where source_key = '...' limit 1),
+    (select id from public.vocabulary_master where source_key = '...'),
     'target',
     false, -- requires_explanation: zie vuistregel hierboven
     1,
@@ -411,6 +411,12 @@ values
 ```
 
 Laat een insert volledig weg als er voor die categorie geen doelitems zijn voor deze les (bv. geen `lesson_phrase`-insert wanneer er geen doelphrases zijn).
+
+**Elk doelwoord uit `lesson_vocabulary` moet ook werkelijk in de dialoogtekst voorkomen.** Haalt een woord de dialoog niet, dan is er één van twee dingen aan de hand: ofwel hoort het woord niet in deze les en verwijder je de link, ofwel hoort het er wel en herschrijf je de dialoog. Laat het nooit staan. Waarom: seeden zet het woord in `vocabulary_status` op `introduced`, en de Single Introduction Rule verhindert dan dat het ooit nog in een latere les als target geïntroduceerd wordt. Het woord krijgt dus een vocabulary card en verdwijnt daarna uit het curriculum zonder dat de leerling het ooit in een zin gezien heeft. Dit is in de praktijk misgegaan: มาก stond als doelwoord in les 5 maar kwam in die dialoog nergens voor (gecorrigeerd op 2026-07-31).
+
+Let op dat het verwijderen van zo'n link niet volstaat: de state-machinetrigger staat op `before insert or update`, niet op `delete`, dus `vocabulary_status` blijft daarna op `introduced` staan. Zet die status expliciet terug op `new` met `first_lesson_id = null`, mits het woord nergens anders meer gekoppeld is.
+
+**Geen `limit 1` in de subquery's.** `source_key`, `concept_key`, `pattern_key` en `phrase_key` zijn uniek in hun masterlijst, dus `limit 1` heeft geen effect — behalve wanneer er ooit tóch een dubbele sleutel ontstaat. Dan kiest `limit 1` stilzwijgend een willekeurige rij en koppel je de les aan het verkeerde woord, zonder foutmelding. Zonder `limit 1` faalt de insert luid met "more than one row returned by a subquery", en dat is precies wat je wil. Let op de homografen in `vocabulary_master`: หน้า is zowel *face* als *page*, เดือน bestaat als `month` én `calendar_month`. Die zijn alleen via hun sleutel uit elkaar te houden, niet via het Thaise schrift of de Engelse vertaling.
 
 Voer de seed uit met het commando:
 
@@ -642,7 +648,7 @@ sql_paths = [
 6. Exporteer als CSV naar `planning/blueprints/`.
 7. Vul `supabase/prompts/dialogs/a1_dialog_XX_prompt.md` in (`04` bij zelfde chat als Stap 1, `06` bij nieuwe chat; scalars vanuit CSV, multiline vanuit Studio-cel).
 8. Genereer de dialoog en sla op in `generation/dialogs/`.
-9. Voer QA uit.
+9. Voer QA uit. Controleer daarbij expliciet dat **elk** doelwoord uit `lesson_vocabulary` werkelijk in de dialoogtekst voorkomt (zie Stap 3); ontbreekt er een, verwijder dan de link én zet `vocabulary_status` terug op `new`, of herschrijf de dialoog.
 10. Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan (dialoog-metadata + blokken) en voer uit.
 11. Genereer audio: `generate-audio.mjs` (alle nieuwe blokken) gevolgd door `merge-audio.mjs --dialog a1-dialog-XX`.
 12. Commit alle bestanden.

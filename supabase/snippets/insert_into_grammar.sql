@@ -1,2 +1,1 @@
-INSERT INTO public.grammar_master (concept_key, cefr_level, title, short_explanation, concept_type, register, source_note) VALUES
-('adverbs_after_verbs_and_adjectives', 'A1', 'Adverbs after verbs and adjectives', 'In Thai, many common adverbs such as บ่อย and มาก come after the verb or adjective.', 'modifier_pattern', 'polite', 'ai_a1_grammar_master_v3_final');
+delete from public.lesson_vocabulary where vocabulary_id = 187;

@@ -49,6 +49,7 @@ docs/illustration-system/design-reference
 # persoonlijk werkdocument, tijdelijk -- niet committen, later verwijderen
 docs/lesson-instructional-content-architectuur.md
 docs/backlog-startprompts.md
+docs/LANGUA~1.MD
 
 # test seed SQL-bestanden, tijdelijk -- niet committen, later verwijderen   
 scripts/dev-seed-instructional-content.sql

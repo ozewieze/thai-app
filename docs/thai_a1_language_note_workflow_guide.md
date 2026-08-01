@@ -149,7 +149,7 @@ Waarom QA vóór audio en niet erna: elke tekstwijziging ná audiogeneratie maak
 Elk voorbeeld krijgt eigen audio van de Thaise zin. De werkwijze volgt het patroon van de dialoog-audio (Stap 12 van de dialoogworkflowgids): pas ná goedkeuring van de tekst, in batch, en alleen voor voorbeelden die nog geen audio hebben.
 
 - **Dit is dezelfde tijdelijke TTS-pipeline als bij de dialogen** — later vervangen door opnames met stemacteurs. Investeer geen tijd in het verfraaien ervan; de redactionele regel is alleen: elke gepubliceerde voorbeeldzin heeft audio, en die audio komt overeen met de exacte huidige tekst.
-- **Stemkeuze:** voorbeelden in een note zijn *instructiestem*, geen personagestem. Gebruik de vaste standaardstem voor notes (zie Open Editorial Decisions), niet de stem van Mali of Narin. Waarom: een personagestem suggereert ten onrechte dat de zin uit de scène komt, en bindt de note aan een personage dat er inhoudelijk niets mee te maken heeft.
+- **Stemkeuze:** voorbeelden in een note zijn *instructiestem*, geen personagestem. Gebruik de vaste vrouwelijke standaardstem voor notes (zie "Vastgelegde redactionele beslissingen"), niet de stem van Mali of Narin. Waarom: een personagestem suggereert ten onrechte dat de zin uit de scène komt, en bindt de note aan een personage dat er inhoudelijk niets mee te maken heeft.
 - **Partikel en stem moeten overeenkomen.** Een zin die op ค่ะ eindigt wordt door een vrouwenstem ingesproken, een zin op ครับ door een mannenstem. Waarom: een mannenstem die ค่ะ zegt is voor elke Thai onmiddellijk fout en leert de leerling een verkeerde koppeling aan. Praktisch betekent dit: kies het partikel in de schrijffase (Stap 4) al passend bij de standaardstem, en wijk alleen af wanneer de note juist het ครับ/ค่ะ-contrast onderwijst — dan krijgen die voorbeelden elk de passende stem.
 - **Na elke tekstwijziging aan een voorbeeld wordt de audio van dát voorbeeld opnieuw gegenereerd.** Tekst en audio die niet overeenkomen zijn erger dan geen audio: de leerling traint zijn oor op de verkeerde zin.
 
@@ -158,10 +158,11 @@ Elk voorbeeld krijgt eigen audio van de Thaise zin. De werkwijze volgt het patro
 Vóór de les gepubliceerd wordt, wordt gecontroleerd:
 
 1. Elk lesconcept met `requires_explanation = true` is gekoppeld aan minstens één note van deze les.
-2. Geen enkele note is leeg (elke note heeft minstens één blok).
-3. Geen enkele voorbeeldgroep is leeg (elke groep heeft minstens één voorbeeld).
-4. Elk voorbeeld heeft audio.
-5. De Stap 7-checklist is doorlopen voor elke note.
+2. Elk doelwoord uit `lesson_vocabulary` komt werkelijk voor in de dialoogtekst van de les. Waarom dit hier óók staat: notes putten uit die woordenset, dus een woord dat de dialoog nooit haalde is een lesfout die pas bij het schrijven van de notes zichtbaar wordt. Zie Stap 3 van de dialoogworkflowgids voor de correctie.
+3. Geen enkele note is leeg (elke note heeft minstens één blok).
+4. Geen enkele voorbeeldgroep is leeg (elke groep heeft minstens één voorbeeld).
+5. Elk voorbeeld heeft audio.
+6. De Stap 7-checklist is doorlopen voor elke note.
 
 Vandaag is dit een handmatige controle; het is de bedoeling dat dit een geautomatiseerd publicatierapport wordt dat precies deze punten afloopt. De workflow verandert daardoor niet — alleen wie het lijstje afvinkt.
 
@@ -198,17 +199,16 @@ Commit de redactionele bestanden van deze les samen (conceptverdeling, drafts, d
 - **Stemacteurs vervangen de TTS-audio** zodra het A1-traject inhoudelijk staat. De workflow verandert dan alleen in Stap 8 (opnemen in plaats van genereren); alle redactionele regels — partikel/stem-overeenkomst, audio volgt bevroren tekst — blijven gelden.
 - **Andere platformen** (een toekomstige mobiele app) lezen dezelfde inhoud. Schrijf dus nooit platform-specifiek ("klik hieronder", "scroll naar rechts") — de note weet niet waar ze wordt weergegeven.
 
-## Open Editorial Decisions
+## Vastgelegde redactionele beslissingen
 
-Beslissingen die gestandaardiseerd moeten zijn vóór er op schaal notes worden geschreven, met telkens mijn aanbeveling:
+Deze beslissingen zijn vastgelegd op 2026-07-31 en gelden voor alle notes. Ze zijn bewust niet per note herzienbaar: hun waarde zit juist in de uniformiteit. Wil je er structureel van afwijken, wijzig dan deze lijst — niet één note.
 
-1. **Taal van de note-inhoud.** Alle leerlinggerichte tekst (titels, paragraphs, tips, vertalingen) in het Engels, consistent met de rest van de leerlinginterface en de dialoogvertalingen. *Aanbeveling: Engels, nu vastleggen.*
-2. **Vaste standaardstem voor note-voorbeelden.** Eén neutrale instructiestem voor alle notes, met als praktisch gevolg één standaardpartikel in voorbeelden. *Aanbeveling: één vrouwelijke standaardstem en dus ค่ะ als standaardpartikel — de bestaande stemconfiguratie heeft al een geschikte vrouwenstem, en één vaste keuze voorkomt per-note-discussies. Mannelijke stem alleen bij expliciete ครับ/ค่ะ-contrast-voorbeelden.*
-3. **Formulenotatie.** Eén vaste schrijfwijze voor formules: Engelse slotnamen in vierkante haken, vaste Thaise elementen in Thais schrift, `=` gevolgd door de functie (`[statement] + ไหม = yes/no question`). *Aanbeveling: deze notatie nu vastleggen en in alle notes identiek gebruiken — leerlingen leren het schema-formaat één keer.*
-4. **Mogen note-voorbeelden vooruitgrijpen op woorden van dezelfde les die (nog) niet in de dialoog zaten?** Bijvoorbeeld een doelwoord dat wel geseed is maar de dialoog niet haalde. *Aanbeveling: ja, woorden uit de volledige lesset mogen; woorden van latere lessen nooit. De lesset is wat de leerling geacht wordt te leren, de dialoog is daar één toepassing van.*
-5. **Koppen en intro's van voorbeeldgroepen.** Wanneer krijgt een groep een kop ("Asking", "Answering") en wanneer een intro-zin? *Aanbeveling: kop bij twee of meer groepen in dezelfde note (om ze te onderscheiden), intro-zin alleen wanneer de voorbeelden zonder context verkeerd gelezen kunnen worden; nooit beide verplicht.*
-6. **Bronbestanden en AI-gebruik bij het schrijven.** De dialoogworkflow heeft een vaste prompt-/generatiestructuur met audit trail; voor notes moet nog beslist worden of drafts via hetzelfde AI-kanaal en dezelfde mapstructuur lopen (prompts en outputs per les bewaard) of dat notes rechtstreeks geschreven worden. *Aanbeveling: zelfde structuur als de dialoogworkflow (prompt en output per les bewaren) — de audit trail heeft zich daar bewezen, en de conceptlijst uit Stap 1 is een natuurlijke prompt-input. De keuze van het AI-kanaal volgt de bestaande projectpraktijk.*
-7. **Naamgeving en volgnummering van notes in bestanden en overzichten.** Nog geen conventie vastgelegd (analoog aan `a1_dialog_XX`). *Aanbeveling: per les nummeren in leesvolgorde (`a1-dialog-03-note-1`), zodat bestandsnamen en lesvolgorde overeenkomen.*
+1. **De note-inhoud is Engelstalig.** Alle leerlinggerichte tekst — titels, paragraphs, tips, vertalingen — staat in het Engels. Waarom: consistent met de leerlinginterface en met de dialoogvertalingen; een tweetalige leeromgeving dwingt de leerling voortdurend te schakelen.
+2. **Eén vrouwelijke standaardstem, en dus ค่ะ als standaardpartikel.** Alle note-voorbeelden gebruiken dezelfde neutrale instructiestem; de bestaande stemconfiguratie heeft daar al een geschikte vrouwenstem voor. Een mannenstem wordt alleen ingezet in voorbeelden die het ครับ/ค่ะ-contrast zélf onderwijzen. Waarom één vaste keuze: ze voorkomt een stemdiscussie per note, en ze maakt de partikelkeuze in de schrijffase (Stap 4) een automatisme in plaats van een valkuil.
+3. **Formulenotatie ligt vast:** Engelse slotnamen tussen vierkante haken, vaste Thaise elementen in Thais schrift, `=` gevolgd door de functie. Dus: `[statement] + ไหม = yes/no question`. Waarom: de leerling leert het schemaformaat één keer; elke variatie kost hem opnieuw aandacht die naar de inhoud had moeten gaan.
+4. **Een voorbeeldgroep krijgt een kop zodra er twee of meer groepen in dezelfde note staan**, zodat ze onderscheidbaar zijn. Een intro-zin komt er alleen bij wanneer de voorbeelden zonder context verkeerd gelezen kunnen worden. Geen van beide is ooit verplicht bij één enkele groep. Waarom: koppen zijn navigatie, intro's zijn betekenisredding — ze lossen verschillende problemen op en horen niet standaard samen.
+5. **Notes volgen dezelfde prompt- en outputstructuur als de dialoogworkflow**, met prompt en output per les bewaard in versiebeheer. Waarom: die audit trail heeft zich bij dialogen bewezen, en de conceptlijst uit Stap 1 is een natuurlijke prompt-input. Het AI-kanaal volgt de bestaande projectpraktijk.
+6. **Notes worden per les genummerd in leesvolgorde:** `a1-dialog-03-note-1`, `a1-dialog-03-note-2`, enzovoort. Waarom: bestandsnamen en leesvolgorde vallen dan samen, zoals bij `a1_dialog_XX`.
 
 ## Praktische checklist per les
 

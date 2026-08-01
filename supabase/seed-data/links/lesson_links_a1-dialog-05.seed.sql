@@ -46,15 +46,7 @@ values
     true,
     5,
     ''
-  ),
-      (
-    (select id from public.lessons where lesson_key = 'a1-dialog-05'),
-    (select id from public.vocabulary_master where source_key = 'very' limit 1),
-    'target',
-    true,
-    6,
-    ''
-  ) 
+  )
 ;
 insert into public.lesson_grammar (
   lesson_id,

@@ -26,12 +26,12 @@ begin
   if TG_OP = 'UPDATE' and OLD.vocabulary_id is distinct from NEW.vocabulary_id then
 
     -- Controleer of het oude woord nog ergens anders in lesson_vocabulary voorkomt.
-    select exists (
+    select exists (--exists geeft true/false terug
       select 1
       from public.lesson_vocabulary
       where vocabulary_id = OLD.vocabulary_id
         and id <> OLD.id        -- sluit de rij die nu geüpdatet wordt uit
-    ) into v_still_used;
+    ) into v_still_used;--bewaar de uitkomst in de variabele
 
     -- Als het nergens anders voorkomt: status terugdraaien naar 'new'.
     if not v_still_used then
