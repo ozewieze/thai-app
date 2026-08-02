@@ -46,7 +46,7 @@
 --
 -- Draaien met:
 --   psql postgresql://postgres:postgres@127.0.0.1:5432/postgres \
---     -P pager=off -f supabase/planning/06_normalize_usage_note_style.sql
+--     -P pager=off -f supabase/maintenance/normalize_usage_note_style.sql
 -- ============================================================
 
 \echo '--- Voor: rijen die nog niet aan de conventie voldoen (verwacht bij de eerste run: 149) ---'

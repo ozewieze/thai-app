@@ -59,6 +59,13 @@ Gebruik `dialogs` voor de definitief goedgekeurde lesdialoog. Gebruik `revisions
 
 ```text
 supabase/
+  qa/
+    verify_language_note_brief_view.sql   ← leest alleen; controleert de LN-briefingview
+    verify_single_introduction_reseed.sql ← leest alleen; controleert de re-seed-uitzondering
+
+  maintenance/
+    normalize_usage_note_style.sql        ← schrijft; stap 1 van de master-sync-ronde
+
   planning/
     00_build_curriculum_sequencer_context.sql ← Stap 1 (standaard): input voor "wat wordt de volgende les"
     01_debug_lesson_blueprint.sql        ← inspectie, geen workflow-stap
@@ -108,6 +115,8 @@ supabase/
 | Map           | Gebruik                                                    |
 | ------------- | ---------------------------------------------------------- |
 | `planning/`   | Builder-SQL, debug-queries, CSV-blueprints, prompttemplates |
+| `qa/`         | Verificatiescripts die alleen lezen; draai ze na een migratie of een datawijziging |
+| `maintenance/` | Idempotente scripts die data normaliseren; ze schrijven, dus lees de kop voor je ze draait |
 | `prompts/dialogs/`   | Ingevulde, lesspecifieke dialoogprompts (Stap 7)      |
 | `prompts/sequencer/` | Ingevulde sequencer-prompts per voorstel (Stap 1)     |
 | `generation/` | Modeloutputs, reviewnotities, tijdelijke drafts            |
@@ -220,7 +229,15 @@ De masterlijsten (`vocabulary_master`, `grammar_master`, `phrase_master`, `patte
 
 Als je vaak rechtstreeks in de mastertabellen werkt (stap 2 hierboven), is een apart sync-script de beste aanvulling op deze workflow. `scripts/export-vocabulary-master.mjs`, `export-grammar-master.mjs`, `export-pattern-master.mjs` en `export-phrase-master.mjs` schrijven de huidige database-inhoud terug naar de bijhorende CSV; de bestaande `seed:vocab` / `seed:grammar` / `seed:pattern` / `seed:phrase` genereren daarna de `.seed.sql` opnieuw uit die CSV.
 
-Draai per masterlijst:
+**Normaliseer eerst de stijl, dan pas exporteren.** `supabase/maintenance/normalize_usage_note_style.sql` geeft elke `usage_note` in `vocabulary_master` een hoofdletter en een eindpunt — de conventie die `short_explanation` in de andere drie masterlijsten al volgt. Het script is idempotent en raakt alleen rijen die nog niet voldoen, dus het kost niets om het standaard vóór elke sync-ronde te draaien:
+
+```
+psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -P pager=off -f supabase/maintenance/normalize_usage_note_style.sql
+```
+
+De volgorde is niet vrijblijvend: de export overschrijft de CSV met wat er in de database staat. Normaliseer je pas ná de export, dan staat de correctie in je database maar niet in versiebeheer, en wist de volgende `db reset` hem.
+
+Draai daarna per masterlijst:
 
 ```
 npm run sync:vocab      # export vocabulary_master -> csv, daarna seed-SQL regenereren
@@ -326,7 +343,9 @@ Vuistregel per tabel:
 | `lesson_phrase` | `true` | Een phrase wordt aan een les gekoppeld mét de bedoeling ze toe te lichten; ze staat daarin gelijk aan grammatica. |
 | `lesson_vocabulary` | `false` | De vocabulary card toont al script, Paiboon, gloss en audio. Zet `true` alleen waar die kaart tekortschiet: meerdere betekenissen, registerkwesties, valse vrienden, of gebruik dat afwijkt van de Nederlandse intuïtie. |
 
-Deze waarde wordt nooit achteraf via een `UPDATE` bijgesteld. Het seedbestand is de enige bron van waarheid en moet na een database-reset exact dezelfde toestand opleveren.
+Het seedbestand is de enige bron van waarheid en moet na een database-reset exact dezelfde toestand opleveren. Corrigeer een waarde dus nooit rechtstreeks in Studio of met een losse `UPDATE` ernaast: dan staat dezelfde waarheid op twee plekken en verdwijnt je correctie bij de eerstvolgende reset.
+
+Corrigeren gaat zo: **pas het seedbestand aan en draai het opnieuw.** De inserts hebben een `on conflict ... do update`-clausule, dus de waarden uit het bestand overschrijven wat er in de database staat. Het bestand is daarmee zelf je synchronisatie-instrument.
 
 ```sql
 insert into public.lesson_vocabulary (
@@ -347,6 +366,11 @@ values
     '...'
   )
   -- voeg hier één rij per doelwoord toe
+on conflict (lesson_id, vocabulary_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes
 ;
 
 insert into public.lesson_grammar (
@@ -367,6 +391,11 @@ values
     '...'
   )
   -- voeg hier één rij per doelgrammaticapunt toe
+on conflict (lesson_id, grammar_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes
 ;
 
 insert into public.lesson_pattern (
@@ -387,6 +416,11 @@ values
     '...'
   )
   -- voeg hier één rij per pattern toe, indien van toepassing
+on conflict (lesson_id, pattern_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes
 ;
 
 insert into public.lesson_phrase (
@@ -407,6 +441,11 @@ values
     '...'
   )
   -- voeg hier één rij per phrase toe, indien van toepassing
+on conflict (lesson_id, phrase_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes
 ;
 ```
 
@@ -423,6 +462,10 @@ Voer de seed uit met het commando:
 psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -f supabase/seed-data/links/lesson_links_a1-dialog-XX.seed.sql
 
 De state machine-triggers updaten `vocabulary_status`, `grammar_status`, `phrase_status` en `pattern_status` automatisch.
+
+**Dit commando mag je onbeperkt herhalen.** Dankzij de `on conflict`-clausules is het seedbestand idempotent: heb je een waarde gewijzigd, draai het bestand dan gewoon opnieuw en de database volgt. Een re-seed van dezelfde les triggert de Single Introduction Rule niet — die blokkeert alleen wanneer een *andere* les een al geïntroduceerd concept als target claimt (zie `20260802120000_single_introduction_allow_reseed.sql`).
+
+**Eén beperking: verwijderde rijen verdwijnen niet.** Haal je een woord of concept uit het seedbestand en draai je het opnieuw, dan blijft de bijbehorende rij in je database staan — zonder foutmelding. Een upsert kent alleen de rijen die je hem geeft. Voor het schrappen van een lesconcept heb je dus ofwel een expliciete `delete` nodig (die de status via de AFTER DELETE-triggers netjes terugdraait), ofwel een `db reset`.
 
 ### Stap 4 — Maak `dialog_blueprint_specs` aan
 

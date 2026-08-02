@@ -23,7 +23,12 @@ values (
   true,
   2,
   'Use ด้วย to add the meaning of also or too.'
-);
+)
+on conflict (lesson_id, grammar_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes;
 
 insert into public.lesson_vocabulary (
   lesson_id,
@@ -36,7 +41,7 @@ insert into public.lesson_vocabulary (
 values
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
-    (select id from public.vocabulary_master where source_key = 'take' limit 1),
+    (select id from public.vocabulary_master where source_key = 'take'),
     'target',
     true,
     1,
@@ -44,7 +49,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
-    (select id from public.vocabulary_master where source_key = 'also' limit 1),
+    (select id from public.vocabulary_master where source_key = 'also'),
     'target',
     true,
     2,
@@ -52,7 +57,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
-    (select id from public.vocabulary_master where source_key = 'no' limit 1),
+    (select id from public.vocabulary_master where source_key = 'no'),
     'target',
     true,
     3,
@@ -60,7 +65,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
-    (select id from public.vocabulary_master where source_key = 'snack' limit 1),
+    (select id from public.vocabulary_master where source_key = 'snack'),
     'target',
     true,
     4,
@@ -68,7 +73,7 @@ values
   ), 
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
-    (select id from public.vocabulary_master where source_key = 'cake' limit 1),
+    (select id from public.vocabulary_master where source_key = 'cake'),
     'target',
     true,
     5,
@@ -76,13 +81,18 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
-    (select id from public.vocabulary_master where source_key = 'ice_cream' limit 1),
+    (select id from public.vocabulary_master where source_key = 'ice_cream'),
     'target',
     true,
     6,
     'a frozen dessert made from dairy; can be a small snack or a larger treat'
   )
-  ;
+  
+on conflict (lesson_id, vocabulary_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes;
 
 insert into public.lesson_pattern (
   lesson_id,
@@ -106,7 +116,12 @@ values (
   true,
   2,
   'Negates an action or state.'
-);
+)
+on conflict (lesson_id, pattern_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes;
 
 -- vocabulary_status en grammar_status worden automatisch
 -- bijgewerkt door de respectieve state machine triggers op het moment dat

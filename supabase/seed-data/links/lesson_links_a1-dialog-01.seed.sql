@@ -14,7 +14,12 @@ values (
   true,
   1,
   'Polite sentence-final particles used in first-meeting introductions.'
-);
+)
+on conflict (lesson_id, grammar_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes;
 
 insert into public.lesson_vocabulary (
   lesson_id,
@@ -27,7 +32,7 @@ insert into public.lesson_vocabulary (
 values
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.vocabulary_master where source_key = 'hello' limit 1),
+    (select id from public.vocabulary_master where source_key = 'hello'),
     'target',
     true,
     1,
@@ -35,7 +40,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.vocabulary_master where source_key = 'you' limit 1),
+    (select id from public.vocabulary_master where source_key = 'you'),
     'target',
     true,
     2,
@@ -43,7 +48,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.vocabulary_master where source_key = 'name' limit 1),
+    (select id from public.vocabulary_master where source_key = 'name'),
     'target',
     true,
     3,
@@ -51,7 +56,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.vocabulary_master where source_key = 'what' limit 1),
+    (select id from public.vocabulary_master where source_key = 'what'),
     'target',
     true,
     4,
@@ -59,7 +64,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.vocabulary_master where source_key = 'i' limit 1),
+    (select id from public.vocabulary_master where source_key = 'i'),
     'target',
     true,
     5,
@@ -67,12 +72,17 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
-    (select id from public.vocabulary_master where source_key = 'i_male' limit 1),
+    (select id from public.vocabulary_master where source_key = 'i_male'),
     'target',
     true,
     6,
     'I / me for male speaker.'
-  );
+  )
+on conflict (lesson_id, vocabulary_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes;
 
 
 insert into public.lesson_phrase (
@@ -99,7 +109,12 @@ values
     true,
     2,
     'Polite fixed expression used when meeting someone for the first time.'
-  );
+  )
+on conflict (lesson_id, phrase_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes;
 
 -- vocabulary_status, phrase_status en grammar_status worden automatisch
 -- bijgewerkt door de respectieve state machine triggers op het moment dat

@@ -14,6 +14,10 @@ Een Language Note is **niet**:
 
 - **Een naslagartikel.** Een note over ไหม in les 3 legt uit wat de leerling in les 3 nodig heeft, niet alles wat er over ไหม te zeggen valt. Waarom: de leerling in les 3 kent alleen de woorden van les 1–3. Volledigheid is hier een gebrek, geen kwaliteit.
 - **De definitieve uitleg van een concept.** Hetzelfde concept mag in een latere les opnieuw en dieper worden uitgelegd, in een nieuwe note van díe les. De vroege note blijft dan gewoon staan zoals ze was. Waarom: het curriculum is progressief; wat een goede uitleg is hangt af van waar de leerling zich bevindt.
+
+  Technisch verloopt dat **niet** via een tweede koppeling aan de oorspronkelijke les: de samengestelde foreign keys van `language_note_concepts` staan alleen claims toe op koppelrijen van de eigen les. De latere les heeft dus een eigen `lesson_*`-rij voor dat concept nodig, met rol `review` of `supporting` — `target` wordt door de Single Introduction Rule geblokkeerd. Die blokkade is precies de bedoeling: ze garandeert dat een woord nooit een tweede keer *als nieuw* wordt uitgelegd.
+
+  **Let op:** die rollen zijn vandaag niet in gebruik — alle links zijn `target`. Zolang dat zo blijft, is herhaalde uitleg een voorziene mogelijkheid en geen bestaande praktijk. Of `review` ooit nodig blijkt, is een open curriculumvraag; het antwoord komt vanzelf wanneer een concept in een latere les werkelijk te kort blijkt uitgelegd.
 - **Een tweede dialoog.** Voorbeeldzinnen in een note zijn illustraties bij één taalpunt, geen doorlopend gesprek met personages en scène.
 
 ## Wanneer krijgt een les een Language Note?
@@ -52,7 +56,7 @@ De volgorde van notes binnen een les is betekenisvol: de leerling leest ze van b
 
 Begin niet met schrijven maar met afbakenen. Verzamel de lesconcepten met `requires_explanation = true` (vocabulaire, grammatica, phrases, patterns) en verdeel ze over het geplande aantal notes: welke concepten vormen samen één uitlegbaar geheel, en welke verdienen een eigen note?
 
-Wijkt je oordeel hier af van de vlag — een gevlagd concept blijkt toch geen note nodig te hebben, of een niet-gevlagd concept juist wel — pas dan het seedbestand aan; dat is de bron van waarheid. Breng de lokale database daarna in lijn. Doe het niet omgekeerd: een correctie die alleen in de database staat, verdwijnt bij de eerstvolgende reset.
+Wijkt je oordeel hier af van de vlag — een gevlagd concept blijkt toch geen note nodig te hebben, of een niet-gevlagd concept juist wel — pas dan het seedbestand aan; dat is de bron van waarheid. Breng de lokale database daarna in lijn door datzelfde seedbestand opnieuw te draaien: de leslink-seeds zijn idempotent, dus de gewijzigde waarden overschrijven wat er staat. Doe het niet omgekeerd: een correctie die alleen in de database staat, verdwijnt bij de eerstvolgende reset.
 
 Leg dit vast als een simpel lijstje per note vóór je iets anders doet. Waarom eerst: de conceptafbakening bepaalt titel, structuur én voorbeelden. Wie eerst schrijft en achteraf kijkt welke concepten "erin zaten", krijgt notes die half over twee onderwerpen gaan.
 

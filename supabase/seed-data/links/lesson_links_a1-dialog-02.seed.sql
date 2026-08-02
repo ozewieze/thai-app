@@ -25,7 +25,12 @@ values
   2,
   'Use ไป with a place or verb to show movement away or going to do something.'
 )
-;
+
+on conflict (lesson_id, grammar_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes;
 
 insert into public.lesson_vocabulary (
   lesson_id,
@@ -38,7 +43,7 @@ insert into public.lesson_vocabulary (
 values
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
-    (select id from public.vocabulary_master where source_key = 'where' limit 1),
+    (select id from public.vocabulary_master where source_key = 'where'),
     'target',
     true,
     1,
@@ -46,7 +51,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
-    (select id from public.vocabulary_master where source_key = 'go' limit 1),
+    (select id from public.vocabulary_master where source_key = 'go'),
     'target',
     true,
     2,
@@ -54,7 +59,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
-    (select id from public.vocabulary_master where source_key = 'drink' limit 1),
+    (select id from public.vocabulary_master where source_key = 'drink'),
     'target',
     true,
     3,
@@ -62,7 +67,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
-    (select id from public.vocabulary_master where source_key = 'coffee' limit 1),
+    (select id from public.vocabulary_master where source_key = 'coffee'),
     'target',
     true,
     4,
@@ -70,7 +75,7 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
-    (select id from public.vocabulary_master where source_key = 'can' limit 1),
+    (select id from public.vocabulary_master where source_key = 'can'),
     'target',
     true,
     5,
@@ -78,12 +83,17 @@ values
   ),
   (
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
-    (select id from public.vocabulary_master where source_key = 'together' limit 1),
+    (select id from public.vocabulary_master where source_key = 'together'),
     'target',
     true,
     6,
     'Adverb indicating shared action; pairs naturally with go and drink.'
-  );
+  )
+on conflict (lesson_id, vocabulary_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes;
 
 insert into public.lesson_pattern (
   lesson_id,
@@ -100,7 +110,12 @@ values (
   true,
   1,
   'Core yes/no question pattern: adds ไหม at the end of a statement.'
-);
+)
+on conflict (lesson_id, pattern_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes;
 
 -- vocabulary_status en grammar_status worden automatisch
 -- bijgewerkt door de respectieve state machine triggers op het moment dat
