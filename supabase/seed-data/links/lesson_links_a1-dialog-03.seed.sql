@@ -30,7 +30,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-03'),
     (select id from public.vocabulary_master where source_key = 'tea' limit 1),
     'target',
-    true,
+    false, -- requires_explanation: gewoon zelfstandig naamwoord, de vocabulary card volstaat
     1,
     'Second drink option; paired with ร้อน or เย็น.'
   ),
@@ -38,7 +38,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-03'),
     (select id from public.vocabulary_master where source_key = 'hot' limit 1),
     'target',
-    true,
+    true, -- requires_explanation: samen met เย็น en adjective_after_noun in één note
     2,
     'Adjective for hot drink; follows the noun directly.'
   ),
@@ -46,7 +46,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-03'),
     (select id from public.vocabulary_master where source_key = 'cool' limit 1),
     'target',
-    true,
+    true, -- requires_explanation: samen met ร้อน en adjective_after_noun in één note
     3,
     'Adjective for cold or iced drink; follows the noun directly.'
   ),
@@ -54,7 +54,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-03'),
     (select id from public.vocabulary_master where source_key = 'or' limit 1),
     'target',
-    true,
+    false, -- requires_explanation: keuze-conjunctie, gelijk aan het Nederlandse "of"
     4,
     'Conjunction used to offer a choice between two options.'
   );
