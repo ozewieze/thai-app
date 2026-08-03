@@ -275,6 +275,9 @@ create unique index language_note_concepts_pattern_note_unique
   where lesson_pattern_id is not null;
 
 -- forward lookup + cascade-performance vanaf language_notes
+--hiermee kan PostgreSQL snel de concepten van een note ophalen, en 
+--bij het verwijderen van een note kan PostgreSQL snel de bijbehorende 
+--concept-links verwijderen (cascade).
 create index language_note_concepts_note_idx
   on public.language_note_concepts (language_note_id);
 

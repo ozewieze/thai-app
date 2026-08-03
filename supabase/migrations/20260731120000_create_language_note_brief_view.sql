@@ -226,9 +226,9 @@ select
     left join public.lesson_vocabulary lv
            on lv.vocabulary_id = vm.id
           and lv.lesson_id = l.id
-    where lv.id is not null
+    where lv.id is not null--woord is aan deze les gekoppeld
        or (intro.sequence_number is not null
-           and intro.sequence_number < l.sequence_number)
+           and intro.sequence_number < l.sequence_number)--woord is eerder geïntroduceerd
   ), '[]'::jsonb) as example_vocabulary_budget,
 
   -- ---------------------------------------------------------
