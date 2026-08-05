@@ -70,7 +70,8 @@ sql_paths = [
   "./seed-data/master/pattern_master.seed.sql",
   "./seed-data/master/phrase_master.seed.sql",
   "./seed-data/links/*.sql",
-  "./seed-data/dialogs/*.sql"
+  "./seed-data/dialogs/*.sql",
+  "./seed-data/language-notes/*.sql"
 ]
 
 [db.network_restrictions]
