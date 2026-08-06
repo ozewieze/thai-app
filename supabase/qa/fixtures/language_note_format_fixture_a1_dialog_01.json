@@ -1,0 +1,26 @@
+{
+  "lesson_key": "a1-dialog-01",
+  "notes": [
+    {
+      "note_key": "zz-fixture-note-3",
+      "title": "Fixture: phrase-arm vanuit les 1",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "สวัสดีครับ",
+              "paiboon": "sà-wàt-dii kráp",
+              "translation_en": "Hello."
+            }
+          ]
+        }
+      ],
+      "concepts": [{ "type": "phrase", "key": "self_introduction_name" }]
+    }
+  ]
+}

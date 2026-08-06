@@ -1,0 +1,82 @@
+{
+  "lesson_key": "a1-dialog-03",
+  "notes": [
+    {
+      "note_key": "zz-fixture-note-1",
+      "title": "Fixture: alle bloktypes",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Narin asks what Mali will drink. Here's the pattern behind her answer."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "subheading",
+          "content": "Describing a drink"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "formula",
+          "content": "[noun] + [adjective] = descriptive phrase"
+        },
+        {
+          "block_key": "b4",
+          "block_type": "example_group",
+          "heading": "From the café",
+          "content": "Both of these appeared in the dialogue.",
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "กาแฟร้อน",
+              "paiboon": "gaa-faae rɔ́ɔn",
+              "translation_en": "hot coffee"
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ชาเย็น",
+              "paiboon": "chaa yen",
+              "translation_en": "iced tea"
+            }
+          ]
+        },
+        {
+          "block_key": "b5",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "จะดื่มอะไรครับ",
+              "paiboon": "jà dʉ̀ʉm à-rai kráp",
+              "translation_en": "What'll you drink?"
+            }
+          ]
+        },
+        {
+          "block_key": "b6",
+          "block_type": "usage_tip",
+          "content": "The adjective never comes first. It's always the noun that leads."
+        }
+      ],
+      "concepts": [
+        { "type": "vocabulary", "key": "hot" },
+        { "type": "grammar", "key": "adjective_after_noun" },
+        { "type": "pattern", "key": "ja_verb" }
+      ]
+    },
+    {
+      "note_key": "zz-fixture-note-2",
+      "title": "Fixture: tweede note in dezelfde les",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "Tweede note van dezelfde les, zodat display_order binnen een les meedraait."
+        }
+      ],
+      "concepts": [{ "type": "vocabulary", "key": "cool" }]
+    }
+  ]
+}
