@@ -149,8 +149,9 @@ CREATE OR REPLACE FUNCTION "public"."fn_lesson_grammar_state_machine"() RETURNS 
     LANGUAGE "plpgsql"
     AS $$
 declare
-  v_status     text;
-  v_still_used boolean;
+  v_status          text;
+  v_first_lesson_id bigint;
+  v_still_used      boolean;
 begin
 
   -- ── UPDATE: grammar_id is gewisseld ─────────────────────────────────────
@@ -176,7 +177,7 @@ begin
 
   -- ── INSERT + UPDATE: validatie en statusupdate voor het nieuwe concept ──
 
-  select status into v_status
+  select status, first_lesson_id into v_status, v_first_lesson_id
   from public.grammar_status
   where grammar_id = NEW.grammar_id;
 
@@ -188,10 +189,18 @@ begin
   end if;
 
   -- Single Introduction Rule: blokkeer tweede target-introductie.
-  -- Bij UPDATE: alleen blokkeren als het een ánder concept is dan het oude
+  -- Bij INSERT: alleen blokkeren wanneer een ANDERE les het concept al
+  -- introduceerde. Seedt dezelfde les zichzelf opnieuw, dan is dat geen
+  -- tweede introductie maar dezelfde. De regel gaat over lessen, niet over
+  -- het aantal keer dat een insert draait -- en zonder deze uitzondering
+  -- kan een seedbestand met on conflict nooit een tweede keer draaien,
+  -- omdat de BEFORE INSERT-trigger vuurt voordat Postgres het conflict
+  -- detecteert.
+  -- Bij UPDATE: alleen blokkeren als het een ander concept is dan het oude
   -- (anders zou je een bestaande target-rij nooit kunnen aanpassen).
   if NEW.role = 'target' and v_status = 'introduced' then
-    if TG_OP = 'INSERT' or OLD.grammar_id is distinct from NEW.grammar_id then
+    if (TG_OP = 'INSERT' and v_first_lesson_id is distinct from NEW.lesson_id)
+       or (TG_OP = 'UPDATE' and OLD.grammar_id is distinct from NEW.grammar_id) then
       raise exception
         'Grammar concept (id: %) is al geïntroduceerd als target (status: introduced). '
         'De Single Introduction Rule verbiedt een tweede target-introductie.',
@@ -250,8 +259,9 @@ CREATE OR REPLACE FUNCTION "public"."fn_lesson_pattern_state_machine"() RETURNS 
     LANGUAGE "plpgsql"
     AS $$
 declare
-  v_status     text;
-  v_still_used boolean;
+  v_status          text;
+  v_first_lesson_id bigint;
+  v_still_used      boolean;
 begin
 
   -- ── UPDATE: pattern_id is gewisseld ─────────────────────────────────────
@@ -277,7 +287,7 @@ begin
 
   -- ── INSERT + UPDATE: validatie en statusupdate voor het nieuwe pattern ──
 
-  select status into v_status
+  select status, first_lesson_id into v_status, v_first_lesson_id
   from public.pattern_status
   where pattern_id = NEW.pattern_id;
 
@@ -289,10 +299,18 @@ begin
   end if;
 
   -- Single Introduction Rule: blokkeer tweede target-introductie.
-  -- Bij UPDATE: alleen blokkeren als het een ánder pattern is dan het oude
+  -- Bij INSERT: alleen blokkeren wanneer een ANDERE les het concept al
+  -- introduceerde. Seedt dezelfde les zichzelf opnieuw, dan is dat geen
+  -- tweede introductie maar dezelfde. De regel gaat over lessen, niet over
+  -- het aantal keer dat een insert draait -- en zonder deze uitzondering
+  -- kan een seedbestand met on conflict nooit een tweede keer draaien,
+  -- omdat de BEFORE INSERT-trigger vuurt voordat Postgres het conflict
+  -- detecteert.
+  -- Bij UPDATE: alleen blokkeren als het een ander concept is dan het oude
   -- (anders zou je een bestaande target-rij nooit kunnen aanpassen).
   if NEW.role = 'target' and v_status = 'introduced' then
-    if TG_OP = 'INSERT' or OLD.pattern_id is distinct from NEW.pattern_id then
+    if (TG_OP = 'INSERT' and v_first_lesson_id is distinct from NEW.lesson_id)
+       or (TG_OP = 'UPDATE' and OLD.pattern_id is distinct from NEW.pattern_id) then
       raise exception
         'Pattern (id: %) is al geïntroduceerd als target (status: introduced). '
         'De Single Introduction Rule verbiedt een tweede target-introductie.',
@@ -351,8 +369,9 @@ CREATE OR REPLACE FUNCTION "public"."fn_lesson_phrase_state_machine"() RETURNS "
     LANGUAGE "plpgsql"
     AS $$
 declare
-  v_status     text;
-  v_still_used boolean;
+  v_status          text;
+  v_first_lesson_id bigint;
+  v_still_used      boolean;
 begin
 
   -- ── UPDATE: phrase_id is gewisseld ──────────────────────────────────────
@@ -378,7 +397,7 @@ begin
 
   -- ── INSERT + UPDATE: validatie en statusupdate voor de nieuwe phrase ────
 
-  select status into v_status
+  select status, first_lesson_id into v_status, v_first_lesson_id
   from public.phrase_status
   where phrase_id = NEW.phrase_id;
 
@@ -390,10 +409,18 @@ begin
   end if;
 
   -- Single Introduction Rule: blokkeer tweede target-introductie.
-  -- Bij UPDATE: alleen blokkeren als het een ándere phrase is dan de oude
+  -- Bij INSERT: alleen blokkeren wanneer een ANDERE les het concept al
+  -- introduceerde. Seedt dezelfde les zichzelf opnieuw, dan is dat geen
+  -- tweede introductie maar dezelfde. De regel gaat over lessen, niet over
+  -- het aantal keer dat een insert draait -- en zonder deze uitzondering
+  -- kan een seedbestand met on conflict nooit een tweede keer draaien,
+  -- omdat de BEFORE INSERT-trigger vuurt voordat Postgres het conflict
+  -- detecteert.
+  -- Bij UPDATE: alleen blokkeren als het een ander concept is dan het oude
   -- (anders zou je een bestaande target-rij nooit kunnen aanpassen).
   if NEW.role = 'target' and v_status = 'introduced' then
-    if TG_OP = 'INSERT' or OLD.phrase_id is distinct from NEW.phrase_id then
+    if (TG_OP = 'INSERT' and v_first_lesson_id is distinct from NEW.lesson_id)
+       or (TG_OP = 'UPDATE' and OLD.phrase_id is distinct from NEW.phrase_id) then
       raise exception
         'Phrase (id: %) is al geïntroduceerd als target (status: introduced). '
         'De Single Introduction Rule verbiedt een tweede target-introductie.',
@@ -452,20 +479,21 @@ CREATE OR REPLACE FUNCTION "public"."fn_lesson_vocabulary_state_machine"() RETUR
     LANGUAGE "plpgsql"
     AS $$
 declare
-  v_status     text;
-  v_still_used boolean;
+  v_status          text;
+  v_first_lesson_id bigint;
+  v_still_used      boolean;
 begin
 
   -- ── UPDATE: vocabulary_id is gewisseld ─────────────────────────────────────
   if TG_OP = 'UPDATE' and OLD.vocabulary_id is distinct from NEW.vocabulary_id then
 
     -- Controleer of het oude woord nog ergens anders in lesson_vocabulary voorkomt.
-    select exists (
+    select exists (--exists geeft true/false terug
       select 1
       from public.lesson_vocabulary
       where vocabulary_id = OLD.vocabulary_id
         and id <> OLD.id        -- sluit de rij die nu geüpdatet wordt uit
-    ) into v_still_used;
+    ) into v_still_used;--bewaar de uitkomst in de variabele
 
     -- Als het nergens anders voorkomt: status terugdraaien naar 'new'.
     if not v_still_used then
@@ -481,7 +509,7 @@ begin
 
   -- ── INSERT + UPDATE: validatie en statusupdate voor het nieuwe woord ────────
 
-  select status into v_status
+  select status, first_lesson_id into v_status, v_first_lesson_id
   from public.vocabulary_status
   where vocabulary_id = NEW.vocabulary_id;
 
@@ -493,10 +521,18 @@ begin
   end if;
 
   -- Blokkeer dubbele target-introductie (Single Introduction Rule).
-  -- Bij UPDATE: alleen blokkeren als het een ánder woord is dan het oude
+  -- Bij INSERT: alleen blokkeren wanneer een ANDERE les het concept al
+  -- introduceerde. Seedt dezelfde les zichzelf opnieuw, dan is dat geen
+  -- tweede introductie maar dezelfde. De regel gaat over lessen, niet over
+  -- het aantal keer dat een insert draait -- en zonder deze uitzondering
+  -- kan een seedbestand met on conflict nooit een tweede keer draaien,
+  -- omdat de BEFORE INSERT-trigger vuurt voordat Postgres het conflict
+  -- detecteert.
+  -- Bij UPDATE: alleen blokkeren als het een ander concept is dan het oude
   -- (anders zou je een bestaande target-rij nooit kunnen aanpassen).
   if NEW.role = 'target' and v_status = 'introduced' then
-    if TG_OP = 'INSERT' or OLD.vocabulary_id is distinct from NEW.vocabulary_id then
+    if (TG_OP = 'INSERT' and v_first_lesson_id is distinct from NEW.lesson_id)
+       or (TG_OP = 'UPDATE' and OLD.vocabulary_id is distinct from NEW.vocabulary_id) then
       raise exception
         'Woord (id: %) is al geïntroduceerd als target (status: introduced). '
         'De Single Introduction Rule verbiedt een tweede target-introductie.',
@@ -761,6 +797,8 @@ CREATE TABLE IF NOT EXISTS "public"."language_note_blocks" (
     "content" "text",
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "block_key" "text" NOT NULL,
+    CONSTRAINT "language_note_blocks_block_key_format" CHECK (("block_key" ~ '^[a-z0-9]+(-[a-z0-9]+)*$'::"text")),
     CONSTRAINT "language_note_blocks_block_type_check" CHECK (("block_type" = ANY (ARRAY['paragraph'::"text", 'subheading'::"text", 'formula'::"text", 'example_group'::"text", 'usage_tip'::"text"]))),
     CONSTRAINT "language_note_blocks_content_shape_check" CHECK (((("block_type" = ANY (ARRAY['paragraph'::"text", 'subheading'::"text", 'formula'::"text", 'usage_tip'::"text"])) AND ("content" IS NOT NULL) AND ("btrim"("content") <> ''::"text") AND ("heading" IS NULL)) OR (("block_type" = 'example_group'::"text") AND (("heading" IS NULL) OR ("btrim"("heading") <> ''::"text")) AND (("content" IS NULL) OR ("btrim"("content") <> ''::"text"))))),
     CONSTRAINT "language_note_blocks_display_order_check" CHECK (("display_order" >= 1))
@@ -1049,9 +1087,11 @@ CREATE TABLE IF NOT EXISTS "public"."language_note_examples" (
     "voice_key" "text",
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "example_key" "text" NOT NULL,
     CONSTRAINT "language_note_examples_audio_url_not_blank" CHECK ((("audio_url" IS NULL) OR ("btrim"("audio_url") <> ''::"text"))),
     CONSTRAINT "language_note_examples_block_type_check" CHECK (("block_type" = 'example_group'::"text")),
     CONSTRAINT "language_note_examples_display_order_check" CHECK (("display_order" >= 1)),
+    CONSTRAINT "language_note_examples_example_key_format" CHECK (("example_key" ~ '^[a-z0-9]+(-[a-z0-9]+)*$'::"text")),
     CONSTRAINT "language_note_examples_paiboon_not_blank" CHECK (("btrim"("paiboon") <> ''::"text")),
     CONSTRAINT "language_note_examples_thai_not_blank" CHECK (("btrim"("thai_script") <> ''::"text")),
     CONSTRAINT "language_note_examples_translation_not_blank" CHECK (("btrim"("translation_en") <> ''::"text")),
@@ -1080,7 +1120,9 @@ CREATE TABLE IF NOT EXISTS "public"."language_notes" (
     "display_order" integer NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "note_key" "text" NOT NULL,
     CONSTRAINT "language_notes_display_order_check" CHECK (("display_order" >= 1)),
+    CONSTRAINT "language_notes_note_key_format" CHECK (("note_key" ~ '^[a-z0-9]+(-[a-z0-9]+)*$'::"text")),
     CONSTRAINT "language_notes_title_not_blank" CHECK (("btrim"("title") <> ''::"text"))
 );
 
@@ -1581,6 +1623,11 @@ ALTER TABLE ONLY "public"."language_note_blocks"
 
 
 ALTER TABLE ONLY "public"."language_note_blocks"
+    ADD CONSTRAINT "language_note_blocks_note_key_unique" UNIQUE ("language_note_id", "block_key");
+
+
+
+ALTER TABLE ONLY "public"."language_note_blocks"
     ADD CONSTRAINT "language_note_blocks_note_order_unique" UNIQUE ("language_note_id", "display_order") DEFERRABLE;
 
 
@@ -1592,6 +1639,11 @@ ALTER TABLE ONLY "public"."language_note_blocks"
 
 ALTER TABLE ONLY "public"."language_note_concepts"
     ADD CONSTRAINT "language_note_concepts_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."language_note_examples"
+    ADD CONSTRAINT "language_note_examples_block_key_unique" UNIQUE ("block_id", "example_key");
 
 
 
@@ -1612,6 +1664,11 @@ ALTER TABLE ONLY "public"."language_notes"
 
 ALTER TABLE ONLY "public"."language_notes"
     ADD CONSTRAINT "language_notes_lesson_order_unique" UNIQUE ("lesson_id", "display_order") DEFERRABLE;
+
+
+
+ALTER TABLE ONLY "public"."language_notes"
+    ADD CONSTRAINT "language_notes_note_key_unique" UNIQUE ("note_key");
 
 
 
