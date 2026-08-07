@@ -1,0 +1,608 @@
+# Language Note Writer Prompt Template
+
+Gebruik dit bestand nadat het voorstel uit
+`07_language_note_planner_prompt_template.md` is goedgekeurd. Het dekt
+Stap 2 tot en met Stap 6 van
+`docs/thai_a1_language_note_workflow_guide.md`.
+
+De output is **één JSON-document per les**, precies volgens het
+invoercontract uit Stap 6, zodat het zonder tussenstap door
+`scripts/generate-language-note-seed.mjs` kan.
+
+## Instructions
+
+- Vul de placeholders hieronder in. De mapping-checklist onderaan geeft
+  per placeholder de bijbehorende query.
+- `{{approved_note_plan}}` is de **goedgekeurde** versie van het
+  plannervoorstel, inclusief jouw correcties — niet de ruwe modeloutput.
+- Sla de ingevulde prompt op als
+  `supabase/prompts/language-notes/a1_dialog_XX_writer_prompt.md`.
+- Sla de modeloutput op als
+  `supabase/generation/language-notes/a1_dialog_XX_notes.json`. Die naam
+  ligt vast: de generator leidt hem af uit `--lesson`.
+- Vervang **elke** placeholder vóór je genereert.
+
+**Dit template is bewust zelfstandig leesbaar** — er is geen
+"same-chat"-variant zoals `04` naast `06`. Ook wanneer de planner in
+dezelfde chat draaide, wordt de woordenlijst met Paiboon hieronder
+volledig herhaald. Reden: de dominante faalmodus in dit project is
+Paiboon-reconstructie (op 2026-07-13 moesten 167 vocabulairerijen en 19
+dialoogblokken van RTGS naar Paiboon gecorrigeerd worden). Wat niet
+letterlijk in de directe context staat, wordt gereconstrueerd. Het
+plakwerk dat een same-chat-variant zou besparen, betaal je met precies
+die fout.
+
+## Role
+
+You are writing Language Notes for a Thai A1 course. A Language Note is
+a lesson-bound mini-lesson: a short, ordered explanation the learner
+reads right after the dialogue of one specific lesson. It is built from
+blocks — paragraphs, a formula, a group of example sentences, a usage
+tip — and covers one delimited language point from that lesson.
+
+A Language Note is **not** a reference article and **not** the
+definitive explanation of a concept. It explains what the learner needs
+*at this point in the curriculum*. The same concept may be explained
+again, more deeply, in a note belonging to a later lesson. Completeness
+here is a defect, not a quality.
+
+All learner-facing text is in **English**: titles, paragraphs, tips and
+translations.
+
+## Task
+
+Write the complete Language Notes for lesson {{lesson_key}}, following
+the approved plan below. Return **one JSON document** that follows the
+Output Contract exactly, and nothing else.
+
+## Approved Note Plan
+
+This plan is final and human-approved. Follow the note division, the
+titles, the concept claims and the block skeletons as given. If you
+believe something in the plan is wrong, follow it anyway and do not
+comment — corrections are made by a human between runs, not silently
+inside one.
+
+There is exactly one exception, and it is about form rather than
+content: a formula written in the master-list style is rewritten in the
+fixed notation. See "Concepts You May Claim" below.
+
+{{approved_note_plan}}
+
+## Concepts You May Claim
+
+These are the lesson concepts flagged as needing explanation. The `key`
+is the identification; the readable fields are context for you.
+
+Always return the `key` literally in the `concepts` array. Never return
+`thai_script` or `title` as an identifier — เดือน exists twice in the
+master vocabulary list and cannot be told apart by script or
+translation.
+
+**Note the notation of `pattern_formula` and `short_explanation`.** These
+fields come from the master list and use their own style — for example
+`จะ + VERB`, or "using the pattern Noun + Adjective" in running text.
+That is **not** the notation a `formula` block uses. Read them as
+descriptions and convert: `จะ + VERB` becomes
+`จะ + [verb] = future intention`. If the approved plan contains a formula
+in the master-list style, rewrite it in the fixed notation — this is the
+one place where you correct the plan rather than follow it.
+
+### Vocabulary — return as `{ "type": "vocabulary", "key": "<source_key>" }`
+
+{{vocabulary_to_explain}}
+
+### Grammar — return as `{ "type": "grammar", "key": "<concept_key>" }`
+
+{{grammar_to_explain}}
+
+### Phrases — return as `{ "type": "phrase", "key": "<phrase_key>" }`
+
+{{phrases_to_explain}}
+
+### Patterns — return as `{ "type": "pattern", "key": "<pattern_key>" }`
+
+{{patterns_to_explain}}
+
+## Available Vocabulary
+
+**This list is the complete set of words you may use in example
+sentences.** It contains the vocabulary of this lesson plus everything
+introduced in earlier lessons. The learner knows these words and no
+others.
+
+The Paiboon form given here is the only correct form for that word.
+**Copy it literally.** Do not derive it, do not normalise it, do not
+"improve" it.
+
+{{example_vocabulary_budget}}
+
+**One narrow exception.** A note explaining a pattern, phrase or grammar
+point may use the Thai element of *that* concept even though it is not in
+the list above — a note about จะ cannot avoid writing จะ. The exception
+covers only the element belonging to a concept in "Concepts To Explain";
+it unlocks nothing else.
+
+Its transliteration is not in the list either. Take it from the dialogue
+transliteration below — that is the only verified source you have for it.
+If the element does not appear in the dialogue, you have no verified
+form: write the transliteration followed by ` [uncertain]` rather than
+reconstructing it.
+
+Polite particles (ครับ / ค่ะ / คะ) are not in this list either; their
+forms are fixed and given under "Voice, particles and pronouns" below.
+That section also decides which of the two first-person pronouns in the
+list you may use.
+
+## The Lesson Dialogue
+
+Every note anchors to this dialogue: the opening paragraph hooks onto
+what the learner has just read. Reusing a dialogue sentence — literally
+or lightly simplified — as the first example works well: recognition
+first, variation after.
+
+Translations of sentences taken from the dialogue must match the
+dialogue translations exactly. Two different translations of the same
+sentence on one lesson page is an error, not stylistic variation.
+
+{{dialog_text}}
+
+## Editorial Rules
+
+### Blocks
+
+The approved plan already fixes which blocks each note has. Build
+exactly those — do not add a block that is not in the plan.
+
+| Block type | When it is used |
+| --- | --- |
+| `paragraph` | required — every note opens with one |
+| `example_group` | required as soon as the note explains a pattern or construction |
+| `formula` | only for a construction with a fixed shape |
+| `usage_tip` | only when there is a real pitfall |
+| `subheading` | only for clearly separated sub-topics |
+
+Only `paragraph` is unconditional. A note with no `formula` and no
+`usage_tip` is complete; a note that only explains what a word means is
+often just a paragraph plus an example group.
+
+- **`paragraph`** — two to four sentences, one idea per block. Every
+  note opens with a paragraph that introduces the concept and anchors it
+  to the dialogue ("In the dialogue, Mali asked ... — that little word
+  at the end is ...").
+- **`subheading`** — only for notes with clearly separated
+  sub-topics. Never the first block, never the last block, never two in
+  a row.
+- **`formula`** — the pattern in schematic form. The notation is fixed:
+  English slot names in square brackets, fixed Thai elements in Thai
+  script, then `=` followed by the function. So:
+  `[statement] + ไหม = yes/no question`. One formula per block. A
+  formula always has an example group in the same note.
+- **`example_group`** — two to four examples of the **same** language
+  point. If you want to show a contrast (question vs. answer), use two
+  groups. A group is never empty.
+- **`usage_tip`** — one concrete tip: a pitfall, a politeness nuance, a
+  difference from English. One tip per block, at most one or two tip
+  blocks per note. Tips draw their force from scarcity: no pitfall, no
+  tip.
+
+### Example sentences
+
+- **Only words from "Available Vocabulary"**, plus the one narrow
+  exception stated there (the Thai element of a concept you are
+  explaining). Never smuggle in any other new word because it makes a
+  nicer example. The learner cannot tell what he is supposed to know and
+  what not; every unknown word feels like a gap in his knowledge.
+- **Never use vocabulary from later lessons.**
+- Short, complete, natural sentences — the way a Thai person would
+  actually say them, including polite particles where natural. Not
+  artificial telegram sentences.
+- Order is didactics: simplest or most recognisable example first.
+
+### Voice, particles and pronouns
+
+Note examples are read by a single **female** instruction voice. That is
+not only a particle choice: **the gendered elements of a sentence form
+one bundle.** Voice, polite particle and first-person pronoun must agree,
+or the sentence is immediately wrong to a Thai ear.
+
+| | Default for note examples |
+| --- | --- |
+| First person | ฉัน (`chǎn`) — **never** ผม |
+| Statement particle | ค่ะ (`kâ`) |
+| Question particle | คะ (`ká`) |
+
+So: ชอบเค้กไหม**คะ** (`chɔ̂ɔp kéek mǎi ká`), never ไหม**ค่ะ**. And
+ฉันชอบกาแฟค่ะ, never ผมชอบกาแฟค่ะ — ผม is a male pronoun and cannot
+share a sentence with ค่ะ.
+
+Both pronouns appear in "Available Vocabulary" (`i` = ฉัน,
+`i_male` = ผม), so nothing in that list stops you from picking the wrong
+one. This rule does.
+
+Use ผม together with ครับ (`kráp`) only in a note that teaches the
+male/female register contrast itself. In a dialogue the characters
+settle this by themselves; a note has no character, only the instruction
+voice, which is why it has to be stated here.
+
+Do not translate the particle as a separate word in the English line.
+Its politeness lives in the tone of the English sentence, or stays
+untranslated. "yes, polite-particle" teaches the learner something
+false.
+
+### Titles
+
+Functional, not grammatical: *"Asking yes/no questions with ไหม"*, not
+*"The interrogative particle ไหม"*. Include the Thai key word in Thai
+script when the note revolves around one word or particle. Around 60
+characters at most. Use the titles from the approved plan.
+
+## Romanization Convention (Paiboon)
+
+All transliteration must strictly follow the Paiboon Publishing /
+ThaiDict system. Do not use RTGS, IPA, or any other convention, even if
+it looks more familiar.
+
+- Unaspirated stops: ก = `g`, ต = `dt`, ป = `bp`
+- Aspirated stops: ข, ค = `k` · ท, ถ = `t` · พ, ผ, ภ = `p` — **never
+  write "kh", "th" or "ph"**
+- ง = `ng`, จ = `j`, ช = `ch`
+- Syllable-final ย is written `i` (not `y`); syllable-final ว is written
+  `o` or `u` depending on the vowel pattern (not `w`)
+- Tone marks on every syllable. An example without tone marks is not
+  "nearly done" — it is wrong.
+- For words with the อัว/อวย vowel pattern (สวย, ครัว, ช่วย, ป่วย),
+  whether it is spelled with a single or double `u` cannot be derived
+  from the script and varies per word. Use whatever spelling that exact
+  word has in "Available Vocabulary".
+
+**Look up, never reconstruct.** Every word you use is in "Available
+Vocabulary" with its Paiboon form. Build the sentence transliteration by
+joining those given forms.
+
+**If a form is not in the list, mark it.** Write the transliteration
+followed by ` [uncertain]`, for example `gaa-faae rɔ́ɔn [uncertain]`.
+Do not guess. A human resolves the marking before seeding; the generator
+refuses any document that still contains it, so an uncertain form cannot
+silently reach the database.
+
+Reaching for `[uncertain]` usually means you are about to use a word you
+are not allowed to use. Check "Available Vocabulary" first.
+
+## Output Contract
+
+Return one JSON object. These are the only permitted fields at every
+level — **any other field is a hard error** and the generator refuses
+the document. An unexpected field is the first sign that a prompt has
+drifted, which is why it fails loudly rather than being ignored.
+
+### Document
+
+| Field | Required | Value |
+| --- | --- | --- |
+| `lesson_key` | yes | `{{lesson_key}}` |
+| `notes` | yes | non-empty array, in reading order |
+
+### Note
+
+| Field | Required | Value |
+| --- | --- | --- |
+| `note_key` | yes | `{{lesson_key}}-note-1`, `-note-2`, … |
+| `title` | yes | English, from the approved plan |
+| `blocks` | yes | non-empty array, in reading order |
+| `concepts` | yes | array, at least one entry |
+
+### Block — `paragraph`, `subheading`, `formula`, `usage_tip`
+
+| Field | Required | Value |
+| --- | --- | --- |
+| `block_key` | yes | `b1`, `b2`, … |
+| `block_type` | yes | one of the four names above |
+| `content` | yes | the text, non-empty |
+
+`heading` is **not** permitted on these blocks.
+
+### Block — `example_group`
+
+| Field | Required | Value |
+| --- | --- | --- |
+| `block_key` | yes | `b1`, `b2`, … |
+| `block_type` | yes | `example_group` |
+| `heading` | yes, may be `null` | short heading, or `null` |
+| `content` | yes, may be `null` | intro sentence, or `null` |
+| `examples` | yes | non-empty array, in reading order |
+
+Give a heading **as soon as there are two or more example groups in the
+same note**, so they can be told apart. A single group never needs one.
+Add an intro sentence in `content` only when the examples could be read
+wrongly without context. Headings are navigation, intros are meaning
+rescue — they solve different problems and do not belong together by
+default.
+
+Use `null` for an absent heading or intro, never an empty string. An
+empty string and "no value" are not the same thing, and the generator
+rejects the empty string.
+
+### Example
+
+| Field | Required | Value |
+| --- | --- | --- |
+| `example_key` | yes | `e1`, `e2`, … |
+| `thai_script` | yes | the Thai sentence |
+| `paiboon` | yes | transliteration, forms copied from the list |
+| `translation_en` | yes | natural English |
+
+### Keys
+
+All three key fields are **required**, and they are the identity of a
+row.
+
+- Lower-case letters, digits and hyphens only. No underscores, no
+  capitals.
+- `note_key` is unique within the document. `block_key` is unique within
+  its note. `example_key` is unique **within its block** — so `e1` in
+  `b3` and `e1` in `b4` are two different examples and both are correct.
+  Do not number examples continuously across blocks.
+- **A key never moves with the order.** If a block changes position, the
+  object moves and keeps its `block_key`. Renumbering a moved block
+  makes the seed insert a new row instead of moving the existing one,
+  leaving the old row orphaned with its examples and audio attached.
+
+### Fields that must not appear
+
+| Field | Why |
+| --- | --- |
+| `display_order` | The array order **is** the screen order. The generator refuses the field, precisely so nobody assumes it does something. |
+| `audio_url` | Output of a later step (Stap 8), generated from the frozen text. |
+| `voice_key` | Empty means "use the fixed default female voice", not "unknown". A value here invites variation where there is nothing to choose. |
+| `heading` on a text block | `heading` exists only for `example_group`. |
+| anything else | Unknown fields are a hard error. |
+
+### The one counter-intuitive rule
+
+The text of a `subheading` goes in `content`, not in `heading`.
+
+Correct:
+
+```json
+{ "block_key": "b3", "block_type": "subheading", "content": "Answering" }
+```
+
+Rejected by the generator and by the database check constraint:
+
+```json
+{ "block_key": "b3", "block_type": "subheading", "heading": "Answering" }
+```
+
+### Complete example
+
+Illustrative — not the content of any real lesson. Every Paiboon form in
+it was copied from the project's master vocabulary list, so the shape is
+safe to imitate.
+
+```json
+{
+  "lesson_key": "a1-dialog-99",
+  "notes": [
+    {
+      "note_key": "a1-dialog-99-note-1",
+      "title": "Asking yes/no questions with ไหม",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Mali asked ชอบเค้กด้วยไหมคะ — \"Do you like cake too?\". Thai does not reorder the sentence to make a question. You keep the statement exactly as it is and add ไหม at the end."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "[statement] + ไหม = yes/no question"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": "Asking",
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ชอบเค้กไหมคะ",
+              "paiboon": "chɔ̂ɔp kéek mǎi ká",
+              "translation_en": "Do you like cake?"
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "กาแฟร้อนไหมคะ",
+              "paiboon": "gaa-faae rɔ́ɔn mǎi ká",
+              "translation_en": "Is the coffee hot?"
+            }
+          ]
+        },
+        {
+          "block_key": "b4",
+          "block_type": "example_group",
+          "heading": "Answering",
+          "content": "There is no separate word for \"yes\" here. You answer by repeating the verb or adjective.",
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ชอบค่ะ",
+              "paiboon": "chɔ̂ɔp kâ",
+              "translation_en": "Yes, I do."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "อร่อยค่ะ",
+              "paiboon": "à-rɔ̀i kâ",
+              "translation_en": "Yes, it is."
+            }
+          ]
+        },
+        {
+          "block_key": "b5",
+          "block_type": "usage_tip",
+          "content": "ไหม comes before the polite particle, never after it: ชอบไหมคะ, not ชอบคะไหม."
+        }
+      ],
+      "concepts": [
+        { "type": "vocabulary", "key": "question_particle" },
+        { "type": "grammar", "key": "yes_no_question_mai" },
+        { "type": "pattern", "key": "statement_mai" }
+      ]
+    },
+    {
+      "note_key": "a1-dialog-99-note-2",
+      "title": "Where adjectives go: กาแฟร้อน",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "English puts the adjective first — \"hot coffee\". Thai does the opposite: the noun leads and the adjective follows it."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "[noun] + [adjective] = descriptive phrase"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "กาแฟร้อน",
+              "paiboon": "gaa-faae rɔ́ɔn",
+              "translation_en": "hot coffee"
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ชาเย็น",
+              "paiboon": "chaa yen",
+              "translation_en": "iced tea"
+            }
+          ]
+        }
+      ],
+      "concepts": [
+        { "type": "vocabulary", "key": "hot" },
+        { "type": "grammar", "key": "adjective_after_noun" }
+      ]
+    }
+  ]
+}
+```
+
+Note what the second note demonstrates: a single example group needs no
+heading, and `example_key` starts again at `e1` in every block.
+
+## Corrections
+
+When you are asked to change something afterwards, return the **complete
+document** again, not a fragment or a diff.
+
+Keep every existing `note_key`, `block_key` and `example_key` attached to
+its own object, including when the order changes. Moving a block means
+moving the object and keeping its key. New material gets a new, unused
+key — do not reuse a key that belonged to something you removed.
+
+## Self-Check Before Answering
+
+Verify all of these before you produce output:
+
+1. Every word in every example appears in "Available Vocabulary", except
+   the Thai element of a concept you are explaining.
+2. Every Paiboon form was copied from that list — or, for that one
+   exception, from the dialogue transliteration. Nothing reconstructed.
+3. No `kh`, `th` or `ph` anywhere in the transliteration.
+4. Every syllable carries a tone mark.
+5. No `[uncertain]` remains — if one does, you used a word you should
+   not have used.
+6. Every `formula` block reads `[slot] + fixed element = function`, with
+   lower-case slot names in square brackets — not the master-list style
+   (`จะ + VERB`) and never without the `=` part.
+7. Questions end in คะ (`ká`), statements in ค่ะ (`kâ`); no ครับ unless
+   this note teaches the contrast.
+8. No example contains ผม. First person is ฉัน (`chǎn`) — a male pronoun
+   in a sentence ending in ค่ะ or คะ is the same error as a male voice
+   saying ค่ะ.
+9. Every note opens with a `paragraph` that anchors to the dialogue.
+10. Every note that explains a pattern or construction has an
+   `example_group`; no `formula` stands without one.
+11. No `example_group` is empty; no `subheading` is the first or last
+   block; no two `subheading` blocks are adjacent.
+12. Where a note has two or more example groups, each has a `heading`.
+13. Sentences taken from the dialogue carry the dialogue's translation.
+14. Every note has at least one entry in `concepts`, every `key` was
+    copied literally from "Concepts You May Claim", and every concept
+    listed there appears in at least one note.
+15. No `display_order`, no `audio_url`, no `voice_key`, no `heading` on
+    a text block, no other unlisted field.
+16. Every `note_key`, `block_key` and `example_key` is present and
+    matches `^[a-z0-9]+(-[a-z0-9]+)*$`.
+
+## Output Rules
+
+- Return the JSON document inside a single ```json code block.
+- Return nothing else: no explanation, no commentary, no summary, no
+  second version, no markdown rendering of the notes alongside it.
+- Do not describe your reasoning or the checks you performed.
+- The document must be valid JSON. Escape double quotes inside strings;
+  keep Thai script and tone marks as literal characters, never as
+  `\u`-escapes.
+
+# Brief-view -> prompt mapping checklist
+
+| Placeholder | Bron |
+| --- | --- |
+| `{{lesson_key}}` | `language_note_brief_view.lesson_key` |
+| `{{approved_note_plan}}` | `supabase/generation/language-notes/a1_dialog_XX_plan.md`, mét jouw correcties |
+| `{{vocabulary_to_explain}}` | `language_note_brief_view.vocabulary_to_explain` |
+| `{{grammar_to_explain}}` | `language_note_brief_view.grammar_to_explain` |
+| `{{phrases_to_explain}}` | `language_note_brief_view.phrases_to_explain` |
+| `{{patterns_to_explain}}` | `language_note_brief_view.patterns_to_explain` |
+| `{{example_vocabulary_budget}}` | `language_note_brief_view.example_vocabulary_budget` |
+| `{{dialog_text}}` | `language_note_brief_view.dialog` |
+
+De vier conceptlijsten en de dialoogtekst render je met dezelfde
+snippets als in `07`. Voor het woordbudget:
+
+```sql
+select string_agg(
+         format('- %s (%s) = %s  [key: %s]',
+                w->>'thai_script', w->>'paiboon',
+                w->>'english_gloss', w->>'source_key'),
+         E'\n' order by (w->>'intro_sequence_number')::int nulls last,
+                        w->>'source_key')
+from public.language_note_brief_view v,
+     lateral jsonb_array_elements(v.example_vocabulary_budget) w
+where v.lesson_key = 'a1-dialog-XX';
+```
+
+## Notes for manual filling
+
+- **Kort de woordenlijst niet in.** Hij groeit per les en dat is de
+  bedoeling: elk woord dat je weglaat, is een woord dat het model niet
+  mag gebruiken of gaat reconstrueren.
+- Is een van de vier conceptlijsten leeg, schrijf dan `(geen)` onder die
+  kop. Laat de kop staan.
+- Neem de `lesson_*_id`-velden uit de view **niet** mee. Dat zijn
+  identity-waarden die na een `db reset` kunnen verschuiven; het contract
+  vraagt mastersleutels.
+- Verwerken van de output:
+
+  ```
+  node scripts/generate-language-note-seed.mjs --lesson a1-dialog-XX
+  psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -f supabase/seed-data/language-notes/a1_dialog_XX_notes.seed.sql
+  ```
+
+  Op PowerShell: één regel, geen `\` — dat is bash-syntax en levert een
+  interactieve psql-sessie op in plaats van een foutmelding. Zet vooraf
+  `chcp 65001` en `$env:PGCLIENTENCODING = "UTF8"`, anders kan het Thaise
+  schrift onderweg beschadigen. Zie Stap 6 van de workflowgids voor de
+  controle achteraf.
+
+  Faalt de generator met een contractfout, corrigeer dan de JSON of laat
+  het model opnieuw genereren — bewerk het gegenereerde SQL-bestand
+  nooit met de hand.

@@ -13,7 +13,7 @@
 //
 // Ontwerpbeslissingen die de validatie hieronder verklaren:
 //
-// 1. display_order staat NIET in de JSON. De vololgorde van de array is de
+// 1. display_order staat NIET in de JSON. De volgorde van de array is de
 //    volgorde op het scherm. Dat haalt een hele klasse overschrijffouten weg:
 //    je kunt geen nummering hebben die niet klopt met de leesvolgorde.
 //
