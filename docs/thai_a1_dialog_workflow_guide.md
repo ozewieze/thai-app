@@ -122,6 +122,60 @@ supabase/
 | `generation/` | Modeloutputs, reviewnotities, tijdelijke drafts            |
 | `seed-data/`  | SQL die echte database-inhoud insert of updatet            |
 
+### Taal van de prompttemplates
+
+**Nederlands boven en onder de prompt, Engels erbinnen.** De
+invulinstructies bovenaan en de mapping-checklist onderaan zijn voor de
+mens die het template invult en blijven Nederlands. Alles wat naar het
+model gaat — van `## Role` tot en met `## Output Rules` — is Engels.
+
+Waarom: elk template levert waarden op die in het Engels in de database
+belanden. `04` en `06` leveren dialoogtekst, `05` levert `title`,
+`subtitle`, `learning_focus` en `scene_summary`, `07` levert notetitels,
+`08` levert de note-inhoud. Een Nederlandse prompt die om een Engelse
+databasewaarde vraagt is een zwakkere instructie dan een Engelse die dat
+doet, en dat is de meest waarschijnlijke — nog niet bewezen — verklaring
+voor de terugkerende `learning_focus`-drift naar de gerundiumvorm.
+
+Deze regel is vastgelegd op 2026-08-06, nadat opviel dat de vijf
+templates drie verschillende taalindelingen hadden zonder dat ergens
+stond waarom. `07` is diezelfde dag omgezet.
+
+> **Nog open:** `05_curriculum_sequencer_prompt_template.md` staat nog
+> volledig in het Nederlands. Het is bewust niet tegelijk omgezet: het
+> heeft lessen 04 en 05 opgeleverd en verdient een eigen beurt met een
+> testrun erna, zodat een afwijking in het volgende voorstel toe te
+> schrijven valt aan de les en niet aan de vertaling.
+
+### psql op Windows
+
+Drie dingen gelden voor **elk** psql-commando in deze gids. Alle drie
+falen stil, dus ze zijn geen van drieën optioneel.
+
+1. **Eén regel, geen `\`.** Dat is bash-syntax; PowerShell zet de regel
+   niet voort, psql krijgt `-f` niet binnen en opent een interactieve
+   sessie. Dat ziet er niet uit als een fout.
+2. **Forceer UTF-8 vóór je een seedbestand met Thais schrift draait.**
+   Waarschuwt psql bij het starten over de console-codepage, dan kan de
+   tekst onderweg beschadigen:
+
+   ```powershell
+   chcp 65001
+   $env:PGCLIENTENCODING = "UTF8"
+   ```
+
+3. **Gebruik `-A -P pager=off` bij elke query die Thais uitleest.** De
+   console rendert Thaise tekens met combinerende toontekens breder dan
+   psql ze telt, waardoor regels elkaar overschrijven. Een correcte
+   waarde kan daardoor als onzin op je scherm verschijnen terwijl de
+   database in orde is.
+
+Controleer daarom nooit door Thaise tekst van je scherm te lezen.
+`docs/thai_a1_language_note_workflow_guide.md`, Stap 6, bevat het
+md5-recept om de bytes in de database te vergelijken met het
+goedgekeurde bronbestand; diezelfde aanpak werkt voor dialoog- en
+linkseeds.
+
 ## Debug-queries vs. builder-query
 
 `01_debug_lesson_blueprint.sql` en `02_debug_continuity_options.sql` zijn **geen workflow-stappen**. Ze zijn handig als diagnose wanneer `03` geen rijen teruggeeft:

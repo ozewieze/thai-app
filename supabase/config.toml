@@ -71,7 +71,13 @@ sql_paths = [
   "./seed-data/master/phrase_master.seed.sql",
   "./seed-data/links/*.sql",
   "./seed-data/dialogs/*.sql",
-  "./seed-data/language-notes/*.sql"
+  "./seed-data/language-notes/*.sql",
+  # Canonieke voorbeelden bij vocabulaire. Hangen alleen aan
+  # master/vocabulary_master.seed.sql (opzoeking via source_key), niet aan
+  # lessen of leslinks -- een canoniek voorbeeld is lesneutraal. De enige
+  # harde eis is dus "na de masterlijst"; de plek achteraan houdt de
+  # gegenereerde contentseeds bij elkaar.
+  "./seed-data/vocabulary-examples/*.sql"
 ]
 
 [db.network_restrictions]

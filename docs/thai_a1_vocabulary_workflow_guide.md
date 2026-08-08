@@ -2,7 +2,11 @@
 
 Deze gids beschrijft de herhaalbare redactionele workflow voor het schrijven van Vocabulary Cards en hun canonieke voorbeelden, in dezelfde geest als `docs/thai_a1_dialog_workflow_guide.md`, `docs/illustration-system/04_illustration_workflow_guide.md` en `docs/thai_a1_language_note_workflow_guide.md`: de database blijft bron van waarheid, alleen goedgekeurde eindresultaten worden definitief opgeslagen, en elke stap heeft een expliciet goedkeuringsmoment.
 
-Dit is een **redactionele** gids: ze beschrijft wat een auteur beslist en schrijft, niet hoe het technisch wordt opgeslagen. De technische kant (schema, migraties, seeds, audioscripts) is een apart onderwerp en hoort hier bewust niet thuis — regels over inhoud verouderen veel trager dan implementatiedetails, en dit document moet ook bruikbaar blijven als de opslag ooit verandert.
+Deze gids beschrijft **zowel wat een auteur beslist als hoe dat wordt opgeslagen**. Tot 2026-08-08 stond hier het omgekeerde: het document beperkte zich bewust tot de redactionele kant, omdat regels over inhoud trager verouderen dan implementatiedetails. Die afbakening is losgelaten toen het seedformaat werd vastgelegd, om dezelfde reden als in de Language Note-gids: de twee kanten bleken niet los van elkaar te beschrijven.
+
+Het duidelijkste voorbeeld staat in Stap 11. Dat een voorbeeld wordt geïdentificeerd via de sleutel van het *wóórd* en dat het invoerdocument geen `lesson_key` draagt, ziet eruit als een implementatiekeuze, maar het ís de lesneutraliteit uit "De twee eigenaarschappen" — mechanisch gemaakt, zodat de belangrijkste redactionele regel van deze gids niet meer per ongeluk te breken valt. Hetzelfde geldt voor de seed die `audio_url` opruimt zodra de tekst wijzigt: dat is de regel "na elke tekstwijziging wordt de audio opnieuw gegenereerd" uit Stap 9, afgedwongen in plaats van onthouden. Twee documenten zouden die verbanden doorknippen en allebei half kloppen.
+
+De twee lagen blijven wel herkenbaar gescheiden. Stap 1 tot en met 10 zijn redactioneel: wat schrijf je, en waarom zo. Stap 11 bevat naast de redactionele regel over wat er in de brondata hoort ook het invoercontract, de concrete SQL, de bestandspaden en de commando's. Waar een technische instructie iets afdwingt wat redactioneel bedoeld is — of juist níet afdwingt — staat dat er expliciet bij.
 
 Deze workflow start pas **nadat** de dialoog van de les volledig is goedgekeurd en opgeslagen (Stap 10 van de dialoogworkflowgids), om dezelfde reden als bij de Language Notes: zolang de dialoog nog kan veranderen, kan de woordenset van de les nog verschuiven. Let op de nuance die deze gids uniek maakt: je schrijft de voorbeelden *na* de dialoog, maar je schrijft ze zó dat ze zonder die dialoog overeind blijven. Zie "Canonieke voorbeelden zijn lesneutraal" hieronder.
 
@@ -234,6 +238,132 @@ Wat wél en niet in de brondata hoort:
 
 Commit alles wat nodig is om te reconstrueren *waarom* de inhoud is zoals ze is, volgens hetzelfde principe als de andere drie workflows.
 
+#### De voorbeelden opslaan
+
+Hier komen de redactionele en de technische laag samen; zie de derde alinea van deze gids voor waarom ze niet los te beschrijven zijn. De vorm volgt Stap 6 van `docs/thai_a1_language_note_workflow_guide.md`.
+
+De voorbeelden worden gegenereerd, niet met de hand geschreven.
+
+**Bestandspaden.**
+
+```text
+supabase/
+  generation/vocabulary-examples/
+    a1_dialog_XX_examples.json          ← goedgekeurde inhoud
+  seed-data/vocabulary-examples/
+    a1_dialog_XX_examples.seed.sql      ← gegenereerd, niet met de hand bewerken
+  qa/
+    verify_vocabulary_example_seed_format.sql   ← schrijft en ruimt op; test het formaat
+    fixtures/
+      vocabulary_example_format_fixture.json    ← testgeval, geen lesinhoud
+scripts/
+  generate-vocabulary-example-seed.mjs
+```
+
+De lesnaam in het bestandspad is een **archiveringslabel voor de batch**, geen betekenisdrager. Hij komt in geen enkele sleutel voor en in geen enkele regel SQL: de inhoud hoort bij het woord, de batch bij de les waarin je hem schreef.
+
+`seed-data/vocabulary-examples/*.sql` staat als glob in `supabase/config.toml`, achteraan. Een nieuw lesbestand wordt dus vanzelf meegenomen bij de volgende `db reset`; je hoeft `config.toml` niet per les bij te werken. De enige harde eis aan de volgorde is dat de map ná `master/vocabulary_master.seed.sql` staat — de seed zoekt woorden op. Verder is er geen afhankelijkheid: geen lessen, geen leslinks. Dat is het verschil met de Language Note-seeds, en het is dezelfde lesneutraliteit in een andere gedaante.
+
+**Genereren en uitvoeren** (PowerShell, één regel per commando):
+
+```powershell
+node scripts/generate-vocabulary-example-seed.mjs --lesson a1-dialog-XX
+$env:PGCLIENTENCODING = "UTF8"
+psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -f supabase/seed-data/vocabulary-examples/a1_dialog_XX_examples.seed.sql
+```
+
+`--lesson` is uitsluitend padsuiker: het bepaalt waar de bestanden staan, meer niet. Anders dan bij de Language Notes is er dus geen kruiscontrole tussen `--lesson` en de inhoud van het bestand — die kán er niet zijn, want het document draagt geen les. Dat is de prijs van de keuze hieronder, en ze is bewust betaald.
+
+Voor de tekencodering gelden dezelfde twee valkuilen als bij de Language Notes, en ze gaan allebei stil mis: `\` is geen regelvervolg in PowerShell (psql opent dan een interactieve sessie in plaats van het bestand te draaien), en zonder `chcp 65001` plus `PGCLIENTENCODING` kan Thais schrift onderweg beschadigd raken. Gebruik `-A -P pager=off` bij elke query die Thais aanraakt. Zie Stap 6 van de Language Note-gids voor de volledige uitleg.
+
+**Het invoercontract.**
+
+```json
+{
+  "examples": [
+    {
+      "source_key": "tea",
+      "example_key": "e1",
+      "thai_script": "ฉันชอบชาเย็นค่ะ",
+      "paiboon": "chǎn chɔ̂ɔp chaa yen kâ",
+      "translation_en": "I'd like iced tea."
+    }
+  ]
+}
+```
+
+Zeven regels, elk met een reden:
+
+- **`display_order` staat er niet in.** De volgorde van de array *is* de volgorde op het scherm. Geef je het veld toch mee, dan weigert het script — anders zou het lijken alsof het iets doet.
+- **`lesson_key` staat er ook niet in.** Dat is het verschil met het note-contract, en het is het belangrijkste veld dat híer ontbreekt. Het script heeft de les nergens voor nodig: de enige opzoeking is `source_key` → `vocabulary_master.id`. En inhoudelijk zou het veld schadelijk zijn: een lesveld in de brondata nodigt uit tot een lesgebonden zin, en dat voorbeeld verschijnt ook in les 24. Een veld dat het script zou moeten negeren, is precies het veld waarvan iemand denkt dat het iets doet.
+- **De sleutels staan er wél in, en zijn verplicht.** De identiteit van een rij is het paar (`source_key`, `example_key`). `example_key` is uniek binnen het woord, niet globaal — vandaag altijd `e1`. Zie "Waarom de sleutel niet `display_order` is" hieronder.
+- **`source_key` volgt de schrijfwijze van `vocabulary_master`:** kleine letters, cijfers en **underscores** (`thank_you`), nooit koppeltekens. `example_key` volgt de sleutelconventie van dit project en gebruikt juist **koppeltekens**. Dat verschil is niet cosmetisch: het script controleert beide vormen, zodat een model dat `thank-you` schrijft meteen faalt in plaats van pas bij het seeden.
+- **Geen `audio_url` en geen `voice_key`.** Die worden door de audiostap gezet, niet door de redactionele brondata — zie de tweede bullet bovenaan Stap 11.
+- **Onbekende velden zijn een fout.** Een prompt die afdrijft levert extra of hernoemde velden op, en dat hoor je liever meteen dan drie lessen later.
+- **`[uncertain]` ergens in het bestand is een harde fout.** De schrijverprompt markeert daarmee een Paiboon-vorm die niet uit de meegeleverde lijst kwam. Zo'n markering hoort door een mens beslecht te worden; belandt ze in de database, dan ziet niemand haar ooit nog.
+
+**Wat de generator wél en niet bewaakt.** Dit is bij de Language Notes pas achteraf gebleken (daar accepteerde het script `"concepts": []`, een geldig document dat redactioneel een gat is), en het staat hier daarom vooraf.
+
+*Wél:* de vorm van het document, de verplichte velden, beide sleutelvormen, geen onbekende velden, geen `[uncertain]`, en **niet meer dan één voorbeeld per woord**. Dat laatste is vastgelegde beslissing 2, afgedwongen in het script en bewust niet in de database: een redactionele beslissing hoort herzienbaar te blijven, en dat kost hier één regel code in plaats van een migratie.
+
+*Niet:*
+
+- **Dekking.** Het bestand mag twee van de vijf doelwoorden bevatten en komt er gewoon door. Het script weet niet welke les je schrijft en kán het niet weten — er staat geen les in het document. Dit is de ondergrens van beslissing 2, en die hoort thuis in Stap 10, punt 1.
+- **Een tweede voorbeeld dat via een ánder bestand binnenkomt.** De bovengrens wordt binnen één document bewaakt. Geeft bestand A `e1` en bestand B `e2` aan hetzelfde woord, dan staan er straks twee rijen. Daarom toont `vocabulary_example_brief_view` de bestaande voorbeelden mét hun tekst en niet alleen als teller.
+- **Een niet-bestaande `source_key`.** Het script heeft geen databasetoegang. Dit faalt niet bij het genereren maar wél luid bij het seeden — zie hieronder.
+- **Alle redactionele kwaliteit:** het woordbudget en de progressieregel, lesneutraliteit, of de Paiboon klopt (alleen `[uncertain]` wordt gezien), of de vertaling verenigbaar is met de gloss, de bundel stem/partikel/eerste persoon, en of het doelwoord centraal staat in zijn eigen voorbeeld. Dat is de checklist van Stap 8. Reken hier niet op het script.
+
+**Hoe het seedbestand eruitziet, en waarom.** Eén statement per voorbeeld:
+
+```sql
+insert into public.vocabulary_examples
+  (vocabulary_id, example_key, display_order, thai_script, paiboon, translation_en)
+values (
+  (select id from public.vocabulary_master where source_key = 'tea'),
+  'e1', 1, 'ฉันชอบชาเย็นค่ะ', 'chǎn chɔ̂ɔp chaa yen kâ', 'I''d like iced tea.'
+)
+on conflict (vocabulary_id, example_key) do update set
+  display_order  = excluded.display_order,
+  thai_script    = excluded.thai_script,
+  paiboon        = excluded.paiboon,
+  translation_en = excluded.translation_en,
+  audio_url      = case
+                     when vocabulary_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else vocabulary_examples.audio_url
+                   end;
+```
+
+- **`values ((select ...))` en niet `select ... join vocabulary_master`.** Vindt de subquery de `source_key` niet, dan levert deze vorm `null` op en botst hij op NOT NULL: het bestand faalt luid. De join-vorm zou nul rijen invoegen en zwijgen — en dan mist er stil een voorbeeld waarvan de publicatievalidatie later dénkt dat het bestaat. Beide gedragingen zijn gemeten in `verify_vocabulary_example_seed_format.sql`, sectie 6. Dit is dezelfde les als bij de conceptclaims van de Language Notes.
+- **`audio_url` gaat op null zodra `thai_script` wijzigt.** Audio die bij een oudere zin hoort is erger dan geen audio: het audioscript slaat een item met een gevulde `audio_url` over ("er is al audio"), en de leerling hoort dan de vorige zin zonder dat iemand een foutmelding ziet — precies het gevaar dat de tweede bullet bovenaan Stap 11 beschrijft. Dit is het enige punt waarop dit seedformaat bewust afwijkt van dat van de Language Notes. `voice_key` blijft wél staan: dat is een redactionele keuze en geen verwijzing die kan verouderen.
+- **Geen `updated_at = now()`.** `vocabulary_examples` heeft een `BEFORE UPDATE`-trigger die dat veld zelf zet. De dialoogseed schrijft die regel wél, en terecht — `dialogs` en `dialog_blocks` hebben zo'n trigger niet.
+
+**Waarom de sleutel niet `display_order` is.** `vocabulary_examples` draagt zijn volgorde in `unique (vocabulary_id, display_order)`. Die is niet bruikbaar als botsingssleutel, om twee onafhankelijke redenen.
+
+Technisch: de constraint is `deferrable initially immediate` aangemaakt, en Postgres weigert een deferrable unique constraint als `on conflict`-arbiter. Let op bij het narekenen — dit is een *uitvoeringsfout, geen planfout*. `explain (costs off) insert ... on conflict (vocabulary_id, display_order) ...` slaagt gewoon en drukt zelfs `Conflict Arbiter Indexes: vocabulary_examples_vocab_order_unique` af. Wie dit met `EXPLAIN` controleert, concludeert precies het tegenovergestelde van de waarheid. Sectie 1 van het QA-script voert daarom echt uit.
+
+Inhoudelijk, en dat weegt zwaarder: `display_order` is precies het veld dat je wilt kunnen wijzigen. Een upsert die daarop botst, zou bij het verplaatsen van een voorbeeld geen bestaande rij bijwerken maar een nieuwe invoegen, en de oude als wees achterlaten — inclusief zijn audio.
+
+Vandaar de aparte sleutel, toegevoegd in `20260808120000_add_vocabulary_example_natural_key.sql`. Hij is **uniek binnen het woord** en niet globaal: het woord draagt de context al via de foreign key, en een sleutel als `hello-e1` zou de `source_key` een tweede keer opschrijven. Een sleutel als `a1-dialog-03-...` is hier fout — dat is de conventie van de Language Notes, waar een note bij een *les* hoort. Zie vastgelegde beslissing 8.
+
+**Wat idempotentie wél en niet dekt.** Het bestand opnieuw draaien is de manier om een correctie door te voeren — voor **toevoegen en wijzigen**. Niet voor **verwijderen**: haal je een voorbeeld uit de JSON, dan blijft de rij gewoon in de database staan. Er is geen mechanisme dat rijen opruimt die uit het bestand verdwenen zijn, en dat is een bewuste keuze — een seed die weggelaten rijen verwijdert, wist bij een half afgemaakt bestand stilzwijgend werk.
+
+Een voorbeeld **vervangen** is dus geen verwijderen: wijzig de tekst en houd `example_key` op `e1`. De seed werkt de bestaande rij bij, met behoud van id, en ruimt de verouderde audio op. Verwijderen is een aparte, expliciete handeling:
+
+```sql
+delete from public.vocabulary_examples e
+using public.vocabulary_master v
+where v.id = e.vocabulary_id
+  and v.source_key = 'tea'
+  and e.example_key = 'e1';
+```
+
+Haal daarna ook de bijbehorende JSON weg, anders komt de rij bij de volgende run terug. En let op Stap 10, punt 1: een doelwoord zonder voorbeeld blokkeert publicatie, dus verwijderen doe je samen met het schrijven van de vervanger.
+
+**Herordenen** is vandaag niet aan de orde — één voorbeeld per woord heeft geen volgorde om te wisselen. Zou dat ooit veranderen, dan geldt dezelfde regel als bij de Language Notes: draai het seedbestand binnen een transactie met `set constraints all deferred;`, anders botst de tussenstand op de `display_order`-constraint.
+
+**Controleren.** `supabase/qa/verify_vocabulary_example_seed_format.sql` meet dat de deferrable constraint geen arbiter kan zijn, draait de fixture twee keer en controleert dat een tweede run niets toevoegt, vergelijkt Thais schrift en Paiboon op `md5` in plaats van op het oog, controleert dat herordenen de sleutels bij hun rij houdt, dat een tekstwijziging de verouderde `audio_url` opruimt en een ongewijzigde run niet, en dat een onbekende `source_key` luid faalt. Het maakt daarvoor twee tijdelijke woorden aan in `vocabulary_master` en ruimt zichzelf op. Draai het na elke wijziging aan het seedformaat of aan de generator.
+
 ## Bestaande cards bewerken
 
 - **Feitelijke fouten worden direct verbeterd**: een verkeerde Paiboon-vorm, een kromme vertaling, een verkeerde gloss. Daarna geldt Stap 9: audio van gewijzigde items regenereren.
@@ -321,7 +451,9 @@ Deze beslissingen zijn vastgelegd op 2026-08-07 en gelden voor alle Vocabulary C
 
 7. **Prompts en audit trail volgen het bestaande kanaal.** Blanco template in `supabase/planning/`, ingevulde prompt in `supabase/prompts/`, modeloutput in `supabase/generation/`, alles in versiebeheer — zoals bij de dialogen en de Language Notes. De concrete invulling voor deze keten wordt niet hier beslist maar in taak 3 van `docs/vocab_card_prompts.md`, en landt in Stap 11 van deze gids. Waarom als verwijzing en niet als eigen beslissing: het is één beslissing over drie ketens, en drie plaatsen waar ze staat is twee te veel.
 
-8. **De naamgeving van de brondata wordt niet hier beslist maar in taak 2** van `docs/vocab_card_prompts.md`, samen met de natuurlijke sleutel, het invoercontract en de generator. Wat wél redactioneel vastligt en die taak bindt: een voorbeeld wordt geïdentificeerd via de sleutel van het **wóórd**, nooit via een les. Een sleutel in de vorm `a1-dialog-03-...` is fout, ook al is dat de conventie bij de Language Notes — daar hoort een voorbeeld bij een les, hier bij een woord. Dat verschil is de lesneutraliteit uit "De twee eigenaarschappen", en het hoort ook in de brondata zichtbaar te zijn.
+8. **Een voorbeeld wordt geïdentificeerd via de sleutel van het wóórd, nooit via een les.** Een sleutel in de vorm `a1-dialog-03-...` is fout, ook al is dat de conventie bij de Language Notes — daar hoort een voorbeeld bij een les, hier bij een woord. Dat verschil is de lesneutraliteit uit "De twee eigenaarschappen", en het hoort ook in de brondata zichtbaar te zijn.
+
+   Uitgewerkt op 2026-08-08. De identiteit van een rij is het paar (`source_key`, `example_key`), waarbij `example_key` uniek is binnen het woord en vandaag altijd `e1` luidt. Het invoerdocument draagt geen `lesson_key`; de les zit alleen in de bestandsnaam, als archiveringslabel voor de batch. Zie Stap 11 voor het volledige contract en `20260808120000_add_vocabulary_example_natural_key.sql` voor de motivering van de sleutel.
 
 ## Praktische checklist per les
 
@@ -335,4 +467,4 @@ Deze beslissingen zijn vastgelegd op 2026-08-07 en gelden voor alle Vocabulary C
 8. Doorloop de redactionele QA-checklist en laat de tekst goedkeuren (Stap 8).
 9. Genereer lemma- en voorbeeldaudio; bewaak stem/partikel-overeenkomst; nooit dialoogaudio hergebruiken (Stap 9).
 10. Valideer vóór publicatie: dekking, progressieregel, volledige drieluiken, audio, nummering (Stap 10).
-11. Leg de redactionele gegevens vast in de brondata en commit ze samen (Stap 11).
+11. Leg de voorbeelden vast in `supabase/generation/vocabulary-examples/`, genereer en draai het seedbestand, en commit alles samen (Stap 11).
