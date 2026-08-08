@@ -90,6 +90,8 @@ Waarom eerst afbakenen: het woordbudget van Stap 2 is werk dat je één keer per
 
 Kom je hier een woord tegen dat in deze les een *andere* functie of betekenis krijgt dan in zijn introductieles, dan hoort dat niet in deze werklijst thuis. Zie vastgelegde beslissing 3.
 
+De werklijst hoeft niet met de hand samengesteld te worden: `vocabulary_example_brief_view` levert hem in de kolom `target_words`, samen met het woordbudget van Stap 2. Zie "De briefing ophalen" onderaan Stap 2. Let daar op `needs_example` en `existing_examples` — die beantwoorden precies de vraag of het woord zijn voorbeeld al gekregen heeft.
+
 **Goedkeuringsmoment:** de werklijst (welke woorden nog een voorbeeld nodig hebben) wordt goedgekeurd vóór er geschreven wordt.
 
 ### Stap 2 — Stel het toegestane woordbudget vast
@@ -98,7 +100,29 @@ Bepaal de lijst woorden die je in de voorbeelden van deze les mag gebruiken, vol
 
 Leg die lijst vast als een concrete opsomming, niet als een gevoel. Waarom vastleggen: het budget is ook de input voor de kwaliteitscontrole in Stap 8, en later voor een geautomatiseerd voorstel (zie Toekomstige uitbreidbaarheid). Een lijst die alleen in je hoofd bestaat, kan geen van beide.
 
-Deze lijst geldt voor alle doelwoorden van deze les tegelijk, omdat ze dezelfde introductieles delen.
+Deze lijst geldt voor alle doelwoorden van deze les tegelijk, zolang ze dezelfde introductieles delen — wat vandaag altijd zo is. Deelt een doelwoord die introductieles níet, dan heeft het een eigen, krapper budget; zie hieronder.
+
+#### De briefing ophalen
+
+`vocabulary_example_brief_view` beantwoordt Stap 1 en Stap 2 in één query. Draaien met (PowerShell):
+
+```powershell
+$env:PGCLIENTENCODING="UTF8"
+psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -P pager=off -c "select jsonb_pretty(to_jsonb(v)) from public.vocabulary_example_brief_view v where lesson_key = 'a1-dialog-03';"
+```
+
+`PGCLIENTENCODING` is niet optioneel: zonder UTF-8 komt het Thaise schrift als vraagtekens terug en beoordeel je iets anders dan wat er in de database staat.
+
+Twee kolommen dragen het werk:
+
+- **`target_words`** — de werklijst van Stap 1, met de mastervelden, `needs_example`, en de voorbeelden die het woord al heeft.
+- **`example_vocabulary_budgets`** — het budget van Stap 2, gegroepeerd **per introductieles**, elk woord met zijn paiboon-vorm.
+
+Die groepering is het punt waarop deze view afwijkt van `language_note_brief_view`, en het is geen implementatiedetail. Daar is het budget lesgebonden; hier is het gebonden aan de introductieles van het doelwoord, precies zoals de progressieregel hierboven voorschrijft. Elk woord in `target_words` draagt `intro_lesson_id` en `is_introduced_here`, zodat je zijn blok kunt terugvinden. Vandaag is er altijd exact één blok — deelt een doelwoord de introductieles van de les niet, dan verschijnt er een tweede, krapper blok en staat `is_introduced_here` op `false`. Dat is het signaal dat je voor dát woord tegen een ander budget schrijft.
+
+De dialoog van de les zit bewust **niet** in deze view, anders dan bij `language_note_brief_view`. Een canoniek voorbeeld moet lesneutraal zijn, en een briefing die de scène toont nodigt uit tot precies de fout die deze gids verbiedt: een dialoogzin kopiëren.
+
+Controleer de view zelf met `supabase/qa/verify_vocabulary_example_brief_view.sql`. Lees de kop daarvan voor je de uitkomst interpreteert: een deel van de secties zijn datacontroles die op kapotte inhoud vuren, een ander deel zijn invariantcontroles die alleen een herschrijving van de view betrappen.
 
 **Goedkeuringsmoment:** het woordbudget wordt goedgekeurd vóór er geschreven wordt.
 
