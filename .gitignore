@@ -50,7 +50,13 @@ docs/illustration-system/design-reference
 docs/lesson-instructional-content-architectuur.md
 docs/backlog-startprompts.md
 docs/LANGUA~1.MD
+docs/vocab_card_prompts.md
+docs/audio_pipeline_prompt.md
 
 # test seed SQL-bestanden, tijdelijk -- niet committen, later verwijderen   
 scripts/dev-seed-instructional-content.sql
 
+# Language Note-fixtures: de JSON is de bron, de SQL wordt gegenereerd vlak
+# voor supabase/qa/verify_language_note_seed_format.sql draait. Committen zou
+# dezelfde inhoud een tweede keer vastleggen.
+supabase/qa/fixtures/*.seed.sql
