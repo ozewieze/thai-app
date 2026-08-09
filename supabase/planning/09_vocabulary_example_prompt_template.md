@@ -344,18 +344,18 @@ safe to imitate.
 {
   "examples": [
     {
-      "source_key": "tea",
+      "source_key": "water",
       "example_key": "e1",
-      "thai_script": "ฉันชอบชาเย็นค่ะ",
-      "paiboon": "chǎn chɔ̂ɔp chaa yen kâ",
-      "translation_en": "I like iced tea."
+      "thai_script": "ฉันดื่มน้ำค่ะ",
+      "paiboon": "chǎn dʉ̀ʉm náam kâ",
+      "translation_en": "I drink water."
     },
     {
-      "source_key": "hot",
+      "source_key": "food",
       "example_key": "e1",
-      "thai_script": "กาแฟร้อนไหมคะ",
-      "paiboon": "gaa-faae rɔ́ɔn mǎi ká",
-      "translation_en": "Is the coffee hot?"
+      "thai_script": "อาหารอร่อยไหมคะ",
+      "paiboon": "aa-hǎan à-rɔ̀i mǎi ká",
+      "translation_en": "Is the food delicious?"
     },
     {
       "source_key": "market",
@@ -365,14 +365,14 @@ safe to imitate.
       "translation_en": "I'm going to the market."
     },
     {
-      "source_key": "drink",
+      "source_key": "teacher",
       "example_key": "e1",
-      "thai_script": "คุณดื่มชาไหมครับ",
-      "paiboon": "kun dʉ̀ʉm chaa mǎi kráp",
-      "translation_en": "Do you drink tea?"
+      "thai_script": "คุณเป็นครูไหมครับ",
+      "paiboon": "kun bpen kruu mǎi kráp",
+      "translation_en": "Are you a teacher?"
     },
     {
-      "source_key": "sweet",
+      "source_key": "milk",
       "example_key": "e1",
       "thai_script": "นมหวานมาก",
       "paiboon": "nom wǎan mâak",
@@ -382,12 +382,19 @@ safe to imitate.
 }
 ```
 
-The five together cover every case. `tea` and `hot` are `speaker_gender:
-female` — a statement in ค่ะ and a question in คะ. `market` and `drink`
-are `speaker_gender: male` — a statement and a question, both in ครับ, with ผม
-as the first person where there is one. `sweet` carries no gendered
-element at all: nobody is being addressed, so it gets no particle and no
-pronoun, whichever `speaker_gender` it was assigned.
+The five together cover every case. `water` and `food` are
+`speaker_gender: female` — a statement in ค่ะ and a question in คะ.
+`market` and `teacher` are `speaker_gender: male` — a statement and a
+question, both in ครับ, with ผม as the first person where there is one.
+`milk` carries no gendered element at all: nobody is being addressed, so
+it gets no particle and no pronoun, whichever `speaker_gender` it was
+assigned.
+
+Note that `example_key` is `e1` in all five, and that is correct rather
+than a slip. The key is unique **within its word**, so five words with
+`e1` are five distinct rows — the identity of a row is the pair
+(`source_key`, `example_key`). Since every word gets exactly one example,
+`e1` is the only value that ever occurs.
 
 In all five the target word is what the sentence is about, no name
 appears, nothing refers to a scene, and every sentence is readable on its
@@ -536,6 +543,16 @@ aan het aantal regels dat de vorige query oplevert.
   geen `speaker_gender`, dus die telt niet mee in het evenwicht; en houd de
   verdeling in de gaten over meerdere lessen, niet alleen binnen deze —
   vier woorden per les laat zich niet netjes halveren.
+- **De vijf woorden in het voorbeelddocument mogen geen doelwoord zijn.**
+  `water`, `food`, `market`, `teacher` en `milk` zijn met opzet gekozen:
+  ze zijn in geen enkele bestaande les een doelwoord. Zou de illustratie
+  een woord tonen waarvoor het model in diezelfde run een zin moet
+  schrijven, dan geeft het die zin gewoon terug — en dan meet je hoe goed
+  het kan kopiëren in plaats van of de prompt werkt. Dit is geen
+  hypothetisch geval: de eerste versie van dit template gebruikte `tea`
+  en `hot`, precies twee van de vier doelwoorden van les 3. Controleer dit
+  opnieuw wanneer er lessen bijkomen, en verwissel de illustratie zodra
+  een van deze vijf een doelwoord wordt.
 - **Kort de woordenlijst niet in.** Hij groeit per les en dat is de
   bedoeling: elk woord dat je weglaat, is een woord dat het model niet
   mag gebruiken of gaat reconstrueren.

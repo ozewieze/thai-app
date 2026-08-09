@@ -65,7 +65,7 @@ insert into public.language_note_examples
   (block_id, example_key, display_order, thai_script, paiboon, translation_en)
 select blocks.id, e.example_key, e.display_order, e.thai_script, e.paiboon, e.translation_en
 from (values
-  ('b3', 'e1', 1, 'จะดื่มอะไรคะ', 'jà dʉ̀ʉm à-rai ká', 'What will you drink?'),
+  ('b3', 'e1', 1, 'จะไปด้วยกันครับ', 'jà bpai dûai-gan kráp', 'We''ll go together.'),
   ('b3', 'e2', 2, 'ฉันจะดื่มกาแฟค่ะ', 'chǎn jà dʉ̀ʉm gaa-faae kâ', 'I will drink coffee.'),
   ('b3', 'e3', 3, 'คุณจะไปที่ไหนคะ', 'kun jà bpai tîi-nǎi ká', 'Where will you go?')
 ) as e(block_key, example_key, display_order, thai_script, paiboon, translation_en)

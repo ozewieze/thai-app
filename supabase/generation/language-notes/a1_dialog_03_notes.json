@@ -23,9 +23,9 @@
           "examples": [
             {
               "example_key": "e1",
-              "thai_script": "จะดื่มอะไรคะ",
-              "paiboon": "jà dʉ̀ʉm à-rai ká",
-              "translation_en": "What will you drink?"
+              "thai_script": "จะไปด้วยกันครับ",
+              "paiboon": "jà bpai dûai-gan kráp",
+              "translation_en": "We'll go together."
             },
             {
               "example_key": "e2",
