@@ -145,7 +145,7 @@ Richtlijnen per bloktype, met de reden erbij:
 - **paragraph** — het werkpaard. Elke note begint met een paragraph die het concept in twee tot vier zinnen introduceert en verankert aan de dialoog ("In the dialogue, Mali asked ... — that little word at the end is ..."). Waarom verankeren: de leerling heeft de dialoog net gelezen; uitleg die daaraan vasthaakt beklijft beter dan abstracte uitleg. Eén idee per paragraph — een tweede idee krijgt een eigen paragraph.
 - **subheading** — alleen voor notes met duidelijk gescheiden deelonderwerpen (bijvoorbeeld "Asking" en "Answering"). Nooit als eerste blok (de titel doet dat werk al), nooit als laatste blok (een kop zonder inhoud eronder is een lege belofte), nooit twee direct na elkaar. Waarom terughoudend: in een korte note creëren koppen vooral visuele ruis; ze verdienen zich pas terug bij langere notes.
 - **formula** — het patroon in schemavorm, bijvoorbeeld `[statement] + ไหม = yes/no question`. Slots in vierkante haken en in het Engels, vaste Thaise elementen in Thais schrift. Eén formule per blok; een tweede patroon krijgt een eigen formula-blok (meestal onder een eigen subheading). Waarom een apart bloktype en geen vetgedrukte tekstregel: formules worden visueel anders weergegeven en moeten als zelfstandig element herbruikbaar en herkenbaar blijven. Een note die geen constructie met een vaste vorm uitlegt, krijgt geen formule — een schema van iets wat geen patroon is, suggereert een regelmaat die er niet is.
-- **example_group** — zie Stap 4. Verplicht bij elke note die een patroon of constructie uitlegt. Waarom verplicht: uitleg zonder voorbeelden is voor een A1-leerling niet verifieerbaar — het voorbeeld ís het bewijs dat hij het begrepen heeft.
+- **example_group** — zie Stap 4. Verplicht bij elke note die een patroon of constructie uitlegt. Waarom verplicht: uitleg zonder voorbeelden is voor een A1-leerling niet verifieerbaar — het voorbeeld ís het bewijs dat hij het begrepen heeft. Het plan wijst hier ook per voorbeeld het `speaker_gender` toe (`female` of `male`, zie vastgelegde beslissing 2). Waarom in het plan en niet in de schrijffase: het is een verdeling over de hele les, en dat is precies het soort beslissing dat een model niet reproduceerbaar neemt.
 - **usage_tip** — één concrete tip: een valkuil, een beleefdheidsnuance, een verschil met het Engels. Eén tip per blok, en maximaal één à twee tip-blokken per note. Heeft het concept geen valkuil, dan krijgt de note geen tip. Waarom beperkt: tips ontlenen hun kracht aan schaarste; vijf tips zijn een tweede uitlegtekst in vermomming, en een tip die er alleen staat omdat het skelet er een voorzag, leert de leerling dat tips overslaan mag.
 
 Het skelet komt uit dezelfde plannerprompt als Stap 1 (`07_language_note_planner_prompt_template.md`), zodat conceptverdeling en structuur in één voorstel te beoordelen zijn — het skelet is juist wat de conceptverdeling toetsbaar maakt.
@@ -166,10 +166,16 @@ Redactionele regels:
   Let op waar de transliteratie dan vandaan komt: ook die staat niet in het budget. De dialoogtekst is de enige geverifieerde bron — `jà` voor จะ komt uit blok 0 van les 3. Staat het element niet in de dialoog, dan is er geen betrouwbare vorm en hoort `[uncertain]` erbij te staan. Zonder die volgorde wordt de uitzondering een achterdeur om de opzoekregel van Stap 5 heen.
 
   Deze uitzondering is toegevoegd op 2026-08-06, nadat de eerste schrijverrun op les 03 hem in de praktijk nodig had en het model zelf de dialoog als bron koos.
-- **Hergebruik dialoogzinnen waar het kan.** Een letterlijke (of licht vereenvoudigde) zin uit de dialoog als eerste voorbeeld werkt uitstekend: herkenning eerst, variatie daarna. Waarom: het bevestigt de leerling dat hij de dialoog écht begrepen heeft, en het kost geen nieuw vocabulaire-budget.
+- **Geen kopie van een dialoogzin uit déze les.** De verankering aan de dialoog gebeurt in de openingsparagraaf, die het Thaise fragment letterlijk citeert met zijn vertaling; de voorbeeldgroep gaat over toepassing. Een zin die *lijkt* op een dialoogzin is prima — `ฉันจะดื่มกาแฟค่ะ` naast `จะดื่มอะไรครับ` is hetzelfde patroon met andere woorden, en dat is precies wat je wil. Een kopie is dat niet.
+
+  **"Déze les" is de hele beperking.** Een echo van een *eerdere* les is geen probleem maar vaak juist het beste voorbeeld. Les 2 heeft `มะลิ: ไปด้วยกันค่ะ`; een note in les 3 over จะ die `จะไปด้วยกันครับ` als voorbeeld neemt, laat de leerling precies het nieuwe element zien met al het andere al bekend. Dat is herkenning zonder herhaling — de leerling heeft die zin niet naast zich staan. Let er dan wel op dat je zin echt verschilt van de oorspronkelijke: `จะไปด้วยกันค่ะ` zou Mali's regel zijn plus จะ, en dat is te dichtbij; het mannelijke `speaker_gender` maakt hem meteen onmiskenbaar anders.
+
+  **Herzien op 2026-08-09.** Tot dan stond hier het omgekeerde: "hergebruik dialoogzinnen waar het kan — herkenning eerst, variatie daarna." Twee redenen om dat om te draaien. De dialoog staat op dezelfde lespagina, twintig regels hoger, mét transliteratie en vertaling; een voorbeeldplek besteden aan een zin die de leerling net gelezen heeft koopt minder dan een nieuwe toepassing, en het levert een tweede audiobestand op voor tekst die er al een heeft.
+
+  De tweede reden is een gemeten fout. Les 3 heeft in de dialoog `นริน: จะดื่มอะไรครับ` en `มะลิ: คุณจะดื่มอะไรคะ`, maar `e1` van note 1 werd `จะดื่มอะไรคะ` — Narins zin met Mali's partikel, en คุณ weggelaten. Dat is geen van beide regels. De oude regel botste met de partikelregel, en het model heeft stilzwijgend het verschil gedeeld: de instructie die herkenning moest opleveren, leverde een zin op die de leerling nergens gelezen heeft.
 - **Kort en natuurlijk.** A1-voorbeelden zijn volledige maar korte zinnen zoals een Thai ze echt zou zeggen — inclusief beleefdheidspartikels waar die natuurlijk zijn. Geen kunstmatig uitgeklede telegramzinnen.
-- **Gegenderde vormen passen bij de instructiestem.** Eerste persoon is ฉัน, partikel ค่ะ of คะ; nooit ผม of ครับ. Zie vastgelegde beslissing 2 — dit wordt hier in de schrijffase vastgelegd, niet pas bij de audiogeneratie ontdekt.
-- **Volgorde is didactiek.** Van eenvoudig naar iets rijker binnen de groep; het eenvoudigste of meest herkenbare voorbeeld staat bovenaan.
+- **Gegenderde vormen vormen één bundel.** ผม hoort bij ครับ, ฉัน bij ค่ะ of คะ; nooit één vorm uit elke kolom. Zie vastgelegde beslissing 2 — dit wordt hier in de schrijffase vastgelegd, niet pas bij de audiogeneratie ontdekt.
+- **Volgorde is didactiek.** Van eenvoudig naar iets rijker binnen de groep; de eenvoudigste vorm van het patroon staat bovenaan.
 
 ### Stap 5 — Transliteratie- en vertaalconventies
 
@@ -178,7 +184,7 @@ Redactionele regels:
 - **Opzoeken, niet reconstrueren.** Voor elk woord dat al in de vocabulairemasterlijst staat, is de daar vastgelegde Paiboon-vorm de enige juiste — kopieer die letterlijk. Waarom dit een harde regel is: Paiboon is uit het hoofd verrassend foutgevoelig, en twee spellingen van hetzelfde woord op één lespagina ondermijnen het vertrouwen van de leerling in het hele systeem.
 - **Geaspireerde medeklinkers krijgen géén h.** ข/ค → *k*, ถ/ท → *t*, ผ/พ/ภ → *p*. Schrijf nooit *kh*, *th* of *ph* — dat is RTGS, niet Paiboon. Waarom Paiboon die h niet nodig heeft: de niet-geaspireerde tegenhangers krijgen een eigen schrijfwijze (ก → *g*, ต → *dt*, ป → *bp*), zodat er geen digraaf nodig is om ze te onderscheiden. Waarom dit expliciet vermeld staat: dit is in het verleden structureel misgegaan (167 vocabulairerijen en 19 dialoogblokken moesten van RTGS naar Paiboon gecorrigeerd worden). Het onderscheid blijft wezenlijk voor de uitspraak — ปา (*bpaa*) en พา (*paa*) zijn verschillende woorden — maar het wordt in Paiboon gedragen door *bp* tegenover *p*, niet door een *h*.
 - **Klinkerlengte nooit gokken, zeker niet bij อัว.** Of een klinker enkel of dubbel geschreven wordt (*u* vs. *uu*, *a* vs. *aa*) is niet altijd betrouwbaar uit het schriftbeeld af te leiden. Bij twijfel: opzoeken in de masterlijst of naslagwerk, per woord bevestigen. Waarom: een verkeerde klinkerlengte is voor een leerling onhoorbaar fout gespeld — hij leert het verkeerd aan zonder het te merken.
-- **Toontekens volgens Paiboon, consequent op elke lettergreep.** Een voorbeeld zonder toontekens is niet "bijna klaar" maar fout.
+- **Toontekens volgens Paiboon, exact zoals de bron ze vastlegt — niets toevoegen, niets weglaten.** Middentoon wordt zonder teken geschreven, dus "een teken op elke lettergreep" is niet de regel: `chaa`, `yen` en `nom` zijn correct zoals ze zijn. Een voorbeeld waaruit de tekens zijn weggevallen is niet "bijna klaar" maar fout — en een teken erbij verzinnen om een lettergreep compleet te maken is even fout. Dat laatste is wat een taalmodel doet zodra je het de eerste formulering geeft. Tot 2026-08-09 stond hier "consequent op elke lettergreep".
 
 **Engelse vertaling:**
 
@@ -386,8 +392,11 @@ Controleer vóór de audio-stap minstens:
 - Heeft elke uitleg van een patroon of constructie een voorbeeldgroep?
 - Bevatten de voorbeelden uitsluitend bekende woorden?
 - Is elke Paiboon-vorm gecontroleerd tegen de masterlijst (aspiratie-h, klinkerlengte, tonen)?
-- Zijn ครับ/ค่ะ natuurlijk en consequent gebruikt in de voorbeelden, en staat er คะ (niet ค่ะ) aan het eind van een vraag?
-- Komt ผม nergens voor in een voorbeeld met ค่ะ of คะ? Eerste persoon is ฉัน, tenzij de note het register-contrast onderwijst.
+- Gebruikt elk voorbeeld de volledige bundel van zijn toegewezen `speaker_gender` — ผม met ครับ, ฉัน met ค่ะ of คะ, nooit één vorm uit elke kolom?
+- Staat er คะ (niet ค่ะ) aan het eind van een vrouwelijke vraag?
+- Is er nergens een voornaamwoord of partikel bijgeplakt in een voorbeeld dat er geen wil?
+- Is de verdeling tussen de twee bundels in evenwicht over de voorbeelden die er een dragen?
+- Is geen enkel voorbeeld een kopie van een dialoogzin? De verankering hoort in de openingsparagraaf.
 - Heeft elke note minstens één conceptkoppeling? De generator laat een lege `concepts`-array door.
 - Zijn de vertalingen natuurlijk Engels én consistent met de dialoogvertalingen?
 - Is er geen subheading als eerste of laatste blok, en geen lege voorbeeldgroep?
@@ -407,15 +416,21 @@ Elk voorbeeld krijgt eigen audio van de Thaise zin. De werkwijze volgt het patro
 >
 > `audio_url` is pure output: het bestaat pas nadat het script een bestand heeft gemaakt. Leeg betekent hier "nog niet gegenereerd", en dat is de enige mogelijke volgorde — audio volgt op bevroren tekst, niet andersom.
 >
-> `voice_key` is een redactionele beslissing die het script alleen maar uitvoert. **Leeg betekent daarom "gebruik de vaste vrouwelijke standaardstem", niet "onbekend".** Het script hoort die default zelf toe te passen en niet te wachten op een waarde. Waarom die keuze zo vastligt: vastgelegde beslissing 2 maakt die stem de norm, dus voor vrijwel elk voorbeeld is `voice_key` een constante. Die constante in elk voorbeeld herhalen levert alleen ruis op, en in de JSON-invoer (Stap 6) nodigt het het model uit om te gaan variëren waar het niets te kiezen heeft.
+> `voice_key` is een redactionele beslissing die het script alleen maar uitvoert. **Leeg betekent daarom "leid de stem af uit de zin", niet "onbekend".** Bevat de zin ผม of ครับ, dan de mannelijke narrator; anders de vrouwelijke. Het script hoort die afleiding zelf te doen en niet te wachten op een waarde.
+>
+> Waarom afleiden en niet opschrijven: het sprekersgeslacht zit al in de tekst, want vastgelegde beslissing 2 maakt de bundel heel. Een `voice_key` erbij zou diezelfde informatie een tweede keer opschrijven, op een plek waar ze kan gaan afwijken van de zin waar ze bij hoort. En in de JSON-invoer (Stap 6) nodigt het veld het model uit om te gaan variëren waar het niets te kiezen heeft — daarom weigert de generator het.
+>
+> Loopt de afleiding mis, dan is dat geen stemprobleem maar het bewijs dat de bundel gebroken is: een zin met ผม en ค่ะ. Corrigeer dan de tekst, niet de stem.
+>
+> Tot 2026-08-09 betekende leeg "gebruik de vaste vrouwelijke standaardstem". Die grond verviel toen beslissing 2 twee bundels kreeg.
 >
 > Een expliciete `voice_key` is dus uitsluitend bedoeld voor de uitzondering hieronder: een note die het ครับ/ค่ะ-contrast zélf onderwijst. Komt die note er, dan wordt `voice_key` een optioneel veld in het JSON-contract — niet eerder. Een veld toevoegen dat niemand vult, verwatert de betekenis van de default.
 >
 > Praktisch gevolg voor wie het script bouwt: een voorbeeld met `voice_key is null` krijgt de standaardstem, een voorbeeld met een expliciete waarde krijgt die stem, en een zin die op ครับ eindigt terwijl de standaardstem vrouwelijk is, hoort een waarschuwing te geven in plaats van stil verkeerd ingesproken te worden.
 
 - **Dit is dezelfde tijdelijke TTS-pipeline als bij de dialogen** — later vervangen door opnames met stemacteurs. Investeer geen tijd in het verfraaien ervan; de redactionele regel is alleen: elke gepubliceerde voorbeeldzin heeft audio, en die audio komt overeen met de exacte huidige tekst.
-- **Stemkeuze:** voorbeelden in een note zijn *instructiestem*, geen personagestem. Gebruik de vaste vrouwelijke standaardstem voor notes (zie "Vastgelegde redactionele beslissingen"), niet de stem van Mali of Narin. Waarom: een personagestem suggereert ten onrechte dat de zin uit de scène komt, en bindt de note aan een personage dat er inhoudelijk niets mee te maken heeft.
-- **Partikel, voornaamwoord en stem moeten overeenkomen.** Een zin die op ค่ะ eindigt wordt door een vrouwenstem ingesproken, een zin op ครับ door een mannenstem — en de eerste persoon in die zin hoort bij dezelfde bundel (ฉัน bij ค่ะ, ผม bij ครับ). Waarom: een mannenstem die ค่ะ zegt is voor elke Thai onmiddellijk fout en leert de leerling een verkeerde koppeling aan; hetzelfde geldt voor een vrouwenstem die ผม zegt. Praktisch betekent dit: kies het partikel in de schrijffase (Stap 4) al passend bij de standaardstem, en wijk alleen af wanneer de note juist het ครับ/ค่ะ-contrast onderwijst — dan krijgen die voorbeelden elk de passende stem.
+- **Stemkeuze:** voorbeelden in een note zijn *instructiestem*, geen personagestem. Gebruik een van de twee vaste narratorstemmen (zie "Vastgelegde redactionele beslissingen"), nooit de stem van Mali of Narin. Waarom: een personagestem suggereert ten onrechte dat de zin uit de scène komt, en bindt de note aan een personage dat er inhoudelijk niets mee te maken heeft. Let op: `scripts/voice-config.mjs` kent vandaag alleen die twee personagestemmen; de narratorstemmen moeten er nog bij komen.
+- **De stem volgt de zin.** Bevat de zin ผม of ครับ, dan de mannelijke narrator; anders de vrouwelijke. Dat wordt afgeleid en niet opgeschreven — zie het kader hierboven. Een mannenstem die ค่ะ zegt is voor elke Thai onmiddellijk fout, en hetzelfde geldt voor een vrouwenstem die ผม zegt; maar dat is een tekstprobleem, niet een audioprobleem. Het `speaker_gender` wordt in Stap 3 toegewezen en in Stap 4 uitgeschreven, en de audio voert het alleen uit.
 - **Na elke tekstwijziging aan een voorbeeld wordt de audio van dát voorbeeld opnieuw gegenereerd.** Tekst en audio die niet overeenkomen zijn erger dan geen audio: de leerling traint zijn oor op de verkeerde zin.
 
 ### Stap 9 — Validatie vóór publicatie
@@ -475,8 +490,9 @@ Het gegenereerde bestand gaat mee in versiebeheer, ook al is het afleidbaar. Red
 - **Te veel concepten in één note.** Tegen het lesfase-maximum aan: splitsen.
 - **Blokken toevoegen om een aantal te halen.** Een formule bij iets wat geen patroon is, of een tip zonder valkuil. Ontstaat wanneer de blokrichtlijn als streefaantal gelezen wordt in plaats van als plafond — zie Stap 3.
 - **Audio vergeten na een tekstcorrectie.** Tekst en audio lopen dan uit elkaar — erger dan geen audio.
-- **ครับ/ค่ะ die niet bij de stem past.** Vastleggen in de schrijffase, niet pas bij audiogeneratie ontdekken.
-- **ผม in een zin die op ค่ะ eindigt.** Beide voornaamwoorden staan vanaf les 1 in het woordbudget, dus het budget vangt dit niet. Stem, partikel en eerste persoon horen bij elkaar — zie beslissing 2.
+- **Eén vorm uit elke kolom.** `ผมชอบกาแฟค่ะ` — een mannelijk voornaamwoord met een vrouwelijk partikel. Beide voornaamwoorden staan vanaf les 1 in het woordbudget, dus het budget vangt dit niet. Sinds er twee bundels zijn, is dit de fout die het vaakst zal opduiken — zie beslissing 2.
+- **Een partikel bijplakken om een `speaker_gender` te tonen.** Een voorbeeld zonder eerste persoon en zonder eindpartikel draagt er geen. `กาแฟร้อนครับ` als naamwoordgroep is geen beleefde variant, het is een zin waar iemand iets in heeft gehangen.
+- **Een dialoogzin kopiëren als eerste voorbeeld.** Voelde jarenlang efficiënt en was tot 2026-08-09 zelfs voorgeschreven. De verankering hoort in de openingsparagraaf — zie Stap 4.
 - **Een subheading als afsluiter of een lege voorbeeldgroep laten staan** na herstructureren.
 
 ## Toekomstige uitbreidbaarheid
@@ -491,21 +507,35 @@ Het gegenereerde bestand gaat mee in versiebeheer, ook al is het afleidbaar. Red
 Deze beslissingen zijn vastgelegd op 2026-07-31 en gelden voor alle notes. Ze zijn bewust niet per note herzienbaar: hun waarde zit juist in de uniformiteit. Wil je er structureel van afwijken, wijzig dan deze lijst — niet één note.
 
 1. **De note-inhoud is Engelstalig.** Alle leerlinggerichte tekst — titels, paragraphs, tips, vertalingen — staat in het Engels. Waarom: consistent met de leerlinginterface en met de dialoogvertalingen; een tweetalige leeromgeving dwingt de leerling voortdurend te schakelen.
-2. **Eén vrouwelijke standaardstem, en dus ค่ะ als standaardpartikel.** Alle note-voorbeelden gebruiken dezelfde neutrale instructiestem; de bestaande stemconfiguratie heeft daar al een geschikte vrouwenstem voor. Een mannenstem wordt alleen ingezet in voorbeelden die het ครับ/ค่ะ-contrast zélf onderwijzen. Waarom één vaste keuze: ze voorkomt een stemdiscussie per note, en ze maakt de partikelkeuze in de schrijffase (Stap 4) een automatisme in plaats van een valkuil.
+2. **Twee instructiestemmen, en per voorbeeld een toegewezen `speaker_gender`.** Note-voorbeelden worden ingesproken door een vaste vrouwelijke en een vaste mannelijke narrator. Elk voorbeeld krijgt vooraf een `speaker_gender` toegewezen, `female` of `male`, en over de voorbeelden heen wordt naar evenwicht gestreefd.
 
-   **Gegenderde elementen vormen één bundel.** Stem, beleefdheidspartikel én eerste persoon horen bij elkaar; klopt er één niet, dan klopt de zin niet. Voor de vrouwelijke standaardstem:
+   Deze beslissing is **letterlijk gelijk aan vastgelegde beslissing 4 van de vocabulairegids**, en dat is de bedoeling: kaart en note verschijnen in dezelfde les, en van sprekersgeslacht wisselen tussen die twee zonder reden is voor de leerling onverklaarbaar. Wijzigt die beslissing daar, dan wijzigt ze hier mee.
 
-   | | Standaard in note-voorbeelden |
-   | --- | --- |
-   | eerste persoon | ฉัน (*chǎn*) — nooit ผม |
-   | mededeling | ค่ะ (*kâ*) |
-   | vraag | คะ (*ká*) |
+   **Herzien op 2026-08-09.** Tot dan gold hier één vrouwelijke standaardstem en dus ค่ะ als standaardpartikel, met een mannenstem alleen in een note die het contrast zélf onderwijst. Drie redenen om dat om te draaien, in volgorde van gewicht.
 
-   Twee dingen die zonder deze tabel misgaan. **Ten eerste het partikel:** ค่ะ en คะ zijn niet uitwisselbaar — ชอบเค้กไหม**คะ**, nooit ไหม**ค่ะ**. De vijf bestaande dialogen doen dit consequent (nul treffers voor ไหมค่ะ), maar de regel stond nergens, en een model dat alleen "ค่ะ is het standaardpartikel" leest, zet het ook achter een vraag. **Ten tweede het voornaamwoord:** `vocabulary_master` bevat zowel `i` (ฉัน) als `i_male` (ผม), allebei geïntroduceerd in les 1, dus allebei staan ze vanaf les 1 in het woordbudget van elke les. Niets in dat budget verhindert `ผมชอบกาแฟค่ะ` — een mannelijk voornaamwoord met een vrouwelijk partikel, even fout als een mannenstem die ค่ะ zegt.
+   *De bundelregel was onbeproefd.* "Nooit ผม" is een verbod op één woord, en dat haalt elk model. Of het model de vormen kan *koppelen*, kwamen we daarmee nooit te weten. Met twee bundels wordt van een verbod een invariant die elke run wordt uitgeoefend en die in Stap 4 en Stap 7 te controleren is.
 
-   Waarom dit gat juist bij notes bestaat en niet bij dialogen: in een dialoog regelen de personages het. Narin is man, Mali is vrouw, en daarmee liggen partikel en voornaamwoord vast zonder dat er een regel voor nodig is. Een note-voorbeeld heeft geen personage, alleen de instructiestem — precies het element dat de keuze automatisch maakte, is weg.
+   *Een mannelijke leerling zag nergens een zin die hij zelf kan zeggen.* De dialogen geven hem Narin, maar de uitleg eromheen sprak hem consequent aan in vormen die hij niet gebruikt.
 
-   ผม en ครับ (*kráp*, verandert niet van vorm) worden samen gebruikt, en alleen in een note die het register-contrast zélf onderwijst.
+   *De kosten vielen weg bij nader inzien.* Er bestaat nog geen note-audio, en `scripts/voice-config.mjs` kent nog geen enkele narratorstem — alleen de personagestemmen `mali` en `narin`, die in een note juist verboden zijn. Eén narrator en twee narrators zijn allebei werk dat nog gedaan moet worden.
+
+   **Gegenderde elementen vormen één bundel.** Stem, beleefdheidspartikel én eerste persoon horen bij elkaar; klopt er één niet, dan klopt de zin niet. Neem nooit één vorm uit de ene kolom en één uit de andere:
+
+   | | `speaker_gender: female` | `speaker_gender: male` |
+   | --- | --- | --- |
+   | eerste persoon | ฉัน (*chǎn*) | ผม (*pǒm*) |
+   | mededeling | ค่ะ (*kâ*) | ครับ (*kráp*) |
+   | vraag | คะ (*ká*) | ครับ (*kráp*) |
+
+   Let op de asymmetrie onderaan: ค่ะ en คะ zijn niet uitwisselbaar — ชอบเค้กไหม**คะ**, nooit ไหม**ค่ะ**. De vijf bestaande dialogen doen dit consequent (nul treffers voor ไหมค่ะ), maar de regel stond nergens, en een model dat alleen "ค่ะ is het standaardpartikel" leest, zet het ook achter een vraag. ครับ verandert daarentegen niet van vorm.
+
+   **Het budget vangt dit niet af.** `vocabulary_master` bevat zowel `i` (ฉัน) als `i_male` (ผม), allebei geïntroduceerd in les 1, dus allebei staan ze vanaf les 1 in het woordbudget van elke les. Niets in dat budget verhindert `ผมชอบกาแฟค่ะ` — een mannelijk voornaamwoord met een vrouwelijk partikel, even fout als een mannenstem die ค่ะ zegt. Waarom dit gat juist bij notes bestaat en niet bij dialogen: in een dialoog regelen de personages het. Narin is man, Mali is vrouw, en daarmee liggen partikel en voornaamwoord vast zonder dat er een regel voor nodig is. Een note-voorbeeld heeft geen personage — alleen het toegewezen `speaker_gender`, en dat moet dus expliciet gemaakt worden.
+
+   **Het `speaker_gender` is een beperking, geen opdracht om een voornaamwoord te gebruiken.** Een voorbeeld zonder eerste persoon en zonder eindpartikel draagt er geen — `กาแฟร้อน` en `ชาเย็น` in note 2 van les 3 zijn kale naamwoordgroepen. Plak daar niets op om een `speaker_gender` zichtbaar te maken, en tel ze niet mee in het evenwicht.
+
+   **Waarom `speaker_gender` en niet `register`.** Zie de motivering bij vastgelegde beslissing 4 van de vocabulairegids: `register` is een bestaande kolom op vijf mastertabellen die formaliteit betekent, en dat is precies het domein waar beleefdheidspartikels ook onder vallen.
+
+   **Wie het `speaker_gender` toewijst.** Jij, in het goedgekeurde plan uit Stap 3, per gepland voorbeeld. Niet het model: dan verschilt de uitkomst tussen twee runs en drijft ze af naar wat het model natuurlijk vindt.
 3. **Formulenotatie ligt vast:** Engelse slotnamen tussen vierkante haken, vaste Thaise elementen in Thais schrift, `=` gevolgd door de functie. Dus: `[statement] + ไหม = yes/no question`. Waarom: de leerling leert het schemaformaat één keer; elke variatie kost hem opnieuw aandacht die naar de inhoud had moeten gaan.
 4. **Een voorbeeldgroep krijgt een kop zodra er twee of meer groepen in dezelfde note staan**, zodat ze onderscheidbaar zijn. Een intro-zin komt er alleen bij wanneer de voorbeelden zonder context verkeerd gelezen kunnen worden. Geen van beide is ooit verplicht bij één enkele groep. Waarom: koppen zijn navigatie, intro's zijn betekenisredding — ze lossen verschillende problemen op en horen niet standaard samen.
 5. **Notes volgen dezelfde prompt- en outputstructuur als de dialoogworkflow**, met prompt en output per les bewaard in versiebeheer. Waarom: die audit trail heeft zich bij dialogen bewezen, en de conceptlijst uit Stap 1 is een natuurlijke prompt-input. Het AI-kanaal volgt de bestaande projectpraktijk.
@@ -515,7 +545,7 @@ Deze beslissingen zijn vastgelegd op 2026-07-31 en gelden voor alle notes. Ze zi
 
 ## Praktische checklist per les
 
-1. Vul `07_language_note_planner_prompt_template.md` met de brief-view-output; het voorstel dekt conceptverdeling, titels en blokskeletten (Stap 1–3). Laat het goedkeuren en bewaar de gecorrigeerde versie als `generation/language-notes/a1_dialog_XX_plan.md`.
+1. Vul `07_language_note_planner_prompt_template.md` met de brief-view-output; het voorstel dekt conceptverdeling, titels, blokskeletten en de verdeling van `speaker_gender` (Stap 1–3). Laat het goedkeuren en bewaar de gecorrigeerde versie als `generation/language-notes/a1_dialog_XX_plan.md`.
 2. Vul `08_language_note_writer_prompt_template.md` met dat goedgekeurde plan, het woordbudget en de dialoogtekst (Stap 2–6).
 3. Sla de modeloutput op als `generation/language-notes/a1_dialog_XX_notes.json` — één JSON-document, geen toelichting.
 4. Controleer elke Paiboon-vorm tegen de masterlijst; controleer vertalingen op natuurlijkheid en consistentie met de dialoog (Stap 5).

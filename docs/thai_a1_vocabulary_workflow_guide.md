@@ -144,12 +144,25 @@ Redactionele regels:
 - **Alleen woorden uit het budget van Stap 2.** Een nieuw woord "smokkelen" omdat het zo'n mooi voorbeeld oplevert, is verboden — de leerling kan niet onderscheiden wat hij hoort te kennen en wat niet, en elk onbekend woord voelt als een gat in zijn kennis.
 - **Het is je enige kans.** Er komt geen tweede voorbeeld dat het beeld aanvult. Kies dus de zin die je zou kiezen als je er maar één mocht hebben — want dat is precies de situatie.
 
+#### De voorbeelden laten voorstellen
+
+De zinnen worden vandaag door een model voorgesteld, met `supabase/planning/09_vocabulary_example_prompt_template.md`. Dat template is de mechanische kant van deze stap: het krijgt de goedgekeurde werklijst uit Stap 1 en het goedgekeurde budget uit Stap 2, en levert één JSON-document volgens het contract uit Stap 11.
+
+Twee dingen die je vóór het invullen zelf beslist, omdat een model ze niet reproduceerbaar beslist:
+
+- **Het `speaker_gender` per doelwoord** (`female` of `male`) — zie vastgelegde beslissing 4.
+- **Welke woorden meedoen** — de werklijst wordt gefilterd op `needs_example`, zodat een woord dat zijn voorbeeld al heeft de prompt niet eens bereikt.
+
+De prompt noemt de les nergens, en de brief-view geeft de dialoog niet mee. Dat is geen omissie maar de lesneutraliteit uit "De twee eigenaarschappen", mechanisch gemaakt: wat het model niet weet te bestaan, kan het niet als anker gebruiken.
+
+Alles in deze stap blijft redactioneel jouw beslissing. Het template neemt de regels hierboven niet over — het herhaalt ze alleen in de taal van het model, en de QA van Stap 8 blijft onverkort gelden.
+
 ### Stap 4 — Paiboon-conventies
 
 - **Opzoeken, niet reconstrueren.** Voor elk woord dat al in de vocabulairemasterlijst staat, is de daar vastgelegde Paiboon-vorm de enige juiste — kopieer die letterlijk. Waarom dit een harde regel is: Paiboon is uit het hoofd verrassend foutgevoelig, en twee spellingen van hetzelfde woord op één lespagina ondermijnen het vertrouwen van de leerling in het hele systeem.
 - **Geaspireerde medeklinkers krijgen géén h.** ข/ค → *k*, ถ/ท → *t*, ผ/พ/ภ → *p*. Schrijf nooit *kh*, *th* of *ph* — dat is RTGS, niet Paiboon. Waarom Paiboon die h niet nodig heeft: de niet-geaspireerde tegenhangers krijgen een eigen schrijfwijze (ก → *g*, ต → *dt*, ป → *bp*), zodat er geen digraaf nodig is om ze te onderscheiden. Waarom dit expliciet vermeld staat: dit is in het verleden structureel misgegaan en moest over honderden rijen van RTGS naar Paiboon gecorrigeerd worden. Het onderscheid blijft wezenlijk voor de uitspraak — ปา (*bpaa*) en พา (*paa*) zijn verschillende woorden — maar het wordt in Paiboon gedragen door *bp* tegenover *p*, niet door een *h*.
 - **Klinkerlengte nooit afleiden, zeker niet bij อัว.** Of een klinker enkel of dubbel geschreven wordt (*u* vs. *uu*, *a* vs. *aa*) is niet betrouwbaar uit het schriftbeeld of het toonpatroon af te leiden. Bevestig het **per woord** in de masterlijst of een naslagwerk. Waarom: een verkeerde klinkerlengte is voor een leerling onhoorbaar fout gespeld — hij leert het verkeerd aan zonder het te merken, en de fout is later duur om terug te draaien.
-- **Toontekens consequent op elke lettergreep.** Een voorbeeld zonder toontekens is fout, niet onaf.
+- **Toontekens exact zoals de bron ze vastlegt — niets toevoegen, niets weglaten.** Middentoon wordt in Paiboon zonder teken geschreven, dus "een teken op elke lettergreep" is niet de regel: `chaa`, `yen` en `nom` zijn correct zoals ze zijn. De regel is trouw overschrijven. Een transliteratie waaruit de tekens zijn weggevallen is fout, niet onaf — maar een teken erbij verzinnen om een lettergreep "compleet" te maken is even fout, en dat is de fout die een taalmodel maakt zodra je het de eerste formulering geeft. Tot 2026-08-09 stond hier "consequent op elke lettergreep".
 - **De transliteratie van het voorbeeld en die van het lemma moeten identiek zijn** voor het doelwoord. Wijken ze af, dan is één van beide fout — controleer welke, en corrigeer de bron.
 
 ### Stap 5 — Engelse vertaling
@@ -188,7 +201,10 @@ Controleer vóór de audio-stap minstens:
 - Is elke Paiboon-vorm gecontroleerd tegen de masterlijst (aspiratie-h, klinkerlengte, tonen)?
 - Komt de transliteratie van het doelwoord in het voorbeeld overeen met die van het lemma?
 - Is elke vertaling natuurlijk Engels, verenigbaar met de gloss, en consistent met dialoog en notes?
-- Zijn ครับ/ค่ะ natuurlijk gebruikt en passen ze bij de stem die het voorbeeld gaat inspreken?
+- Gebruikt elk voorbeeld de volledige bundel van het `speaker_gender` dat aan het woord is toegewezen — ผม met ครับ, ฉัน met ค่ะ of คะ, nooit één vorm uit elke kolom?
+- Staat ค่ะ in mededelingen en คะ in vragen, en niet omgekeerd?
+- Is er nergens een voornaamwoord of partikel bijgeplakt in een zin die er geen wil?
+- Is de verdeling tussen de twee bundels over de lessen heen in evenwicht?
 - Staan instruerende teksten in de imperatief?
 - Is `display_order` aaneensluitend vanaf 1?
 
@@ -200,15 +216,16 @@ Waarom QA vóór audio en niet erna: elke tekstwijziging ná audiogeneratie maak
 
 Er zijn twee soorten audio op een Vocabulary Card, en ze worden apart gemaakt:
 
-**Lemma-audio** — het woord alleen, in citeervorm. Duidelijk en op normaal spreektempo, niet overdreven traag: een verlengde citeervorm vervormt de tonen en leert de leerling een uitspraak aan die hij in een zin nooit terughoort.
+**Lemma-audio** — het woord alleen, in citeervorm. Duidelijk en op normaal spreektempo, niet overdreven traag: een verlengde citeervorm vervormt de tonen en leert de leerling een uitspraak aan die hij in een zin nooit terughoort. Lemma-audio gebruikt altijd de vrouwelijke narrator: een los woord draagt geen `speaker_gender`, dus er valt niets af te leiden en een vaste keuze voorkomt een stemdiscussie per woord.
 
 **Voorbeeldaudio** — de volledige Thaise zin van elk voorbeeld.
 
 Regels voor beide:
 
 - **Voorbeeldaudio wordt nooit hergebruikt uit dialoogaudio**, ook niet wanneer de zin toevallig identiek zou zijn. Waarom: dialoogaudio is een personagestem in een scène, met de intonatie van dat moment. Een woordkaart hoort de neutrale instructiestem te gebruiken; een personagestem suggereert ten onrechte dat de zin uit een scène komt en bindt de kaart aan een personage dat er niets mee te maken heeft.
-- **Instructiestem, geen personagestem.** Alle kaartaudio gebruikt de vaste narratorstem. De standaard is de vrouwelijke narrator; de mannelijke wordt gebruikt wanneer de taal genderspecifiek is.
-- **Partikel en stem moeten overeenkomen.** Een zin die op ค่ะ eindigt wordt door een vrouwenstem ingesproken, een zin op ครับ door een mannenstem. Een mannenstem die ค่ะ zegt is voor elke Thai onmiddellijk fout en leert de leerling een verkeerde koppeling aan. Praktisch: kies het partikel al in Stap 3 passend bij de standaardstem, en wijk alleen af wanneer het voorbeeld juist het ครับ/ค่ะ-contrast toont.
+- **Instructiestem, geen personagestem.** Alle kaartaudio gebruikt een van de twee vaste narratorstemmen. Nooit de stem van Mali of Narin: dat zijn personagestemmen, en `scripts/voice-config.mjs` kent vandaag alleen die twee. De narratorstemmen moeten er nog bij komen; zie `docs/audio_pipeline_prompt.md`.
+- **De stem volgt de zin, en wordt niet apart opgeschreven.** Bevat de zin ผม of ครับ, dan de mannelijke narrator; anders de vrouwelijke. Daarom staat `voice_key` niet in de redactionele brondata en weigert de generator het veld: een lege `voice_key` betekent "leid af uit de tekst", niet "onbekend". Die afleiding kan niet mislopen zolang Stap 3 de bundel heel houdt — en als ze wél misloopt, is dat het bewijs dat de bundel gebroken is en hoort de tekst gecorrigeerd te worden, niet de stem.
+- **Een mannenstem die ค่ะ zegt is voor elke Thai onmiddellijk fout** en leert de leerling een verkeerde koppeling aan. Dat is geen audioprobleem maar een tekstprobleem: het `speaker_gender` wordt al in Stap 3 vastgelegd, per woord, en de audio voert het alleen uit.
 - **Na elke tekstwijziging wordt de audio van dát item opnieuw gegenereerd.** Tekst en audio die niet overeenkomen zijn erger dan geen audio: de leerling traint zijn oor op de verkeerde zin.
 - **Dit is dezelfde tijdelijke TTS-pipeline als bij de dialogen**, later vervangen door opnames met stemacteurs. Investeer geen tijd in het verfraaien ervan; de redactionele regel is alleen: elk gepubliceerd lemma en elk gepubliceerd voorbeeld heeft audio, en die audio komt overeen met de exacte huidige tekst.
 
@@ -286,7 +303,7 @@ Voor de tekencodering gelden dezelfde twee valkuilen als bij de Language Notes, 
       "example_key": "e1",
       "thai_script": "ฉันชอบชาเย็นค่ะ",
       "paiboon": "chǎn chɔ̂ɔp chaa yen kâ",
-      "translation_en": "I'd like iced tea."
+      "translation_en": "I like iced tea."
     }
   ]
 }
@@ -379,6 +396,8 @@ Haal daarna ook de bijbehorende JSON weg, anders komt de rij bij de volgende run
 - **Een dialoogzin kopiëren.** Voelt efficiënt, maar bindt een permanente kaart aan één scène.
 - **Het budget meten tegen de verkeerde les.** Meet altijd tegen de introductieles van het wóórd, niet tegen de les waarin je werkt — zie "Bestaande cards bewerken".
 - **Eén woord smokkelen.** Het voelt als een detail en is de reden dat de leerling denkt dat hij iets gemist heeft.
+- **Eén vorm uit elke kolom.** `ผมชอบกาแฟค่ะ` — een mannelijk voornaamwoord met een vrouwelijk partikel. Het woordbudget verhindert het niet, want beide voornaamwoorden staan er vanaf les 1 in. Sinds er twee bundels zijn, is dit de fout die het vaakst zal opduiken.
+- **Een partikel bijplakken om een `speaker_gender` te tonen.** Een zin die geen eerste persoon en geen eindpartikel heeft, draagt er geen. `นมหวานมากครับ` is niet "beleefder", het is een zin waar iemand iets in heeft gehangen.
 - **Paiboon uit het hoofd.** De meest voorkomende én best verstopte fout. Aspiratie-h en klinkerlengte zijn de bekende recidivisten; อัว wordt per woord bevestigd, nooit afgeleid.
 - **Voorbeeldvertaling die de gloss tegenspreekt.** Twee betekenissen op één kaart zonder dat iemand het merkt.
 - **Een tweede voorbeeld schrijven voor een tweede functie.** Tot 2026-08-07 was dit de voorgeschreven werkwijze; sindsdien is het een fout. Zie beslissing 2 en 3.
@@ -391,7 +410,7 @@ Haal daarna ook de bijbehorende JSON weg, anders komt de rij bij de volgende run
 
 ## Toekomstige uitbreidbaarheid
 
-- **AI-ondersteund voorstel voor voorbeeldzinnen.** Het woordbudget van Stap 2 en de werklijst van Stap 1 zijn precies de input die een generatieve stap nodig heeft: "hier is het toegestane vocabulaire, hier zijn de doelwoorden, stel per woord één voorbeeld voor". Dat is een geplande volgende stap — zie taak 3 van `docs/vocab_card_prompts.md`. Deze gids is daarom kanaal-agnostisch geschreven: nergens staat *wie* de zin bedenkt, alleen welke regels de zin moet halen. Wanneer die stap er is, komt hij tussen Stap 2 en Stap 3, en blijven alle redactionele regels en goedkeuringsmomenten ongewijzigd gelden.
+- **~~AI-ondersteund voorstel voor voorbeeldzinnen.~~ Gebouwd op 2026-08-09**, zie "De voorbeelden laten voorstellen" in Stap 3. Het woordbudget van Stap 2 en de werklijst van Stap 1 bleken inderdaad precies de input die de generatieve stap nodig had. Alle redactionele regels en goedkeuringsmomenten gelden ongewijzigd; deze gids blijft kanaal-agnostisch geschreven, en nergens staat *wie* de zin bedenkt — alleen welke regels de zin moet halen.
 - **Geautomatiseerd publicatierapport** dat de punten van Stap 10 afloopt, in het bijzonder de progressieregel — die is machinaal volledig controleerbaar zodra het budget formeel wordt vastgesteld.
 - **Stemacteurs vervangen de TTS-audio** zodra het A1-traject inhoudelijk staat. Alleen Stap 9 verandert dan (opnemen in plaats van genereren); alle redactionele regels blijven gelden. Op dat moment wordt ook de afweging in Stap 11 herzien: opgenomen audio is een asset die niet opnieuw berekend kan worden, en moet dan wél duurzaam bewaard worden.
 - **Extra weergavevelden op de kaart** (bijvoorbeeld een classifier bij naamwoorden, of een tegengesteld woord) zijn denkbaar. Tot ze bestaan, hoort die informatie in `usage_note` of in een Language Note — niet verstopt in een voorbeeldzin.
@@ -431,25 +450,51 @@ Deze beslissingen zijn vastgelegd op 2026-08-07 en gelden voor alle Vocabulary C
 
    **`is_multifunctional` is geen trigger voor deze beslissing.** 145 van de 513 woorden staan op true; die allemaal behandelen zou een onhoudbare notelast opleveren. De vlag zegt dat het woord meerdere functies *heeft*, niet dat dit curriculum ze allebei *gebruikt*. Die tweede vraag is een oordeel per woord, en het wordt genomen op het moment dat de tweede functie werkelijk in een les opduikt — niet vooruit, op basis van een kolom.
 
-4. **Eén vrouwelijke standaardstem, en dus ค่ะ als standaardpartikel.** Alle kaartaudio — lemma én voorbeeld — gebruikt de vaste vrouwelijke instructiestem. Een mannenstem wordt alleen ingezet in voorbeelden die het ครับ/ค่ะ-contrast zélf tonen.
+4. **Lemma-audio in één vrouwelijke stem; voorbeelden in beide bundels, bewust verdeeld.** Een los lemma draagt geen `speaker_gender` en krijgt altijd de vrouwelijke narrator. Een voorbeeldzin krijgt per woord een toegewezen `speaker_gender`, `female` of `male`, en er wordt over de lessen heen naar evenwicht gestreefd.
 
-   Deze beslissing is **letterlijk gelijk aan vastgelegde beslissing 2 van de Language Note-gids**, en dat is de bedoeling: kaart en note verschijnen in dezelfde les, en van stem wisselen tussen die twee is voor de leerling onverklaarbaar. Wijzigt die beslissing daar, dan wijzigt ze hier mee.
+   Deze beslissing is **letterlijk gelijk aan vastgelegde beslissing 2 van de Language Note-gids**, en dat is de bedoeling: kaart en note verschijnen in dezelfde les, en van sprekersgeslacht wisselen tussen die twee zonder reden is voor de leerling onverklaarbaar. Wijzigt die beslissing daar, dan wijzigt ze hier mee.
 
-   **Gegenderde elementen vormen één bundel.** Stem, beleefdheidspartikel én eerste persoon horen bij elkaar; klopt er één niet, dan klopt de zin niet. Voor de vrouwelijke standaardstem:
+   **Herzien op 2026-08-09.** Tot dan gold hier één vrouwelijke standaardstem en dus ค่ะ als standaardpartikel, met een mannenstem alleen in voorbeelden die het contrast zélf tonen. Drie redenen om dat om te draaien, in volgorde van gewicht.
 
-   | | Standaard in canonieke voorbeelden |
-   | --- | --- |
-   | eerste persoon | ฉัน (*chǎn*) — nooit ผม |
-   | mededeling | ค่ะ (*kâ*) |
-   | vraag | คะ (*ká*) |
+   *De bundelregel was onbeproefd.* "Nooit ผม" is een verbod op één woord, en dat haalt elk model. Wat we daarmee nooit te weten kwamen, is of het model de vormen kan *koppelen*. Met twee bundels wordt van een verbod een invariant die elke run wordt uitgeoefend en die in Stap 8 te controleren is.
 
-   ค่ะ en คะ zijn niet uitwisselbaar: ชอบเค้กไหม**คะ**, nooit ไหม**ค่ะ**. En het voornaamwoord vangt zichzelf niet af — `vocabulary_master` bevat zowel `i` (ฉัน) als `i_male` (ผม), allebei geïntroduceerd in les 1, dus allebei staan ze vanaf les 1 in elk woordbudget. Niets in dat budget verhindert `ผมชอบกาแฟค่ะ`. Waarom dit gat juist hier bestaat: in een dialoog regelen de personages het, maar een canoniek voorbeeld heeft geen personage — alleen de instructiestem, en dat is precies het element dat de keuze automatisch maakte.
+   *Een mannelijke leerling zag nergens een zin die hij zelf kan zeggen.* Bij 513 kaarten met elk één voorbeeld is dat een groot oppervlak om ongebruikt te laten, en het kost redactioneel niets extra.
+
+   *De kosten vielen weg bij nader inzien.* Er bestaat vandaag nog geen kaartaudio en `scripts/voice-config.mjs` kent nog geen enkele narratorstem — alleen de personagestemmen `mali` en `narin`, die op een kaart juist verboden zijn. Eén narrator en twee narrators zijn allebei werk dat nog gedaan moet worden; het verschil is één regel configuratie, geen herontwerp.
+
+   **Gegenderde elementen vormen één bundel.** Stem, beleefdheidspartikel én eerste persoon horen bij elkaar; klopt er één niet, dan klopt de zin niet. Neem nooit één vorm uit de ene kolom en één uit de andere:
+
+   | | `speaker_gender: female` | `speaker_gender: male` |
+   | --- | --- | --- |
+   | eerste persoon | ฉัน (*chǎn*) | ผม (*pǒm*) |
+   | mededeling | ค่ะ (*kâ*) | ครับ (*kráp*) |
+   | vraag | คะ (*ká*) | ครับ (*kráp*) |
+
+   Let op de asymmetrie onderaan: ค่ะ en คะ zijn niet uitwisselbaar — ชอบเค้กไหม**คะ**, nooit ไหม**ค่ะ** — terwijl ครับ in beide gevallen ครับ blijft.
+
+   **Het `speaker_gender` is een beperking, geen opdracht om een voornaamwoord te gebruiken.** Veel natuurlijke Thaise zinnen hebben geen eerste persoon en geen eindpartikel; die dragen er dan ook geen, en hun toewijzing blijft simpelweg ongebruikt. Plak nooit een voornaamwoord of partikel op een zin die er geen wil, alleen om een toegewezen `speaker_gender` zichtbaar te maken. Zulke zinnen tellen ook niet mee in het evenwicht.
+
+   **Waarom `speaker_gender` en niet `register`.** "Register" lag voor de hand en was de eerste keuze, maar `register` is een bestaande kolom met een check constraint op vijf mastertabellen — `dialogs`, `vocabulary_master`, `grammar_master`, `pattern_master` en `phrase_master` — waar hij formaliteit betekent (`formal`, `informal`). `vocabulary_example_brief_view.target_words` levert die kolom bovendien al mee, dus twee betekenissen zouden op één regel van de werklijst terechtkomen. En het is precies het domein waar de andere betekenis thuishoort: beleefdheidspartikels *zijn* een registerverschijnsel in de formaliteitszin. `speaker_gender` zegt wat het bestuurt en botst nergens.
+
+   **Wie het `speaker_gender` toewijst.** Jij, vóór de generatiestap, per doelwoord. Niet het model: dan verschilt de uitkomst tussen twee runs en drijft ze af naar wat het model natuurlijk vindt, en dan is de regel niet meer te controleren. Zie `supabase/planning/09_vocabulary_example_prompt_template.md`.
+
+   **Het budget vangt dit niet af.** `vocabulary_master` bevat zowel `i` (ฉัน) als `i_male` (ผม), allebei geïntroduceerd in les 1, dus allebei staan ze vanaf les 1 in elk woordbudget. Niets in dat budget verhindert `ผมชอบกาแฟค่ะ`. Waarom dit gat juist hier bestaat: in een dialoog regelen de personages het, maar een canoniek voorbeeld heeft geen personage — alleen het toegewezen `speaker_gender`, en dat moet dus expliciet gemaakt worden.
 
 5. **Een beleefdheidspartikel staat er waar een Thai het echt zou zeggen.** Bij aanspreken, antwoorden en vragen wel; bij een losse constatering niet. Waarom niet altijd: elk voorbeeld op ค่ะ laten eindigen maakt de zinnen beleefd maar ook eentonig, en het verstopt de kale zinsstructuur die de leerling juist moet leren zien. Voer het onderscheid consequent door, zodat de aanwezigheid van het partikel zelf informatie draagt in plaats van decoratie te zijn.
 
 6. **Geen eigennamen in canonieke voorbeelden.** Gebruik een voornaamwoord, of laat het onderwerp weg zoals in natuurlijk Thais gebruikelijk is. Twee redenen die samenvallen: een naam is leesmateriaal in Thais schrift dat nergens is aangeleerd (zie de progressieregel — eigennamen tellen mee in het budget), en de namen die voor de hand liggen zijn Mali en Narin, wat het voorbeeld meteen aan een scène bindt die het niet mag hebben.
 
-7. **Prompts en audit trail volgen het bestaande kanaal.** Blanco template in `supabase/planning/`, ingevulde prompt in `supabase/prompts/`, modeloutput in `supabase/generation/`, alles in versiebeheer — zoals bij de dialogen en de Language Notes. De concrete invulling voor deze keten wordt niet hier beslist maar in taak 3 van `docs/vocab_card_prompts.md`, en landt in Stap 11 van deze gids. Waarom als verwijzing en niet als eigen beslissing: het is één beslissing over drie ketens, en drie plaatsen waar ze staat is twee te veel.
+7. **Prompts en audit trail volgen het bestaande kanaal.** Blanco template in `supabase/planning/`, ingevulde prompt in `supabase/prompts/`, modeloutput in `supabase/generation/`, alles in versiebeheer — zoals bij de dialogen en de Language Notes.
+
+   Uitgewerkt op 2026-08-09. Voor deze keten:
+
+   | | Pad |
+   | --- | --- |
+   | template | `supabase/planning/09_vocabulary_example_prompt_template.md` |
+   | ingevulde prompt | `supabase/prompts/vocabulary-examples/a1_dialog_XX_examples_prompt.md` |
+   | modeloutput | `supabase/generation/vocabulary-examples/a1_dialog_XX_examples.json` |
+
+   Eén template, geen planner en schrijver — anders dan bij de Language Notes, waar `07` en `08` naast elkaar staan omdat de verdeling concepten → notes goedkeuring vraagt vóór er geschreven wordt. Hier valt er niets te verdelen: elk doelwoord krijgt precies één voorbeeld en de werklijst volgt rechtstreeks uit de brief-view. De twee goedkeuringsmomenten van Stap 1 en Stap 2 blijven bestaan; ze liggen vóór het invullen van de prompt in plaats van tussen twee prompts.
 
 8. **Een voorbeeld wordt geïdentificeerd via de sleutel van het wóórd, nooit via een les.** Een sleutel in de vorm `a1-dialog-03-...` is fout, ook al is dat de conventie bij de Language Notes — daar hoort een voorbeeld bij een les, hier bij een woord. Dat verschil is de lesneutraliteit uit "De twee eigenaarschappen", en het hoort ook in de brondata zichtbaar te zijn.
 
@@ -459,7 +504,7 @@ Deze beslissingen zijn vastgelegd op 2026-08-07 en gelden voor alle Vocabulary C
 
 1. Verzamel de doelwoorden, controleer bestaande voorbeelden, en stel de werklijst op; laat die goedkeuren (Stap 1).
 2. Stel het toegestane woordbudget vast volgens de progressieregel; laat het goedkeuren (Stap 2).
-3. Schrijf per woord één voorbeelddrieluik — lesneutraal, zelfstandig leesbaar, binnen budget (Stap 3).
+3. Wijs per doelwoord een `speaker_gender` toe (`female` of `male`) en schrijf één voorbeelddrieluik — lesneutraal, zelfstandig leesbaar, binnen budget (Stap 3).
 4. Controleer elke Paiboon-vorm tegen de masterlijst; bevestig อัว-klinkerlengte per woord (Stap 4).
 5. Schrijf natuurlijke Engelse vertalingen, verenigbaar met de gloss en consistent met dialoog en notes (Stap 5).
 6. Controleer lemma-teksten en lesnotities; instruerende tekst in de imperatief (Stap 6).

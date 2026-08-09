@@ -110,9 +110,24 @@ phrase`.
 
 ## The Lesson Dialogue
 
-Every note anchors to this dialogue: the opening paragraph hooks onto
-what the learner has just read. Use the dialogue also to see which
-sentences lend themselves to being the first example.
+Every note anchors to this dialogue **in its opening paragraph and
+nowhere else.** That paragraph quotes the Thai fragment the learner has
+just read, with the dialogue's own translation.
+
+The example groups do not. Never plan a sentence from the dialogue below
+as an example — it sits on the same lesson page, already carrying its
+transliteration and translation, so an example slot spent on it buys less
+than a fresh application of the same point. An example that *resembles*
+one is fine; a copy is not.
+
+This applies to **this lesson's** dialogue, the only one you can see.
+Echoing a sentence from an earlier lesson is not the same thing and is
+often the better example: the learner does not have it in front of him,
+so the echo shows him the new element with everything else already
+familiar.
+
+Use the dialogue to decide which fragment each note's paragraph should
+quote.
 
 {{dialog_text}}
 
@@ -133,7 +148,9 @@ zero `usage_tip` blocks is complete; never add one to reach a count.
 
 - **`paragraph`** — the workhorse. Every note opens with a `paragraph`
   that introduces the concept in two to four sentences and anchors it to
-  the dialogue. One idea per block; a second idea gets its own block.
+  the dialogue by quoting a Thai fragment from it. Name that fragment in
+  the plan: it is the note's only contact with the dialogue. One idea per
+  block; a second idea gets its own block.
 - **`subheading`** — only for notes with clearly separated sub-topics
   (for example "Asking" and "Answering"). **Never the first block** (the
   title already does that work), **never the last block** (a heading
@@ -151,11 +168,40 @@ zero `usage_tip` blocks is complete; never add one to reach a count.
 - **`example_group`** — two to four examples of the same language point.
   **Required for every note that explains a pattern or construction:**
   explanation without examples is not verifiable for an A1 learner. To
-  show a contrast, plan two groups.
+  show a contrast, plan two groups. Give each planned example a
+  `speaker_gender` — see "Speaker Gender" below.
 - **`usage_tip`** — one concrete tip: a pitfall, a politeness nuance, a
   difference from English. One tip per block, at most one or two tip
   blocks per note. Tips draw their force from scarcity: if the concept
   has no pitfall, the note gets no tip.
+
+## Speaker Gender
+
+Note examples are read by two fixed instruction voices, one female and
+one male. **Every planned example gets a `speaker_gender`: `female` or
+`male`.** The writing phase follows that assignment; it does not choose.
+
+| | `speaker_gender: female` | `speaker_gender: male` |
+| --- | --- | --- |
+| First person | ฉัน | ผม |
+| Statement particle | ค่ะ | ครับ |
+| Question particle | คะ | ครับ |
+
+Two rules govern the assignment.
+
+**Aim for balance across the lesson.** Not an exact half — with three
+examples that is impossible — but no lesson where every example is the
+same `speaker_gender`.
+
+**Only examples that carry a gendered element count.** Many examples have
+no first person and no final particle: กาแฟร้อน and ชาเย็น are bare noun
+phrases. Such an example carries no `speaker_gender`, and it does not count
+towards the balance. Never plan an example that exists only to display a
+`speaker_gender` — and never plan one that would need a pronoun or a particle
+bolted on to show it.
+
+A note that teaches the male/female contrast itself is the one case where
+both bundles must appear side by side. Say so in the justification.
 
 Two skeletons, depending on what the note explains. A note about a
 language pattern:
@@ -200,7 +246,9 @@ split.
    validation worthless.
 3. **Choose a functional title** — see the title conventions below.
 4. **Design the block skeleton** — see "Block Types" above. Per note,
-   pick only the types the language point calls for.
+   pick only the types the language point calls for. Assign a
+   `speaker_gender` to every planned example, and check the balance across
+   the lesson before you finish — see "Speaker Gender".
 5. **Decide the order of the notes.** The learner reads them top to
    bottom. The note about the central lesson goal comes first;
    supporting notes (pronunciation, register, culture) after it. The
@@ -249,7 +297,7 @@ Use exactly this structure.
 - Block skeleton:
   1. paragraph — <what goes in it, one line>
   2. formula — <which pattern>
-  3. example_group — <which language point, how many examples, which dialogue sentence first>
+  3. example_group — <which language point, how many examples, speaker_gender per example>
   4. usage_tip — <which pitfall>
 
 ### Note 2 — <title>
@@ -286,11 +334,9 @@ Use exactly this structure.
   script if you must, but write no Paiboon — you do not have the
   recorded forms here, and a reconstructed form that lands in the
   proposal gets copied unquestioned in the writing phase.
-- **Examples are read by a female instruction voice.** So they use ฉัน,
-  ค่ะ and คะ — never ผม or ครับ. Do not propose a note whose examples
-  need the male forms, unless the note teaches the male/female register
-  contrast itself; in that case say so explicitly in the justification,
-  because it changes which voice records those examples.
+- **Assign a `speaker_gender` to every planned example**, `female` or
+  `male`. See "Speaker Gender" below. This is part of the plan, not of the writing
+  phase.
 - **No `subheading` as the first or last block**, and never two in a
   row.
 - **No `formula` without an `example_group`** in the same note.
@@ -381,6 +427,14 @@ where v.lesson_key = 'a1-dialog-XX';
   de prompt. Dat zijn identity-waarden die na een `db reset` kunnen
   verschuiven; ze dienen om achteraf te controleren dat de seed dezelfde
   rij vond, niet om ergens ingevuld te worden.
+- **De verdeling van `speaker_gender` is jouw beslissing, niet die van het model.** Het
+  voorstel doet er een gooi naar; jij zet hem recht vóór je het plan
+  goedkeurt. Laat je die keuze staan zoals het model hem doet, dan
+  verschilt ze tussen twee runs en drijft ze af naar wat het model
+  natuurlijk vindt — en dan is de regel in Stap 7 van de gids niet meer
+  te controleren. Kijk daarbij ook over de les heen: het evenwicht geldt
+  over het hele traject, en één les met drie voorbeelden laat zich niet
+  netjes halveren.
 - Wijkt je oordeel bij het reviewen af van de `requires_explanation`-vlag,
   pas dan het leslink-seedbestand aan en draai het opnieuw — niet alleen
   de database. Een correctie die alleen in de database staat, verdwijnt

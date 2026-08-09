@@ -58,10 +58,10 @@ Output Contract exactly, and nothing else.
 ## Approved Note Plan
 
 This plan is final and human-approved. Follow the note division, the
-titles, the concept claims and the block skeletons as given. If you
-believe something in the plan is wrong, follow it anyway and do not
-comment — corrections are made by a human between runs, not silently
-inside one.
+titles, the concept claims, the block skeletons and the `speaker_gender`
+assigned to each planned example, as given. If you believe something in
+the plan is wrong, follow it anyway and do not comment — corrections are
+made by a human between runs, not silently inside one.
 
 There is exactly one exception, and it is about form rather than
 content: a formula written in the master-list style is rewritten in the
@@ -136,14 +136,34 @@ list you may use.
 
 ## The Lesson Dialogue
 
-Every note anchors to this dialogue: the opening paragraph hooks onto
-what the learner has just read. Reusing a dialogue sentence — literally
-or lightly simplified — as the first example works well: recognition
-first, variation after.
+Every note anchors to this dialogue, and it does so **in its opening
+paragraph and nowhere else.**
 
-Translations of sentences taken from the dialogue must match the
-dialogue translations exactly. Two different translations of the same
-sentence on one lesson page is an error, not stylistic variation.
+**The paragraph quotes.** Name the Thai fragment the learner has just
+read, in Thai script, with its English translation, and take that
+translation from the dialogue below — word for word. Two different
+translations of the same sentence on one lesson page is an error, not
+stylistic variation. This works well:
+
+> In the dialogue, Narin and Mali both ask จะดื่มอะไร — "What will you
+> drink?". จะ comes before a verb and shows what someone intends or is
+> going to do.
+
+**The examples do not.** Never copy a sentence from the dialogue below
+into an `example_group`. It sits on the same lesson page, twenty lines
+above, already carrying its transliteration and its translation; an
+example slot spent on a sentence the learner just read buys less than a
+fresh application of the same point.
+
+A sentence that *resembles* one is fine — ฉันจะดื่มกาแฟค่ะ alongside
+จะดื่มอะไรครับ is the same pattern with different words, and that is
+exactly what you want. A copy is not.
+
+This applies to **this lesson's** dialogue, which is the only one you can
+see. Echoing a sentence from an earlier lesson is not the same thing and
+is often the better example: the learner met ไปด้วยกัน in an earlier
+lesson and does not have it in front of him now, so จะไปด้วยกัน shows him
+the new element with everything else already familiar.
 
 {{dialog_text}}
 
@@ -168,8 +188,11 @@ often just a paragraph plus an example group.
 
 - **`paragraph`** — two to four sentences, one idea per block. Every
   note opens with a paragraph that introduces the concept and anchors it
-  to the dialogue ("In the dialogue, Mali asked ... — that little word
-  at the end is ...").
+  to the dialogue by quoting the Thai fragment with its dialogue
+  translation ("In the dialogue, Mali asked ... — that little word at the
+  end is ..."). This is the only place a note touches the dialogue, so
+  the quote has to be real: name the actual fragment, not "as you just
+  saw".
 - **`subheading`** — only for notes with clearly separated
   sub-topics. Never the first block, never the last block, never two in
   a row.
@@ -194,36 +217,52 @@ often just a paragraph plus an example group.
   nicer example. The learner cannot tell what he is supposed to know and
   what not; every unknown word feels like a gap in his knowledge.
 - **Never use vocabulary from later lessons.**
+- **Never a copy of a dialogue sentence** — see "The Lesson Dialogue".
 - Short, complete, natural sentences — the way a Thai person would
   actually say them, including polite particles where natural. Not
   artificial telegram sentences.
-- Order is didactics: simplest or most recognisable example first.
+- Order is didactics: the barest form of the pattern first, richer
+  applications after.
 
 ### Voice, particles and pronouns
 
-Note examples are read by a single **female** instruction voice. That is
-not only a particle choice: **the gendered elements of a sentence form
-one bundle.** Voice, polite particle and first-person pronoun must agree,
-or the sentence is immediately wrong to a Thai ear.
+Note examples are read by two fixed instruction voices, one female and
+one male. Which of the two reads a given example is **not yours to
+choose**: the approved plan assigns a `speaker_gender` to every planned
+example, and that assignment is binding.
 
-| | Default for note examples |
-| --- | --- |
-| First person | ฉัน (`chǎn`) — **never** ผม |
-| Statement particle | ค่ะ (`kâ`) |
-| Question particle | คะ (`ká`) |
+**The gendered elements of a sentence form one bundle.** Voice, polite
+particle and first-person pronoun belong together; if one of them is
+wrong the sentence is wrong, and it is immediately wrong to a Thai ear.
+Never take one form from one column and one from the other:
 
-So: ชอบเค้กไหม**คะ** (`chɔ̂ɔp kéek mǎi ká`), never ไหม**ค่ะ**. And
-ฉันชอบกาแฟค่ะ, never ผมชอบกาแฟค่ะ — ผม is a male pronoun and cannot
-share a sentence with ค่ะ.
+| | `speaker_gender: female` | `speaker_gender: male` |
+| --- | --- | --- |
+| First person | ฉัน (`chǎn`) | ผม (`pǒm`) |
+| Statement particle | ค่ะ (`kâ`) | ครับ (`kráp`) |
+| Question particle | คะ (`ká`) | ครับ (`kráp`) |
 
-Both pronouns appear in "Available Vocabulary" (`i` = ฉัน,
-`i_male` = ผม), so nothing in that list stops you from picking the wrong
-one. This rule does.
+Note the asymmetry in the bottom two rows. The female forms differ
+between a statement and a question and are not interchangeable: it is
+ชอบเค้กไหม**คะ** (`chɔ̂ɔp kéek mǎi ká`), never ไหม**ค่ะ**. The male form
+is ครับ in both.
 
-Use ผม together with ครับ (`kráp`) only in a note that teaches the
-male/female register contrast itself. In a dialogue the characters
-settle this by themselves; a note has no character, only the instruction
-voice, which is why it has to be stated here.
+ผมชอบกาแฟค่ะ is the error this section exists to prevent: ผม is a male
+pronoun and cannot share a sentence with ค่ะ. Both pronouns appear in
+"Available Vocabulary" (`i` = ฉัน, `i_male` = ผม), so nothing in that
+list stops you from picking the wrong one. The assigned `speaker_gender`
+does.
+
+**A `speaker_gender` is a constraint, not an instruction to use a
+pronoun.** Many
+examples have no first person and no final particle at all — กาแฟร้อน and
+ชาเย็น are bare noun phrases. Such an example carries no gendered element
+and its `speaker_gender` goes unused. Never bolt a pronoun or a particle
+onto an example that does not want one just because one was assigned.
+
+In a dialogue the characters settle all of this by themselves; a note has
+no character, only the instruction voices, which is why it has to be
+stated here.
 
 Do not translate the particle as a separate word in the English line.
 Its politeness lives in the tone of the English sentence, or stays
@@ -249,8 +288,11 @@ it looks more familiar.
 - ง = `ng`, จ = `j`, ช = `ch`
 - Syllable-final ย is written `i` (not `y`); syllable-final ว is written
   `o` or `u` depending on the vowel pattern (not `w`)
-- Tone marks on every syllable. An example without tone marks is not
-  "nearly done" — it is wrong.
+- Tone marks exactly as the source records them — none added, none
+  dropped. Mid tone is written without a mark in Paiboon, so "a mark on
+  every syllable" is not the rule; copying faithfully is. A
+  transliteration with the marks stripped out is not "nearly done", it
+  is wrong.
 - For words with the อัว/อวย vowel pattern (สวย, ครัว, ช่วย, ป่วย),
   whether it is spelled with a single or double `u` cannot be derived
   from the script and varies per word. Use whatever spelling that exact
@@ -406,15 +448,15 @@ safe to imitate.
           "examples": [
             {
               "example_key": "e1",
-              "thai_script": "ชอบเค้กไหมคะ",
-              "paiboon": "chɔ̂ɔp kéek mǎi ká",
-              "translation_en": "Do you like cake?"
-            },
-            {
-              "example_key": "e2",
               "thai_script": "กาแฟร้อนไหมคะ",
               "paiboon": "gaa-faae rɔ́ɔn mǎi ká",
               "translation_en": "Is the coffee hot?"
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ดื่มชาไหมครับ",
+              "paiboon": "dʉ̀ʉm chaa mǎi kráp",
+              "translation_en": "Do you drink tea?"
             }
           ]
         },
@@ -432,8 +474,8 @@ safe to imitate.
             },
             {
               "example_key": "e2",
-              "thai_script": "อร่อยค่ะ",
-              "paiboon": "à-rɔ̀i kâ",
+              "thai_script": "อร่อยครับ",
+              "paiboon": "à-rɔ̀i kráp",
               "translation_en": "Yes, it is."
             }
           ]
@@ -494,8 +536,23 @@ safe to imitate.
 }
 ```
 
-Note what the second note demonstrates: a single example group needs no
-heading, and `example_key` starts again at `e1` in every block.
+Four things this example demonstrates.
+
+The opening paragraph of note 1 quotes ชอบเค้กด้วยไหมคะ from the
+dialogue, with the dialogue's own translation — and no example group
+repeats it. That is the division of labour: the paragraph recognises, the
+examples apply.
+
+Both bundles appear, each one whole: ...ไหม**คะ** and
+...ไหม**ครับ** in the asking group, ...**ค่ะ** and ...**ครับ** in the
+answering group. No sentence mixes the two.
+
+The examples in note 2 are bare noun phrases. They carry no first person
+and no final particle, so they carry no `speaker_gender` at all — and nothing was
+added to give them one.
+
+And, mechanically: a single example group needs no heading, and
+`example_key` starts again at `e1` in every block.
 
 ## Corrections
 
@@ -516,24 +573,28 @@ Verify all of these before you produce output:
 2. Every Paiboon form was copied from that list — or, for that one
    exception, from the dialogue transliteration. Nothing reconstructed.
 3. No `kh`, `th` or `ph` anywhere in the transliteration.
-4. Every syllable carries a tone mark.
+4. Every tone mark stands exactly where its source put it — none added,
+   none dropped.
 5. No `[uncertain]` remains — if one does, you used a word you should
    not have used.
 6. Every `formula` block reads `[slot] + fixed element = function`, with
    lower-case slot names in square brackets — not the master-list style
    (`จะ + VERB`) and never without the `=` part.
-7. Questions end in คะ (`ká`), statements in ค่ะ (`kâ`); no ครับ unless
-   this note teaches the contrast.
-8. No example contains ผม. First person is ฉัน (`chǎn`) — a male pronoun
-   in a sentence ending in ค่ะ or คะ is the same error as a male voice
-   saying ค่ะ.
+7. Every example uses the bundle of the `speaker_gender` the plan assigned to
+   it, and never one form from each column: ผม goes with ครับ, ฉัน goes
+   with ค่ะ or คะ. Within `speaker_gender: female`, statements end in ค่ะ
+   (`kâ`) and questions in คะ (`ká`) — never the other way around.
+8. No pronoun and no particle was added to an example that does not want
+   one.
 9. Every note opens with a `paragraph` that anchors to the dialogue.
 10. Every note that explains a pattern or construction has an
    `example_group`; no `formula` stands without one.
 11. No `example_group` is empty; no `subheading` is the first or last
    block; no two `subheading` blocks are adjacent.
 12. Where a note has two or more example groups, each has a `heading`.
-13. Sentences taken from the dialogue carry the dialogue's translation.
+13. No `example_group` contains a copy of a dialogue sentence, and every
+    opening paragraph quotes a real Thai fragment with the dialogue's own
+    translation.
 14. Every note has at least one entry in `concepts`, every `key` was
     copied literally from "Concepts You May Claim", and every concept
     listed there appears in at least one note.
