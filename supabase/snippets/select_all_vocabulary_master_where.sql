@@ -1,2 +1,2 @@
 select * from vocabulary_master
-where thai_script ilike '%มาก%';
+where english_gloss = 'cool';

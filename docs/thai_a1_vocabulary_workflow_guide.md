@@ -108,14 +108,11 @@ Deze lijst geldt voor alle doelwoorden van deze les tegelijk, zolang ze dezelfde
 
 #### De briefing ophalen
 
-`vocabulary_example_brief_view` beantwoordt Stap 1 en Stap 2 in één query. Draaien met (PowerShell):
+`vocabulary_example_brief_view` beantwoordt Stap 1 en Stap 2 in één rij.
 
-```powershell
-$env:PGCLIENTENCODING="UTF8"
-psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -P pager=off -c "select jsonb_pretty(to_jsonb(v)) from public.vocabulary_example_brief_view v where lesson_key = 'a1-dialog-03';"
-```
+**De queries die je bij het invullen draait, staan in de mapping-checklist onderaan het template `supabase/planning/09_vocabulary_example_prompt_template.md` — niet in deze gids.** Twee stuks: één voor de werklijst, één voor het budget. Ze leveren precies de velden die de prompt nodig heeft, in de vorm die je plakt. Deze gids beschrijft wát de stap oplevert en waarom; het template draagt de mechaniek van het invullen, en die hoort op één plaats te staan.
 
-`PGCLIENTENCODING` is niet optioneel: zonder UTF-8 komt het Thaise schrift als vraagtekens terug en beoordeel je iets anders dan wat er in de database staat.
+**Wil je de rij zelf bekijken — bijvoorbeeld omdat er twee budgetblokken verschijnen of een waarde ontbreekt — doe dat dan in Supabase Studio.** Niet via psql: op een Windows-console verschijnt ได้ als `à¹"à¸"à¹%` zodra `chcp 65001` ontbreekt, en ook mét de juiste codepage klopt de uitlijning niet bij combinerende toontekens. Correcte bytes, verkeerd getekend — je beoordeelt dan iets anders dan wat er in de database staat. Zie "psql op Windows" in `docs/thai_a1_dialog_workflow_guide.md` voor de gevallen waarin psql wél nodig is; daar gaat het altijd om bestanden draaien of om md5-vergelijkingen, nooit om Thais van het scherm lezen.
 
 Twee kolommen dragen het werk:
 
@@ -150,7 +147,7 @@ De zinnen worden vandaag door een model voorgesteld, met `supabase/planning/09_v
 
 Twee dingen die je vóór het invullen zelf beslist, omdat een model ze niet reproduceerbaar beslist:
 
-- **Het `speaker_gender` per doelwoord** (`female` of `male`) — zie vastgelegde beslissing 4.
+- **Het `speaker_gender` per doelwoord** (`female` of `male`) — het model verdeelt, jij corrigeert bij het nalezen; zie vastgelegde beslissing 4.
 - **Welke woorden meedoen** — de werklijst wordt gefilterd op `needs_example`, zodat een woord dat zijn voorbeeld al heeft de prompt niet eens bereikt.
 
 De prompt noemt de les nergens, en de brief-view geeft de dialoog niet mee. Dat is geen omissie maar de lesneutraliteit uit "De twee eigenaarschappen", mechanisch gemaakt: wat het model niet weet te bestaan, kan het niet als anker gebruiken.
@@ -476,13 +473,23 @@ Deze beslissingen zijn vastgelegd op 2026-08-07 en gelden voor alle Vocabulary C
 
    **Waarom `speaker_gender` en niet `register`.** "Register" lag voor de hand en was de eerste keuze, maar `register` is een bestaande kolom met een check constraint op vijf mastertabellen — `dialogs`, `vocabulary_master`, `grammar_master`, `pattern_master` en `phrase_master` — waar hij formaliteit betekent (`formal`, `informal`). `vocabulary_example_brief_view.target_words` levert die kolom bovendien al mee, dus twee betekenissen zouden op één regel van de werklijst terechtkomen. En het is precies het domein waar de andere betekenis thuishoort: beleefdheidspartikels *zijn* een registerverschijnsel in de formaliteitszin. `speaker_gender` zegt wat het bestuurt en botst nergens.
 
-   **Wie het `speaker_gender` toewijst.** Jij, vóór de generatiestap, per doelwoord. Niet het model: dan verschilt de uitkomst tussen twee runs en drijft ze af naar wat het model natuurlijk vindt, en dan is de regel niet meer te controleren. Zie `supabase/planning/09_vocabulary_example_prompt_template.md`.
+   **Wie het `speaker_gender` toewijst.** Het model verdeelt binnen één run, jij corrigeert bij het nalezen — hetzelfde patroon als overal in deze keten. Er is niets extra's voor nodig om te zien wat het gekozen heeft: ครับ of ค่ะ staat in de zin.
+
+   Wat het model niet kan zien is de rest van het curriculum; het krijgt één les. Het evenwicht over de lessen heen is daarom jouw controle, en die is te tellen over `vocabulary_examples`. Zie de notities onderaan `supabase/planning/09_vocabulary_example_prompt_template.md` voor de query.
 
    **Het budget vangt dit niet af.** `vocabulary_master` bevat zowel `i` (ฉัน) als `i_male` (ผม), allebei geïntroduceerd in les 1, dus allebei staan ze vanaf les 1 in elk woordbudget. Niets in dat budget verhindert `ผมชอบกาแฟค่ะ`. Waarom dit gat juist hier bestaat: in een dialoog regelen de personages het, maar een canoniek voorbeeld heeft geen personage — alleen het toegewezen `speaker_gender`, en dat moet dus expliciet gemaakt worden.
 
 5. **Een beleefdheidspartikel staat er waar een Thai het echt zou zeggen.** Bij aanspreken, antwoorden en vragen wel; bij een losse constatering niet. Waarom niet altijd: elk voorbeeld op ค่ะ laten eindigen maakt de zinnen beleefd maar ook eentonig, en het verstopt de kale zinsstructuur die de leerling juist moet leren zien. Voer het onderscheid consequent door, zodat de aanwezigheid van het partikel zelf informatie draagt in plaats van decoratie te zijn.
 
-6. **Geen eigennamen in canonieke voorbeelden.** Gebruik een voornaamwoord, of laat het onderwerp weg zoals in natuurlijk Thais gebruikelijk is. Twee redenen die samenvallen: een naam is leesmateriaal in Thais schrift dat nergens is aangeleerd (zie de progressieregel — eigennamen tellen mee in het budget), en de namen die voor de hand liggen zijn Mali en Narin, wat het voorbeeld meteen aan een scène bindt die het niet mag hebben.
+6. **Geen eigennamen in canonieke voorbeelden, op één geval na.** Gebruik een voornaamwoord, of laat het onderwerp weg zoals in natuurlijk Thais gebruikelijk is. Twee redenen die samenvallen: een naam is leesmateriaal in Thais schrift dat nergens is aangeleerd (zie de progressieregel — eigennamen tellen mee in het budget), en de namen die voor de hand liggen zijn Mali en Narin, wat het voorbeeld meteen aan een scène bindt die het niet mag hebben.
+
+   **De uitzondering, toegevoegd 2026-08-09: een voorbeeld over iemands naam.** `ฉันชื่อ …` valt niet af te maken zonder naam, en `i`, `i_male` en `name` zijn alle drie doelwoorden van les 1. Zonder uitzondering bestaat er voor die woorden geen zinnig voorbeeld — de eerste generatierun leverde `ฉันชื่ออะไรคะ` op, "hoe heet ik?", omdat dat het enige was wat grammaticaal kon.
+
+   **De naam komt niet uit een tabel.** Hij hoort niet in `vocabulary_master`: mét leslink zou de kaartquery hem als woordkaart renderen — die filtert nergens op, elke `lesson_vocabulary`-rij wordt een kaart — en zonder leslink heeft hij geen `first_lesson_id` en komt hij in geen enkel woordbudget. Een eigennaam is geen woord dat uitgelegd wordt. In plaats daarvan staat er een **vaste namenlijst in het promptgedeelte zelf**, in `supabase/planning/09_vocabulary_example_prompt_template.md` en woordelijk hetzelfde in `08` — één roster voor het hele project, zoals de partikeltabel.
+
+   **Waarom vast en niet per generatierun.** Dat was de eerste opzet, maar een canoniek voorbeeld is permanent en lesneutraal: het verschijnt ook in les 24. Een lijst die per run verschilt, levert de leerling twee schrijfwijzen van dezelfde naam op — op 2026-08-09 stond `มะลิ` in de dialogen naast `มาลี` in de `usage_note` van `name` — en brengt bij elke run opnieuw de kans op een gereconstrueerde Paiboon-vorm. De prijs is duplicatie over twee templates; die staat in beide bestanden vermeld.
+
+   Drie voorwaarden voor een naam die je later toevoegt. De Paiboon komt uit een betrouwbare bron en niet uit het hoofd — er is geen masterlijst om hem tegen te controleren, dus dit is de enige plek in de keten waar een transliteratie ongecontroleerd binnenkomt. De naam is niet die van een personage uit een dialoog, want dat is precies de scènebinding die de hoofdregel verbiedt. En hij gaat op beide plaatsen tegelijk erin. Zie "De eigennamen" onderaan `09` voor de huidige lijst en de herkomst ervan.
 
 7. **Prompts en audit trail volgen het bestaande kanaal.** Blanco template in `supabase/planning/`, ingevulde prompt in `supabase/prompts/`, modeloutput in `supabase/generation/`, alles in versiebeheer — zoals bij de dialogen en de Language Notes.
 
@@ -504,7 +511,7 @@ Deze beslissingen zijn vastgelegd op 2026-08-07 en gelden voor alle Vocabulary C
 
 1. Verzamel de doelwoorden, controleer bestaande voorbeelden, en stel de werklijst op; laat die goedkeuren (Stap 1).
 2. Stel het toegestane woordbudget vast volgens de progressieregel; laat het goedkeuren (Stap 2).
-3. Wijs per doelwoord een `speaker_gender` toe (`female` of `male`) en schrijf één voorbeelddrieluik — lesneutraal, zelfstandig leesbaar, binnen budget (Stap 3).
+3. Schrijf per doelwoord één voorbeelddrieluik — lesneutraal, zelfstandig leesbaar, binnen budget, met de twee `speaker_gender`-bundels evenwichtig verdeeld (Stap 3).
 4. Controleer elke Paiboon-vorm tegen de masterlijst; bevestig อัว-klinkerlengte per woord (Stap 4).
 5. Schrijf natuurlijke Engelse vertalingen, verenigbaar met de gloss en consistent met dialoog en notes (Stap 5).
 6. Controleer lemma-teksten en lesnotities; instruerende tekst in de imperatief (Stap 6).

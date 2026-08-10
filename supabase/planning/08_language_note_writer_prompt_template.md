@@ -134,6 +134,25 @@ forms are fixed and given under "Voice, particles and pronouns" below.
 That section also decides which of the two first-person pronouns in the
 list you may use.
 
+**Given names.** A sentence about someone's name needs one — ฉันชื่อ …
+cannot be completed without it. These are the names you may write in an
+`example_group`, with their transliteration:
+
+- มาย (maai) — female
+- ฝน (fǒn) — female
+- ฟ้า (fáa) — female
+- นัท (nát) — male
+- ก้อง (gɔ̂ng) — male
+- นนท์ (non) — male
+
+That list is the only source for both the script and the transliteration;
+any other name gets ` [uncertain]` rather than a guess. Use one only where
+the sentence genuinely needs it, never as decoration.
+
+This rule is about **example sentences**. An opening paragraph quotes the
+dialogue, so it names the characters exactly as the dialogue does — see
+"The Lesson Dialogue".
+
 ## The Lesson Dialogue
 
 Every note anchors to this dialogue, and it does so **in its opening
@@ -586,21 +605,25 @@ Verify all of these before you produce output:
    (`kâ`) and questions in คะ (`ká`) — never the other way around.
 8. No pronoun and no particle was added to an example that does not want
    one.
-9. Every note opens with a `paragraph` that anchors to the dialogue.
-10. Every note that explains a pattern or construction has an
-   `example_group`; no `formula` stands without one.
-11. No `example_group` is empty; no `subheading` is the first or last
-   block; no two `subheading` blocks are adjacent.
-12. Where a note has two or more example groups, each has a `heading`.
-13. No `example_group` contains a copy of a dialogue sentence, and every
+9. No `example_group` contains a personal name other than one listed
+    under "Given names", and none at all in an example that does not need
+    one. A name in an opening paragraph is the dialogue's own and is not
+    covered by this.
+10. Every note opens with a `paragraph` that anchors to the dialogue.
+11. Every note that explains a pattern or construction has an
+    `example_group`; no `formula` stands without one.
+12. No `example_group` is empty; no `subheading` is the first or last
+    block; no two `subheading` blocks are adjacent.
+13. Where a note has two or more example groups, each has a `heading`.
+14. No `example_group` contains a copy of a dialogue sentence, and every
     opening paragraph quotes a real Thai fragment with the dialogue's own
     translation.
-14. Every note has at least one entry in `concepts`, every `key` was
+15. Every note has at least one entry in `concepts`, every `key` was
     copied literally from "Concepts You May Claim", and every concept
     listed there appears in at least one note.
-15. No `display_order`, no `audio_url`, no `voice_key`, no `heading` on
+16. No `display_order`, no `audio_url`, no `voice_key`, no `heading` on
     a text block, no other unlisted field.
-16. Every `note_key`, `block_key` and `example_key` is present and
+17. Every `note_key`, `block_key` and `example_key` is present and
     matches `^[a-z0-9]+(-[a-z0-9]+)*$`.
 
 ## Output Rules
@@ -641,8 +664,34 @@ from public.language_note_brief_view v,
 where v.lesson_key = 'a1-dialog-XX';
 ```
 
+### Liever JSON dan een lijst?
+
+Plak dan niet de ruwe view-kolom, om dezelfde redenen als in `07`: de
+`*_id`-velden verschuiven na een `db reset`, en `register` draagt hier de
+betekenis *formaliteit* terwijl deze prompt `speaker_gender` gebruikt voor
+iets heel anders. Gebruik een projectie:
+
+```sql
+select jsonb_pretty(jsonb_agg(jsonb_build_object(
+         'source_key',    w->>'source_key',
+         'thai_script',   w->>'thai_script',
+         'paiboon',       w->>'paiboon',
+         'english_gloss', w->>'english_gloss',
+         'usage_note',    w->>'usage_note')
+       order by (w->>'intro_sequence_number')::int nulls last,
+                 w->>'source_key'))
+from public.language_note_brief_view v,
+     lateral jsonb_array_elements(v.example_vocabulary_budget) w
+where v.lesson_key = 'a1-dialog-XX';
+```
+
 ## Notes for manual filling
 
+- **De namenlijst onder "Given names" is vast; daar vul je niets in.**
+  Dezelfde zes namen staan letterlijk in `09`. Wil je er een toevoegen,
+  doe dat dan op beide plaatsen tegelijk en lees eerst "De eigennamen"
+  onderaan `09` — daar staan de drie voorwaarden en de herkomst van de
+  huidige zes.
 - **Kort de woordenlijst niet in.** Hij groeit per les en dat is de
   bedoeling: elk woord dat je weglaat, is een woord dat het model niet
   mag gebruiken of gaat reconstrueren.

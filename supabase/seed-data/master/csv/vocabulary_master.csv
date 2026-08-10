@@ -19,7 +19,7 @@ when,A1,เมื่อไร,mʉ̂a-rai,when,question_word,formal,questions,fal
 how,A1,อย่างไร,yàang-rai,how,question_word,formal,questions,false,,ai_a1_master_v3
 how_much,A1,เท่าไร,tâo-rai,how much,question_word,formal,questions,true,Used for price quantity or amount.,ai_a1_master_v3
 which,A1,ไหน,nǎi,which,question_word,formal,questions,true,Also used in simple where-like questions depending on pattern.,ai_a1_master_v3
-name,A1,ชื่อ,chʉ̂ʉ,name,noun,formal,people,true,"Although ชื่อ is literally “name” and is usually classified as a noun, it commonly functions as “to be named” in sentences such as คุณชื่ออะไร and ฉันชื่อมาลี.",ai_a1_master_v3
+name,A1,ชื่อ,chʉ̂ʉ,name,noun,formal,people,true,"Although ชื่อ is literally “name” and is usually classified as a noun, it commonly functions as “to be named” in sentences such as คุณชื่ออะไร and ฉันชื่อมะลิ.",ai_a1_master_v3
 man,A1,ผู้ชาย,pûu-chaai,man,noun,formal,people,false,,ai_a1_master_v3
 woman,A1,ผู้หญิง,pûu-yǐng,woman,noun,formal,people,false,,ai_a1_master_v3
 child,A1,เด็ก,dèk,child,noun,formal,people,false,,ai_a1_master_v3
@@ -83,7 +83,7 @@ take,A1,เอา,ao,take,verb,informal,actions,true,Can mean take bring or choo
 open,A1,เปิด,bpə̀ət,open,verb,formal,actions,true,Also used for turning on devices.,ai_a1_master_v3
 close,A1,ปิด,bpìt,close,verb,formal,actions,true,Also used for turning off devices.,ai_a1_master_v3
 hot,A1,ร้อน,rɔ́ɔn,hot,adjective,formal,weather,true,"Used for hot weather, hot objects, food, and drinks.",ai_a1_master_v3
-cool,A1,เย็น,yen,cool,adjective,formal,weather,true,"Used for cool or cold objects, food, and drinks. Also means ""evening"".",ai_a1_master_v3
+cool,A1,เย็น,yen,cool,adjective,formal,weather,true,"Used for cool or cold objects and food, with drinks it means iced. Also means ""evening"".",ai_a1_master_v3
 big,A1,ใหญ่,yài,big,adjective,formal,descriptions,false,,ai_a1_master_v3
 small,A1,เล็ก,lék,small,adjective,formal,descriptions,false,,ai_a1_master_v3
 good,A1,ดี,dii,good,adjective,formal,descriptions,false,,ai_a1_master_v3

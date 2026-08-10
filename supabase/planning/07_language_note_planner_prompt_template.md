@@ -179,7 +179,9 @@ zero `usage_tip` blocks is complete; never add one to reach a count.
 
 Note examples are read by two fixed instruction voices, one female and
 one male. **Every planned example gets a `speaker_gender`: `female` or
-`male`.** The writing phase follows that assignment; it does not choose.
+`male`.** You propose the division here; a human adjusts it when
+approving the plan, and the writing phase then follows it without
+choosing again.
 
 | | `speaker_gender: female` | `speaker_gender: male` |
 | --- | --- | --- |
@@ -355,12 +357,15 @@ Use exactly this structure.
 
 # Brief-view -> prompt mapping checklist
 
-Alle placeholders komen uit één view. Draai eerst:
+Alle placeholders komen uit één view: `language_note_brief_view`. De
+tabel hieronder zegt welke kolom bij welke placeholder hoort; de queries
+eronder maken er de vorm van die je plakt.
 
-```sql
-select * from public.language_note_brief_view
-where lesson_key = 'a1-dialog-XX';
-```
+Draai **niet** `select *` om de prompt te vullen. Dat levert de hele rij
+met alle velden, inclusief de koppelrij-id's die na een `db reset`
+verschuiven, en op een Windows-console komt het Thaise schrift er
+onleesbaar uit. Bekijk de rij in Supabase Studio wanneer je hem wilt
+inspecteren; gebruik de queries hieronder wanneer je invult.
 
 | Placeholder | Kolom |
 | --- | --- |
@@ -417,6 +422,42 @@ from public.language_note_brief_view v,
 where v.lesson_key = 'a1-dialog-XX';
 ```
 
+### Liever JSON dan een lijst?
+
+Plak dan niet de ruwe view-kolom. Die draagt `lesson_vocabulary_id`,
+`lesson_grammar_id`, `grammar_id`, `pattern_id` en `display_order` —
+identity-waarden die na een `db reset` verschuiven, en die er precies
+uitzien als de identifier die het model juist *niet* mag gebruiken. Het
+ging tot nu toe goed omdat het model de `key` koos, niet omdat de prompt
+hem daartoe dwong.
+
+Gebruik in plaats daarvan een projectie. Voor vocabulaire:
+
+```sql
+select jsonb_pretty(jsonb_agg(jsonb_build_object(
+         'source_key',    c->>'source_key',
+         'thai_script',   c->>'thai_script',
+         'paiboon',       c->>'paiboon',
+         'english_gloss', c->>'english_gloss',
+         'usage_note',    c->>'usage_note')
+       order by (c->>'display_order')::int nulls first))
+from public.language_note_brief_view v,
+     lateral jsonb_array_elements(v.vocabulary_to_explain) c
+where v.lesson_key = 'a1-dialog-XX';
+```
+
+Voor grammatica, phrases en patterns dezelfde vorm met hun eigen
+sleutelnaam plus `title`, `short_explanation` en — alleen bij phrases en
+patterns — `phrase_formula` respectievelijk `pattern_formula`. Dat laatste
+veld hoort er wél in: het template vraagt het model expliciet die notatie
+te lezen en om te zetten.
+
+Laat `register` weg. Elk masterobject draagt hem met de betekenis
+*formaliteit*, en deze prompt gebruikt de term nergens meer — sinds
+2026-08-09 heet de mannelijk/vrouwelijk-keuze `speaker_gender`, juist om
+die botsing te vermijden. Hem alsnog meeplakken zet beide betekenissen in
+één prompt.
+
 ## Notes for manual filling
 
 - Is een van de vier conceptlijsten leeg, schrijf dan letterlijk
@@ -427,14 +468,13 @@ where v.lesson_key = 'a1-dialog-XX';
   de prompt. Dat zijn identity-waarden die na een `db reset` kunnen
   verschuiven; ze dienen om achteraf te controleren dat de seed dezelfde
   rij vond, niet om ergens ingevuld te worden.
-- **De verdeling van `speaker_gender` is jouw beslissing, niet die van het model.** Het
-  voorstel doet er een gooi naar; jij zet hem recht vóór je het plan
-  goedkeurt. Laat je die keuze staan zoals het model hem doet, dan
-  verschilt ze tussen twee runs en drijft ze af naar wat het model
-  natuurlijk vindt — en dan is de regel in Stap 7 van de gids niet meer
-  te controleren. Kijk daarbij ook over de les heen: het evenwicht geldt
-  over het hele traject, en één les met drie voorbeelden laat zich niet
-  netjes halveren.
+- **De verdeling van `speaker_gender` doet het model; jij corrigeert
+  hem.** Binnen één les kan het voorstel prima zelf spreiden, en je ziet
+  bij het nalezen meteen wat het gekozen heeft. Wat het model níet kan
+  zien is de rest van het curriculum — het krijgt één les. Kijk dus bij
+  het goedkeuren over de les heen: het evenwicht geldt over het hele
+  traject, en één les met drie voorbeelden laat zich niet netjes
+  halveren.
 - Wijkt je oordeel bij het reviewen af van de `requires_explanation`-vlag,
   pas dan het leslink-seedbestand aan en draai het opnieuw — niet alleen
   de database. Een correctie die alleen in de database staat, verdwijnt

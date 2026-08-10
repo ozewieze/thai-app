@@ -1,0 +1,46 @@
+{
+  "examples": [
+    {
+      "source_key": "hello",
+      "example_key": "e1",
+      "thai_script": "สวัสดีครับ",
+      "paiboon": "sà-wàt-dii kráp",
+      "translation_en": "Hello."
+    },
+    {
+      "source_key": "you",
+      "example_key": "e1",
+      "thai_script": "คุณชื่ออะไรคะ",
+      "paiboon": "kun chʉ̂ʉ à-rai ká",
+      "translation_en": "What is your name?"
+    },
+    {
+      "source_key": "name",
+      "example_key": "e1",
+      "thai_script": "ฉันชื่อมายค่ะ",
+      "paiboon": "chǎn chʉ̂ʉ maai kâ",
+      "translation_en": "My name is Mai."
+    },
+    {
+      "source_key": "what",
+      "example_key": "e1",
+      "thai_script": "คุณชื่ออะไรครับ",
+      "paiboon": "kun chʉ̂ʉ à-rai kráp",
+      "translation_en": "What is your name?"
+    },
+    {
+      "source_key": "i",
+      "example_key": "e1",
+      "thai_script": "ฉันชื่อฝนค่ะ",
+      "paiboon": "chǎn chʉ̂ʉ fǒn kâ",
+      "translation_en": "I'm Fon."
+    },
+    {
+      "source_key": "i_male",
+      "example_key": "e1",
+      "thai_script": "ผมชื่อก้องครับ",
+      "paiboon": "pǒm chʉ̂ʉ gɔ̂ng kráp",
+      "translation_en": "I'm Kong."
+    }
+  ]
+}

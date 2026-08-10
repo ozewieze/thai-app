@@ -1,64 +1,3 @@
-# Vocabulary Example Prompt Template
-
-Gebruik dit bestand om de canonieke voorbeelden bij de Vocabulary Cards
-van één les te laten voorstellen. Het dekt Stap 3 tot en met Stap 5 van
-`docs/thai_a1_vocabulary_workflow_guide.md`: het voorbeelddrieluik, de
-Paiboon-conventies en de Engelse vertaling.
-
-De output is **één JSON-document**, precies volgens het invoercontract
-uit Stap 11, zodat het zonder tussenstap door
-`scripts/generate-vocabulary-example-seed.mjs` kan.
-
-**Eén template, geen planner en schrijver.** Bij de Language Notes
-bestaan `07` en `08` naast elkaar omdat de verdeling concepten → notes
-een oordeel is dat goedkeuring vraagt vóór er geschreven wordt. Hier valt
-er niets te verdelen: elk doelwoord krijgt precies één voorbeeld
-(vastgelegde beslissing 2) en de werklijst volgt rechtstreeks uit
-`vocabulary_example_brief_view`. De twee goedkeuringsmomenten van de gids
-verdwijnen daarmee niet — ze liggen vóór het invullen. Stap 1 (welke
-woorden hebben een voorbeeld nodig) en Stap 2 (het woordbudget) keur je
-goed op de output van de view, met de hand, voordat je hieronder één
-placeholder vult. Een plannerprompt zou die twee alleen door een model
-laten herformuleren.
-
-**Dit template noemt de les nergens in het promptgedeelte.** Geen
-`{{lesson_key}}`, geen lesnummer, geen "in this lesson". Dat is het
-verschil met `08` en het is opzettelijk. Een canoniek voorbeeld is
-lesneutraal (zie "De twee eigenaarschappen" in de gids), het
-invoercontract kent geen `lesson_key`, en de brief-view laat de dialoog
-er bewust uit. Wat het model niet weet te bestaan, kan het niet als anker
-gebruiken. De les bestaat alleen in de bestandsnamen hieronder, als
-archiveringslabel voor de batch.
-
-**Dit template is bewust zelfstandig leesbaar.** Ook wanneer je in
-dezelfde chat al iets anders voor deze les hebt gedaan, plak je de
-woordenlijst met Paiboon volledig opnieuw. Reden: de dominante faalmodus
-in dit project is Paiboon-reconstructie — op 2026-07-13 moesten 167
-vocabulairerijen en 19 dialoogblokken van RTGS naar Paiboon gecorrigeerd
-worden. Wat niet letterlijk in de directe context staat, wordt
-gereconstrueerd.
-
-## Instructions
-
-- Draai de brief-view voor deze les en vul de placeholders hieronder in.
-  De mapping-checklist onderaan geeft per placeholder de bijbehorende
-  query.
-- **Filter de werklijst op `needs_example = true`** vóór je hem plakt.
-  Een woord dat zijn voorbeeld al heeft, mag het model niet zien: dan
-  leest het `existing_examples` als "hier mag iets bij", en dat is een
-  tweede voorbeeld op hetzelfde woord — een fout, geen aanvulling.
-- Sla de ingevulde prompt op als
-  `supabase/prompts/vocabulary-examples/a1_dialog_XX_examples_prompt.md`.
-- Sla de modeloutput op als
-  `supabase/generation/vocabulary-examples/a1_dialog_XX_examples.json`.
-  Die naam ligt vast: de generator leidt hem af uit `--lesson`.
-- Vervang **elke** placeholder vóór je genereert.
-
-**Taalregel voor alle prompttemplates:** Nederlands boven en onder de
-prompt, Engels erbinnen. De invulinstructies en de mapping-checklist zijn
-voor jou en blijven Nederlands; alles tussen `## Role` en het einde van
-`## Output Rules` gaat naar het model en is Engels. Zie "Taal van de
-prompttemplates" in `docs/thai_a1_dialog_workflow_guide.md`.
 
 ## Role
 
@@ -111,7 +50,12 @@ every example is the same one. See "Voice, Particles and Pronouns" for
 what that governs and for the one kind of sentence that stays out of the
 count.
 
-{{target_words}}
+- สวัสดี (sà-wàt-dii) = hello  [key: hello]  ·  particle
+- คุณ (kun) = you  [key: you]  ·  pronoun
+- ชื่อ (chʉ̂ʉ) = name  [key: name]  ·  noun  ·  Although ชื่อ is literally “name” and is usually classified as a noun, it commonly functions as “to be named” in sentences such as คุณชื่ออะไร and ฉันชื่อมะลิ.
+- อะไร (à-rai) = what  [key: what]  ·  question_word
+- ฉัน (chǎn) = I  [key: i]  ·  pronoun  ·  Polite first-person pronoun often used by women; male learners may later learn ผม.
+- ผม (pǒm) = I  [key: i_male]  ·  pronoun  ·  Male polite first-person pronoun; also means hair.
 
 ## Available Vocabulary
 
@@ -130,7 +74,12 @@ The Paiboon form given here is the only correct form for that word.
 **Copy it literally.** Do not derive it, do not normalise it, do not
 "improve" it.
 
-{{example_vocabulary_budget}}
+- สวัสดี (sà-wàt-dii) = hello  [key: hello]
+- ฉัน (chǎn) = I  [key: i]
+- ผม (pǒm) = I  [key: i_male]
+- ชื่อ (chʉ̂ʉ) = name  [key: name]
+- อะไร (à-rai) = what  [key: what]
+- คุณ (kun) = you  [key: you]
 
 **The target word is never an exception.** It is always in the list
 above: the list holds everything known by the lesson that introduces the
@@ -150,12 +99,12 @@ A sentence about someone's name needs one: ฉันชื่อ … cannot be c
 without it, and neither can an answer to "what is your name". These are
 the names you may write, with their transliteration:
 
-- มาย (maai) — female
-- ฝน (fǒn) — female
-- ฟ้า (fáa) — female
-- นัท (nát) — male
-- ก้อง (gɔ̂ng) — male
-- นนท์ (non) — male
+ - มาย (maai) — female
+  -ฝน (fǒn) — female
+ - ฟ้า (fáa) — female
+ - นัท (nát) — male
+ - ก้อง (gɔ̂ng) — male
+ - นนท์ (non) — male
 
 That list is the only source for both the script and the transliteration.
 **Any other name is forbidden**, including one you believe you know — and
@@ -505,48 +454,41 @@ de queries hieronder wanneer je invult.
 | --- | --- |
 | `{{target_words}}` | `vocabulary_example_brief_view.target_words`, gefilterd op `needs_example` |
 | `{{example_vocabulary_budget}}` | `vocabulary_example_brief_view.example_vocabulary_budgets` |
+| `{{given_names}}` | jij, met de hand — zie hieronder |
 
 ## De eigennamen
 
-**Hier valt niets in te vullen.** De lijst onder "Given names" in het
-promptgedeelte is vast en staat er al; dezelfde zes namen staan letterlijk
-in `08`. Deze sectie legt uit waarom dat zo is, en wat je moet doen als je
-er later een toevoegt.
+Deze placeholder komt uit geen enkele tabel, en dat is opzet. Een
+eigennaam is geen woord dat uitgelegd wordt: zou hij als rij in
+`vocabulary_master` staan mét leslink, dan rendert de kaartquery hem als
+woordkaart — die filtert nergens op, elke `lesson_vocabulary`-rij wordt
+een kaart. En zonder leslink heeft hij geen `first_lesson_id` en komt hij
+in geen enkel budget. Geen van beide werkt. Dus lever je hem hier zelf
+aan.
 
-**Waarom een lijst en geen tabelkolom.** Een eigennaam hoort niet in
-`vocabulary_master`. Mét leslink rendert de kaartquery hem als woordkaart
-— die filtert nergens op, elke `lesson_vocabulary`-rij wordt een kaart —
-en zonder leslink heeft hij geen `first_lesson_id` en komt hij in geen
-enkel budget. Geen van beide werkt, en een eigennaam is ook geen woord dat
-uitgelegd wordt.
+Geef er één per geslacht, in deze vorm:
 
-**Waarom vast en niet per generatierun.** Een canoniek voorbeeld is
-permanent en lesneutraal: het verschijnt ook in les 24. Een lijst die per
-run verschilt, levert de leerling twee schrijfwijzen van dezelfde naam op
-en brengt bij elke run opnieuw de kans op een gereconstrueerde
-Paiboon-vorm. Eén roster over alle lessen neemt beide weg.
+```text
+- มาย (maai) — female
+  -ฝน (fǒn) — female
+ - ฟ้า (fáa) — female
+ - นัท (nát) — male
+ - ก้อง (gɔ̂ng) — male
+ - นนท์ (non) — male
+```
 
-**Als je een naam toevoegt.** Drie voorwaarden, en de eerste is de
-zwaarste:
+Drie dingen om op te letten. **Neem de Paiboon uit een betrouwbare bron
+en niet uit je hoofd** — dit is precies de plek waar reconstructie
+binnensluipt, want de naam staat in geen enkele masterlijst om tegen te
+controleren. **Gebruik niet de personages van de dialoog** waar je op dat
+moment aan werkt: een canoniek voorbeeld verschijnt ook in les 24, en een
+naam uit de scène van les 1 bindt de kaart aan iets wat daar niet gebeurd
+is. **Houd de spelling constant over alle lessen**, anders leert de
+leerling twee schrijfwijzen van dezelfde naam.
 
-- **De Paiboon komt uit een betrouwbare bron en niet uit je hoofd.** Er is
-  geen masterlijst om hem tegen te controleren, dus dit is de enige plek
-  in de hele keten waar een transliteratie ongecontroleerd binnenkomt.
-- **Geen personage uit een dialoog.** `มะลิ` en `นริน` vallen daarmee af:
-  een canoniek voorbeeld mag niet aan een scène gebonden zijn die de
-  leerling in les 24 nooit gezien heeft.
-- **Voeg hem op beide plaatsen toe**, in `09` én in `08`, in dezelfde
-  vorm. Dat is de prijs van één roster in twee templates; er is geen
-  gedeelde bron die het voor je doet.
-
-**Herkomst van de huidige zes.** Met de hand aangeleverd op 2026-08-10,
-uit kennis van het Thai. Twee ervan zijn wél te controleren en kloppen:
-`ฝน` en `ฟ้า` staan als gewoon woord in `vocabulary_master` (`rain` =
-`fǒn`, `sky` = `fáa`) en de vormen in de lijst zijn daaraan gelijk. De
-andere vier — `มาย`, `นัท`, `ก้อง`, `นนท์` — komen in geen enkele
-masterlijst voor en zijn dus nergens tegen na te lopen. Dat is geen fout
-maar wel een open flank: blijkt een vorm later verkeerd, dan moeten alle
-voorbeelden die hem gebruiken mee.
+Is er in deze batch geen enkel doelwoord dat een naam nodig heeft, schrijf
+dan `(geen)` onder de kop. Laat de kop staan — een weggelaten kop leest
+als een vergissing.
 
 `{{lesson_key}}` bestaat hier niet. Dat is geen omissie — zie de vierde
 alinea bovenaan dit bestand.
