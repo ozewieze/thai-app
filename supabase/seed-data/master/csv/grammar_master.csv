@@ -33,10 +33,10 @@ already_yang_question,A1,Yet in questions with ยัง,Use ยัง in questi
 experience_khoei,A1,Past experience with เคย,Use เคย before a verb to talk about past experience.,tense_aspect,formal,ai_a1_grammar_master_v3_final
 future_intention_ja,A1,Future intention with จะ,Use จะ before a verb for future actions or intentions.,tense_aspect,formal,ai_a1_grammar_master_v3_final
 immediate_future_gamlang_ja,A1,About to with กำลังจะ,Use กำลังจะ before a verb to show something is about to happen.,tense_aspect,formal,ai_a1_grammar_master_v3_final
-ability_dai,A1,Ability with ได้,Use ได้ with a verb to say someone can do something.,verb_pattern,formal,ai_a1_grammar_master_v3_final
-opportunity_or_permission_dai,A1,Permission or opportunity with ได้,Use ได้ to say someone may do something or had the chance to do it.,verb_pattern,formal,ai_a1_grammar_master_v3_final
+ability_dai,A1,Ability with ได้,Use ได้ after the whole verb phrase to say someone can do something.,verb_pattern,formal,ai_a1_grammar_master_v3_final
+opportunity_or_permission_dai,A1,Permission or opportunity with ได้,Use ได้ after the whole verb phrase to say someone may do something or had the chance to do it.,verb_pattern,formal,ai_a1_grammar_master_v3_final
 achievement_do_successfully_dai,A1,Successful completion with ได้,Use ได้ after some verbs to show successful result or completion.,tense_aspect,formal,ai_a1_grammar_master_v3_final
-inability_or_not_allowed_mai_dai,A1,Inability or prohibition with ไม่ได้,Use ไม่ได้ to say someone cannot do something or is not allowed to.,negation,formal,ai_a1_grammar_master_v3_final
+inability_or_not_allowed_mai_dai,A1,Inability or prohibition with ไม่ได้,Use ไม่ได้ after the whole verb phrase to say someone cannot do something or is not allowed to.,negation,formal,ai_a1_grammar_master_v3_final
 want_yaak,A1,Want with อยาก,Use อยาก before a verb or noun phrase to express wanting.,verb_pattern,formal,ai_a1_grammar_master_v3_final
 need_or_must_tong,A1,Need or must with ต้อง,Use ต้อง before a verb to express necessity or obligation.,functional_expression,formal,ai_a1_grammar_master_v3_final
 should_khuan,A1,Should with ควร,Use ควร before a verb to give simple advice.,functional_expression,formal,ai_a1_grammar_master_v3_final

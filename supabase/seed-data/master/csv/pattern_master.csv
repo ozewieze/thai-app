@@ -3,7 +3,7 @@ mai_verb,A1,Not do,ไม่ + VERB,Negates an action or state.,negation_frame,f
 yang_mai_verb,A1,Not yet do,ยังไม่ + VERB,Says something has not happened yet.,negation_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 mai_chai_noun,A1,Not be noun,ไม่ใช่ + NOUN,Says something is not a person or thing.,negation_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 mai_mi_noun,A1,Not have noun,ไม่มี + NOUN,Says something does not exist or is not available.,negation_frame,formal,productive,true,ai_a1_pattern_master_v3_final
-mai_dai_verb,A1,Not able to do,ไม่ได้ + VERB,Says someone cannot do or did not do something in basic contexts.,ability_frame,formal,productive,true,ai_a1_pattern_master_v3_final
+mai_dai_verb,A1,Did not do,ไม่ได้ + VERB PHRASE,Placed before the verb phrase to say that something did not happen.,negation_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 ya_verb,A1,Do not do,อย่า + VERB,Tells someone not to do something.,request_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 yak_verb,A1,Want to do,อยาก + VERB,Expresses wanting to do something.,preference_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 yaak_dai_noun,A1,Want noun,อยากได้ + NOUN,Expresses wanting an item or thing.,preference_frame,formal,productive,true,ai_a1_pattern_master_v3_final
@@ -24,9 +24,9 @@ mi_noun,A1,Have noun,มี + NOUN,Says someone has something or something exist
 mi_noun_mai,A1,Have noun question,มี + NOUN + ไหม,Asks whether something exists or is available.,question_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 pen_noun,A1,Be noun,เป็น + NOUN,Identifies a person or thing by category or role.,sentence_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 verb_pen,A1,Know how to do,VERB + เป็น,Shows someone knows how to do a learned skill.,ability_frame,formal,productive,true,ai_a1_pattern_master_v3_final
-dai_verb,A1,Can do,ได้ + VERB,Shows ability or possibility in basic use.,ability_frame,formal,productive,true,ai_a1_pattern_master_v3_final
-verb_dai_mai,A1,Can do question,VERB + ได้ไหม,Asks if something can be done.,ability_frame,formal,productive,true,ai_a1_pattern_master_v3_final
-verb_mai_dai,A1,Cannot do,VERB + ไม่ได้,Says something cannot be done.,ability_frame,formal,productive,true,ai_a1_pattern_master_v3_final
+verb_dai,A1,Can do,VERB PHRASE + ได้,Placed after the whole verb phrase to say that something can be done.,ability_frame,formal,productive,true,ai_a1_pattern_master_v3_final
+verb_dai_mai,A1,Can do question,VERB PHRASE + ได้ไหม,Asks if something can be done.,ability_frame,formal,productive,true,ai_a1_pattern_master_v3_final
+verb_mai_dai,A1,Cannot do,VERB PHRASE + ไม่ได้,Says something cannot be done.,ability_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 tong_verb,A1,Must do,ต้อง + VERB,Expresses necessity or obligation.,sentence_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 tong_verb_mai,A1,Need to do question,ต้อง + VERB + ไหม,Asks whether something is necessary.,question_frame,formal,productive,true,ai_a1_pattern_master_v3_final
 yak_verb_mai,A1,Want to do question,อยาก + VERB + ไหม,Asks whether someone wants to do something.,question_frame,formal,productive,true,ai_a1_pattern_master_v3_final
