@@ -138,9 +138,7 @@ insert into public.language_note_examples
 select blocks.id, e.example_key, e.display_order, e.thai_script, e.paiboon, e.translation_en
 from (values
   ('b3', 'e1', 1, 'กาแฟร้อน', 'gaa-faae rɔ́ɔn', 'hot coffee'),
-  ('b3', 'e2', 2, 'กาแฟเย็น', 'gaa-faae yen', 'iced coffee'),
-  ('b3', 'e3', 3, 'ชาร้อน', 'chaa rɔ́ɔn', 'hot tea'),
-  ('b3', 'e4', 4, 'ชาเย็น', 'chaa yen', 'iced tea')
+  ('b3', 'e4', 2, 'ชาเย็น', 'chaa yen', 'iced tea')
 ) as e(block_key, example_key, display_order, thai_script, paiboon, translation_en)
 join blocks on blocks.block_key = e.block_key
 on conflict (block_id, example_key) do update set

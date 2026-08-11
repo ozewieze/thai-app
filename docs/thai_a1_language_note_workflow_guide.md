@@ -78,6 +78,24 @@ De tweede is dat het aantal notes geen redactionele keuze is maar een *gevolg*. 
 
 De volgorde van notes binnen een les is betekenisvol: de leerling leest ze van boven naar onder. Zet de note over het centrale lesdoel eerst, ondersteunende notes (uitspraak, register, cultuur) daarna. Waarom: de eerste note bepaalt of de leerling de dialoog begrijpt; de rest verdiept.
 
+## Gereedschap bij deze workflow
+
+Twee dingen nemen het handwerk uit de stappen hieronder weg. Geen van beide vervangt een goedkeuringsmoment.
+
+**`scripts/fill-note-prompt.mjs`** vult een template uit `supabase/planning/` met de gegevens van één les en schrijft het resultaat naar `supabase/prompts/`. Drie stages: `planner` (`07`), `writer` (`08`) en `vocab-examples` (`09`).
+
+```powershell
+node --env-file=.env.local scripts/fill-note-prompt.mjs --lesson a1-dialog-XX --stage planner
+```
+
+Het script faalt luid zodra er een placeholder blijft staan. Dat is waarom het bestaat: bij `a1-dialog-01` gingen de twee guideline-waarden als lege bullets de deur uit en bleven `{{lesson_key}}` en `{{sequence_number}}` op twee plaatsen staan, waarna het model drie notes van zes blokken plande terwijl er twee van vijf golden. Een leeg veld dat er niet uitziet als een veld is voor geen enkele controle vindbaar.
+
+Voor de writer-stage leest het script het goedgekeurde plan uit `supabase/generation/language-notes/<les>_plan.md` — alleen het gedeelte tot "Redactionele beslissingen", want die motivering is Nederlands en voor jou.
+
+**De skill `thai-lesson-content-review`** draagt de reviewchecklist voor Stap 1–5: wat er in de praktijk misging bij eerdere lessen, plus de mechanische controles op woordbudget, Paiboon, genderbundels, sleutels en dekking. Roep hem aan wanneer je een plan of een gegenereerde JSON laat nakijken.
+
+De reden dat het nakijken door een ánder model gebeurt dan het genereren: de generator ziet zijn eigen aannames niet. Elke correctie die tot nu toe iets opleverde, kwam voort uit het lezen van output die de lezer niet zelf had gemaakt.
+
 ## Stapsgewijze workflow per Language Note
 
 ### Stap 1 — Bepaal de behandelde concepten
