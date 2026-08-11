@@ -45,7 +45,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
     (select id from public.vocabulary_master where source_key = 'where'),
     'target',
-    true,
+    false,
     1,
     'Question word for location.'
   ),
@@ -53,7 +53,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
     (select id from public.vocabulary_master where source_key = 'go'),
     'target',
-    true,
+    false,
     2,
     'Verb for movement; also marks direction or future intention in simple patterns.'
   ),
@@ -61,7 +61,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
     (select id from public.vocabulary_master where source_key = 'drink'),
     'target',
-    true,
+    false,
     3,
     'Verb for drinking.'
   ),
@@ -69,7 +69,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
     (select id from public.vocabulary_master where source_key = 'coffee'),
     'target',
-    true,
+    false,
     4,
     'Common drink used as a natural object in this dialog.'
   ),
@@ -77,7 +77,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
     (select id from public.vocabulary_master where source_key = 'can'),
     'target',
-    true,
+    false,
     5,
     'Modal verb for ability, possibility, and permission; also marks completed actions.'
   ),
@@ -85,7 +85,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-02'),
     (select id from public.vocabulary_master where source_key = 'together'),
     'target',
-    true,
+    false,
     6,
     'Adverb indicating shared action; pairs naturally with go and drink.'
   )
@@ -110,6 +110,14 @@ values (
   true,
   1,
   'Core yes/no question pattern: adds ไหม at the end of a statement.'
+),
+(
+ (select id from public.lessons where lesson_key = 'a1-dialog-02'),
+  (select id from public.pattern_master where pattern_key = 'verb_dai'),
+  'target',
+  true,
+  2,
+  'Placed after the whole verb phrase to say that something can be done.'
 )
 on conflict (lesson_id, pattern_id) do update
 set role                 = excluded.role,

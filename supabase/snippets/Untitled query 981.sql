@@ -1,4 +1,4 @@
-select pattern_key, title, pattern_formula, pattern_type
+select id, pattern_key, title, pattern_formula, pattern_type
 from public.pattern_master
-where pattern_formula like '%ได้%'
+where pattern_key = 'verb_dai'
 order by pattern_key;
