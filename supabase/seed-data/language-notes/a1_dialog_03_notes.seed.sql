@@ -10,6 +10,16 @@
 --   set constraints all deferred;
 -- De tussenstand van een herordening botst anders op de display_order-
 -- constraints; precies daarvoor zijn die deferrable aangemaakt.
+--
+-- Waarom audio_url op null gaat bij gewijzigde thai_script: audio die bij een
+-- oudere zin hoort is erger dan geen audio. Het audioscript slaat een item met
+-- een gevulde audio_url over ('er is al audio'), en de leerling hoort dan de
+-- oude zin zonder dat iemand een foutmelding ziet. Dat maakt voorlopige notes
+-- veilig herzienbaar: corrigeer de tekst, draai opnieuw, en de audio hoort
+-- vanzelf bij het volgende audioscript opnieuw gegenereerd te worden.
+-- voice_key blijft wel staan: dat is een redactionele keuze en geen verwijzing
+-- die kan verouderen. Zelfde constructie als in
+-- generate-vocabulary-example-seed.mjs.
 
 begin;
 
@@ -74,7 +84,12 @@ on conflict (block_id, example_key) do update set
   display_order  = excluded.display_order,
   thai_script    = excluded.thai_script,
   paiboon        = excluded.paiboon,
-  translation_en = excluded.translation_en;
+  translation_en = excluded.translation_en,
+  audio_url      = case
+                     when language_note_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else language_note_examples.audio_url
+                   end;
 
 -- pattern: ja_verb
 insert into public.language_note_concepts
@@ -132,7 +147,12 @@ on conflict (block_id, example_key) do update set
   display_order  = excluded.display_order,
   thai_script    = excluded.thai_script,
   paiboon        = excluded.paiboon,
-  translation_en = excluded.translation_en;
+  translation_en = excluded.translation_en,
+  audio_url      = case
+                     when language_note_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else language_note_examples.audio_url
+                   end;
 
 -- vocabulary: hot
 insert into public.language_note_concepts

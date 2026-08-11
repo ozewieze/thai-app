@@ -22,6 +22,20 @@ Een Language Note is **niet**:
   **Let op:** die rollen zijn vandaag niet in gebruik — alle links zijn `target`. Zolang dat zo blijft, is herhaalde uitleg een voorziene mogelijkheid en geen bestaande praktijk. Of `review` ooit nodig blijkt, is een open curriculumvraag; het antwoord komt vanzelf wanneer een concept in een latere les werkelijk te kort blijkt uitgelegd.
 - **Een tweede dialoog.** Voorbeeldzinnen in een note zijn illustraties bij één taalpunt, geen doorlopend gesprek met personages en scène.
 
+### De ontbrekende laag: focusartikelen
+
+Die eerste twee "niet"-regels laten met opzet een gat achter. Er is nergens plaats voor het volledige verhaal over een concept — voor de leerling die verder wil dan wat les 3 hem nu laat zeggen. Dat gat is geen fout in het notesysteem; het is de prijs van de keuze om notes lesgebonden te houden. Maar het wordt wél voelbaar zodra een concept groter is dan de les waarin het opduikt, en dan is de verleiding groot om de note toch maar op te rekken.
+
+Er komt daarom ooit een tweede laag: **focusartikelen** (grammar focus / pattern focus), vrij van de lesbeperkingen, voor wie diepgang zoekt. Die laag is op 2026-08-11 nog niet gebouwd. Wat hier nu al vastligt, zijn de drie regels die bepalen dat hij later kan inpluggen zonder dat er iets aan de notes verandert.
+
+**1. Focusartikelen worden gesleuteld op de bestaande conceptsleutels**, niet op lessen: `pattern_key`, `concept_key`, `phrase_key`, `source_key`. Waarom: een artikel over vraagwoorden hoort bij het concept, niet bij de les waarin het toevallig voor het eerst langskomt. Deze keuze houdt de laag volledig los van `lessons` en van alle koppeltabellen — en dat is precies waarom hij later toe te voegen is zonder migratie aan iets bestaands.
+
+**2. Eigendom is verdeeld en overlapt niet.** De note bezit "wat je hier, nu, kunt zeggen". Het artikel bezit "hoe het systeem in elkaar zit". Een note mag naar een artikel verwijzen; een artikel gaat nooit uit van een note, want het weet niet waar zijn lezer staat. Waarom dit expliciet: twee teksten over hetzelfde onderwerp zonder eigendomsgrens drijven uit elkaar, en dan is de vraag "welke van de twee klopt nog" niet te beantwoorden.
+
+**3. Het bestaan van de laag is geen reden om een note dunner te maken.** Dit is het echte risico. "Dat leg ik wel uit in het focusartikel" is een aantrekkelijke uitweg zodra een note tegen zijn blokplafond loopt, en het resultaat is een note die zijn eigen les niet meer draagt. De toets blijft ongewijzigd: begrijpt de leerling het concept ná deze note, met alleen de woorden die hij kent? Zo nee, dan splits je de note — je verwijst niet door.
+
+Zolang de laag niet bestaat, verandert er niets aan deze workflow. Koppelbeslissingen die je vandaag neemt — welk concept in welke les `target` wordt — blijven geldig, juist omdat de laag op conceptsleutels zit en niet op lessen.
+
 ## Wanneer krijgt een les een Language Note?
 
 De beslissing is grotendeels al genomen vóór deze workflow begint. Bij het seeden van de leslinks (Stap 3 van de dialoogworkflow) krijgt elk lesconcept een bewust ingevulde `requires_explanation`-vlag. Die vlag is de opdrachtenlijst voor deze workflow:
@@ -40,17 +54,27 @@ Daarnaast geldt:
 
 ## Hoeveel notes per les, en hoe lang?
 
-Richtlijn per lesfase, analoog aan de woorden-per-les-tabel in de dialoogworkflowgids:
+**Elke les met gevlagde concepten krijgt 2 tot 4 notes, ongeacht de lesfase.** Vier is een alarm, geen streefgetal: kom je erboven, dan zijn er vermoedelijk te veel concepten gevlagd en corrigeer je het leslink-seedbestand, niet de noteverdeling. De ondergrens geldt alleen voor lessen die überhaupt gevlagde concepten hebben — een les zonder vlaggen krijgt nog steeds geen verplichte note.
 
-| Lesfase (`sequence_number`) | Notes per les | Blokken per note (maximum) |
-| --------------------------- | ------------- | -------------------------- |
-| 1–10                        | 1–2           | 5                          |
-| 11–30                       | 2–3           | 6                          |
-| 31+                         | 2–4           | 7                          |
+De lengte van een note is wél fasegebonden, analoog aan de woorden-per-les-tabel in de dialoogworkflowgids:
 
-De achterliggende logica: vroege lessen introduceren weinig maar fundamenteel materiaal (één stevige note is beter dan drie dunne), latere lessen combineren meer concepten en verdragen meer notes.
+| Lesfase (`sequence_number`) | Blokken per note (maximum) |
+| --------------------------- | -------------------------- |
+| 1–10                        | 5                          |
+| 11–30                       | 6                          |
+| 31+                         | 7                          |
+
+De achterliggende logica: vroege lessen introduceren weinig maar fundamenteel materiaal en verdragen dus korte notes, latere lessen combineren meer en mogen langer uitpakken.
+
+**Herzien op 2026-08-11.** Hier stond een tweede kolom "Notes per les" met 1–2 / 2–3 / 2–4. Die is vervallen om twee redenen.
+
+De eerste is een tegenspraak met de regel hieronder. Die zegt dat een note die tegen het blokplafond aanloopt gesplitst moet worden — maar wie tegelijk op het noteplafond zat, mócht niet splitsen en kon alleen samenpersen. Dat is precies wat de blokregel wil voorkomen. Bij `a1-dialog-01` liep dat in de praktijk vast: drie gevlagde concepten, een maximum van twee notes, en een beleefdheidsnote die het gendercontrast niet in vijf blokken kwijt kon.
+
+De tweede is dat het aantal notes geen redactionele keuze is maar een *gevolg*. Het volgt uit hoeveel lesconcepten `requires_explanation = true` dragen, en die vlag zet je bij het curriculumplannen (zie "Wanneer krijgt een les een Language Note?"). Daar hoort de sturing thuis. Een tweede plafond verderop in de keten corrigeert die beslissing niet, het verbergt hem alleen. Toen het bereik daarna in alle drie de fasen 2–4 werd, hield de kolom op iets te zeggen — een tabel met drie identieke rijen is een zin die zich als data vermomt.
 
 **De blokkolom is een plafond, geen bereik.** Ze stond hier tot 2026-08-06 als "3–5", en dat leest als een te halen aantal: een note die op drie blokken uitkomt, krijgt er dan een formule en een tip bij om in de band te vallen. Er is geen ondergrens — twee blokken volstaan voor een note die één woordbetekenis uitlegt (zie Stap 3). Een note die tegen het maximum aanloopt, behandelt vrijwel zeker twee onderwerpen en moet gesplitst worden; dát is waar het getal voor dient.
+
+**Blokken zijn instanties, geen types.** Er zijn vijf bloktypes (zie Stap 3), maar een note bestaat uit een geordende reeks blok*rijen*: `language_note_blocks` draagt per note een `block_key` (`b1`, `b2`, `b3` …) en een `display_order`, en het type is daar een kolom in — geen identiteit. Eén note mag dus drie `paragraph`-blokken en twee `example_group`-blokken hebben. Zeven blokken is daarom geen tegenspraak met vijf types: `paragraph`, `subheading`, `formula`, `example_group`, `subheading`, `formula`, `example_group` is een geldige reeks van zeven. Dit staat er sinds 2026-08-11 expliciet bij omdat de tabel zonder die zin leest alsof het plafond het aantal *gebruikte types* begrenst.
 
 De volgorde van notes binnen een les is betekenisvol: de leerling leest ze van boven naar onder. Zet de note over het centrale lesdoel eerst, ondersteunende notes (uitspraak, register, cultuur) daarna. Waarom: de eerste note bepaalt of de leerling de dialoog begrijpt; de rest verdiept.
 
@@ -83,6 +107,16 @@ De view is gecontroleerd met `supabase/qa/verify_language_note_brief_view.sql`; 
 **Eén waarschuwing bij het lezen van de view.** Elk concept draagt naast de mastersleutel ook de koppelrij-id (`lesson_vocabulary_id`, `lesson_grammar_id`, `lesson_phrase_id`, `lesson_pattern_id`). Dat is een *controlemiddel*, geen waarde om over te nemen in een seedbestand: het is een identity-waarde die na een `db reset` kan verschuiven. De seeds zoeken de koppelrij zelf op via de sleutels (zie Stap 6). Gebruik de id uit de view om achteraf te controleren dat de seed dezelfde rij vond — niet om hem in te vullen.
 
 Wijkt je oordeel hier af van de vlag — een gevlagd concept blijkt toch geen note nodig te hebben, of een niet-gevlagd concept juist wel — pas dan het seedbestand aan; dat is de bron van waarheid. Breng de lokale database daarna in lijn door datzelfde seedbestand opnieuw te draaien: de leslink-seeds zijn idempotent, dus de gewijzigde waarden overschrijven wat er staat. Doe het niet omgekeerd: een correctie die alleen in de database staat, verdwijnt bij de eerstvolgende reset.
+
+```powershell
+chcp 65001
+$env:PGCLIENTENCODING = "UTF8"
+psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -P pager=off -f supabase/seed-data/links/lesson_links_a1-dialog-XX.seed.sql
+```
+
+De eerste twee regels forceren UTF-8 en zijn niet optioneel bij bestanden met Thais schrift; zie "psql op Windows" in de dialoogworkflowgids. Vervang `XX` door het lesnummer en draai dit vanuit de projectmap.
+
+**Eén beperking om te kennen:** `on conflict do update` werkt de rijen bij die in het bestand staan, maar verwijdert niets. Haal je een concept wég uit het seedbestand, dan blijft de bijbehorende rij in de database gewoon bestaan. Verwijder die dan expliciet met een `delete`; de `AFTER DELETE`-trigger zet de status daarna zelf terug op `new`.
 
 Leg dit vast als een simpel lijstje per note vóór je iets anders doet. Waarom eerst: de conceptafbakening bepaalt titel, structuur én voorbeelden. Wie eerst schrijft en achteraf kijkt welke concepten "erin zaten", krijgt notes die half over twee onderwerpen gaan.
 
@@ -377,6 +411,10 @@ where n.id = b.language_note_id
 ```
 
 Haal daarna ook de bijbehorende JSON weg, anders komt de rij bij de volgende run terug.
+
+**Wijzig je de tekst van een voorbeeld, dan gaat `audio_url` op `null`.** De upsert vergelijkt `thai_script` en wist de verwijzing alleen bij dat ene gewijzigde voorbeeld; `voice_key` blijft staan en de rest van de groep wordt niet aangeraakt. Waarom dit nodig is: het audioscript slaat een voorbeeld met een gevulde `audio_url` over ("er is al audio"), dus zonder deze reset blijft de opname van de óude zin hangen en hoort de leerling iets anders dan er staat — zonder foutmelding, zonder spoor. Dit is dezelfde constructie als in `generate-vocabulary-example-seed.mjs` en is op 2026-08-11 aan de note-generator toegevoegd; daarvoor ontbrak ze.
+
+Praktisch gevolg: **voorlopige notes zijn veilig te herzien.** Zet tekst neer, laat hem later staan of corrigeer hem, draai de seed opnieuw — de audio van gewijzigde zinnen wordt vanzelf opnieuw aangemaakt. De volgorde die wél telt: laat audio genereren pas nadat de tekst redactioneel af is, anders betaal je elke herziening in weggegooide opnames.
 
 **Controleren.** `supabase/qa/verify_language_note_seed_format.sql` draait de fixture twee keer, controleert dat een tweede run niets toevoegt, dat Thais schrift en apostroffen ongeschonden blijven, dat herordenen de sleutels bij hun rij houdt, en dat een ontbrekend of verkeerd-les concept luid faalt. Het ruimt zichzelf op. Draai het na elke wijziging aan het seedformaat of aan de generator.
 

@@ -1,0 +1,119 @@
+{
+  "lesson_key": "a1-dialog-01",
+  "notes": [
+    {
+      "note_key": "a1-dialog-01-note-1",
+      "title": "Introducing yourself when you meet someone",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Mali says ฉันชื่อมะลิค่ะ — \"My name is Mali.\" — and asks คุณชื่ออะไรคะ — \"What is your name?\". Asking someone's name and giving your own name form a simple first-meeting exchange. For \"I\", a female speaker uses ฉัน, while a male speaker uses ผม."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "[pronoun] + ชื่อ + [name] = giving your own name"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ฉันชื่อฝนค่ะ",
+              "paiboon": "chǎn chʉ̂ʉ fǒn kâ",
+              "translation_en": "My name is Fon."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ผมชื่อนัทครับ",
+              "paiboon": "pǒm chʉ̂ʉ nát kráp",
+              "translation_en": "My name is Nat."
+            }
+          ]
+        },
+        {
+          "block_key": "b4",
+          "block_type": "paragraph",
+          "content": "Narin then says ยินดีที่ได้รู้จักครับ — \"Nice to meet you.\". ยินดีที่ได้รู้จัก is a fixed expression you can use when meeting someone for the first time. The expression itself stays the same; only the polite particle changes with the speaker."
+        },
+        {
+          "block_key": "b5",
+          "block_type": "usage_tip",
+          "content": "Do not try to break ยินดีที่ได้รู้จัก into separate words yet. Learn it as one complete phrase for now — you will meet the individual words later."
+        }
+      ],
+      "concepts": [
+        {
+          "type": "phrase",
+          "key": "self_introduction_name"
+        },
+        {
+          "type": "phrase",
+          "key": "yin_di_thi_dai_ru_jak"
+        }
+      ]
+    },
+    {
+      "note_key": "a1-dialog-01-note-2",
+      "title": "Speaking politely with ครับ, ค่ะ and คะ",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Mali says สวัสดีค่ะ — \"Hello.\" — while Narin says สวัสดีครับ — \"Hello.\". Thai often marks politeness with a particle at the end of an utterance. A female speaker uses ค่ะ in a statement, while a male speaker uses ครับ."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "[statement] + ค่ะ / ครับ = polite statement"
+        },
+        {
+          "block_key": "b4",
+          "block_type": "paragraph",
+          "content": "For a female speaker, the polite ending changes with the sentence: ค่ะ is used for a statement, but คะ is used for a question. A male speaker uses ครับ for both statements and questions. Keeping these female forms separate is important because they are not interchangeable."
+        },
+        {
+          "block_key": "b5",
+          "block_type": "example_group",
+          "heading": null,
+          "content": "The first two are both said by a female speaker: only the ending changes with the type of sentence. The third shows a male speaker asking the same question.",
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ฉันชื่อฟ้าค่ะ",
+              "paiboon": "chǎn chʉ̂ʉ fáa kâ",
+              "translation_en": "My name is Fah."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "คุณชื่ออะไรคะ",
+              "paiboon": "kun chʉ̂ʉ à-rai ká",
+              "translation_en": "What is your name?"
+            },
+            {
+              "example_key": "e3",
+              "thai_script": "คุณชื่ออะไรครับ",
+              "paiboon": "kun chʉ̂ʉ à-rai kráp",
+              "translation_en": "What is your name?"
+            }
+          ]
+        },
+        {
+          "block_key": "b6",
+          "block_type": "usage_tip",
+          "content": "Pay attention to the tone difference between ค่ะ (kâ) and คะ (ká)."
+        }
+      ],
+      "concepts": [
+        {
+          "type": "grammar",
+          "key": "polite_particles_khrab_kha"
+        }
+      ]
+    }
+  ]
+}

@@ -1,68 +1,3 @@
-# Language Note Planner Prompt Template
-
-Gebruik dit bestand vóór er ook maar één note geschreven wordt. Het dekt
-Stap 1 tot en met Stap 3 van
-`docs/thai_a1_language_note_workflow_guide.md`: welke concepten vormen
-samen één note, hoe heet die note, en uit welke blokken bestaat ze.
-
-De output is een **voorstel dat jij goedkeurt of bijschuift** — geen
-note-tekst. Dat is bewust: de gids legt na Stap 1 en na Stap 3 een
-goedkeuringsmoment, omdat een verkeerde conceptverdeling of een
-verkeerde blokvolgorde ná het uitschrijven vijf keer zoveel werk kost om
-te herstellen.
-
-Pas ná goedkeuring gaat het goedgekeurde plan als invoer naar
-`08_language_note_writer_prompt_template.md`.
-
-**Voorwaarde:** de dialoog van deze les is goedgekeurd en geseed (Stap 10
-van de dialoogworkflowgids). Zolang de dialoog nog kan veranderen, kan
-een note naar zinnen verwijzen die straks niet meer bestaan.
-
-## Instructions
-
-- Draai de brief-view voor deze les en vul de placeholders hieronder in.
-  De mapping-checklist onderaan geeft per placeholder de bijbehorende
-  query.
-- `{{max_blocks_per_note}}` komt niet uit de brief-view maar uit de
-  tabel "Hoeveel notes per les, en hoe lang?" in de workflowgids: zoek
-  `sequence_number` daar op en neem **alleen dat ene getal** over. Het is
-  een plafond; een bereik zou lezen als een te halen aantal en levert
-  opgevulde notes op. Het aantal notes per les staat als vaste tekst in
-  de prompt — dat is 2–4 in elke lesfase en hoef je dus niet op te
-  zoeken.
-- Sla de ingevulde prompt op als
-  `supabase/prompts/language-notes/a1_dialog_XX_planner_prompt.md`.
-- Sla de modeloutput op als
-  `supabase/generation/language-notes/a1_dialog_XX_plan.md`.
-- Vervang **elke** placeholder vóór je genereert, en controleer dat
-  mechanisch — niet op het oog:
-
-  ```powershell
-  Select-String -Path supabase\prompts\language-notes\a1_dialog_XX_planner_prompt.md -Pattern '\{\{'
-  ```
-
-  Geen output betekent klaar om te versturen. **Deze controle is de reden
-  dat het blokplafond een placeholder is** en geen lege bullet. Tot
-  2026-08-11 stonden de twee guideline-waarden als `- Notes per lesson:`
-  met niets erachter; de prompt voor `a1-dialog-01` ging zo de deur uit
-  en het model plande drie notes van zes blokken zonder te weten dat er
-  twee van vijf golden. Een leeg veld dat er niet uitziet als een veld,
-  is voor geen enkele controle vindbaar — ook niet voor die van jezelf.
-
-**Taalregel voor alle prompttemplates:** Nederlands boven en onder de
-prompt, Engels erbinnen. De invulinstructies en de mapping-checklist zijn
-voor jou en blijven Nederlands; alles tussen `## Role` en het einde van
-`## Output Rules` gaat naar het model en is Engels.
-
-Waarom: elke prompt levert waarden op die uiteindelijk in het Engels in
-de database belanden — notetitels hier, dialoogtekst bij `04`,
-`learning_focus` bij `05`. Een Nederlandse prompt die om een Engelse
-waarde vraagt, is een zwakkere instructie dan een Engelse die dat doet.
-Dit template stond tot 2026-08-06 volledig in het Nederlands.
-
-De output van dit template is daardoor ook Engels. Dat is meegenomen: het
-plan gaat ongewijzigd de schrijverprompt in, en die is Engels.
-
 ## Role
 
 You are the editor of Language Notes for a Thai A1 course of about 50
@@ -79,7 +14,7 @@ Completeness here is a defect, not a quality.
 
 ## Task
 
-Propose how the concepts of lesson {{lesson_key}} that need explaining
+Propose how the concepts of lesson a1-dialog-01 that need explaining
 should be divided over notes. For each note, give a title, a
 justification, the concepts it covers, and the block skeleton.
 
@@ -108,19 +43,20 @@ phrase`.
 
 ### Vocabulary
 
-{{vocabulary_to_explain}}
+(geen)
 
 ### Grammar
 
-{{grammar_to_explain}}
+- Polite sentence-final particles: Use ครับ and ค่ะ to make speech polite and socially appropriate.  [key: polite_particles_khrab_kha]
 
 ### Phrases
 
-{{phrases_to_explain}}
+- Introduce yourself by name: คุณชื่ออะไร / ผมชื่อ... / ฉันชื่อ... — Asks someone’s name and gives your own name in a simple first-meeting exchange.  [key: self_introduction_name]
+- Nice to meet you: ยินดีที่ได้รู้จัก — A polite formula used when meeting someone for the first time.  [key: yin_di_thi_dai_ru_jak]
 
 ### Patterns
 
-{{patterns_to_explain}}
+(geen)
 
 ## The Lesson Dialogue
 
@@ -143,7 +79,13 @@ familiar.
 Use the dialogue to decide which fragment each note's paragraph should
 quote.
 
-{{dialog_text}}
+mali: มะลิ: สวัสดีค่ะ / Mali: sà-wàt-dii kâ / Mali: Hello.
+narin: นริน: สวัสดีครับ / Narin: sà-wàt-dii kráp / Narin: Hello.
+mali: มะลิ: ฉันชื่อมะลิค่ะ / Mali: chǎn chʉ̂ʉ Mali kâ / Mali: My name is Mali.
+mali: มะลิ: คุณชื่ออะไรคะ / Mali: kun chʉ̂ʉ à-rai ká / Mali: What is your name?
+narin: นริน: ผมชื่อนรินครับ / Narin: pǒm chʉ̂ʉ Narin kráp / Narin: My name is Narin.
+narin: นริน: ยินดีที่ได้รู้จักครับ / Narin: yin-dii tîi dâai rúu-jàk kráp / Narin: Nice to meet you.
+mali: มะลิ: ยินดีที่ได้รู้จักค่ะ / Mali: yin-dii tîi dâai rúu-jàk kâ / Mali: Nice to meet you.
 
 ## Block Types
 
@@ -236,10 +178,10 @@ A note explaining what a word means often needs only two blocks:
 2. example_group  — 2-3 examples
 ```
 
-## Guideline For This Lesson Phase (sequence_number {{sequence_number}})
+## Guideline For This Lesson Phase (sequence_number 1)
 
 - Notes per lesson: 2-4 — the same in every lesson phase
-- Maximum blocks per note: {{max_blocks_per_note}}
+- Maximum blocks per note: 5
 
 **There is no target number of blocks.** Take only the blocks the
 language point calls for. The maximum is an alarm, not a goal: a note
@@ -301,11 +243,11 @@ split.
 Use exactly this structure.
 
 ```
-## Note plan for {{lesson_key}}
+## Note plan for a1-dialog-01
 
 ### Note 1 — <title>
 
-- note_key: {{lesson_key}}-note-1
+- note_key: a1-dialog-01-note-1
 - Why these concepts together: <one or two sentences>
 - Concepts covered:
   - vocabulary / <source_key> — <thai script> <gloss>
@@ -336,8 +278,8 @@ Use exactly this structure.
   `thai_script` or `title` to identify a concept.
 - **`type` is one of:** `vocabulary`, `grammar`, `phrase`, `pattern`.
   Note the singular in `phrase` and `pattern`.
-- **`note_key` follows the fixed convention:** `{{lesson_key}}-note-1`,
-  `{{lesson_key}}-note-2`, numbered in reading order. Lower-case
+- **`note_key` follows the fixed convention:** `a1-dialog-01-note-1`,
+  `a1-dialog-01-note-2`, numbered in reading order. Lower-case
   letters, digits and hyphens; no underscores.
 - **Every concept from "Concepts To Explain" appears in the coverage
   check.** If you find a concept that in your judgement needs no note,
@@ -368,133 +310,3 @@ Use exactly this structure.
   justification.
 - Make no assumptions about concepts, characters or scenes that do not
   follow from the context given.
-
-# Brief-view -> prompt mapping checklist
-
-Op twee na komen alle placeholders uit één view:
-`language_note_brief_view`. De tabel hieronder zegt welke kolom bij welke
-placeholder hoort; de queries eronder maken er de vorm van die je plakt.
-
-De uitzondering is `{{max_blocks_per_note}}`. Die staat niet in de
-database maar in de tabel "Hoeveel notes per les, en hoe lang?" van de
-workflowgids, geïndexeerd op `sequence_number` — het enige veld dat je in
-een tweede bron moet opzoeken. Zie de invulinstructies bovenaan.
-
-Draai **niet** `select *` om de prompt te vullen. Dat levert de hele rij
-met alle velden, inclusief de koppelrij-id's die na een `db reset`
-verschuiven, en op een Windows-console komt het Thaise schrift er
-onleesbaar uit. Bekijk de rij in Supabase Studio wanneer je hem wilt
-inspecteren; gebruik de queries hieronder wanneer je invult.
-
-| Placeholder | Kolom |
-| --- | --- |
-| `{{lesson_key}}` | `lesson_key` |
-| `{{sequence_number}}` | `sequence_number` |
-| `{{vocabulary_to_explain}}` | `vocabulary_to_explain` |
-| `{{grammar_to_explain}}` | `grammar_to_explain` |
-| `{{phrases_to_explain}}` | `phrases_to_explain` |
-| `{{patterns_to_explain}}` | `patterns_to_explain` |
-| `{{dialog_text}}` | `dialog` |
-
-De vier conceptkolommen zijn `jsonb`-arrays. Plak ze als leesbare lijst
-in plaats van als ruwe JSON — dat scheelt het model werk en jou
-leesbaarheid. Voor vocabulaire:
-
-```sql
-select string_agg(
-         format('- %s (%s) = %s  [key: %s]',
-                c->>'thai_script', c->>'paiboon',
-                c->>'english_gloss', c->>'source_key'),
-         E'\n' order by (c->>'display_order')::int nulls first)
-from public.language_note_brief_view v,
-     lateral jsonb_array_elements(v.vocabulary_to_explain) c
-where v.lesson_key = 'a1-dialog-XX';
-```
-
-Voor grammatica, phrases en patterns dezelfde vorm, met de eigen
-sleutelnaam en velden:
-
-```sql
--- grammar: concept_key · title · short_explanation
--- phrases: phrase_key  · title · phrase_formula  · short_explanation
--- patterns: pattern_key · title · pattern_formula · short_explanation
-select string_agg(
-         format('- %s: %s — %s  [key: %s]',
-                c->>'title', c->>'phrase_formula',
-                c->>'short_explanation', c->>'phrase_key'),
-         E'\n' order by (c->>'display_order')::int nulls first)
-from public.language_note_brief_view v,
-     lateral jsonb_array_elements(v.phrases_to_explain) c
-where v.lesson_key = 'a1-dialog-XX';
-```
-
-En voor de dialoogtekst:
-
-```sql
-select string_agg(
-         format('%s: %s / %s / %s',
-                b->>'speaker_key', b->>'thai_text',
-                b->>'transliteration', b->>'translation_en'),
-         E'\n' order by (b->>'block_index')::int)
-from public.language_note_brief_view v,
-     lateral jsonb_array_elements(v.dialog->'blocks') b
-where v.lesson_key = 'a1-dialog-XX';
-```
-
-### Liever JSON dan een lijst?
-
-Plak dan niet de ruwe view-kolom. Die draagt `lesson_vocabulary_id`,
-`lesson_grammar_id`, `grammar_id`, `pattern_id` en `display_order` —
-identity-waarden die na een `db reset` verschuiven, en die er precies
-uitzien als de identifier die het model juist *niet* mag gebruiken. Het
-ging tot nu toe goed omdat het model de `key` koos, niet omdat de prompt
-hem daartoe dwong.
-
-Gebruik in plaats daarvan een projectie. Voor vocabulaire:
-
-```sql
-select jsonb_pretty(jsonb_agg(jsonb_build_object(
-         'source_key',    c->>'source_key',
-         'thai_script',   c->>'thai_script',
-         'paiboon',       c->>'paiboon',
-         'english_gloss', c->>'english_gloss',
-         'usage_note',    c->>'usage_note')
-       order by (c->>'display_order')::int nulls first))
-from public.language_note_brief_view v,
-     lateral jsonb_array_elements(v.vocabulary_to_explain) c
-where v.lesson_key = 'a1-dialog-XX';
-```
-
-Voor grammatica, phrases en patterns dezelfde vorm met hun eigen
-sleutelnaam plus `title`, `short_explanation` en — alleen bij phrases en
-patterns — `phrase_formula` respectievelijk `pattern_formula`. Dat laatste
-veld hoort er wél in: het template vraagt het model expliciet die notatie
-te lezen en om te zetten.
-
-Laat `register` weg. Elk masterobject draagt hem met de betekenis
-*formaliteit*, en deze prompt gebruikt de term nergens meer — sinds
-2026-08-09 heet de mannelijk/vrouwelijk-keuze `speaker_gender`, juist om
-die botsing te vermijden. Hem alsnog meeplakken zet beide betekenissen in
-één prompt.
-
-## Notes for manual filling
-
-- Is een van de vier conceptlijsten leeg, schrijf dan letterlijk
-  `(geen)` onder die kop. Laat de kop staan — een weggelaten kop leest
-  als een vergissing, `(geen)` als een feit.
-- Neem de `lesson_vocabulary_id`, `lesson_grammar_id`,
-  `lesson_phrase_id` en `lesson_pattern_id` uit de view **niet** mee in
-  de prompt. Dat zijn identity-waarden die na een `db reset` kunnen
-  verschuiven; ze dienen om achteraf te controleren dat de seed dezelfde
-  rij vond, niet om ergens ingevuld te worden.
-- **De verdeling van `speaker_gender` doet het model; jij corrigeert
-  hem.** Binnen één les kan het voorstel prima zelf spreiden, en je ziet
-  bij het nalezen meteen wat het gekozen heeft. Wat het model níet kan
-  zien is de rest van het curriculum — het krijgt één les. Kijk dus bij
-  het goedkeuren over de les heen: het evenwicht geldt over het hele
-  traject, en één les met drie voorbeelden laat zich niet netjes
-  halveren.
-- Wijkt je oordeel bij het reviewen af van de `requires_explanation`-vlag,
-  pas dan het leslink-seedbestand aan en draai het opnieuw — niet alleen
-  de database. Een correctie die alleen in de database staat, verdwijnt
-  bij de eerstvolgende reset.

@@ -34,7 +34,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
     (select id from public.vocabulary_master where source_key = 'hello'),
     'target',
-    true,
+    false,
     1,
     'Greeting word for first contact.'
   ),
@@ -42,7 +42,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
     (select id from public.vocabulary_master where source_key = 'you'),
     'target',
-    true,
+    false,
     2,
     'You / polite address in introductions.'
   ),
@@ -50,7 +50,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
     (select id from public.vocabulary_master where source_key = 'name'),
     'target',
-    true,
+    false,
     3,
     'Name.'
   ),
@@ -58,7 +58,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
     (select id from public.vocabulary_master where source_key = 'what'),
     'target',
-    true,
+    false,
     4,
     'What.'
   ),
@@ -66,7 +66,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
     (select id from public.vocabulary_master where source_key = 'i'),
     'target',
-    true,
+    false,
     5,
     'I / me for female speaker.'
   ),
@@ -74,7 +74,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-01'),
     (select id from public.vocabulary_master where source_key = 'i_male'),
     'target',
-    true,
+    false,
     6,
     'I / me for male speaker.'
   )

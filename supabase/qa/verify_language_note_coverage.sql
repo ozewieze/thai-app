@@ -109,15 +109,24 @@ create temporary view ln_geclaimd as
 \echo '    gaten > 0 blokkeert publicatie (Stap 9, punt 1).'
 \echo ''
 
+-- Waarom hier distinct op (soort, link_id) en niet op link_id alleen:
+-- link_id komt uit vier tabellen met onafhankelijke identity-reeksen, dus
+-- lesson_grammar.id = 1 en lesson_phrase.id = 1 zijn twee verschillende
+-- concepten met hetzelfde getal. Op 2026-08-11 gemeten bij a1-dialog-01:
+-- drie gevlagde concepten (grammar:1, phrase:1, phrase:2) werden als
+-- twee geteld. De statuskolom en sectie 2 bleven kloppen -- die kijken
+-- per rij -- maar gevlagd en gedekt telden te laag, en gedekt + gaten
+-- kon boven gevlagd uitkomen.
+
 select
   l.lesson_key,
-  count(distinct g.link_id)                                    as gevlagd,
-  count(distinct g.link_id) filter (
+  count(distinct (g.soort, g.link_id))                                    as gevlagd,
+  count(distinct (g.soort, g.link_id)) filter (
     where exists (select 1 from ln_geclaimd c
                    where c.lesson_id = g.lesson_id
                      and c.soort     = g.soort
                      and c.link_id   = g.link_id))             as gedekt,
-  count(distinct g.link_id) filter (
+  count(distinct (g.soort, g.link_id)) filter (
     where not exists (select 1 from ln_geclaimd c
                        where c.lesson_id = g.lesson_id
                          and c.soort     = g.soort
@@ -127,7 +136,7 @@ select
   case
     when (select count(*) from public.language_notes n where n.lesson_id = l.id) = 0
       then 'geen notes'
-    when count(distinct g.link_id) filter (
+    when count(distinct (g.soort, g.link_id)) filter (
       where not exists (select 1 from ln_geclaimd c
                          where c.lesson_id = g.lesson_id
                            and c.soort     = g.soort
