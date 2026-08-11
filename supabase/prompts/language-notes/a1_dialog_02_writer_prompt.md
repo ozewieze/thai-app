@@ -84,8 +84,9 @@ fixed notation. See "Concepts You May Claim" below.
   2. formula — [verb phrase] + ได้ = ability or possibility.
   3. example_group — ได้ after a complete verb phrase, 2 fresh examples;
      speaker_gender: male, female.
-  4. usage_tip — ได้ comes after the whole verb phrase, not straight
-     after the verb: ดื่มกาแฟได้, not ดื่มได้กาแฟ.
+  4. usage_tip — ได้ goes at the very end, after the object, with the
+     object between the verb and ได้. Describe the wrong order in
+     English; do not write it out in Thai script.
 
 ### Note 4 — Thai often leaves out the subject
 
