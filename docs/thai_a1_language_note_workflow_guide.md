@@ -94,6 +94,18 @@ Voor de writer-stage leest het script het goedgekeurde plan uit `supabase/genera
 
 **De skill `thai-lesson-content-review`** draagt de reviewchecklist voor Stap 1–5: wat er in de praktijk misging bij eerdere lessen, plus de mechanische controles op woordbudget, Paiboon, genderbundels, sleutels en dekking. Roep hem aan wanneer je een plan of een gegenereerde JSON laat nakijken.
 
+**Geef er altijd de bronnen bij, niet alleen de output.** De helft van de controles is een vergelijking, en zonder de tweede helft wordt het giswerk:
+
+| je laat nakijken | geef mee |
+| --- | --- |
+| notenplan (planner) | de dialoog, én het woordbudget |
+| notes-JSON (writer) | de ingevulde writerprompt (die bevat beide al) |
+| vocabulaire-voorbeelden | de ingevulde `09`-prompt, plus de JSON's van de vórige lessen |
+
+De dialoog is nodig om te zien of een geplande verankering naar een regel wijst die er werkelijk staat, en of een voorbeeld geen kopie wordt. Het woordbudget is nodig om te zien of de geplande voorbeelden überhaupt te schrijven zijn — dat is de controle die bij `a1-dialog-01` de helft van het plan onhoudbaar maakte.
+
+**Let op de asymmetrie tussen de twee prompts.** De writerprompt bevat de dialoog én het woordbudget, dus daar volstaat het prompbestand. De plannerprompt bevat alleen de dialoog: de planner krijgt bewust geen woordbudget, omdat een gereconstrueerde Paiboon-vorm in het plan in de schrijffase klakkeloos wordt overgenomen. Bij een planreview moet je het budget er dus apart bij leveren — uit de brief-view, of uit de writerprompt van dezelfde les als die al gevuld is.
+
 De reden dat het nakijken door een ánder model gebeurt dan het genereren: de generator ziet zijn eigen aannames niet. Elke correctie die tot nu toe iets opleverde, kwam voort uit het lezen van output die de lezer niet zelf had gemaakt.
 
 ## Stapsgewijze workflow per Language Note
