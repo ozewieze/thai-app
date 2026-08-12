@@ -43,7 +43,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
     (select id from public.vocabulary_master where source_key = 'take'),
     'target',
-    true,
+    false,
     1,
     'can mean take bring or choose depending on context'
   ),
@@ -51,7 +51,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
     (select id from public.vocabulary_master where source_key = 'also'),
     'target',
-    true,
+    false,
     2,
     'placed at the end of a sentence to mean also or too; also means with or by means of'
   ),
@@ -59,7 +59,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
     (select id from public.vocabulary_master where source_key = 'no'),
     'target',
-    true,
+    false,
     3,
     'basic negation; also used in answers and before verbs or adjectives'
   ),
@@ -67,7 +67,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
     (select id from public.vocabulary_master where source_key = 'snack'),
     'target',
-    true,
+    false,
     4,
     'a small treat or snack; can be sweet or savory'
   ), 
@@ -75,7 +75,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
     (select id from public.vocabulary_master where source_key = 'cake'),
     'target',
-    true,
+    false,
     5,
     'a sweet baked dessert, typically served as a slice in cafés or as a whole cake for celebrations.'
   ),
@@ -83,7 +83,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-04'),
     (select id from public.vocabulary_master where source_key = 'ice_cream'),
     'target',
-    true,
+    false,
     6,
     'a frozen dessert made from dairy; can be a small snack or a larger treat'
   )

@@ -1,0 +1,46 @@
+{
+  "examples": [
+    {
+      "source_key": "take",
+      "example_key": "e1",
+      "thai_script": "คุณเอาชาหรือกาแฟคะ",
+      "paiboon": "kun ao chaa rʉ̌ʉ gaa-faae ká",
+      "translation_en": "Do you want tea or coffee?"
+    },
+    {
+      "source_key": "also",
+      "example_key": "e1",
+      "thai_script": "ผมเอากาแฟด้วยครับ",
+      "paiboon": "pǒm ao gaa-faae dûai kráp",
+      "translation_en": "I'll have coffee too."
+    },
+    {
+      "source_key": "no",
+      "example_key": "e1",
+      "thai_script": "ฉันไม่ดื่มกาแฟค่ะ",
+      "paiboon": "chǎn mâi dʉ̀ʉm gaa-faae kâ",
+      "translation_en": "I don't drink coffee."
+    },
+    {
+      "source_key": "snack",
+      "example_key": "e1",
+      "thai_script": "ผมเอาขนมครับ",
+      "paiboon": "pǒm ao kà-nǒm kráp",
+      "translation_en": "I'll have a snack."
+    },
+    {
+      "source_key": "cake",
+      "example_key": "e1",
+      "thai_script": "ฉันเอาเค้กค่ะ",
+      "paiboon": "chǎn ao kéek kâ",
+      "translation_en": "I'll have cake."
+    },
+    {
+      "source_key": "ice_cream",
+      "example_key": "e1",
+      "thai_script": "ไอศกรีมเย็นครับ",
+      "paiboon": "ai-sà-griim yen kráp",
+      "translation_en": "The ice cream is cold."
+    }
+  ]
+}
