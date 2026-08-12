@@ -1,0 +1,39 @@
+{
+  "examples": [
+    {
+      "source_key": "like",
+      "example_key": "e1",
+      "thai_script": "ผมชอบกาแฟครับ",
+      "paiboon": "pǒm chɔ̂ɔp gaa-faae kráp",
+      "translation_en": "I like coffee."
+    },
+    {
+      "source_key": "eat",
+      "example_key": "e1",
+      "thai_script": "ฉันกินขนมค่ะ",
+      "paiboon": "chǎn gin kà-nǒm kâ",
+      "translation_en": "I eat snacks."
+    },
+    {
+      "source_key": "delicious",
+      "example_key": "e1",
+      "thai_script": "เค้กอร่อย",
+      "paiboon": "kéek à-rɔ̀i",
+      "translation_en": "The cake is delicious."
+    },
+    {
+      "source_key": "sweet",
+      "example_key": "e1",
+      "thai_script": "ไอศกรีมหวาน",
+      "paiboon": "ai-sà-griim wǎan",
+      "translation_en": "Ice cream is sweet."
+    },
+    {
+      "source_key": "often",
+      "example_key": "e1",
+      "thai_script": "ผมกินเค้กบ่อยครับ",
+      "paiboon": "pǒm gin kéek bɔ̀i kráp",
+      "translation_en": "I often eat cake."
+    }
+  ]
+}

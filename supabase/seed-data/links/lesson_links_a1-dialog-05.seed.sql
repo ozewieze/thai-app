@@ -11,7 +11,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-05'),
     (select id from public.vocabulary_master where source_key = 'like'),
     'target',
-    true,
+    false,
     1,
     'also commonly expresses preference'
   ),
@@ -27,7 +27,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-05'),
     (select id from public.vocabulary_master where source_key = 'delicious'),
     'target',
-    true,
+    false,
     3,
     ''
   ),
@@ -35,7 +35,7 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-05'),
     (select id from public.vocabulary_master where source_key = 'sweet'),
     'target',
-    true,
+    false,
     4,
     ''
   ),
@@ -43,9 +43,9 @@ values
     (select id from public.lessons where lesson_key = 'a1-dialog-05'),
     (select id from public.vocabulary_master where source_key = 'often'),
     'target',
-    true,
+    false,
     5,
-    ''
+    'placement after the verb is explained by adverbs_after_verbs_and_adjectives'
   )
 
 on conflict (lesson_id, vocabulary_id) do update
@@ -69,7 +69,7 @@ values
     true,
     1,
     'In Thai, many common adverbs such as บ่อย and มาก come after the verb or adjective'
-  )  
+  )
 
 on conflict (lesson_id, grammar_id) do update
 set role                 = excluded.role,
@@ -77,3 +77,26 @@ set role                 = excluded.role,
     display_order        = excluded.display_order,
     notes                = excluded.notes;
 
+insert into public.lesson_pattern (
+  lesson_id,
+  pattern_id,
+  role,
+  requires_explanation,
+  display_order,
+  notes
+)
+values
+  (
+    (select id from public.lessons where lesson_key = 'a1-dialog-05'),
+    (select id from public.pattern_master where pattern_key = 'chop_noun'),
+    'target',
+    true,
+    1,
+    'ชอบ followed by a thing or category. Only the noun form occurs in this dialogue; chop_verb is kept for a later lesson that can anchor it.'
+  )
+
+on conflict (lesson_id, pattern_id) do update
+set role                 = excluded.role,
+    requires_explanation = excluded.requires_explanation,
+    display_order        = excluded.display_order,
+    notes                = excluded.notes;
