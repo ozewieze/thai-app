@@ -41,6 +41,13 @@
       "thai_script": "ดื่มกาแฟด้วยกันค่ะ",
       "paiboon": "dʉ̀ʉm gaa-faae dûai-gan kâ",
       "translation_en": "We drink coffee together."
+    },
+    {
+      "source_key": "question_particle_mai",
+      "example_key": "e1",
+      "thai_script": "คุณชื่อฝนไหมคะ",
+      "paiboon": "kun chʉ̂ʉ fǒn mǎi ká",
+      "translation_en": "Is your name Fon?"
     }
   ]
 }

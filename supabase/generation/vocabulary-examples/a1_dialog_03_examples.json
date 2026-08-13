@@ -27,6 +27,13 @@
       "thai_script": "คุณดื่มชาหรือกาแฟครับ",
       "paiboon": "kun dʉ̀ʉm chaa rʉ̌ʉ gaa-faae kráp",
       "translation_en": "Do you drink tea or coffee?"
+    },
+    {
+      "source_key": "will",
+      "example_key": "e1",
+      "thai_script": "ฉันจะไปค่ะ",
+      "paiboon": "chǎn jà bpai kâ",
+      "translation_en": "I will go."
     }
   ]
 }
