@@ -62,6 +62,14 @@ values
     false, -- requires_explanation: keuze-conjunctie, gelijk aan het Nederlandse "of"
     4,
     'Conjunction used to offer a choice between two options.'
+  ),
+  (
+    (select id from public.lessons where lesson_key = 'a1-dialog-03'),
+    (select id from public.vocabulary_master where source_key = 'will'),
+    'target',
+    false, -- requires_explanation: ja_verb legt de vorm al uit; een tweede note zou hetzelfde herhalen
+    5,
+    'Auxiliary marking intention or future. Toegevoegd 2026-08-13: จะ stond al in de dialoog en werd hier al aangeleerd, maar zonder link-rij bleef het buiten het woordbudget van elke latere les.'
   )
 on conflict (lesson_id, vocabulary_id) do update
 set role                 = excluded.role,

@@ -88,6 +88,14 @@ values
     false,
     6,
     'Adverb indicating shared action; pairs naturally with go and drink.'
+  ),
+  (
+    (select id from public.lessons where lesson_key = 'a1-dialog-02'),
+    (select id from public.vocabulary_master where source_key = 'question_particle_mai'),
+    'target',
+    false, -- requires_explanation: statement_mai legt de vorm al uit; een tweede note zou hetzelfde herhalen
+    7,
+    'Yes/no question particle. Toegevoegd 2026-08-13: ไหม stond al in de dialoog en werd hier al aangeleerd, maar zonder link-rij bleef het buiten het woordbudget van elke latere les.'
   )
 on conflict (lesson_id, vocabulary_id) do update
 set role                 = excluded.role,
