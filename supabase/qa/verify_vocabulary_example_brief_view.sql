@@ -186,7 +186,13 @@ from public.vocabulary_example_brief_view v,
 where (w ->> 'existing_example_count')::int > 1;
 
 
-\echo '--- 11. Werklijst van a1-dialog-03 (verwacht: needs_example overal true, budget nog leeg van voorbeelden) ---'
+-- De oorspronkelijke verwachting ("needs_example overal true") gold zolang
+-- les 03 nog geen voorbeelden had. Die zijn intussen geseed, en op
+-- 2026-08-13 kwam จะ (will) als vijfde doelwoord binnen. De sectie leest nu
+-- dus als een voortgangsmeter: vlak na het toevoegen van de link-rij staat
+-- alleen จะ op needs_example true, en na het seeden van zijn kaart staat
+-- alles op false met existing_example_count 1.
+\echo '--- 11. Werklijst van a1-dialog-03 (verwacht: needs_example alleen true zolang een doelwoord nog geen canoniek voorbeeld heeft) ---'
 
 select
   w ->> 'source_key'            as sleutel,
@@ -203,7 +209,7 @@ where v.lesson_key = 'a1-dialog-03'
 order by (w ->> 'display_order')::int nulls first;
 
 
-\echo '--- 12. Woordbudget van a1-dialog-03 (verwacht: dezelfde 16 woorden als sectie 8 van verify_language_note_brief_view.sql) ---'
+\echo '--- 12. Woordbudget van a1-dialog-03 (verwacht: dezelfde 18 woorden als sectie 8 van verify_language_note_brief_view.sql) ---'
 -- Vergelijkbaar omdat alle doelwoorden van les 03 daar ook geintroduceerd
 -- worden; het anker valt samen met de les. Wijkt dit af, dan is dat het
 -- eerste teken dat een doelwoord elders geintroduceerd is -- zie 9.

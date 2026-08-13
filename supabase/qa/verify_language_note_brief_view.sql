@@ -113,7 +113,10 @@ from public.language_note_brief_view v,
 where w ->> 'paiboon' ~ '(kh|th|ph)';
 
 
-\echo '--- 8. Woordbudget van les 03 (verwacht: 16 woorden, lessen 1-3, geen woord uit een latere les) ---'
+-- Sinds 2026-08-13 zitten ไหม (les 02) en จะ (les 03) als eigen
+-- vocabulaire-rij in de lijst; het budget van les 03 ging daardoor van
+-- 16 naar 18 woorden. Zie snippets/add_mai_ja_vocabulary_2026-08-13.sql.
+\echo '--- 8. Woordbudget van les 03 (verwacht: 18 woorden, lessen 1-3, geen woord uit een latere les) ---'
 
 select
   w ->> 'source_key'            as source_key,
@@ -150,7 +153,13 @@ where v.lesson_key = 'a1-dialog-03'
 order by (b ->> 'block_index')::int;
 
 
-\echo '--- 11. Controleles: a1-dialog-01 staat nog volledig op true (verwacht: vocab 6, grammar 1, phrases 2) ---'
+-- De oorspronkelijke titel zei "staat nog volledig op true" en verwachtte
+-- vocab 6. Dat gold zolang les 01 nog geen notes had; bij het vaststellen
+-- van het notenplan zijn de zes vocabulairerijen op requires_explanation
+-- false gezet, omdat de phrases en het grammaticaconcept de uitleg dragen.
+-- Bijgewerkt 2026-08-13; de sectie blijft een controleles, alleen niet
+-- meer voor de vocabulairekolom.
+\echo '--- 11. Controleles: a1-dialog-01 is niet meegewijzigd (verwacht: vocab 0, grammar 1, phrases 2, budget 6) ---'
 
 select
   jsonb_array_length(vocabulary_to_explain) as vocab,

@@ -226,7 +226,10 @@ often just a paragraph plus an example group.
 - **`usage_tip`** — one concrete tip: a pitfall, a politeness nuance, a
   difference from English. One tip per block, at most one or two tip
   blocks per note. Tips draw their force from scarcity: no pitfall, no
-  tip.
+  tip. **Never spell out the wrong form in Thai script.** The block has
+  no way to strike text through, so the incorrect Thai sits on the page
+  just as legibly as the correct Thai and a beginner may well memorise
+  it. Describe the mistake in English and show only the correct Thai.
 
 ### Example sentences
 
@@ -502,11 +505,11 @@ safe to imitate.
         {
           "block_key": "b5",
           "block_type": "usage_tip",
-          "content": "ไหม comes before the polite particle, never after it: ชอบไหมคะ, not ชอบคะไหม."
+          "content": "ไหม comes before the polite particle, never after it. The polite particle always closes the sentence: ชอบไหมคะ."
         }
       ],
       "concepts": [
-        { "type": "vocabulary", "key": "question_particle" },
+        { "type": "vocabulary", "key": "question_particle_mai" },
         { "type": "grammar", "key": "yes_no_question_mai" },
         { "type": "pattern", "key": "statement_mai" }
       ]

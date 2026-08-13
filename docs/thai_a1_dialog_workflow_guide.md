@@ -193,26 +193,31 @@ Betere aanpak: gebruik een **shortlist van 10–12 kandidaatwoorden** die passen
 
 > "Welke [doelaantal] van deze kandidaatwoorden vormen samen de sterkste lesset voor dit doel en deze scène?"
 
-Vul `[doelaantal]` in met het bereik uit de tabel in "Hoeveel nieuwe woorden en regels per lesfase" hieronder, afhankelijk van waar de les zich in het curriculum bevindt.
+Vul `[doelaantal]` in met het bereik uit "Hoeveel nieuwe woorden en regels per les" hieronder — vandaag 5 à 8 woorden, voor elke les van het A1-traject.
 
 Keur de aanbeveling goed en seed dan pas naar `lesson_vocabulary`. Zo blijft de database de curriculumbron van waarheid terwijl je betere input geeft aan de selectie.
 
-## Hoeveel nieuwe woorden en regels per lesfase
+## Hoeveel nieuwe woorden en regels per les
 
-De oorspronkelijke regel "maximaal 5 nieuwe woorden, dialoog zo kort mogelijk" werkt goed voor de allereerste lessen, maar schaalt niet naar een volledig A1-traject van rond de 50 lessen: latere dialogen mogen en moeten meer woorden bevatten en meer op een natuurlijk gesprek lijken. Gebruik onderstaande richtlijn per lesfase (op basis van `sequence_number` van de les) in plaats van één vast getal voor het hele traject:
+**Vocabulary guideline for A1: typically 5–8 new vocabulary items per lesson.**
 
-| Lesfase (`sequence_number`) | Nieuwe woorden per les | Richtlijn `estimated_line_count` |
-| --------------------------- | ---------------------- | -------------------------------- |
-| 1–10                        | 4–5                    | 4–6 lines                        |
-| 11–30                       | 6–8                    | 6–8 lines                        |
-| 31+                         | 8–10                   | 8–10 lines                       |
+Nadrukkelijk een richtlijn, geen constraint. Een scène die er zeven nodig heeft is geen probleem, en een scène die met vier af kan evenmin. Het getal bestaat om te voorkomen dat een lesset ongemerkt uitdijt, niet om een goede les tegen te houden.
+
+De eerdere staffel per lesfase (4–5 woorden voor les 1–10, oplopend naar 8–10) is op 2026-08-13 losgelaten. Twee redenen. De ondergrens klopte in de praktijk al niet — les 1 en les 2 zaten allebei op zes doelwoorden — en de staffel suggereerde een precisie die er niet is: het verschil tussen les 10 en les 11 is geen didactische breuklijn. Eén bereik over het hele A1-traject is eerlijker over wat de regel werkelijk doet.
+
+Voor de dialooglengte blijft de lesfase wél nuttig, omdat een beginnersdialoog echt korter hoort te zijn dan een dialoog halverwege het traject:
+
+| Lesfase (`sequence_number`) | Richtlijn `estimated_line_count` |
+| --------------------------- | -------------------------------- |
+| 1–10                        | 4–6 lines                        |
+| 11–30                       | 6–8 lines                        |
+| 31+                         | 8–10 lines                       |
 
 Praktisch:
 
-- Bepaal de lesfase via `sequence_number` van de les in `lessons`.
-- Kies de shortlist-omvang en het doelaantal in Stap 1 volgens deze tabel (de vocabulaireselectie gebeurt daar nu, als onderdeel van het AI-voorstel).
-- Vul `estimated_line_count` in `dialog_blueprint_specs` (Stap 5) in met de bijhorende richtlijn, bijvoorbeeld `'6-8 lines'`.
-- Dit is een richtlijn, geen harde databasebeperking: bij een scène die iets meer of minder nodig heeft, mag je afwijken. De tabel is een startpunt voor de shortlist-vraag en voor `estimated_line_count`, niet een constraint in het schema.
+- Kies de shortlist-omvang en het doelaantal in Stap 1 op de vocabulairerichtlijn hierboven (de vocabulaireselectie gebeurt daar nu, als onderdeel van het AI-voorstel).
+- Bepaal de lesfase via `sequence_number` van de les in `lessons` en vul `estimated_line_count` in `dialog_blueprint_specs` (Stap 5) in met de bijhorende richtlijn, bijvoorbeeld `'6-8 lines'`.
+- Ook de regeltabel is een richtlijn, geen harde databasebeperking: bij een scène die iets meer of minder nodig heeft, mag je afwijken. Het is een startpunt voor `estimated_line_count`, niet een constraint in het schema.
 
 ## Nieuw woord/concept toevoegen aan de masterlijst
 
