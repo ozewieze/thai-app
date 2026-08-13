@@ -80,7 +80,7 @@ insert into public.vocabulary_master (source_key, cefr_level, thai_script, paibo
 ('be', 'A1', 'เป็น', 'bpen', 'be', 'verb', 'formal', 'essentials', true, 'Used for identity classification profession or ability in some patterns.', 'ai_a1_master_v3'),
 ('can', 'A1', 'ได้', 'dâai', 'can', 'verb', 'formal', 'essentials', true, 'Used for ability possibility permission and some completed actions.', 'ai_a1_master_v3'),
 ('give', 'A1', 'ให้', 'hâi', 'give', 'verb', 'formal', 'actions', true, 'Means give; also marks doing something for someone or permission in simple patterns.', 'ai_a1_master_v3'),
-('take', 'A1', 'เอา', 'ao', 'take', 'verb', 'informal', 'actions', true, 'Can mean take, bring or choose depending on context.', 'ai_a1_master_v3'),
+('take', 'A1', 'เอา', 'ao', 'take', 'verb', 'informal', 'actions', true, 'Used when taking, choosing, or saying that you want something.', 'ai_a1_master_v3'),
 ('open', 'A1', 'เปิด', 'bpə̀ət', 'open', 'verb', 'formal', 'actions', true, 'Also used for turning on devices.', 'ai_a1_master_v3'),
 ('close', 'A1', 'ปิด', 'bpìt', 'close', 'verb', 'formal', 'actions', true, 'Also used for turning off devices.', 'ai_a1_master_v3'),
 ('hot', 'A1', 'ร้อน', 'rɔ́ɔn', 'hot', 'adjective', 'formal', 'weather', true, 'Used for hot weather, hot objects, food, and drinks.', 'ai_a1_master_v3'),
@@ -185,7 +185,7 @@ insert into public.vocabulary_master (source_key, cefr_level, thai_script, paibo
 ('english_language', 'A1', 'ภาษาอังกฤษ', 'paa-sǎa-ang-grìt', 'English', 'noun', 'formal', 'school', false, NULL, 'ai_a1_master_v3'),
 ('understand', 'A1', 'เข้าใจ', 'kâo-jai', 'understand', 'verb', 'formal', 'school', false, NULL, 'ai_a1_master_v3'),
 ('know', 'A1', 'รู้', 'rúu', 'know', 'verb', 'formal', 'school', false, NULL, 'ai_a1_master_v3'),
-('question_particle', 'A1', 'ไหม', 'mǎi', 'question particle', 'particle', 'formal', 'questions', false, NULL, 'ai_a1_master_v3'),
+('question_particle_mai', 'A1', 'ไหม', 'mǎi', 'yes/no question particle', 'particle', 'formal', 'questions', false, NULL, 'ai_a1_master_v3'),
 ('very', 'A1', 'มาก', 'mâak', 'very', 'adverb', 'formal', 'descriptions', false, NULL, 'ai_a1_master_v3'),
 ('again', 'A1', 'อีก', 'ìik', 'again', 'adverb', 'formal', 'daily_life', true, 'Can mean again another or more depending on context.', 'ai_a1_master_v3'),
 ('already', 'A1', 'แล้ว', 'lɛ́ɛo', 'already', 'adverb', 'formal', 'time', true, 'Also marks completed or changed state in simple patterns.', 'ai_a1_master_v3'),
@@ -512,4 +512,5 @@ insert into public.vocabulary_master (source_key, cefr_level, thai_script, paibo
 ('each_other', 'A1', 'กัน', 'gan', 'each other', 'particle', 'formal', 'social', true, 'Marks mutual or shared action; also appears in ด้วยกัน (together) and กันเอง (among ourselves).', 'ai_a1_master_v3'),
 ('snack', 'A1', 'ขนม', 'kà-nǒm', 'snack', 'noun', 'formal', 'food', false, NULL, NULL),
 ('cake', 'A1', 'เค้ก', 'kéek', 'cake', 'noun', 'formal', 'food', false, NULL, NULL),
-('ice_cream', 'A1', 'ไอศกรีม', 'ai-sà-griim', 'ice cream', 'noun', 'formal', 'food', false, NULL, NULL);
+('ice_cream', 'A1', 'ไอศกรีม', 'ai-sà-griim', 'ice cream', 'noun', 'formal', 'food', false, NULL, NULL),
+('will', 'A1', 'จะ', 'jà', 'will / going to', 'verb', 'formal', 'essentials', false, 'Placed before the verb to show intention or a future action.', 'manual_dialogue_seed_v1');

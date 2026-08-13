@@ -1,2 +1,2 @@
 select * from vocabulary_master
-where thai_script = 'จะ'
+where thai_script = 'ไหม'
