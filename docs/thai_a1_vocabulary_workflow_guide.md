@@ -82,6 +82,24 @@ De regel dekt automatisch het hele curriculum, en dat is geen toeval: door de Si
 
 Woorden met `role = 'supporting'`, `'review'` of `'bonus'` krijgen geen eigen voorbeeldverplichting in die les: ze hebben hun voorbeelden al gekregen in de les die ze introduceerde, of krijgen die daar nog.
 
+## Gereedschap bij deze workflow
+
+Twee dingen nemen het handwerk uit de stappen hieronder weg. Geen van beide vervangt een goedkeuringsmoment.
+
+**`scripts/fill-note-prompt.mjs`** vult `09_vocabulary_example_prompt_template.md` met de doelwoorden en het woordbudget van één les en schrijft het resultaat naar `supabase/prompts/vocabulary-examples/`. Ondanks zijn naam dekt het script alle drie de templates; de stage is wat telt.
+
+```powershell
+node --env-file=.env.local scripts/fill-note-prompt.mjs --lesson a1-dialog-XX --stage vocab-examples
+```
+
+Het script faalt luid zodra er een placeholder blijft staan, en ook wanneer er meer dan één budgetblok is of `word_count` niet klopt met het aantal woorden erin — de twee controles die Stap 2 anders met de hand vraagt. Het filtert `target_words` zelf op `needs_example`, dus de werklijst van Stap 1 komt er kant-en-klaar uit.
+
+**De skill `thai-lesson-content-review`** kijkt de gegenereerde JSON na tegen de regels van Stap 3 tot en met 5, plus de mechanische controles op woordbudget, Paiboon, genderbundels en sleutels.
+
+**Geef er twee dingen bij, niet alleen de JSON.** De ingevulde `09`-prompt, want daar staan het woordbudget en de doelwoordenlijst in. En **de JSON's van de vorige lessen**, uit `supabase/generation/vocabulary-examples/`. Dat tweede is geen luxe: een woordkaart overleeft zijn les, dus de vergelijkingsgroep is alles wat er al staat en niet de batch van vandaag. Bij les 4 ging dat mis — er werd een zin voorgesteld die sinds les 2 al op een andere kaart stond.
+
+De reden dat het nakijken door een ánder model gebeurt dan het genereren: de generator ziet zijn eigen aannames niet. De terugkerende faalmodus is dat het model bij een krap budget één zinsframe maakt en alleen het object of de genderbundel verwisselt — vier van de zes kaarten van les 4 waren `[voornaamwoord] + เอา + [naamwoord] + [partikel]`, alle vier vertaald als "I'll have X". Genderbundels en Paiboon waren daarbij perfect, dus geen enkele mechanische controle sloeg aan. Zoiets zie je alleen door de kaarten naast elkaar te leggen.
+
 ## Stapsgewijze workflow per les
 
 ### Stap 1 — Bepaal welke woorden voorbeelden nodig hebben
@@ -204,6 +222,11 @@ Controleer vóór de audio-stap minstens:
 - Is de verdeling tussen de twee bundels over de lessen heen in evenwicht?
 - Staan instruerende teksten in de imperatief?
 - Is `display_order` aaneensluitend vanaf 1?
+- **Maken twee kaarten hetzelfde punt, of alleen dezelfde vorm?** Leg de nieuwe kaarten naast álle bestaande, niet alleen naast elkaar.
+
+Die laatste vraag is de enige in deze lijst die geen enkele mechanische controle kan beantwoorden, en het is de fout die het vaakst doorglipt. Het onderscheid: **frame-overlap** is in vroege lessen rekenkunde en geen fout — met drie werkwoorden en vijf etenswoorden móéten twintig kaarten op elkaar lijken. **Punt-overlap** is het wel: twee kaarten die draaien om hetzelfde woord met een verwisseld object leren de leerling twee keer hetzelfde. In les 4 waren vier van de zes kaarten `[voornaamwoord] + เอา + [naamwoord] + [partikel]`, alle vier vertaald als "I'll have X".
+
+Vind je punt-overlap, dan zijn de gebruikelijke uitwegen binnen een krap budget: een vraagvorm met het vraagwoord dat de leerling al kent, een minder gebruikt naamwoord of werkwoord uit het budget, of een bijvoeglijke zin zonder voornaamwoord.
 
 Waarom QA vóór audio en niet erna: elke tekstwijziging ná audiogeneratie maakt die audio ongeldig en dwingt tot regenereren. Tekst eerst bevriezen is goedkoper.
 

@@ -10,9 +10,9 @@
 //   vocab-examples 09_vocabulary_example_prompt_template.md
 //
 // Uitvoeren:
-//   node --env-file=.env.local scripts/fill-note-prompt.mjs --lesson a1-dialog-05 --stage planner
-//   node --env-file=.env.local scripts/fill-note-prompt.mjs --lesson a1-dialog-05 --stage writer
-//   node --env-file=.env.local scripts/fill-note-prompt.mjs --lesson a1-dialog-05 --stage vocab-examples
+//   node --env-file=.env.local scripts/fill-note-prompt.mjs --lesson a1-dialog-XX --stage planner
+//   node --env-file=.env.local scripts/fill-note-prompt.mjs --lesson a1-dialog-XX --stage writer
+//   node --env-file=.env.local scripts/fill-note-prompt.mjs --lesson a1-dialog-XX --stage vocab-examples
 //
 // Dry-run (toont wat er zou gebeuren, schrijft niets):
 //   ... --stage planner --dry-run

@@ -52,6 +52,7 @@ docs/backlog-startprompts.md
 docs/LANGUA~1.MD
 docs/vocab_card_prompts.md
 docs/audio_pipeline_prompt.md
+docs/language_note_budget_extension_prompt.md
 
 # test seed SQL-bestanden, tijdelijk -- niet committen, later verwijderen   
 scripts/dev-seed-instructional-content.sql

@@ -1,0 +1,157 @@
+{
+  "lesson_key": "a1-dialog-04",
+  "notes": [
+    {
+      "note_key": "a1-dialog-04-note-1",
+      "title": "Asking for and choosing things with เอา",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Narin asks เอาขนมไหมครับ — \"Would you like a snack?\", and Mali later says เอาเค้กค่ะ — \"I'll have cake.\". เอา is used both to ask what someone wants and to state your own choice. The English translation changes with the situation, but the Thai word เอา stays the same."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "เอา + [noun] = choose or ask for something"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "เอาชาร้อนค่ะ",
+              "paiboon": "ao chaa rɔ́ɔn kâ",
+              "translation_en": "I'll have hot tea."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "คุณเอาเค้กหรือไอศกรีมครับ",
+              "paiboon": "kun ao kéek rʉ̌ʉ ai-sà-griim kráp",
+              "translation_en": "Would you like cake or ice cream?"
+            },
+            {
+              "example_key": "e3",
+              "thai_script": "คุณเอาอะไรครับ",
+              "paiboon": "kun ao à-rai kráp",
+              "translation_en": "What would you like?"
+            }
+          ]
+        }
+      ],
+      "concepts": [
+        {
+          "type": "pattern",
+          "key": "ao_noun"
+        }
+      ]
+    },
+    {
+      "note_key": "a1-dialog-04-note-2",
+      "title": "Making something negative with ไม่",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Narin says ไม่เอาเค้กครับ — \"I won't have cake.\". ไม่ goes directly before the word it makes negative. That word can be an action or a describing word."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "ไม่ + [verb] = negative"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "formula",
+          "content": "[noun] + ไม่ + [describing word] = saying something is not that way"
+        },
+        {
+          "block_key": "b4",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ไม่เอาชาค่ะ",
+              "paiboon": "mâi ao chaa kâ",
+              "translation_en": "I won't have tea."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ผมไม่ไปครับ",
+              "paiboon": "pǒm mâi bpai kráp",
+              "translation_en": "I'm not going."
+            },
+            {
+              "example_key": "e3",
+              "thai_script": "กาแฟไม่ร้อน",
+              "paiboon": "gaa-faae mâi rɔ́ɔn",
+              "translation_en": "The coffee isn't hot."
+            }
+          ]
+        }
+      ],
+      "concepts": [
+        {
+          "type": "grammar",
+          "key": "negative_mai_general"
+        },
+        {
+          "type": "pattern",
+          "key": "mai_verb"
+        }
+      ]
+    },
+    {
+      "note_key": "a1-dialog-04-note-3",
+      "title": "Adding \"too\" with ด้วย",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Mali asks เอาเค้กด้วยไหมคะ — \"Will you have cake too?\". ด้วย adds the meaning \"also\" or \"too\". It comes at the end of the verb phrase, after the object when there is one."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "[verb phrase] + ด้วย = also or too"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ผมดื่มชาด้วยครับ",
+              "paiboon": "pǒm dʉ̀ʉm chaa dûai kráp",
+              "translation_en": "I drink tea too."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ฉันไปด้วยค่ะ",
+              "paiboon": "chǎn bpai dûai kâ",
+              "translation_en": "I'll go too."
+            }
+          ]
+        },
+        {
+          "block_key": "b4",
+          "block_type": "usage_tip",
+          "content": "ด้วย means \"too\" when you add one more thing or person. It is different from ด้วยกัน, which means \"together\" when people do something jointly."
+        }
+      ],
+      "concepts": [
+        {
+          "type": "grammar",
+          "key": "addition_duai"
+        }
+      ]
+    }
+  ]
+}
