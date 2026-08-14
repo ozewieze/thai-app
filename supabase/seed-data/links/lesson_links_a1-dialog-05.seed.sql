@@ -46,6 +46,14 @@ values
     false,
     5,
     'placement after the verb is explained by adverbs_after_verbs_and_adjectives'
+  ),
+  (
+    (select id from public.lessons where lesson_key = 'a1-dialog-05'),
+    (select id from public.vocabulary_master where source_key = 'very'),
+    'target',
+    false,
+    6,
+    'placement after the verb or adjective is explained by adverbs_after_verbs_and_adjectives'
   )
 
 on conflict (lesson_id, vocabulary_id) do update

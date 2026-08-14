@@ -56,7 +56,7 @@ select
 from dialog
 cross join (values
   (0, 'narin', 'นริน: เค้กอร่อยไหมครับ',                 'Narin: kéek à-rɔ̀i mǎi kráp',                              'Narin: Is the cake delicious?'),
-  (1, 'mali',  'มะลิ: อร่อยค่ะ เค้กหวาน ชอบขนมหวานค่ะ',  'Mali: à-rɔ̀i kâ. kéek wǎan. chɔ̂ɔp kà-nǒm wǎan kâ.',       'Mali: It is delicious. The cake is sweet. I like sweet snacks.'),
+  (1, 'mali',  'มะลิ: อร่อยมากค่ะ เค้กหวาน ชอบขนมหวานค่ะ',  'Mali: à-rɔ̀i mâak kâ. kéek wǎan. chɔ̂ɔp kà-nǒm wǎan kâ.',       'Mali: It is very delicious. The cake is sweet. I like sweet snacks.'),
   (2, 'mali',  'มะลิ: ชอบเค้กด้วยไหมคะ',                 'Mali: chɔ̂ɔp kéek dûai mǎi ká',                            'Mali: Do you like cake too?'),
   (3, 'narin', 'นริน: ชอบครับ คุณชอบไอศกรีมด้วยไหมครับ', 'Narin: chɔ̂ɔp kráp. kun chɔ̂ɔp ai-sà-griim dûai mǎi kráp', 'Narin: I do. Do you like ice cream too?'),
   (4, 'mali',  'มะลิ: ชอบค่ะ กินขนมบ่อยไหมคะ',           'Mali: chɔ̂ɔp kâ. gin kà-nǒm bɔ̀i mǎi ká',                  'Mali: I do. Do you often eat snacks?'),
