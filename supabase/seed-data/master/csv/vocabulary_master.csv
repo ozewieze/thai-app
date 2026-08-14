@@ -50,7 +50,7 @@ coffee,A1,กาแฟ,gaa-faae,coffee,noun,formal,drinks,false,,ai_a1_master_v3
 tea,A1,ชา,chaa,tea,noun,formal,drinks,false,,ai_a1_master_v3
 milk,A1,นม,nom,milk,noun,formal,drinks,false,,ai_a1_master_v3
 beer,A1,เบียร์,bia,beer,noun,informal,drinks,false,,ai_a1_master_v3
-eat,A1,กิน,gin,eat,verb,informal,actions,true,Also often used for drink in everyday speech.,ai_a1_master_v3
+eat,A1,กิน,gin,eat,verb,informal,actions,true,Also commonly used for ‘drink’ with beverages in everyday Thai.,ai_a1_master_v3
 drink,A1,ดื่ม,dʉ̀ʉm,drink,verb,formal,actions,false,,ai_a1_master_v3
 go,A1,ไป,bpai,go,verb,formal,actions,true,Also marks movement away or future intention in simple patterns.,ai_a1_master_v3
 come,A1,มา,maa,come,verb,formal,actions,true,Also marks movement toward speaker or adds a directional sense.,ai_a1_master_v3
