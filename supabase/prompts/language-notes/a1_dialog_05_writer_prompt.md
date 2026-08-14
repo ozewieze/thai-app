@@ -1,37 +1,3 @@
-# Language Note Writer Prompt Template
-
-Gebruik dit bestand nadat het voorstel uit
-`07_language_note_planner_prompt_template.md` is goedgekeurd. Het dekt
-Stap 2 tot en met Stap 6 van
-`docs/thai_a1_language_note_workflow_guide.md`.
-
-De output is **één JSON-document per les**, precies volgens het
-invoercontract uit Stap 6, zodat het zonder tussenstap door
-`scripts/generate-language-note-seed.mjs` kan.
-
-## Instructions
-
-- Vul de placeholders hieronder in. De mapping-checklist onderaan geeft
-  per placeholder de bijbehorende query.
-- `{{approved_note_plan}}` is de **goedgekeurde** versie van het
-  plannervoorstel, inclusief jouw correcties — niet de ruwe modeloutput.
-- Sla de ingevulde prompt op als
-  `supabase/prompts/language-notes/a1_dialog_XX_writer_prompt.md`.
-- Sla de modeloutput op als
-  `supabase/generation/language-notes/a1_dialog_XX_notes.json`. Die naam
-  ligt vast: de generator leidt hem af uit `--lesson`.
-- Vervang **elke** placeholder vóór je genereert.
-
-**Dit template is bewust zelfstandig leesbaar** — er is geen
-"same-chat"-variant zoals `04` naast `06`. Ook wanneer de planner in
-dezelfde chat draaide, wordt de woordenlijst met Paiboon hieronder
-volledig herhaald. Reden: de dominante faalmodus in dit project is
-Paiboon-reconstructie (op 2026-07-13 moesten 167 vocabulairerijen en 19
-dialoogblokken van RTGS naar Paiboon gecorrigeerd worden). Wat niet
-letterlijk in de directe context staat, wordt gereconstrueerd. Het
-plakwerk dat een same-chat-variant zou besparen, betaal je met precies
-die fout.
-
 ## Role
 
 You are writing Language Notes for a Thai A1 course. A Language Note is
@@ -51,7 +17,7 @@ translations.
 
 ## Task
 
-Write the complete Language Notes for lesson {{lesson_key}}, following
+Write the complete Language Notes for lesson a1-dialog-05, following
 the approved plan below. Return **one JSON document** that follows the
 Output Contract exactly, and nothing else.
 
@@ -67,7 +33,84 @@ There is exactly one exception, and it is about form rather than
 content: a formula written in the master-list style is rewritten in the
 fixed notation. See "Concepts You May Claim" below.
 
-{{approved_note_plan}}
+## Note plan for a1-dialog-05
+
+### Note 1 — Saying what you like with ชอบ
+
+- note_key: a1-dialog-05-note-1
+- Why these concepts together: ชอบ + naamwoord is het centrale productieve
+  patroon van de dialoog; met dit ene patroon begrijpt de leerling zowel de
+  vragen als de kale antwoorden ชอบครับ / ชอบค่ะ.
+- Concepts covered:
+  - pattern / chop_noun — Like noun
+- Block skeleton:
+  1. paragraph — Anchor to ชอบขนมหวานค่ะ / "I like sweet snacks." Introduceer
+     ชอบ als het woord dat direct vóór het ding of de categorie staat, en zeg
+     erbij dat het Thaise woord niet verandert of je nu over jezelf praat of
+     iets aan iemand vraagt.
+  2. formula — ชอบ + [noun] = liking a thing or category.
+  3. example_group — 3 voorbeelden die elk een ánder *frame* gebruiken, niet
+     alleen een ander naamwoord: één mededeling met een naamwoord dat in deze
+     les nog niet met ชอบ is gecombineerd, één vraag aan คุณ met ไหม maar
+     **zonder** ด้วย (de dialoog heeft ชอบเค้กด้วยไหมคะ en
+     คุณชอบไอศกรีมด้วยไหมครับ), en één ontkenning met ไม่. Geen van de drie mag
+     woordkaart `like` (ผมชอบกาแฟครับ) zijn met alleen een ander naamwoord;
+     speaker_gender: female, male, male.
+
+### Note 2 — Adding detail after verbs and adjectives
+
+- note_key: a1-dialog-05-note-2
+- Why these concepts together: บ่อย en มาก zijn geen losse uitdrukkingen maar
+  twee toepassingen van dezelfde positieregel; los uitgelegd zou de leerling
+  twee keer een woord leren en nul keer de regel.
+- Concepts covered:
+  - grammar / adverbs_after_verbs_and_adjectives — Adverbs after verbs and
+    adjectives
+- Block skeleton:
+  1. paragraph — Anchor to อร่อยมากค่ะ / "It is very delicious." Introduceer
+     dat woorden als มาก en บ่อย ná het woord komen waar ze iets over zeggen,
+     en dat dat woord zowel een beschrijvend woord (zoals hier) als een
+     handeling kan zijn. Noem de tweede positie, laat de voorbeelden hem tonen.
+  2. formula — [verb or adjective] + [adverb] = more detail about the action or
+     the description.
+  3. example_group — 3 voorbeelden die samen beide posities én beide bijwoorden
+     dekken: één beschrijvend woord + มาก (kale zin, geen eerste persoon en
+     geen eindpartikel), één handeling + มาก, en één handeling + บ่อย. De
+     บ่อย-zin mag geen กิน + snoepgoed zijn: dat is woordkaart `often`
+     (ผมกินเค้กบ่อยครับ) én de dialoogregel ไม่กินขนมบ่อยครับ. Een zin uit de
+     dialoog van les 2 of 3 met alleen het bijwoord erbij is hier de beste
+     vorm — de leerling heeft die niet meer voor zich en ziet dan alleen het
+     nieuwe element; speaker_gender: none, female, male.
+
+### Note 3 — Using กิน for food and drinks
+
+- note_key: a1-dialog-05-note-3
+- Why these concepts together: de woordkaart geeft al "eat"; wat de leerling
+  daar níét uit kan afleiden is dat กิน in alledaags Thai ook met dranken
+  gebruikt wordt. Precies dat gat is de reden dat `eat` gevlagd staat, dus dat
+  is wat de note uitlegt — niet de basisbetekenis.
+- Concepts covered:
+  - vocabulary / eat — กิน eat
+- Block skeleton:
+  1. paragraph — Anchor to ไม่กินขนมบ่อยครับ / "I don't eat snacks often."
+     Bevestig kort dat กิน hier "eat" is, en leg dan uit dat กิน in alledaags
+     Thai ook voor dranken gebruikt wordt, zodat de Engelse vertaling van het
+     object afhangt.
+  2. example_group — 3 voorbeelden: twee met een drank in verschillende vorm
+     (één mededeling, één vraag met ไหม), en één met eten als contrast. Het
+     eetvoorbeeld mag niet woordkaart `eat` (ฉันกินขนมค่ะ) of `often`
+     (ผมกินเค้กบ่อยครับ) zijn met alleen een ander naamwoord;
+     speaker_gender: male, female, female.
+  3. usage_tip — ดื่ม is het specifieke, formelere woord voor drinken; กิน is
+     het alledaagse woord dat voor allebei kan. De leerling kent ดื่ม uit les 2
+     (ไปดื่มกาแฟด้วยกัน) en moet weten dat er niets mis is met ดื่ม. Beide
+     vormen zijn correct Thai, dus beide mogen hier in Thais schrift.
+
+## Coverage check
+
+- pattern / chop_noun — Note 1
+- grammar / adverbs_after_verbs_and_adjectives — Note 2
+- vocabulary / eat — Note 3
 
 ## Concepts You May Claim
 
@@ -90,19 +133,19 @@ one place where you correct the plan rather than follow it.
 
 ### Vocabulary — return as `{ "type": "vocabulary", "key": "<source_key>" }`
 
-{{vocabulary_to_explain}}
+- กิน (gin) = eat  [key: eat]
 
 ### Grammar — return as `{ "type": "grammar", "key": "<concept_key>" }`
 
-{{grammar_to_explain}}
+- Adverbs after verbs and adjectives: In Thai, many common adverbs such as บ่อย and มาก come after the verb or adjective.  [key: adverbs_after_verbs_and_adjectives]
 
 ### Phrases — return as `{ "type": "phrase", "key": "<phrase_key>" }`
 
-{{phrases_to_explain}}
+(geen)
 
 ### Patterns — return as `{ "type": "pattern", "key": "<pattern_key>" }`
 
-{{patterns_to_explain}}
+- Like noun: ชอบ + NOUN — Expresses liking a thing or category.  [key: chop_noun]
 
 ## Available Vocabulary
 
@@ -115,7 +158,36 @@ The Paiboon form given here is the only correct form for that word.
 **Copy it literally.** Do not derive it, do not normalise it, do not
 "improve" it.
 
-{{example_vocabulary_budget}}
+- สวัสดี (sà-wàt-dii) = hello  [key: hello]
+- ฉัน (chǎn) = I  [key: i]
+- ผม (pǒm) = I  [key: i_male]
+- ชื่อ (chʉ̂ʉ) = name  [key: name]
+- อะไร (à-rai) = what  [key: what]
+- คุณ (kun) = you  [key: you]
+- ได้ (dâai) = can  [key: can]
+- กาแฟ (gaa-faae) = coffee  [key: coffee]
+- ดื่ม (dʉ̀ʉm) = drink  [key: drink]
+- ไป (bpai) = go  [key: go]
+- ไหม (mǎi) = yes/no question particle  [key: question_particle_mai]
+- ด้วยกัน (dûai-gan) = together  [key: together]
+- ที่ไหน (tîi-nǎi) = where  [key: where]
+- เย็น (yen) = cool  [key: cool]
+- ร้อน (rɔ́ɔn) = hot  [key: hot]
+- หรือ (rʉ̌ʉ) = or  [key: or]
+- ชา (chaa) = tea  [key: tea]
+- จะ (jà) = will / going to  [key: will]
+- ด้วย (dûai) = also / too  [key: also]
+- เค้ก (kéek) = cake  [key: cake]
+- ไอศกรีม (ai-sà-griim) = ice cream  [key: ice_cream]
+- ไม่ (mâi) = no  [key: no]
+- ขนม (kà-nǒm) = snack  [key: snack]
+- เอา (ao) = take  [key: take]
+- อร่อย (à-rɔ̀i) = delicious  [key: delicious]
+- กิน (gin) = eat  [key: eat]
+- ชอบ (chɔ̂ɔp) = like  [key: like]
+- บ่อย (bɔ̀i) = often  [key: often]
+- หวาน (wǎan) = sweet  [key: sweet]
+- มาก (mâak) = very  [key: very]
 
 **One narrow exception.** A note explaining a pattern, phrase or grammar
 point may use the Thai element of *that* concept even though it is not in
@@ -184,7 +256,12 @@ is often the better example: the learner met ไปด้วยกัน in an e
 lesson and does not have it in front of him now, so จะไปด้วยกัน shows him
 the new element with everything else already familiar.
 
-{{dialog_text}}
+narin: นริน: เค้กอร่อยไหมครับ / Narin: kéek à-rɔ̀i mǎi kráp / Narin: Is the cake delicious?
+mali: มะลิ: อร่อยมากค่ะ เค้กหวาน ชอบขนมหวานค่ะ / Mali: à-rɔ̀i mâak kâ. kéek wǎan. chɔ̂ɔp kà-nǒm wǎan kâ. / Mali: It is very delicious. The cake is sweet. I like sweet snacks.
+mali: มะลิ: ชอบเค้กด้วยไหมคะ / Mali: chɔ̂ɔp kéek dûai mǎi ká / Mali: Do you like cake too?
+narin: นริน: ชอบครับ คุณชอบไอศกรีมด้วยไหมครับ / Narin: chɔ̂ɔp kráp. kun chɔ̂ɔp ai-sà-griim dûai mǎi kráp / Narin: I do. Do you like ice cream too?
+mali: มะลิ: ชอบค่ะ กินขนมบ่อยไหมคะ / Mali: chɔ̂ɔp kâ. gin kà-nǒm bɔ̀i mǎi ká / Mali: I do. Do you often eat snacks?
+narin: นริน: ไม่กินขนมบ่อยครับ / Narin: mâi gin kà-nǒm bɔ̀i kráp / Narin: I don't eat snacks often.
 
 ## Editorial Rules
 
@@ -325,7 +402,7 @@ Vocabulary" with its Paiboon form. Build the sentence transliteration by
 joining those given forms.
 
 **If a form is not in the list, mark it.** Write the transliteration
-followed by ` [uncertain]`, for example `gaa-fɛɛ rɔ́ɔn [uncertain]`.
+followed by ` [uncertain]`, for example `gaa-faae rɔ́ɔn [uncertain]`.
 Do not guess. A human resolves the marking before seeding; the generator
 refuses any document that still contains it, so an uncertain form cannot
 silently reach the database.
@@ -344,14 +421,14 @@ drifted, which is why it fails loudly rather than being ignored.
 
 | Field | Required | Value |
 | --- | --- | --- |
-| `lesson_key` | yes | `{{lesson_key}}` |
+| `lesson_key` | yes | `a1-dialog-05` |
 | `notes` | yes | non-empty array, in reading order |
 
 ### Note
 
 | Field | Required | Value |
 | --- | --- | --- |
-| `note_key` | yes | `{{lesson_key}}-note-1`, `-note-2`, … |
+| `note_key` | yes | `a1-dialog-05-note-1`, `-note-2`, … |
 | `title` | yes | English, from the approved plan |
 | `blocks` | yes | non-empty array, in reading order |
 | `concepts` | yes | array, at least one entry |
@@ -471,7 +548,7 @@ safe to imitate.
             {
               "example_key": "e1",
               "thai_script": "กาแฟร้อนไหมคะ",
-              "paiboon": "gaa-fɛɛ rɔ́ɔn mǎi ká",
+              "paiboon": "gaa-faae rɔ́ɔn mǎi ká",
               "translation_en": "Is the coffee hot?"
             },
             {
@@ -537,7 +614,7 @@ safe to imitate.
             {
               "example_key": "e1",
               "thai_script": "กาแฟร้อน",
-              "paiboon": "gaa-fɛɛ rɔ́ɔn",
+              "paiboon": "gaa-faae rɔ́ɔn",
               "translation_en": "hot coffee"
             },
             {
@@ -638,84 +715,3 @@ Verify all of these before you produce output:
 - The document must be valid JSON. Escape double quotes inside strings;
   keep Thai script and tone marks as literal characters, never as
   `\u`-escapes.
-
-# Brief-view -> prompt mapping checklist
-
-| Placeholder | Bron |
-| --- | --- |
-| `{{lesson_key}}` | `language_note_brief_view.lesson_key` |
-| `{{approved_note_plan}}` | `supabase/generation/language-notes/a1_dialog_XX_plan.md`, mét jouw correcties |
-| `{{vocabulary_to_explain}}` | `language_note_brief_view.vocabulary_to_explain` |
-| `{{grammar_to_explain}}` | `language_note_brief_view.grammar_to_explain` |
-| `{{phrases_to_explain}}` | `language_note_brief_view.phrases_to_explain` |
-| `{{patterns_to_explain}}` | `language_note_brief_view.patterns_to_explain` |
-| `{{example_vocabulary_budget}}` | `language_note_brief_view.example_vocabulary_budget` |
-| `{{dialog_text}}` | `language_note_brief_view.dialog` |
-
-De vier conceptlijsten en de dialoogtekst render je met dezelfde
-snippets als in `07`. Voor het woordbudget:
-
-```sql
-select string_agg(
-         format('- %s (%s) = %s  [key: %s]',
-                w->>'thai_script', w->>'paiboon',
-                w->>'english_gloss', w->>'source_key'),
-         E'\n' order by (w->>'intro_sequence_number')::int nulls last,
-                        w->>'source_key')
-from public.language_note_brief_view v,
-     lateral jsonb_array_elements(v.example_vocabulary_budget) w
-where v.lesson_key = 'a1-dialog-XX';
-```
-
-### Liever JSON dan een lijst?
-
-Plak dan niet de ruwe view-kolom, om dezelfde redenen als in `07`: de
-`*_id`-velden verschuiven na een `db reset`, en `register` draagt hier de
-betekenis *formaliteit* terwijl deze prompt `speaker_gender` gebruikt voor
-iets heel anders. Gebruik een projectie:
-
-```sql
-select jsonb_pretty(jsonb_agg(jsonb_build_object(
-         'source_key',    w->>'source_key',
-         'thai_script',   w->>'thai_script',
-         'paiboon',       w->>'paiboon',
-         'english_gloss', w->>'english_gloss',
-         'usage_note',    w->>'usage_note')
-       order by (w->>'intro_sequence_number')::int nulls last,
-                 w->>'source_key'))
-from public.language_note_brief_view v,
-     lateral jsonb_array_elements(v.example_vocabulary_budget) w
-where v.lesson_key = 'a1-dialog-XX';
-```
-
-## Notes for manual filling
-
-- **De namenlijst onder "Given names" is vast; daar vul je niets in.**
-  Dezelfde zes namen staan letterlijk in `09`. Wil je er een toevoegen,
-  doe dat dan op beide plaatsen tegelijk en lees eerst "De eigennamen"
-  onderaan `09` — daar staan de drie voorwaarden en de herkomst van de
-  huidige zes.
-- **Kort de woordenlijst niet in.** Hij groeit per les en dat is de
-  bedoeling: elk woord dat je weglaat, is een woord dat het model niet
-  mag gebruiken of gaat reconstrueren.
-- Is een van de vier conceptlijsten leeg, schrijf dan `(geen)` onder die
-  kop. Laat de kop staan.
-- Neem de `lesson_*_id`-velden uit de view **niet** mee. Dat zijn
-  identity-waarden die na een `db reset` kunnen verschuiven; het contract
-  vraagt mastersleutels.
-- Verwerken van de output:
-
-  ```
-  node scripts/generate-language-note-seed.mjs --lesson a1-dialog-XX
-  psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -f supabase/seed-data/language-notes/a1_dialog_XX_notes.seed.sql
-  ```
-
-  Op PowerShell: één regel, geen `\` — dat is bash-syntax en levert een
-  interactieve psql-sessie op in plaats van een foutmelding. Zet vooraf
-  `chcp 65001` en `$env:PGCLIENTENCODING = "UTF8"`, anders kan het Thaise
-  schrift onderweg beschadigen. Zie Stap 6 van de workflowgids voor de
-  controle achteraf.
-
-  Faalt de generator met een contractfout, corrigeer dan de JSON of laat
-  het model opnieuw genereren — bewerk het gegenereerde SQL-bestand
-  nooit met de hand.

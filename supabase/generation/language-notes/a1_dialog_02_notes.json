@@ -24,13 +24,13 @@
             {
               "example_key": "e1",
               "thai_script": "ฉันไปดื่มกาแฟค่ะ",
-              "paiboon": "chǎn bpai dʉ̀ʉm gaa-faae kâ",
+              "paiboon": "chǎn bpai dʉ̀ʉm gaa-fɛɛ kâ",
               "translation_en": "I am going to drink coffee."
             },
             {
               "example_key": "e2",
               "thai_script": "ไปดื่มกาแฟด้วยกันครับ",
-              "paiboon": "bpai dʉ̀ʉm gaa-faae dûai-gan kráp",
+              "paiboon": "bpai dʉ̀ʉm gaa-fɛɛ dûai-gan kráp",
               "translation_en": "Let's go and drink coffee together."
             }
           ]
@@ -66,7 +66,7 @@
             {
               "example_key": "e1",
               "thai_script": "คุณดื่มกาแฟไหมคะ",
-              "paiboon": "kun dʉ̀ʉm gaa-faae mǎi ká",
+              "paiboon": "kun dʉ̀ʉm gaa-fɛɛ mǎi ká",
               "translation_en": "Do you drink coffee?"
             },
             {
@@ -108,7 +108,7 @@
             {
               "example_key": "e1",
               "thai_script": "ผมดื่มกาแฟได้ครับ",
-              "paiboon": "pǒm dʉ̀ʉm gaa-faae dâai kráp",
+              "paiboon": "pǒm dʉ̀ʉm gaa-fɛɛ dâai kráp",
               "translation_en": "I can drink coffee."
             },
             {
@@ -156,7 +156,7 @@
             {
               "example_key": "e2",
               "thai_script": "ดื่มกาแฟครับ",
-              "paiboon": "dʉ̀ʉm gaa-faae kráp",
+              "paiboon": "dʉ̀ʉm gaa-fɛɛ kráp",
               "translation_en": "I am drinking coffee."
             }
           ]

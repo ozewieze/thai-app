@@ -4,7 +4,7 @@
       "source_key": "like",
       "example_key": "e1",
       "thai_script": "ผมชอบกาแฟครับ",
-      "paiboon": "pǒm chɔ̂ɔp gaa-faae kráp",
+      "paiboon": "pǒm chɔ̂ɔp gaa-fɛɛ kráp",
       "translation_en": "I like coffee."
     },
     {
@@ -34,6 +34,13 @@
       "thai_script": "ผมกินเค้กบ่อยครับ",
       "paiboon": "pǒm gin kéek bɔ̀i kráp",
       "translation_en": "I often eat cake."
+    },
+    {
+      "source_key": "very",
+      "example_key": "e1",
+      "thai_script": "กาแฟร้อนมาก",
+      "paiboon": "gaa-fɛɛ rɔ́ɔn mâak",
+      "translation_en": "The coffee is very hot."
     }
   ]
 }

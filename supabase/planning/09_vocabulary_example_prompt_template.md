@@ -253,7 +253,7 @@ There is no third source. Build the sentence transliteration by joining
 the given forms.
 
 **If a form is in neither source, mark it.** Write the transliteration
-followed by ` [uncertain]`, for example `gaa-faae rɔ́ɔn [uncertain]`. Do
+followed by ` [uncertain]`, for example `gaa-fɛɛ rɔ́ɔn [uncertain]`. Do
 not guess. A human resolves the marking before seeding; the generator
 refuses any document that still contains it, so an uncertain form cannot
 silently reach the database.

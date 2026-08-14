@@ -1,0 +1,149 @@
+{
+  "lesson_key": "a1-dialog-05",
+  "notes": [
+    {
+      "note_key": "a1-dialog-05-note-1",
+      "title": "Saying what you like with ชอบ",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Mali says ชอบขนมหวานค่ะ — \"I like sweet snacks.\". ชอบ comes directly before the thing or category you like. The Thai word ชอบ does not change when you talk about yourself or ask someone what they like."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "ชอบ + [noun] = liking a thing or category"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ชอบชาค่ะ",
+              "paiboon": "chɔ̂ɔp chaa kâ",
+              "translation_en": "I like tea."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "คุณชอบกาแฟไหมครับ",
+              "paiboon": "kun chɔ̂ɔp gaa-fɛɛ mǎi kráp",
+              "translation_en": "Do you like coffee?"
+            },
+            {
+              "example_key": "e3",
+              "thai_script": "ไม่ชอบเค้กครับ",
+              "paiboon": "mâi chɔ̂ɔp kéek kráp",
+              "translation_en": "I don't like cake."
+            }
+          ]
+        }
+      ],
+      "concepts": [
+        {
+          "type": "pattern",
+          "key": "chop_noun"
+        }
+      ]
+    },
+    {
+      "note_key": "a1-dialog-05-note-2",
+      "title": "Adding detail after verbs and adjectives",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Mali says อร่อยมากค่ะ — \"It is very delicious.\". Words such as มาก and บ่อย come after the word they give more information about. That word can be a describing word, as here, or an action."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "[verb or adjective] + [adverb] = more detail about the action or the description"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ขนมอร่อยมาก",
+              "paiboon": "kà-nǒm à-rɔ̀i mâak",
+              "translation_en": "The snack is very delicious."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ฉันชอบไอศกรีมมากค่ะ",
+              "paiboon": "chǎn chɔ̂ɔp ai-sà-griim mâak kâ",
+              "translation_en": "I like ice cream very much."
+            },
+            {
+              "example_key": "e3",
+              "thai_script": "ผมดื่มกาแฟบ่อยครับ",
+              "paiboon": "pǒm dʉ̀ʉm gaa-fɛɛ bɔ̀i kráp",
+              "translation_en": "I often drink coffee."
+            }
+          ]
+        }
+      ],
+      "concepts": [
+        {
+          "type": "grammar",
+          "key": "adverbs_after_verbs_and_adjectives"
+        }
+      ]
+    },
+    {
+      "note_key": "a1-dialog-05-note-3",
+      "title": "Using กิน for food and drinks",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Narin says ไม่กินขนมบ่อยครับ — \"I don't eat snacks often.\". Here กิน means \"eat\". In everyday Thai, กิน is also commonly used with drinks, so its English translation depends on what comes after it."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ผมกินกาแฟครับ",
+              "paiboon": "pǒm gin gaa-fɛɛ kráp",
+              "translation_en": "I drink coffee."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "กินชาไหมคะ",
+              "paiboon": "gin chaa mǎi ká",
+              "translation_en": "Do you drink tea?"
+            },
+            {
+              "example_key": "e3",
+              "thai_script": "ไม่กินเค้กค่ะ",
+              "paiboon": "mâi gin kéek kâ",
+              "translation_en": "I don't eat cake."
+            }
+          ]
+        },
+        {
+          "block_key": "b3",
+          "block_type": "usage_tip",
+          "content": "ดื่ม is the specific, more formal word for drinking. กิน is an everyday word that can be used for both eating and drinking. Both forms are correct Thai."
+        }
+      ],
+      "concepts": [
+        {
+          "type": "vocabulary",
+          "key": "eat"
+        }
+      ]
+    }
+  ]
+}

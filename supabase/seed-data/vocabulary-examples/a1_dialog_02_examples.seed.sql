@@ -98,7 +98,7 @@ values (
   'e1',
   1,
   'ฉันดื่มกาแฟค่ะ',
-  'chǎn dʉ̀ʉm gaa-faae kâ',
+  'chǎn dʉ̀ʉm gaa-fɛɛ kâ',
   'I drink coffee.'
 )
 on conflict (vocabulary_id, example_key) do update set
@@ -142,7 +142,7 @@ values (
   'e1',
   1,
   'ดื่มกาแฟด้วยกันค่ะ',
-  'dʉ̀ʉm gaa-faae dûai-gan kâ',
+  'dʉ̀ʉm gaa-fɛɛ dûai-gan kâ',
   'We drink coffee together.'
 )
 on conflict (vocabulary_id, example_key) do update set

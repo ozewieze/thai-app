@@ -87,8 +87,8 @@ insert into public.language_note_examples
   (block_id, example_key, display_order, thai_script, paiboon, translation_en)
 select blocks.id, e.example_key, e.display_order, e.thai_script, e.paiboon, e.translation_en
 from (values
-  ('b3', 'e1', 1, 'ฉันไปดื่มกาแฟค่ะ', 'chǎn bpai dʉ̀ʉm gaa-faae kâ', 'I am going to drink coffee.'),
-  ('b3', 'e2', 2, 'ไปดื่มกาแฟด้วยกันครับ', 'bpai dʉ̀ʉm gaa-faae dûai-gan kráp', 'Let''s go and drink coffee together.')
+  ('b3', 'e1', 1, 'ฉันไปดื่มกาแฟค่ะ', 'chǎn bpai dʉ̀ʉm gaa-fɛɛ kâ', 'I am going to drink coffee.'),
+  ('b3', 'e2', 2, 'ไปดื่มกาแฟด้วยกันครับ', 'bpai dʉ̀ʉm gaa-fɛɛ dûai-gan kráp', 'Let''s go and drink coffee together.')
 ) as e(block_key, example_key, display_order, thai_script, paiboon, translation_en)
 join blocks on blocks.block_key = e.block_key
 on conflict (block_id, example_key) do update set
@@ -147,7 +147,7 @@ insert into public.language_note_examples
   (block_id, example_key, display_order, thai_script, paiboon, translation_en)
 select blocks.id, e.example_key, e.display_order, e.thai_script, e.paiboon, e.translation_en
 from (values
-  ('b3', 'e1', 1, 'คุณดื่มกาแฟไหมคะ', 'kun dʉ̀ʉm gaa-faae mǎi ká', 'Do you drink coffee?'),
+  ('b3', 'e1', 1, 'คุณดื่มกาแฟไหมคะ', 'kun dʉ̀ʉm gaa-fɛɛ mǎi ká', 'Do you drink coffee?'),
   ('b3', 'e2', 2, 'คุณไปไหมครับ', 'kun bpai mǎi kráp', 'Are you going?')
 ) as e(block_key, example_key, display_order, thai_script, paiboon, translation_en)
 join blocks on blocks.block_key = e.block_key
@@ -208,7 +208,7 @@ insert into public.language_note_examples
   (block_id, example_key, display_order, thai_script, paiboon, translation_en)
 select blocks.id, e.example_key, e.display_order, e.thai_script, e.paiboon, e.translation_en
 from (values
-  ('b3', 'e1', 1, 'ผมดื่มกาแฟได้ครับ', 'pǒm dʉ̀ʉm gaa-faae dâai kráp', 'I can drink coffee.'),
+  ('b3', 'e1', 1, 'ผมดื่มกาแฟได้ครับ', 'pǒm dʉ̀ʉm gaa-fɛɛ dâai kráp', 'I can drink coffee.'),
   ('b3', 'e2', 2, 'ฉันไปได้ค่ะ', 'chǎn bpai dâai kâ', 'I can go.')
 ) as e(block_key, example_key, display_order, thai_script, paiboon, translation_en)
 join blocks on blocks.block_key = e.block_key
@@ -268,7 +268,7 @@ insert into public.language_note_examples
 select blocks.id, e.example_key, e.display_order, e.thai_script, e.paiboon, e.translation_en
 from (values
   ('b2', 'e1', 1, 'ชื่อฝนค่ะ', 'chʉ̂ʉ fǒn kâ', 'My name is Fon.'),
-  ('b2', 'e2', 2, 'ดื่มกาแฟครับ', 'dʉ̀ʉm gaa-faae kráp', 'I am drinking coffee.')
+  ('b2', 'e2', 2, 'ดื่มกาแฟครับ', 'dʉ̀ʉm gaa-fɛɛ kráp', 'I am drinking coffee.')
 ) as e(block_key, example_key, display_order, thai_script, paiboon, translation_en)
 join blocks on blocks.block_key = e.block_key
 on conflict (block_id, example_key) do update set

@@ -49,11 +49,7 @@ every example is the same one. See "Voice, Particles and Pronouns" for
 what that governs and for the one kind of sentence that stays out of the
 count.
 
-- ชอบ (chɔ̂ɔp) = like  [key: like]  ·  verb  ·  Also commonly expresses preference.
-- กิน (gin) = eat  [key: eat]  ·  verb  ·  Also often used for drink in everyday speech.
-- อร่อย (à-rɔ̀i) = delicious  [key: delicious]  ·  adjective
-- หวาน (wǎan) = sweet  [key: sweet]  ·  adjective
-- บ่อย (bɔ̀i) = often  [key: often]  ·  adverb
+- มาก (mâak) = very  [key: very]  ·  adverb
 
 ## Available Vocabulary
 
@@ -71,6 +67,7 @@ script, and that is precisely what he cannot yet do.
 The Paiboon form given here is the only correct form for that word.
 **Copy it literally.** Do not derive it, do not normalise it, do not
 "improve" it.
+
 - สวัสดี (sà-wàt-dii) = hello  [key: hello]
 - ฉัน (chǎn) = I  [key: i]
 - ผม (pǒm) = I  [key: i_male]
@@ -81,12 +78,14 @@ The Paiboon form given here is the only correct form for that word.
 - กาแฟ (gaa-faae) = coffee  [key: coffee]
 - ดื่ม (dʉ̀ʉm) = drink  [key: drink]
 - ไป (bpai) = go  [key: go]
+- ไหม (mǎi) = yes/no question particle  [key: question_particle_mai]
 - ด้วยกัน (dûai-gan) = together  [key: together]
 - ที่ไหน (tîi-nǎi) = where  [key: where]
 - เย็น (yen) = cool  [key: cool]
 - ร้อน (rɔ́ɔn) = hot  [key: hot]
 - หรือ (rʉ̌ʉ) = or  [key: or]
 - ชา (chaa) = tea  [key: tea]
+- จะ (jà) = will / going to  [key: will]
 - ด้วย (dûai) = also / too  [key: also]
 - เค้ก (kéek) = cake  [key: cake]
 - ไอศกรีม (ai-sà-griim) = ice cream  [key: ice_cream]
@@ -98,6 +97,7 @@ The Paiboon form given here is the only correct form for that word.
 - ชอบ (chɔ̂ɔp) = like  [key: like]
 - บ่อย (bɔ̀i) = often  [key: often]
 - หวาน (wǎan) = sweet  [key: sweet]
+- มาก (mâak) = very  [key: very]
 
 **The target word is never an exception.** It is always in the list
 above: the list holds everything known by the lesson that introduces the
@@ -454,4 +454,3 @@ Verify all of these before you produce output:
 - The document must be valid JSON. Escape double quotes inside strings;
   keep Thai script and tone marks as literal characters, never as
   `\u`-escapes.
-

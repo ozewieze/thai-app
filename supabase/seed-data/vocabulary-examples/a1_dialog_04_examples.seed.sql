@@ -32,7 +32,7 @@ values (
   'e1',
   1,
   'คุณเอาชาหรือกาแฟคะ',
-  'kun ao chaa rʉ̌ʉ gaa-faae ká',
+  'kun ao chaa rʉ̌ʉ gaa-fɛɛ ká',
   'Do you want tea or coffee?'
 )
 on conflict (vocabulary_id, example_key) do update set
@@ -54,7 +54,7 @@ values (
   'e1',
   1,
   'ผมเอากาแฟด้วยครับ',
-  'pǒm ao gaa-faae dûai kráp',
+  'pǒm ao gaa-fɛɛ dûai kráp',
   'I''ll have coffee too.'
 )
 on conflict (vocabulary_id, example_key) do update set
@@ -76,7 +76,7 @@ values (
   'e1',
   1,
   'ฉันไม่ดื่มกาแฟค่ะ',
-  'chǎn mâi dʉ̀ʉm gaa-faae kâ',
+  'chǎn mâi dʉ̀ʉm gaa-fɛɛ kâ',
   'I don''t drink coffee.'
 )
 on conflict (vocabulary_id, example_key) do update set

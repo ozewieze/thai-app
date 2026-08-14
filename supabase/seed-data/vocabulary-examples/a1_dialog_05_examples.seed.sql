@@ -32,7 +32,7 @@ values (
   'e1',
   1,
   'ผมชอบกาแฟครับ',
-  'pǒm chɔ̂ɔp gaa-faae kráp',
+  'pǒm chɔ̂ɔp gaa-fɛɛ kráp',
   'I like coffee.'
 )
 on conflict (vocabulary_id, example_key) do update set
@@ -122,6 +122,28 @@ values (
   'ผมกินเค้กบ่อยครับ',
   'pǒm gin kéek bɔ̀i kráp',
   'I often eat cake.'
+)
+on conflict (vocabulary_id, example_key) do update set
+  display_order  = excluded.display_order,
+  thai_script    = excluded.thai_script,
+  paiboon        = excluded.paiboon,
+  translation_en = excluded.translation_en,
+  audio_url      = case
+                     when vocabulary_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else vocabulary_examples.audio_url
+                   end;
+
+-- very / e1
+insert into public.vocabulary_examples
+  (vocabulary_id, example_key, display_order, thai_script, paiboon, translation_en)
+values (
+  (select id from public.vocabulary_master where source_key = 'very'),
+  'e1',
+  1,
+  'กาแฟร้อนมาก',
+  'gaa-fɛɛ rɔ́ɔn mâak',
+  'The coffee is very hot.'
 )
 on conflict (vocabulary_id, example_key) do update set
   display_order  = excluded.display_order,
