@@ -60,7 +60,7 @@ insert into public.vocabulary_master
   (source_key, cefr_level, thai_script, paiboon, english_gloss, part_of_speech, register, source_note)
 values
   ('zz_fixture_word_1', 'A1', 'ชา',   'chaa',     'fixture tea',    'noun', 'formal', 'qa_fixture'),
-  ('zz_fixture_word_2', 'A1', 'กาแฟ', 'gaa-faae', 'fixture coffee', 'noun', 'formal', 'qa_fixture');
+  ('zz_fixture_word_2', 'A1', 'กาแฟ', 'gaa-fɛɛ', 'fixture coffee', 'noun', 'formal', 'qa_fixture');
 
 \echo ''
 \echo '=== 1. De bestaande constraint kan geen arbiter zijn ==='
