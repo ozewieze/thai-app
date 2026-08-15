@@ -481,27 +481,50 @@ Waarom QA vóór audio en niet erna: elke tekstwijziging ná audiogeneratie maak
 
 Elk voorbeeld krijgt eigen audio van de Thaise zin. De werkwijze volgt het patroon van de dialoog-audio (Stap 12 van de dialoogworkflowgids): pas ná goedkeuring van de tekst, in batch, en alleen voor voorbeelden die nog geen audio hebben.
 
-> **Technisch nog niet gebouwd (stand 2026-08-03).** Er is vandaag geen commando voor deze stap. `scripts/generate-audio.mjs` verwerkt uitsluitend `dialog_blocks` en kent `language_note_examples` niet, en `service_role` heeft nog geen grants op de Language Note-tabellen — de migratie die die tabellen aanmaakte houdt die bewust achter tot er een script is dat ze nodig heeft. `audio_url` en `voice_key` blijven dus leeg na het seeden, en het seedformaat vult ze ook niet in. De redactionele regels hieronder gelden onverkort zodra het script er is.
->
-> **De twee velden zijn niet hetzelfde soort veld, en dat bepaalt hoe het script ze hoort te behandelen.**
+**Het commando** (gebouwd 2026-08-14):
+
+```powershell
+npm run audio:note-examples -- --dry-run
+npm run audio:note-examples
+```
+
+Draai altijd eerst de dry-run. Dat is het enige moment waarop je een verkeerd gekozen stem ziet vóórdat er een opname van bestaat: het script toont per zin welke narrator hij kiest en waarom. Beperken tot één les kan met `--lesson a1-dialog-04`. Voorbeelden met een gevulde `audio_url` worden overgeslagen, dus herhalen is veilig.
+
+> **De twee velden zijn niet hetzelfde soort veld, en dat bepaalt hoe het script ze behandelt.**
 >
 > `audio_url` is pure output: het bestaat pas nadat het script een bestand heeft gemaakt. Leeg betekent hier "nog niet gegenereerd", en dat is de enige mogelijke volgorde — audio volgt op bevroren tekst, niet andersom.
 >
-> `voice_key` is een redactionele beslissing die het script alleen maar uitvoert. **Leeg betekent daarom "leid de stem af uit de zin", niet "onbekend".** Bevat de zin ผม of ครับ, dan de mannelijke narrator; anders de vrouwelijke. Het script hoort die afleiding zelf te doen en niet te wachten op een waarde.
+> **`voice_key` is óók output.** Het script leidt de stem af uit de zin, gebruikt hem, en schrijft hem daarna weg als verslag van welke stem deze opname heeft ingesproken. Het veld is dus geen instructie aan de audiostap maar een verslag ervan, en het wordt nooit gelezen om een stem te kiezen.
 >
-> Waarom afleiden en niet opschrijven: het sprekersgeslacht zit al in de tekst, want vastgelegde beslissing 2 maakt de bundel heel. Een `voice_key` erbij zou diezelfde informatie een tweede keer opschrijven, op een plek waar ze kan gaan afwijken van de zin waar ze bij hoort. En in de JSON-invoer (Stap 6) nodigt het veld het model uit om te gaan variëren waar het niets te kiezen heeft — daarom weigert de generator het.
+> Waarom niet: `voice_key` is in de hele database NULL en hoort dat te zijn, want de schrijverprompt verbiedt het veld expliciet in de modeloutput — samen met `audio_url`, om precies dezelfde reden. Een script dat "leeg betekent de standaardstem" zou daarom **elke** zin vrouwelijk inspreken. Gemeten op 2026-08-11 over de 34 voorbeelden van les 1 tot en met 3: 17 vrouwelijk, 15 mannelijk, 2 zonder genderelement. Vijftien zinnen met ผม en ครับ zouden door een vrouwenstem gelezen worden.
 >
-> Loopt de afleiding mis, dan is dat geen stemprobleem maar het bewijs dat de bundel gebroken is: een zin met ผม en ค่ะ. Corrigeer dan de tekst, niet de stem.
+> Tot 2026-08-09 betekende leeg "gebruik de vaste vrouwelijke standaardstem". Die grond verviel toen beslissing 2 twee bundels kreeg, en de regel is op 2026-08-14 vervangen door de afleiding hieronder.
 >
-> Tot 2026-08-09 betekende leeg "gebruik de vaste vrouwelijke standaardstem". Die grond verviel toen beslissing 2 twee bundels kreeg.
->
-> Een expliciete `voice_key` is dus uitsluitend bedoeld voor de uitzondering hieronder: een note die het ครับ/ค่ะ-contrast zélf onderwijst. Komt die note er, dan wordt `voice_key` een optioneel veld in het JSON-contract — niet eerder. Een veld toevoegen dat niemand vult, verwatert de betekenis van de default.
->
-> Praktisch gevolg voor wie het script bouwt: een voorbeeld met `voice_key is null` krijgt de standaardstem, een voorbeeld met een expliciete waarde krijgt die stem, en een zin die op ครับ eindigt terwijl de standaardstem vrouwelijk is, hoort een waarschuwing te geven in plaats van stil verkeerd ingesproken te worden.
+> Een note die het ครับ/ค่ะ-contrast zélf onderwijst zou een uitzondering nodig hebben. Die note bestaat nog niet, en tot dan komt er geen invoerveld bij: een veld toevoegen dat niemand vult, verwatert de betekenis van de regel.
+
+**De afleiding, en waarom ze eruitziet zoals ze eruitziet.** Thai schrijft geen woordgrenzen, dus "bevat de zin ผม" is onbetrouwbaar als toets. Twee woorden uit de eigen masterlijst bewijzen dat: `คะแนน` (score) bevat คะ, en `หวีผม` (comb hair) bevat ผม. De zinnen `ฉันหวีผมค่ะ` en `ผมได้คะแนนดีครับ` zijn allebei correct Thai en zouden door een substringregel als bundelfout gemeld worden. De regel ankert daarom aan de uiteinden:
+
+| toets | stem |
+|---|---|
+| eindigt op ครับ of ครับผม | `narrator_male` |
+| eindigt op ค่ะ of คะ | `narrator_female` |
+| geen partikel, begint met ผม | `narrator_male` |
+| geen partikel, begint met ฉัน | `narrator_female` |
+| geen van beide | `narrator_female` (de afgesproken standaard) |
+
+De terugval op het voornaamwoord is nodig omdat `ผมไปได้` zonder partikel anders de vrouwenstem zou krijgen. De homograaf weegt daar licht: `ผมสีดำ` ("haar is zwart") krijgt dan een mannenstem, wat willekeurig is maar niet fout, terwijl `ผมไปได้` zonder die terugval gewoon verkeerd is.
+
+**De bundelcontrole is asymmetrisch, en dat is geen slordigheid.** Begint een zin met ฉัน en eindigt hij op een mannelijk partikel, dan stopt het script met een harde fout — ฉัน is in de masterlijst alleen "ik" en geen enkel woord begint ermee, dus die helft is betrouwbaar. Begint hij met ผม en eindigt hij op ค่ะ, dan volgt alleen een waarschuwing: ผม is een homograaf, en `ผมฉันสีดำค่ะ` ("mijn haar is zwart") is volstrekt correct Thai. Een controle die geldige zinnen afkeurt is erger dan geen controle — je leert hem negeren, of je gaat bruikbare voorbeelden vermijden.
+
+Het script leidt eerst álle rijen af en genereert pas daarna. Een gebroken bundel valt dus vóór de eerste TTS-aanroep, en je ziet in één keer elke gebroken rij in plaats van alleen de eerste.
+
+**Drie meldingsniveaus, gegroepeerd geprint.** `FOUT` stopt het script en vraagt om een tekstcorrectie. `WAARSCHUWING` wil je één keer bekijken en is meestal geldig. `INFO` vraagt niets — een zin als `กาแฟร้อน` heeft nu eenmaal geen genderelement en dat blijft altijd zo. Die regels horen bij elke run te verschijnen zonder dat er iets te doen valt.
+
+Deze regel is drie keer herzien voordat hij deugde: eerst substring, toen symmetrisch verankerd, nu asymmetrisch. Telkens lag de fout in een categorie gevallen die niet was opgesomd, niet in de gevallen die getest waren. Kom je eraan, draai dan `node scripts/voice-config.mjs --self-test` (24 gevallen, met voor elke gesneuvelde versie zijn eigen tegenvoorbeeld) én `supabase/qa/negative_test_broken_bundle.sql`, die de kéten test in plaats van de regel.
 
 - **Dit is dezelfde tijdelijke TTS-pipeline als bij de dialogen** — later vervangen door opnames met stemacteurs. Investeer geen tijd in het verfraaien ervan; de redactionele regel is alleen: elke gepubliceerde voorbeeldzin heeft audio, en die audio komt overeen met de exacte huidige tekst.
-- **Stemkeuze:** voorbeelden in een note zijn *instructiestem*, geen personagestem. Gebruik een van de twee vaste narratorstemmen (zie "Vastgelegde redactionele beslissingen"), nooit de stem van Mali of Narin. Waarom: een personagestem suggereert ten onrechte dat de zin uit de scène komt, en bindt de note aan een personage dat er inhoudelijk niets mee te maken heeft. Let op: `scripts/voice-config.mjs` kent vandaag alleen die twee personagestemmen; de narratorstemmen moeten er nog bij komen.
-- **De stem volgt de zin.** Bevat de zin ผม of ครับ, dan de mannelijke narrator; anders de vrouwelijke. Dat wordt afgeleid en niet opgeschreven — zie het kader hierboven. Een mannenstem die ค่ะ zegt is voor elke Thai onmiddellijk fout, en hetzelfde geldt voor een vrouwenstem die ผม zegt; maar dat is een tekstprobleem, niet een audioprobleem. Het `speaker_gender` wordt in Stap 3 toegewezen en in Stap 4 uitgeschreven, en de audio voert het alleen uit.
+- **Stemkeuze:** voorbeelden in een note zijn *instructiestem*, geen personagestem. Het script gebruikt `narrator_female` of `narrator_male`, nooit de sleutel van Mali of Narin. Waarom: een personagestem suggereert ten onrechte dat de zin uit de scène komt, en bindt de note aan een personage dat er inhoudelijk niets mee te maken heeft. Let op de nuance in `scripts/voice-config.mjs`: de twee narrators wijzen bewust naar dezelfde Google-stemmen als Mali en Narin. Het onderscheid leeft in de sleutel, niet in het geluid — een eigen narratorstem kiezen is werk met een houdbaarheidsdatum, want de hele TTS-pijplijn verdwijnt zodra stemacteurs het overnemen.
+- **De stem volgt de zin**, volgens de verankerde regel hierboven, en wordt daarna weggeschreven naar `voice_key`. Een mannenstem die ค่ะ zegt is voor elke Thai onmiddellijk fout, en hetzelfde geldt voor een vrouwenstem die ผม zegt; maar dat is een tekstprobleem, niet een audioprobleem. Het `speaker_gender` wordt in Stap 3 toegewezen en in Stap 4 uitgeschreven, en de audio voert het alleen uit. De bundelcontrole in het audioscript is daarmee een tweede handhavingspunt voor een regel die verder alleen door de schrijverprompt gedragen wordt — op een plek waar de fout niet meer te repareren is zonder de opname weg te gooien.
 - **Na elke tekstwijziging aan een voorbeeld wordt de audio van dát voorbeeld opnieuw gegenereerd.** Tekst en audio die niet overeenkomen zijn erger dan geen audio: de leerling traint zijn oor op de verkeerde zin.
 
 ### Stap 9 — Validatie vóór publicatie

@@ -236,15 +236,29 @@ Waarom QA vóór audio en niet erna: elke tekstwijziging ná audiogeneratie maak
 
 Er zijn twee soorten audio op een Vocabulary Card, en ze worden apart gemaakt:
 
-**Lemma-audio** — het woord alleen, in citeervorm. Duidelijk en op normaal spreektempo, niet overdreven traag: een verlengde citeervorm vervormt de tonen en leert de leerling een uitspraak aan die hij in een zin nooit terughoort. Lemma-audio gebruikt altijd de vrouwelijke narrator: een los woord draagt geen `speaker_gender`, dus er valt niets af te leiden en een vaste keuze voorkomt een stemdiscussie per woord.
+**Lemma-audio** — het woord alleen, in citeervorm. Duidelijk en op normaal spreektempo, niet overdreven traag: een verlengde citeervorm vervormt de tonen en leert de leerling een uitspraak aan die hij in een zin nooit terughoort.
 
 **Voorbeeldaudio** — de volledige Thaise zin van elk voorbeeld.
+
+**De commando's** (gebouwd 2026-08-14):
+
+```powershell
+npm run audio:lemmas -- --dry-run
+npm run audio:vocab-examples -- --dry-run
+npm run audio:cards
+```
+
+Draai altijd eerst de twee dry-runs. Dat is het enige moment waarop je een verkeerd gekozen stem ziet vóórdat er een opname van bestaat. `npm run audio:cards` draait de drie kaartscripts achter elkaar, inclusief dat voor de Language Note-voorbeelden. Items met een gevulde `audio_url` worden overgeslagen, dus herhalen is veilig.
+
+`audio:lemmas` verwerkt standaard alleen lemma's die via `lesson_vocabulary` aan minstens één les hangen — gemeten op 2026-08-14 zijn dat er 30 van de 514. Een woord zonder leskoppeling komt op geen enkele kaart terecht en wordt dus nooit afgespeeld; audio ervoor maken is betalen voor bestanden die niemand hoort. Wil je toch de hele masterlijst, dan `--all --yes`; één specifiek woord vooruit opnemen kan met `--source-key coffee`.
 
 Regels voor beide:
 
 - **Voorbeeldaudio wordt nooit hergebruikt uit dialoogaudio**, ook niet wanneer de zin toevallig identiek zou zijn. Waarom: dialoogaudio is een personagestem in een scène, met de intonatie van dat moment. Een woordkaart hoort de neutrale instructiestem te gebruiken; een personagestem suggereert ten onrechte dat de zin uit een scène komt en bindt de kaart aan een personage dat er niets mee te maken heeft.
-- **Instructiestem, geen personagestem.** Alle kaartaudio gebruikt een van de twee vaste narratorstemmen. Nooit de stem van Mali of Narin: dat zijn personagestemmen, en `scripts/voice-config.mjs` kent vandaag alleen die twee. De narratorstemmen moeten er nog bij komen; zie `docs/audio_pipeline_prompt.md`.
-- **De stem volgt de zin, en wordt niet apart opgeschreven.** Bevat de zin ผม of ครับ, dan de mannelijke narrator; anders de vrouwelijke. Daarom staat `voice_key` niet in de redactionele brondata en weigert de generator het veld: een lege `voice_key` betekent "leid af uit de tekst", niet "onbekend". Die afleiding kan niet mislopen zolang Stap 3 de bundel heel houdt — en als ze wél misloopt, is dat het bewijs dat de bundel gebroken is en hoort de tekst gecorrigeerd te worden, niet de stem.
+- **Instructiestem, geen personagestem.** Alle kaartaudio gebruikt `narrator_female` of `narrator_male`, nooit de sleutel van Mali of Narin. Let op de nuance in `scripts/voice-config.mjs`: die twee narrators wijzen bewust naar dezelfde Google-stemmen als de personages. Het onderscheid leeft in de sleutel, niet in het geluid — een eigen narratorstem kiezen is werk met een houdbaarheidsdatum, want de hele TTS-pijplijn verdwijnt zodra stemacteurs het overnemen.
+- **Voor een voorbeeldzin volgt de stem de zin**, verankerd aan het slotpartikel: eindigt hij op ครับ of ครับผม dan `narrator_male`, op ค่ะ of คะ dan `narrator_female`, en zonder partikel telt het voornaamwoord aan het begin (ผม of ฉัน). Blijft alles leeg, dan de vrouwelijke standaard. **Nooit op substring**: `คะแนน` bevat คะ en `หวีผม` bevat ผม, dus `ฉันหวีผมค่ะ` en `ผมได้คะแนนดีครับ` zouden allebei ten onrechte als bundelfout gemeld worden. Zie Stap 8 van de Language Note-gids voor de volledige regel, de asymmetrische bundelcontrole en de drie meldingsniveaus.
+- **Voor een lemma wordt niets afgeleid.** Een lemma is een woord, geen uitspraak, en ผม als los woord is niet van หวีผม te onderscheiden door te matchen. De regel is: altijd `narrator_female`, met een expliciete overrulelijst op `source_key` in `voice-config.mjs`. Vandaag staat daar alleen `i_male` in. Dat is auditeerbaar en hangt van geen enkele stringvergelijking af.
+- **`voice_key` is output, geen invoer.** Het script leidt de stem af, gebruikt hem, en schrijft hem daarna weg als verslag van welke stem deze opname heeft ingesproken. Daarom staat het veld niet in de redactionele brondata en weigert de generator het — samen met `audio_url`, om dezelfde reden. Zou het script een lege `voice_key` als "gebruik de standaardstem" lezen, dan werd **elke** zin vrouwelijk: het veld is in de hele database NULL en hoort dat te zijn.
 - **Een mannenstem die ค่ะ zegt is voor elke Thai onmiddellijk fout** en leert de leerling een verkeerde koppeling aan. Dat is geen audioprobleem maar een tekstprobleem: het `speaker_gender` wordt al in Stap 3 vastgelegd, per woord, en de audio voert het alleen uit.
 - **Na elke tekstwijziging wordt de audio van dát item opnieuw gegenereerd.** Tekst en audio die niet overeenkomen zijn erger dan geen audio: de leerling traint zijn oor op de verkeerde zin.
 - **Dit is dezelfde tijdelijke TTS-pipeline als bij de dialogen**, later vervangen door opnames met stemacteurs. Investeer geen tijd in het verfraaien ervan; de redactionele regel is alleen: elk gepubliceerd lemma en elk gepubliceerd voorbeeld heeft audio, en die audio komt overeen met de exacte huidige tekst.
