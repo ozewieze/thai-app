@@ -90,8 +90,8 @@ export const AUDIO_CONFIG = {
 export const LEVEL = {
   OK: "OK",
   INFO: "INFO",
-  WAARSCHUWING: "WAARSCHUWING",
-  FOUT: "FOUT",
+  WARNING: "WAARSCHUWING",
+  ERROR: "FOUT",
 };
 
 export const DEFAULT_NARRATOR = "narrator_female";
@@ -181,7 +181,7 @@ function outcome(narratorKey, level, reason, notes) {
  *
  * @param {string} thaiScript
  * @returns {{narratorKey: string|null, level: string, reason: string}}
- *   narratorKey is null bij LEVEL.FOUT.
+ *   narratorKey is null bij LEVEL.ERROR.
  */
 export function deriveNarratorFromSentence(thaiScript) {
   const trimmed = String(thaiScript ?? "").trim();
@@ -189,14 +189,14 @@ export function deriveNarratorFromSentence(thaiScript) {
   const notes = [];
 
   if (sentence === "") {
-    return outcome(null, LEVEL.FOUT, "lege zin", notes);
+    return outcome(null, LEVEL.ERROR, "lege zin", notes);
   }
   if (sentence !== trimmed) {
     notes.push("zin eindigt op een leesteken; verankerd zonder dat teken");
   }
 
-  const endsMale = MALE_ENDINGS.some((p) => sentence.endsWith(p));
-  const endsFemale = FEMALE_ENDINGS.some((p) => sentence.endsWith(p));
+  const endsMale = MALE_ENDINGS.some((particle) => sentence.endsWith(particle));
+  const endsFemale = FEMALE_ENDINGS.some((particle) => sentence.endsWith(particle));
   const startsMale = sentence.startsWith(MALE_PRONOUN);
   const startsFemale = sentence.startsWith(FEMALE_PRONOUN);
 
@@ -208,7 +208,7 @@ export function deriveNarratorFromSentence(thaiScript) {
   if (startsFemale && endsMale) {
     return outcome(
       null,
-      LEVEL.FOUT,
+      LEVEL.ERROR,
       "begint met ฉัน en eindigt op een mannelijk partikel — gebroken bundel, corrigeer de tekst",
       notes,
     );
@@ -222,7 +222,7 @@ export function deriveNarratorFromSentence(thaiScript) {
   if (endsMale) {
     return outcome(
       "narrator_male",
-      notes.length > 0 ? LEVEL.WAARSCHUWING : LEVEL.OK,
+      notes.length > 0 ? LEVEL.WARNING : LEVEL.OK,
       "slotpartikel ครับ",
       notes,
     );
@@ -230,7 +230,7 @@ export function deriveNarratorFromSentence(thaiScript) {
   if (endsFemale) {
     return outcome(
       "narrator_female",
-      startsMale ? LEVEL.WAARSCHUWING : notes.length > 0 ? LEVEL.WAARSCHUWING : LEVEL.OK,
+      notes.length > 0 ? LEVEL.WARNING : LEVEL.OK,
       "slotpartikel ค่ะ/คะ",
       notes,
     );
@@ -238,7 +238,7 @@ export function deriveNarratorFromSentence(thaiScript) {
   if (startsMale) {
     return outcome(
       "narrator_male",
-      notes.length > 0 ? LEVEL.WAARSCHUWING : LEVEL.OK,
+      notes.length > 0 ? LEVEL.WARNING : LEVEL.OK,
       "geen slotpartikel, begint met ผม",
       notes,
     );
@@ -246,7 +246,7 @@ export function deriveNarratorFromSentence(thaiScript) {
   if (startsFemale) {
     return outcome(
       "narrator_female",
-      notes.length > 0 ? LEVEL.WAARSCHUWING : LEVEL.OK,
+      notes.length > 0 ? LEVEL.WARNING : LEVEL.OK,
       "geen slotpartikel, begint met ฉัน",
       notes,
     );
@@ -258,12 +258,7 @@ export function deriveNarratorFromSentence(thaiScript) {
   // iets te doen valt. Omdat de scripts rijen met een gevulde
   // audio_url overslaan, zie je ze na de eerste run alleen nog
   // terug na een lokale db reset.
-  return outcome(
-    DEFAULT_NARRATOR,
-    LEVEL.INFO,
-    "geen genderelement, standaardstem",
-    notes,
-  );
+  return outcome(DEFAULT_NARRATOR, LEVEL.INFO, "geen genderelement, standaardstem", notes);
 }
 
 // ── De stemkeuze voor lemma-audio ───────────────────────────
@@ -343,8 +338,8 @@ const SELF_TEST_SENTENCES = [
   ["ผมสีดำ", "narrator_male", LEVEL.OK],
 
   // asymmetrische bundelcontrole
-  ["ผมฉันสีดำค่ะ", "narrator_female", LEVEL.WAARSCHUWING],
-  ["ฉันชื่อนัทครับ", null, LEVEL.FOUT],
+  ["ผมฉันสีดำค่ะ", "narrator_female", LEVEL.WARNING],
+  ["ฉันชื่อนัทครับ", null, LEVEL.ERROR],
 
   // geen genderelement — hoort INFO te zijn, geen waarschuwing
   ["กาแฟร้อน", "narrator_female", LEVEL.INFO],
@@ -352,8 +347,8 @@ const SELF_TEST_SENTENCES = [
 
   // vorm van de invoer
   ["  สวัสดีค่ะ  ", "narrator_female", LEVEL.OK],
-  ["สวัสดีค่ะ?", "narrator_female", LEVEL.WAARSCHUWING],
-  ["", null, LEVEL.FOUT],
+  ["สวัสดีค่ะ?", "narrator_female", LEVEL.WARNING],
+  ["", null, LEVEL.ERROR],
 ];
 
 const SELF_TEST_LEMMAS = [
@@ -368,31 +363,31 @@ function runSelfTest() {
   let mislukt = 0;
 
   console.log("Zinnen\n");
-  for (const [zin, verwachteStem, verwachtNiveau] of SELF_TEST_SENTENCES) {
-    const r = deriveNarratorFromSentence(zin);
-    const ok = r.narratorKey === verwachteStem && r.level === verwachtNiveau;
+  for (const [sentence, expectedNarrator, expectedLevel] of SELF_TEST_SENTENCES) {
+    const result = deriveNarratorFromSentence(sentence);
+    const ok = result.narratorKey === expectedNarrator && result.level === expectedLevel;
     if (!ok) mislukt++;
     console.log(
-      `  ${ok ? "ok  " : "FOUT"} ${JSON.stringify(zin)} -> ${r.narratorKey} / ${r.level}` +
-        (ok ? "" : `  (verwacht ${verwachteStem} / ${verwachtNiveau})`),
+      `  ${ok ? "ok  " : "FOUT"} ${JSON.stringify(sentence)} -> ${result.narratorKey} / ${result.level}` +
+        (ok ? "" : `  (verwacht ${expectedNarrator} / ${expectedLevel})`),
     );
-    console.log(`       ${r.reason}`);
+    console.log(`       ${result.reason}`);
   }
 
   console.log("\nLemma's\n");
-  for (const [sourceKey, verwachteStem] of SELF_TEST_LEMMAS) {
-    const r = narratorForLemma(sourceKey);
-    const ok = r.narratorKey === verwachteStem;
+  for (const [sourceKey, expectedNarrator] of SELF_TEST_LEMMAS) {
+    const result = narratorForLemma(sourceKey);
+    const ok = result.narratorKey === expectedNarrator;
     if (!ok) mislukt++;
     console.log(
-      `  ${ok ? "ok  " : "FOUT"} ${sourceKey} -> ${r.narratorKey}` +
-        (ok ? "" : `  (verwacht ${verwachteStem})`),
+      `  ${ok ? "ok  " : "FOUT"} ${sourceKey} -> ${result.narratorKey}` +
+        (ok ? "" : `  (verwacht ${expectedNarrator})`),
     );
   }
 
-  const totaal = SELF_TEST_SENTENCES.length + SELF_TEST_LEMMAS.length;
+  const total = SELF_TEST_SENTENCES.length + SELF_TEST_LEMMAS.length;
   console.log("\n------------------------------");
-  console.log(`${totaal - mislukt}/${totaal} geslaagd`);
+  console.log(`${total - mislukt}/${total} geslaagd`);
   console.log("------------------------------");
 
   if (mislukt > 0) process.exit(1);
@@ -400,24 +395,21 @@ function runSelfTest() {
 
 // Alleen bij directe uitvoering, niet bij import.
 //
-// Via fileURLToPath en niet via een string-vergelijking op
-// import.meta.url. Die vergelijking faalde op Windows omdat het
-// pad een spatie bevat ('personal projects'): in een file://-URL
-// staat daar %20, en in process.argv[1] een echte spatie. Het
-// script deed dan helemaal niets — geen zelftest, geen melding.
-// fileURLToPath draait de URL-codering terug en normaliseert de
-// scheidingstekens.
 // De vlag beslist, niet de padvergelijking. Anders hangt het
-// draaien van de zelftest opnieuw aan een string-vergelijking die
-// op één platform anders uitpakt — hoofdletter van de schijfletter,
-// een symlink, een spatie — en het gevolg daarvan is stilte, de
-// slechtste uitkomst van allemaal. De padcontrole bepaalt nu alleen
-// nog of de gebruiksregel getoond wordt.
-const ditBestand = fileURLToPath(import.meta.url);// bvb C:\Users\...\personal projects\thai-vocab\scripts\voice-config.mjs 
-const aangeroepenBestand = process.argv[1] ? resolve(process.argv[1]) : null;
+// draaien van de zelftest aan een string-vergelijking die op één
+// platform anders uitpakt — hoofdletter van de schijfletter, een
+// symlink, een spatie in het pad — en het gevolg daarvan is
+// stilte, de slechtste uitkomst van allemaal. Dat is precies wat
+// er gebeurde: in een file://-URL staat %20 waar het pad een
+// spatie heeft ('personal projects'), en in process.argv[1] een
+// echte spatie. De padcontrole bepaalt nu alleen nog of de
+// gebruiksregel getoond wordt; fileURLToPath draait de
+// URL-codering terug.
+const thisFile = fileURLToPath(import.meta.url);
+const invokedFile = process.argv[1] ? resolve(process.argv[1]) : null;
 
 if (process.argv.includes("--self-test")) {
   runSelfTest();
-} else if (aangeroepenBestand === ditBestand) {
+} else if (invokedFile === thisFile) {
   console.log("Gebruik: node scripts/voice-config.mjs --self-test");
 }
