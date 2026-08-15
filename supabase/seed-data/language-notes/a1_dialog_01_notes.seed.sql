@@ -17,9 +17,10 @@
 -- oude zin zonder dat iemand een foutmelding ziet. Dat maakt voorlopige notes
 -- veilig herzienbaar: corrigeer de tekst, draai opnieuw, en de audio hoort
 -- vanzelf bij het volgende audioscript opnieuw gegenereerd te worden.
--- voice_key blijft wel staan: dat is een redactionele keuze en geen verwijzing
--- die kan verouderen. Zelfde constructie als in
--- generate-vocabulary-example-seed.mjs.
+-- voice_key gaat mee op null: die kolom is een verslag van welke stem de opname
+-- insprak, geen redactionele invoer -- zonder opname valt er niets te verslaan.
+-- De audiostap leidt de stem opnieuw af uit de gecorrigeerde zin en schrijft hem
+-- terug. Zelfde constructie als in generate-vocabulary-example-seed.mjs.
 
 begin;
 
@@ -90,6 +91,11 @@ on conflict (block_id, example_key) do update set
                      when language_note_examples.thai_script is distinct from excluded.thai_script
                      then null
                      else language_note_examples.audio_url
+                   end,
+  voice_key      = case
+                     when language_note_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else language_note_examples.voice_key
                    end;
 
 -- phrase: self_introduction_name
@@ -168,6 +174,11 @@ on conflict (block_id, example_key) do update set
                      when language_note_examples.thai_script is distinct from excluded.thai_script
                      then null
                      else language_note_examples.audio_url
+                   end,
+  voice_key      = case
+                     when language_note_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else language_note_examples.voice_key
                    end;
 
 -- grammar: polite_particles_khrab_kha

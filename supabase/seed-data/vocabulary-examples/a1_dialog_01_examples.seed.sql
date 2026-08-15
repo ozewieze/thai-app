@@ -15,8 +15,12 @@
 -- Waarom audio_url op null gaat bij gewijzigde thai_script: audio die bij een
 -- oudere zin hoort is erger dan geen audio. Het audioscript slaat een item met
 -- een gevulde audio_url over ('er is al audio'), en de leerling hoort dan de
--- oude zin zonder dat iemand een foutmelding ziet. voice_key blijft wel staan:
--- dat is een redactionele keuze en geen verwijzing die kan verouderen.
+-- oude zin zonder dat iemand een foutmelding ziet. voice_key gaat mee op null:
+-- die kolom is een verslag van welke stem de opname insprak, geen redactionele
+-- invoer -- zonder opname valt er niets te verslaan, en een achtergebleven
+-- voice_key zou een uitspraak zijn over een bestand dat niet meer bestaat.
+-- De audiostap leidt de stem opnieuw af uit de gecorrigeerde zin en schrijft
+-- hem terug. De twee kolommen horen samen gevuld en samen leeg te zijn.
 --
 -- Geen `updated_at = now()`: trg_vocabulary_examples_set_updated_at zet dat
 -- veld zelf.
@@ -44,6 +48,11 @@ on conflict (vocabulary_id, example_key) do update set
                      when vocabulary_examples.thai_script is distinct from excluded.thai_script
                      then null
                      else vocabulary_examples.audio_url
+                   end,
+  voice_key      = case
+                     when vocabulary_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else vocabulary_examples.voice_key
                    end;
 
 -- you / e1
@@ -66,6 +75,11 @@ on conflict (vocabulary_id, example_key) do update set
                      when vocabulary_examples.thai_script is distinct from excluded.thai_script
                      then null
                      else vocabulary_examples.audio_url
+                   end,
+  voice_key      = case
+                     when vocabulary_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else vocabulary_examples.voice_key
                    end;
 
 -- name / e1
@@ -88,6 +102,11 @@ on conflict (vocabulary_id, example_key) do update set
                      when vocabulary_examples.thai_script is distinct from excluded.thai_script
                      then null
                      else vocabulary_examples.audio_url
+                   end,
+  voice_key      = case
+                     when vocabulary_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else vocabulary_examples.voice_key
                    end;
 
 -- what / e1
@@ -110,6 +129,11 @@ on conflict (vocabulary_id, example_key) do update set
                      when vocabulary_examples.thai_script is distinct from excluded.thai_script
                      then null
                      else vocabulary_examples.audio_url
+                   end,
+  voice_key      = case
+                     when vocabulary_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else vocabulary_examples.voice_key
                    end;
 
 -- i / e1
@@ -132,6 +156,11 @@ on conflict (vocabulary_id, example_key) do update set
                      when vocabulary_examples.thai_script is distinct from excluded.thai_script
                      then null
                      else vocabulary_examples.audio_url
+                   end,
+  voice_key      = case
+                     when vocabulary_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else vocabulary_examples.voice_key
                    end;
 
 -- i_male / e1
@@ -154,6 +183,11 @@ on conflict (vocabulary_id, example_key) do update set
                      when vocabulary_examples.thai_script is distinct from excluded.thai_script
                      then null
                      else vocabulary_examples.audio_url
+                   end,
+  voice_key      = case
+                     when vocabulary_examples.thai_script is distinct from excluded.thai_script
+                     then null
+                     else vocabulary_examples.voice_key
                    end;
 
 commit;
