@@ -16,10 +16,17 @@
     "sync:pattern": "node --env-file=.env.local scripts/export-pattern-master.mjs && npm run seed:pattern",
     "sync:phrase": "node --env-file=.env.local scripts/export-phrase-master.mjs && npm run seed:phrase",
     "sync:master": "npm run sync:vocab && npm run sync:grammar && npm run sync:pattern && npm run sync:phrase",
+    "audio:dialog-blocks": "node --env-file=.env.local scripts/generate-audio.mjs",
+    "audio:dialog-merge": "node --env-file=.env.local scripts/merge-audio.mjs",
+    "audio:dialogs": "npm run audio:dialog-blocks && npm run audio:dialog-merge",
+    "audio:lemmas": "node --env-file=.env.local scripts/generate-lemma-audio.mjs",
+    "audio:vocab-examples": "node --env-file=.env.local scripts/generate-vocab-example-audio.mjs",
+    "audio:note-examples": "node --env-file=.env.local scripts/generate-note-example-audio.mjs",
+    "audio:cards": "npm run audio:lemmas && npm run audio:vocab-examples && npm run audio:note-examples",
     "db:status": "npx supabase migration list",
     "db:dump": "npx supabase db dump --local -f schema.sql",
     "db:reset": "npm run seed:vocab && npm run seed:grammar && npm run seed:pattern && npm run seed:phrase && npx supabase db reset",
-    "db:reset:full": "npm run db:reset && node --env-file=.env.local scripts/generate-audio.mjs && node --env-file=.env.local scripts/merge-audio.mjs && node --env-file=.env.local scripts/upload-slides.mjs"
+    "db:reset:full": "npm run db:reset && npm run audio:dialogs && npm run audio:cards && node --env-file=.env.local scripts/upload-slides.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",
