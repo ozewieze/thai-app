@@ -140,7 +140,7 @@
   align-items: center;
   min-height: 1.75rem;
   padding-inline: var(--spacing-8);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background-color: rgba(53, 87, 137, 0.08);
   color: var(--color-brand);
 }

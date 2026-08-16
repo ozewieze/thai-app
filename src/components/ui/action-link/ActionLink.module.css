@@ -19,7 +19,7 @@
 
 .actionLink:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 4px var(--color-focus-ring);
+  box-shadow: 0 0 0 var(--spacing-4) var(--color-focus-ring);
 }
 
 .actionLink:hover {
@@ -39,7 +39,7 @@
 
 .md {
   min-height: 2.75rem;
-  padding: var(--spacing-14) var(--spacing-16);
+  padding: var(--spacing-12) var(--spacing-16);
   font-size: var(--size-14);
 }
 
