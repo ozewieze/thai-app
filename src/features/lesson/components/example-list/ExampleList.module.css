@@ -28,7 +28,7 @@
 .thai {
   font-family: var(--font-thai);
   font-size: var(--size-18);
-  font-weight: var(--medium-bold);
+  font-weight: var(--medium);
   color: var(--color-heading);
   line-height: 1.4;
   margin: 0;

@@ -1,5 +1,6 @@
 .nav {
   display: flex;
+  margin-bottom: var(--spacing-24);
 }
 
 .list {

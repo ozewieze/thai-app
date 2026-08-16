@@ -18,6 +18,9 @@ import AudioButton from "@/components/ui/audio-button/AudioButton";
  *
  * De lemma-audioknop (AudioButton) staat links van het woord; `audioUrl`
  * kan null zijn (nog geen audio) -> knop disabled.
+ *
+ * De usage-note staat bewust ná de voorbeelden: het is een kleine
+ * rand-opmerking bij het woord, geen inleiding erop.
  */
 type VocabularyCardProps = {
   item: VocabularyItem;
@@ -49,18 +52,18 @@ export default function VocabularyCard({ item }: VocabularyCardProps) {
         </div>
       </header>
 
+      <ExampleList examples={examples} />
+
       {master.usageNote && (
         <p className={styles.usageNote}>
           <StickyNote
-            size={14}
+            size={16}
             className={styles.usageNoteIcon}
             aria-hidden="true"
           />
           {master.usageNote}
         </p>
       )}
-
-      <ExampleList examples={examples} />
     </article>
   );
 }

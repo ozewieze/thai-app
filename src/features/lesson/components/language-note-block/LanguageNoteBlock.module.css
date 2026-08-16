@@ -35,10 +35,10 @@
 .usageTip {
   display: flex;
   align-items: flex-start;
-  gap: var(--spacing-8);
+  gap: var(--spacing-12);
   background: var(--color-brand-soft);
   border-radius: var(--radius-md);
-  padding: var(--spacing-16);
+  padding: var(--spacing-24);
 }
 
 .usageTipIcon {
@@ -48,7 +48,7 @@
 }
 
 .usageTipText {
-  font-size: var(--size-14);
+  font-size: var(--size-16);
   color: var(--color-text-soft);
   line-height: 1.5;
   margin: 0;
