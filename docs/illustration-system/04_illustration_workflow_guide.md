@@ -18,6 +18,11 @@ dialog_blueprint_specs + dialogs + dialog_blocks + character_profiles  (DB, best
    Slide Specifications (.md)         — automatisch concept, jij keurt segmentatie en moment goed
               │
               ▼
+   seed-data/dialogs/a1_dialog_XX_slides.seed.sql   (Stap 3)
+   → rijen in dialog_slides, image_url nog null
+   Zonder deze rijen heeft upload-slides.mjs straks niets om bij te werken.
+              │
+              ▼
     Illustration Prompt (.md)         — mechanisch samengesteld, jij doet finale QA
               │
               ▼
@@ -243,7 +248,9 @@ Het script roept zelf geen enkele generatie-API aan — het verwerkt alleen wat 
 
 `scripts/upload-slides.mjs` werkt na een geslaagde upload meteen `dialog_slides.image_url` en `updated_at` bij voor de betreffende rij — je hoeft hiervoor geen losse SQL meer uit te voeren.
 
-Als de rij in `dialog_slides` nog niet bestaat (nieuwe dialoog, nog geen slides gedefinieerd), moet die eerst worden aangemaakt met `slide_index`, `first_block_index`, `last_block_index` — dat gebeurt normaal al bij het opzetten van de dialoog-afspeellogica, onafhankelijk van illustraties, en valt buiten dit script.
+Vindt het script geen rij om bij te werken, dan is Stap 3 overgeslagen. `dialog_slides` wordt nergens automatisch gevuld: de rijen komen uit `seed-data/dialogs/a1_dialog_XX_slides.seed.sql`, dat je in Stap 3 zelf aanmaakt uit de goedgekeurde segmentatie. Ga daarheen terug voor je hier verder gaat.
+
+> Tot 2026-08-16 stond hier dat die rijen "normaal al bij het opzetten van de dialoog-afspeellogica" ontstaan, onafhankelijk van illustraties. Dat was een restant uit de fase vóór het slides-seedbestand bestond, en het sprak Stap 3 van dit document tegen.
 
 Ter referentie, dit is het equivalent van wat het script uitvoert:
 
@@ -264,8 +271,9 @@ Commit samen:
 - `scene-bibles/a1_dialog_XX_scene_bible.md`
 - `slide-specs/a1_dialog_XX_slide_specs.md`
 - `prompts/a1_dialog_XX/slide_nn_prompt.md` (alle slides)
+- `supabase/seed-data/dialogs/a1_dialog_XX_slides.seed.sql` (Stap 3)
 
-Er is geen losse SQL-update meer om te committen — die schrijft `scripts/upload-slides.mjs` rechtstreeks naar de database.
+Dat laatste bestand is de enige SQL die hier in versiebeheer hoort, en het is er de bron van waarheid: `dialog_slides` wordt bij een `db reset` alleen uit dit bestand herbouwd. De `image_url`-update hoeft níét gecommit te worden — die schrijft `scripts/upload-slides.mjs` rechtstreeks naar de database, en na een reset wordt ze opnieuw gezet door een nieuwe upload uit de staging-map.
 
 De afbeeldingen zelf (`slide-nn.png`) en de staging-map (`illustration-staging/`) worden **niet** gecommit — die staan alleen lokaal tussen Stap 6b en Stap 7/8, en zijn overbodig zodra `dialog_slides.image_url` naar Supabase Storage wijst (zie Stap 6b).
 
@@ -283,9 +291,10 @@ Gebruik `templates/new-scene.template.md`. Dezelfde Master Style Prompt en Locke
 1. Bevestig dat de dialoog is goedgekeurd en opgeslagen (`dialogs`/`dialog_blocks`).
 2. Stel de Scene Bible op en laat goedkeuren.
 3. Vraag de segmentatie + Moment in Dialogue per slide aan en laat goedkeuren.
-4. Genereer de Illustration Prompt(s).
-5. Genereer de afbeelding(en) via ChatGPT — met hero image, face lock-referenties, cast-referenties en vorige slide als bijlage, in dezelfde chatsessie.
-6. Voer visuele QA uit, inclusief expliciete Thai-gezichtscontrole; corrigeer indien nodig via Stap 6a.
-7. Download de goedgekeurde afbeelding(en), hernoem naar `slide-{nn}.png` en zet ze in `illustration-staging/{lesson_key}/` (Stap 6b).
-8. Voer `node --env-file=.env.local scripts/upload-slides.mjs --dialog {lesson_key} --dry-run` uit ter controle, en daarna zonder `--dry-run` om daadwerkelijk te uploaden naar de `illustrations`-bucket en `dialog_slides.image_url` bij te werken (Stap 7–8).
-9. Commit de planning- en generatiebestanden (geen afbeeldingen, geen staging-map — zie Stap 9).
+4. Maak `seed-data/dialogs/a1_dialog_XX_slides.seed.sql` aan uit de goedgekeurde segmentatietabel en voer hem uit (Stap 3). **Sla dit niet over** — zonder rijen in `dialog_slides` vindt `upload-slides.mjs` straks niets om bij te werken, en dat merk je pas aan het einde.
+5. Genereer de Illustration Prompt(s) (Stap 4).
+6. Genereer de afbeelding(en) via ChatGPT — met hero image, face lock-referenties, cast-referenties en vorige slide als bijlage, in dezelfde chatsessie (Stap 5).
+7. Voer visuele QA uit, inclusief expliciete Thai-gezichtscontrole; corrigeer indien nodig via Stap 6a.
+8. Download de goedgekeurde afbeelding(en), hernoem naar `slide-{nn}.png` en zet ze in `illustration-staging/{lesson_key}/` (Stap 6b).
+9. Voer `node --env-file=.env.local scripts/upload-slides.mjs --dialog {lesson_key} --dry-run` uit ter controle, en daarna zonder `--dry-run` om daadwerkelijk te uploaden naar de `illustrations`-bucket en `dialog_slides.image_url` bij te werken (Stap 7–8).
+10. Commit de planning- en generatiebestanden plus `a1_dialog_XX_slides.seed.sql` (geen afbeeldingen, geen staging-map — zie Stap 9).

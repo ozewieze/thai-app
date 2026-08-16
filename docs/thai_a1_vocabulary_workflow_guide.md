@@ -28,6 +28,8 @@ Dit is het kernconcept van deze gids, en de meeste fouten in deze workflow zijn 
 
 **Lesgebonden — de rol van het woord in déze les.** Per les wordt vastgelegd welke `role` het woord speelt (`target`, `supporting`, `review`, `bonus`), in welke volgorde het getoond wordt (`display_order`), of het geschreven uitleg nodig heeft (`requires_explanation`) en eventueel een lesspecifieke notitie (`notes`). Diezelfde woordkaart kan in les 3 een doelwoord zijn en in les 24 een herhalingswoord; dat verschil zit uitsluitend hier.
 
+> **Let op: van die vier rollen is vandaag alleen `target` in gebruik.** Alle bestaande leslinks staan op `target`; `supporting`, `review` en `bonus` zijn voorziene mogelijkheden, geen bestaande praktijk. Waar deze gids ze noemt, beschrijft ze dus hoe het systeem bedoeld is te werken zodra ze in gebruik komen — niet iets wat je vandaag in de database aantreft. De Language Note-gids maakt dezelfde kanttekening bij "Wat een Language Note wél en niet is".
+
 De praktische consequentie, en meteen de belangrijkste redactionele regel van deze gids:
 
 > **Canonieke voorbeelden zijn lesneutraal.** Een voorbeeld mag nergens naar één specifieke les verwijzen — niet naar de scène, niet naar de personages, niet naar "zoals je net zag". Waarom: het voorbeeld wordt ook getoond in les 24, waar die scène nooit heeft plaatsgevonden.
@@ -80,7 +82,7 @@ De regel dekt automatisch het hele curriculum, en dat is geen toeval: door de Si
 
 **`is_multifunctional` verandert hier niets aan.** De vlag zegt dat een woord meerdere functies *heeft*, niet dat dit curriculum ze allebei gebruikt — 145 van de 513 woorden staan op true. Zie vastgelegde beslissing 3 voor wat er wél gebeurt met een tweede functie die het curriculum werkelijk in gebruik neemt.
 
-Woorden met `role = 'supporting'`, `'review'` of `'bonus'` krijgen geen eigen voorbeeldverplichting in die les: ze hebben hun voorbeelden al gekregen in de les die ze introduceerde, of krijgen die daar nog.
+Woorden met `role = 'supporting'`, `'review'` of `'bonus'` zouden geen eigen voorbeeldverplichting krijgen in die les: ze hebben hun voorbeelden al gekregen in de les die ze introduceerde, of krijgen die daar nog. Vandaag is dat een regel zonder gevallen — alle leslinks staan op `target` (zie de kanttekening onder "De twee eigenaarschappen").
 
 ## Gereedschap bij deze workflow
 
@@ -163,10 +165,12 @@ Redactionele regels:
 
 De zinnen worden vandaag door een model voorgesteld, met `supabase/planning/09_vocabulary_example_prompt_template.md`. Dat template is de mechanische kant van deze stap: het krijgt de goedgekeurde werklijst uit Stap 1 en het goedgekeurde budget uit Stap 2, en levert één JSON-document volgens het contract uit Stap 11.
 
-Twee dingen die je vóór het invullen zelf beslist, omdat een model ze niet reproduceerbaar beslist:
+Eén ding beslis je vóór het invullen, en één ding beslist het model:
 
-- **Het `speaker_gender` per doelwoord** (`female` of `male`) — het model verdeelt, jij corrigeert bij het nalezen; zie vastgelegde beslissing 4.
-- **Welke woorden meedoen** — de werklijst wordt gefilterd op `needs_example`, zodat een woord dat zijn voorbeeld al heeft de prompt niet eens bereikt.
+- **Welke woorden meedoen, beslis jij** — filter de werklijst op `needs_example` vóór je hem plakt, zodat een woord dat zijn voorbeeld al heeft de prompt niet eens bereikt. Ziet het model `existing_examples` staan, dan leest het dat als "hier mag iets bij", en dat is een tweede voorbeeld op hetzelfde woord.
+- **Het `speaker_gender` per doelwoord verdeelt het model** (`female` of `male`); jij corrigeert bij het nalezen. Er is niets extra's voor nodig om te zien wat het gekozen heeft — ครับ of ค่ะ staat gewoon in de zin. Wat het model níet kan zien is de rest van het curriculum: het evenwicht over de lessen heen is jouw controle bij de goedkeuring. Zie vastgelegde beslissing 4.
+
+  Dit is anders dan bij de Language Notes, waar de planner het `speaker_gender` per gepland voorbeeld voorstelt en jij het bij het goedkeuren van het plan corrigeert. Daar bestaat een plan om het in te zetten; hier is er maar één prompt.
 
 De prompt noemt de les nergens, en de brief-view geeft de dialoog niet mee. Dat is geen omissie maar de lesneutraliteit uit "De twee eigenaarschappen", mechanisch gemaakt: wat het model niet weet te bestaan, kan het niet als anker gebruiken.
 
@@ -245,10 +249,15 @@ Er zijn twee soorten audio op een Vocabulary Card, en ze worden apart gemaakt:
 ```powershell
 npm run audio:lemmas -- --dry-run
 npm run audio:vocab-examples -- --dry-run
+npm run audio:note-examples -- --dry-run
 npm run audio:cards
 ```
 
-Draai altijd eerst de twee dry-runs. Dat is het enige moment waarop je een verkeerd gekozen stem ziet vóórdat er een opname van bestaat. `npm run audio:cards` draait de drie kaartscripts achter elkaar, inclusief dat voor de Language Note-voorbeelden. Items met een gevulde `audio_url` worden overgeslagen, dus herhalen is veilig.
+Draai altijd eerst de dry-runs. Dat is het enige moment waarop je een verkeerd gekozen stem ziet vóórdat er een opname van bestaat.
+
+**Het zijn er drie, niet twee.** `npm run audio:cards` draait `audio:lemmas`, `audio:vocab-examples` én `audio:note-examples` achter elkaar — dat derde script maakt de audio bij de Language Note-voorbeelden en valt onder Stap 8 van de Language Note-gids, maar het draait hier wel mee. Sla je die dry-run over, dan is dat het ene script waarvan je de stemkeuze niet gezien hebt.
+
+Items met een gevulde `audio_url` worden overgeslagen, dus herhalen is veilig.
 
 `audio:lemmas` verwerkt standaard alleen lemma's die via `lesson_vocabulary` aan minstens één les hangen — gemeten op 2026-08-14 zijn dat er 30 van de 514. Een woord zonder leskoppeling komt op geen enkele kaart terecht en wordt dus nooit afgespeeld; audio ervoor maken is betalen voor bestanden die niemand hoort. Wil je toch de hele masterlijst, dan `--all --yes`; één specifiek woord vooruit opnemen kan met `--source-key coffee`.
 
@@ -486,7 +495,18 @@ Deze beslissingen zijn vastgelegd op 2026-08-07 en gelden voor alle Vocabulary C
 
 4. **Lemma-audio in één vrouwelijke stem; voorbeelden in beide bundels, bewust verdeeld.** Een los lemma draagt geen `speaker_gender` en krijgt altijd de vrouwelijke narrator. Een voorbeeldzin krijgt per woord een toegewezen `speaker_gender`, `female` of `male`, en er wordt over de lessen heen naar evenwicht gestreefd.
 
-   Deze beslissing is **letterlijk gelijk aan vastgelegde beslissing 2 van de Language Note-gids**, en dat is de bedoeling: kaart en note verschijnen in dezelfde les, en van sprekersgeslacht wisselen tussen die twee zonder reden is voor de leerling onverklaarbaar. Wijzigt die beslissing daar, dan wijzigt ze hier mee.
+   **Deze beslissing is gekoppeld aan vastgelegde beslissing 2 van de Language Note-gids.** Kaart en note verschijnen in dezelfde les, en van sprekersgeslacht wisselen tussen die twee zonder reden is voor de leerling onverklaarbaar. Wijzigt die beslissing daar, dan wijzigt ze hier mee.
+
+   Wat **woordelijk gelijk hoort te blijven** aan de Language Note-gids, is precies dit:
+
+   - het twee-bundels-principe: er zijn twee instructiestemmen, elk voorbeeld krijgt een toegewezen `speaker_gender`, en over de voorbeelden heen wordt naar evenwicht gestreefd;
+   - de bundeltabel hieronder, inclusief de asymmetrie ค่ะ/คะ;
+   - de regel dat een zin zonder eerste persoon en zonder eindpartikel geen `speaker_gender` draagt en niet meetelt in het evenwicht;
+   - de motivering waarom het `speaker_gender` heet en niet `register` (die staat hier, en de LN-gids verwijst ernaar).
+
+   Wat **terecht verschilt**, omdat de ketens verschillen: de lemma-audio hierboven (bestaat alleen hier), wie het `speaker_gender` toewijst (hier het model binnen één run, daar de planner in Stap 3 van die gids), en de voorbeelden en metingen waarmee de regel wordt onderbouwd.
+
+   Dit onderscheid stond hier tot 2026-08-16 niet in — er stond "letterlijk gelijk", terwijl de twee teksten toen al op vijf punten verschilden. Een bewering die bij elke terechte lokale toevoeging onwaar wordt, houdt op als bewaking te werken; deze opsomming zegt waar de bewaking wél op slaat.
 
    **Herzien op 2026-08-09.** Tot dan gold hier één vrouwelijke standaardstem en dus ค่ะ als standaardpartikel, met een mannenstem alleen in voorbeelden die het contrast zélf tonen. Drie redenen om dat om te draaien, in volgorde van gewicht.
 
@@ -508,7 +528,7 @@ Deze beslissingen zijn vastgelegd op 2026-08-07 en gelden voor alle Vocabulary C
 
    **Het `speaker_gender` is een beperking, geen opdracht om een voornaamwoord te gebruiken.** Veel natuurlijke Thaise zinnen hebben geen eerste persoon en geen eindpartikel; die dragen er dan ook geen, en hun toewijzing blijft simpelweg ongebruikt. Plak nooit een voornaamwoord of partikel op een zin die er geen wil, alleen om een toegewezen `speaker_gender` zichtbaar te maken. Zulke zinnen tellen ook niet mee in het evenwicht.
 
-   **Waarom `speaker_gender` en niet `register`.** "Register" lag voor de hand en was de eerste keuze, maar `register` is een bestaande kolom met een check constraint op vijf mastertabellen — `dialogs`, `vocabulary_master`, `grammar_master`, `pattern_master` en `phrase_master` — waar hij formaliteit betekent (`formal`, `informal`). `vocabulary_example_brief_view.target_words` levert die kolom bovendien al mee, dus twee betekenissen zouden op één regel van de werklijst terechtkomen. En het is precies het domein waar de andere betekenis thuishoort: beleefdheidspartikels *zijn* een registerverschijnsel in de formaliteitszin. `speaker_gender` zegt wat het bestuurt en botst nergens.
+   **Waarom `speaker_gender` en niet `register`.** "Register" lag voor de hand en was de eerste keuze, maar `register` is een bestaande kolom met een check constraint op vijf tabellen — de vier masterlijsten `vocabulary_master`, `grammar_master`, `pattern_master` en `phrase_master`, plus `dialogs` — waar hij formaliteit betekent (`formal`, `informal`). Reken `dialog_blueprint_specs.allowed_register` er als zesde bij: andere naam, zelfde betekenis en zelfde waardenlijst. `vocabulary_example_brief_view.target_words` levert die kolom bovendien al mee, dus twee betekenissen zouden op één regel van de werklijst terechtkomen. En het is precies het domein waar de andere betekenis thuishoort: beleefdheidspartikels *zijn* een registerverschijnsel in de formaliteitszin. `speaker_gender` zegt wat het bestuurt en botst nergens.
 
    **Wie het `speaker_gender` toewijst.** Het model verdeelt binnen één run, jij corrigeert bij het nalezen — hetzelfde patroon als overal in deze keten. Er is niets extra's voor nodig om te zien wat het gekozen heeft: ครับ of ค่ะ staat in de zin.
 

@@ -57,10 +57,11 @@ Gebruik `dialogs` voor de definitief goedgekeurde lesdialoog. Gebruik `revisions
 
 ## Mapstructuur
 
+**Dit is de boom van de dialoogworkflow, niet van de repo.** Alleen wat je in de stappen hieronder werkelijk aanraakt staat erin; de zusterworkflows staan eronder als verwijzing.
+
 ```text
 supabase/
   qa/
-    verify_language_note_brief_view.sql   ← leest alleen; controleert de LN-briefingview
     verify_single_introduction_reseed.sql ← leest alleen; controleert de re-seed-uitzondering
 
   maintenance/
@@ -74,6 +75,7 @@ supabase/
     04_lesson_dialog_prompt_template.md ← standaard (Stap 7, zelfde chat als Stap 1)
     05_curriculum_sequencer_prompt_template.md ← hoort bij Stap 1
     06_lesson_dialog_coldstart_prompt_template.md ← uitzondering (Stap 7, nieuwe chat)
+    07_… 08_… 09_…                      ← zusterworkflows, zie hieronder
     blueprints/
       a1_dialog_01_blueprint.csv
       a1_dialog_02_blueprint.csv
@@ -110,6 +112,20 @@ supabase/
       a1_dialog_02.seed.sql
 ```
 
+### De zusterworkflows
+
+Elke keten volgt hetzelfde kanaal — blanco template in `planning/`, ingevulde prompt in `prompts/`, modeloutput in `generation/`, gegenereerde SQL in `seed-data/` — met een eigen submap per keten. Hun padenlijst staat in hun eigen gids, en daar alleen:
+
+| Keten | Templates | Padenlijst staat in |
+| --- | --- | --- |
+| Language Notes | `07` (planner), `08` (writer) | `docs/thai_a1_language_note_workflow_guide.md`, Stap 6 |
+| Vocabulaire-voorbeelden | `09` | `docs/thai_a1_vocabulary_workflow_guide.md`, Stap 11 |
+| Illustraties | eigen sjablonen onder `docs/illustration-system/templates/` | `docs/illustration-system/04_illustration_workflow_guide.md` |
+
+Waarom hier geen kopie: die zou de derde worden, en een derde kopie loopt achter zodra er een vierde keten bijkomt. De boom hierboven stond tot 2026-08-16 nog op `00` t/m `06` en kende geen van de zes nieuwe mappen.
+
+Ook `supabase/qa/` bevat meer dan het ene script hierboven — draai `ls supabase/qa/` als je zoekt wat er te verifiëren valt. De scripts dragen hun doel in hun kop.
+
 ### Wat hoort waar
 
 | Map           | Gebruik                                                    |
@@ -131,15 +147,35 @@ model gaat — van `## Role` tot en met `## Output Rules` — is Engels.
 
 Waarom: elk template levert waarden op die in het Engels in de database
 belanden. `04` en `06` leveren dialoogtekst, `05` levert `title`,
-`subtitle`, `learning_focus` en `scene_summary`, `07` levert notetitels,
-`08` levert de note-inhoud. Een Nederlandse prompt die om een Engelse
-databasewaarde vraagt is een zwakkere instructie dan een Engelse die dat
-doet, en dat is de meest waarschijnlijke — nog niet bewezen — verklaring
-voor de terugkerende `learning_focus`-drift naar de gerundiumvorm.
+`subtitle`, `learning_focus` en `scene_summary`, `07` levert notetitels
+en blokskeletten, `08` levert de note-inhoud, `09` levert de canonieke
+voorbeeldzinnen bij de vocabulary cards. Een Nederlandse prompt die om
+een Engelse databasewaarde vraagt is een zwakkere instructie dan een
+Engelse die dat doet, en dat is de meest waarschijnlijke — nog niet
+bewezen — verklaring voor de terugkerende `learning_focus`-drift naar de
+gerundiumvorm.
 
 Deze regel is vastgelegd op 2026-08-06, nadat opviel dat de vijf
-templates drie verschillende taalindelingen hadden zonder dat ergens
-stond waarom. `07` is diezelfde dag omgezet.
+templates die er toen waren drie verschillende taalindelingen hadden
+zonder dat ergens stond waarom. `07` is diezelfde dag omgezet. `09` is
+er op 2026-08-09 bijgekomen en volgt de regel vanaf zijn eerste versie;
+het zijn er dus zes.
+
+Voor `07`, `08` en `09` is de regel bovendien mechanisch afgedwongen:
+`scripts/fill-note-prompt.mjs` knipt het bestand tussen de regel
+`## Role` en de regel `# Brief-view -> prompt mapping checklist`, en
+alleen dat stuk komt in de ingevulde prompt terecht. Wat je erbuiten
+schrijft bereikt het model nooit.
+
+**Die twee kopregels zijn daarmee dragend.** Hernoem ze niet: het script
+zoekt ze als exacte regel en faalt luid als er één ontbreekt. In de
+praktijk is `## Output Rules` de laatste promptsectie vóór de
+mapping-checklist, dus het geknipte stuk loopt van `## Role` tot en met
+`## Output Rules` — maar dat is een gevolg van de volgorde, niet de
+regel waarop geknipt wordt.
+
+`04`, `05` en `06` worden met de hand ingevuld en hebben die bewaking
+niet.
 
 > **Nog open:** `05_curriculum_sequencer_prompt_template.md` staat nog
 > volledig in het Nederlands. Het is bewust niet tegelijk omgezet: het
@@ -254,8 +290,6 @@ De masterlijsten (`vocabulary_master`, `grammar_master`, `phrase_master`, `patte
      ('...', 'A1', '...', '...', '...', '...');
    ```
 
-   Toegestane waarden voor `concept_type`: `pattern`, `particle`, `word_order`, `question_form`, `negation`, `classifier_usage`, `politeness`, `other`.
-
    **Phrase:**
 
    ```sql
@@ -264,8 +298,6 @@ De masterlijsten (`vocabulary_master`, `grammar_master`, `phrase_master`, `patte
    values
      ('...', 'A1', '...', '...', '...', '...', '...', '...', true);
    ```
-
-   Toegestane waarden voor `phrase_type`: `sentence_frame`, `collocation`, `formulaic_expression`, `functional_pattern`, `discourse_pattern`, `question_answer_exchange`, `other`. Voor `fixedness_level`: `fixed`, `semi_fixed`, `productive`.
 
    **Pattern:**
 
@@ -276,9 +308,9 @@ De masterlijsten (`vocabulary_master`, `grammar_master`, `phrase_master`, `patte
      ('...', 'A1', '...', '...', '...', '...', '...', '...', true);
    ```
 
-   Toegestane waarden voor `pattern_type`: `sentence_frame`, `collocation`, `formulaic_expression`, `functional_pattern`, `discourse_pattern`, `other`. Voor `fixedness_level`: zelfde als bij Phrase hierboven.
+   **De toegestane waarden voor `register`, `part_of_speech`, `concept_type`, `phrase_type`, `pattern_type` en `fixedness_level` staan onder "Toegestane waarden" in `05_curriculum_sequencer_prompt_template.md` — niet hier.** Een `[NEW]`-item uit een Stap 1-voorstel draagt die waarden al, dus in de normale route hoef je niets op te zoeken: je typt over wat het voorstel je geeft. Vul je met de hand aan, kijk dan daar.
 
-   Voor alle vier geldt: toegestane waarden voor `register` zijn `neutral`, `formal`, `informal`, `polite`, `colloquial`. Deze lijsten zijn dezelfde als "Toegestane waarden" in `05_curriculum_sequencer_prompt_template.md` — als je een NEW-item rechtstreeks uit een Stap 1-voorstel overneemt, kan je de daar voorgestelde waarden hier gewoon overtypen.
+   Waarom die lijst op één plaats staat: het zijn check constraints, dus ze veranderen bij een migratie. Op 2026-04-24 gebeurde dat met `concept_type` en `pattern_type` (`20260424100000_expand_grammar_concept_types.sql` en `20260424103000_expand_pattern_types.sql`), en de kopie die hier stond is dat niet gevolgd — ze noemde tot 2026-08-16 nog vijf `concept_type`-waarden en vijf `pattern_type`-waarden die de insert vandaag laten falen. Twee kopieën van een constraint betekent dat de volgende migratie er één vergeet.
 
    De bijhorende initialisatietrigger (`trg_initialize_vocabulary_status` en de grammar-/phrase-/pattern-varianten) maakt automatisch de status-rij aan met `status = 'new'`. Je hoeft dus niets extra te doen om het woord bruikbaar te maken — het verschijnt meteen in de ongebruikte kandidatenpool (zie Stap 1 hieronder).
 
@@ -327,12 +359,12 @@ Dit is het standaardproces: je verzint scène, subtitel en woordenlijst niet mee
 
 > De 12 lessen die oorspronkelijk in `core.seed.sql` zijn geseed (`a1-dialog-01` t/m `a1-revision-premium-01`) waren een voorlopige skeletplanning uit een vroeg stadium van het project, vóór dit sequencer-proces bestond. Vanaf nu geldt Stap 1 als het vaste proces: ook voor die bestaande rijen mag je Stap 1 gebruiken om ze te herzien en te overschrijven zodra je eraan toe bent, in plaats van de oorspronkelijke placeholder-titel klakkeloos over te nemen.
 
-1. Voer `00_build_curriculum_sequencer_context.sql` uit in Supabase Studio — dit zijn 7 losse secties (voortgang, reeds-geïntroduceerde concepten, ongebruikte kandidatenpool per categorie, laatste dialogen, continuïteitscontext).
+1. Voer `00_build_curriculum_sequencer_context.sql` uit in Supabase Studio. Het script is genummerd 1 t/m 5, maar sectie 3 is gesplitst in 3, 3b, 3c en 3d (één kandidatenpool per categorie) — je krijgt dus **acht** resultatensets: voortgang, reeds-geïntroduceerde concepten, vier kandidatenpools, laatste dialogen, continuïteitscontext.
 2. Vul `05_curriculum_sequencer_prompt_template.md` in met die resultaten en sla het ingevulde resultaat op als `supabase/prompts/sequencer/a1_dialog_XX_sequencer_prompt.md` (audit trail van waarop het voorstel gebaseerd was; `XX` is op dit punt nog een schatting van het volgnummer, corrigeer de bestandsnaam indien nodig zodra de definitieve `sequence_number` bekend is in Stap 5).
 3. Laat AI een voorstel doen: subtitel (de beschrijvende scènetitel, bv. "At the café"), scène, lesdoel, en doelconcepten (bestaande items onvermeld, nieuwe items expliciet gelabeld als `[NEW]`). De `title`-kolom zelf is geen AI-voorstel — dat is altijd de vaste conventie "Dialog" + `sequence_number` (zie ook de bestaande rijen in `core.seed.sql`).
 4. **Keur het voorstel goed of stuur het bij** — dit is een voorstel, geen bron van waarheid. Let vooral op:
    - Klopt de scène inhoudelijk en past ze bij de vorige dialoog(en)?
-   - Is het aantal nieuwe items in lijn met de lesfase-richtlijn?
+   - Is het aantal nieuwe woorden in lijn met de richtlijn van 5 à 8, en de `estimated_line_count` met de lesfase-tabel?
    - Voor elk `[NEW]`-item: wil je dit echt toevoegen, of bestaat er al een alternatief in de pool?
 5. Voor elk goedgekeurd `[NEW]`-item: volg "Nieuw woord/concept toevoegen aan de masterlijst" hierboven.
 6. **Maak of werk de `lessons`-rij aan** met de vaste titelconventie, de goedgekeurde subtitel en sequence_number uit het voorstel:
@@ -598,7 +630,8 @@ De output bestaat uit vijf metadata-secties (Title, Subtitle, Learning focus, Sc
 Controleer minstens:
 
 - Past de scène bij het lesdoel?
-- Zijn alle verplichte doelelementen aanwezig?
+- **Komt elk doelwoord uit `lesson_vocabulary` werkelijk voor in de dialoogtekst?** Loop de lijst woord voor woord na, niet op gevoel. Ontbreekt er een, dan verwijder je de link of herschrijf je de dialoog — zie Stap 3 voor waarom een doelwoord dat de dialoog nooit haalde stilzwijgend uit het curriculum verdwijnt.
+- Zijn alle verplichte phrases, grammaticapunten en patterns aanwezig?
 - Is er geen belangrijke nieuwe grammatica buiten de lesscope?
 - Zijn `ครับ`, `ค่ะ` en `คะ` correct gebruikt?
 - Past de toon bij de karakterprofielen?
@@ -692,8 +725,8 @@ Na Stap 10/11 staat de dialoogtekst in de database, maar `dialogs.audio_url` en 
 
 1. Genereer per-blok audio:
 
-   ```
-   node --env-file=.env.local scripts/generate-audio.mjs
+   ```powershell
+   npm run audio:dialog-blocks
    ```
 
    Dit script heeft geen `--dialog`-optie: het verwerkt in één keer **alle** blokken in de hele database zonder `audio_url`, dus bij een nieuwe dialoog pakt het automatisch enkel de nieuwe blokken op. Gebruik `--dry-run` om eerst te controleren zonder API-aanroepen of DB-wijzigingen.
@@ -702,9 +735,13 @@ Na Stap 10/11 staat de dialoogtekst in de database, maar `dialogs.audio_url` en 
 
 2. Voeg de blokken samen tot één dialoog-audio:
 
+   ```powershell
+   npm run audio:dialog-merge -- --dialog a1-dialog-XX
    ```
-   node --env-file=.env.local scripts/merge-audio.mjs --dialog a1-dialog-XX
-   ```
+
+   Let op de losse `--` vóór de vlaggen: die scheidt jouw argumenten van
+   die van npm. Vergeet je hem, dan krijgt het script `--dialog` niet
+   binnen en verwerkt het álle dialogen zonder `audio_url`.
 
    Dit voegt de per-blok audio samen tot `full-dialog.mp3`, berekent per-blok timestamps (`dialog_blocks.full_start_ms`/`full_end_ms`) voor synchronisatie in de speler, en werkt `dialogs.audio_url` bij. Vereist `ffmpeg`/`ffprobe` in je PATH. `--dialog` beperkt dit tot deze ene les — zonder die vlag verwerkt het script alle dialogen die nog geen `audio_url` hebben. Gebruik `--dialog a1-dialog-XX --force` om een reeds samengevoegde dialoog opnieuw te verwerken (bv. na een correctie).
 
@@ -721,24 +758,11 @@ Commit de plannings-, generatie- en seed-bestanden samen:
 
 ## `config.toml` seed-configuratie
 
-Dialoog-seeds draaien al automatisch bij `db reset`, via `supabase/config.toml`:
+Dialoog-seeds draaien al automatisch bij `db reset`, via `sql_paths` onder `[db.seed]` in `supabase/config.toml`. **Je hoeft dat bestand niet bij te werken per nieuwe les.** Alle contentmappen staan er als glob in — `seed-data/app/specs/`, `links/`, `dialogs/`, `language-notes/` en `vocabulary-examples/` — dus een nieuw `lesson_links_a1-dialog-XX.seed.sql` of `a1_dialog_XX.seed.sql` wordt vanzelf meegenomen. Alleen de vier mastertabellen staan er per bestand in, omdat ze een vaste volgorde hebben.
 
-```toml
-[db.seed]
-enabled = true
-sql_paths = [
-  "./seed-data/app/core.seed.sql",
-  "./seed-data/app/specs/*.sql",
-  "./seed-data/master/vocabulary_master.seed.sql",
-  "./seed-data/master/grammar_master.seed.sql",
-  "./seed-data/master/pattern_master.seed.sql",
-  "./seed-data/master/phrase_master.seed.sql",
-  "./seed-data/links/*.sql",
-  "./seed-data/dialogs/*.sql"
-]
-```
+Wat wél telt is de **volgorde**, en die is niet vrijblijvend: de seeds zoeken op wat er al staat. `core.seed.sql` en de specs eerst, dan de vier masterlijsten, dan de leslinks, dan de dialogen, dan de Language Notes (die lessen én koppelrijen opzoeken), en achteraan de canonieke vocabulairevoorbeelden (die alleen `vocabulary_master` nodig hebben). Zet je een nieuwe contentmap ertussen, plaats hem dan ná alles wat hij opzoekt.
 
-`links/*.sql` en `dialogs/*.sql` zijn globs, dus een nieuw bestand zoals `lesson_links_a1-dialog-XX.seed.sql` of `a1_dialog_XX.seed.sql` wordt automatisch meegenomen bij de volgende `db reset` — je hoeft dit bestand niet bij te werken per nieuwe dialoog.
+De actuele lijst staat in `supabase/config.toml` zelf; hij is hier bewust niet overgetypt. De vorige versie van deze sectie was een letterlijke kopie en liep twee globs achter — precies wat een gekopieerd configuratiebestand doet.
 
 ## Praktische checklist per nieuwe les
 
@@ -750,7 +774,7 @@ sql_paths = [
 6. Exporteer als CSV naar `planning/blueprints/`.
 7. Vul `supabase/prompts/dialogs/a1_dialog_XX_prompt.md` in (`04` bij zelfde chat als Stap 1, `06` bij nieuwe chat; scalars vanuit CSV, multiline vanuit Studio-cel).
 8. Genereer de dialoog en sla op in `generation/dialogs/`.
-9. Voer QA uit. Controleer daarbij expliciet dat **elk** doelwoord uit `lesson_vocabulary` werkelijk in de dialoogtekst voorkomt (zie Stap 3); ontbreekt er een, verwijder dan de link (de status draait automatisch terug) of herschrijf de dialoog.
+9. Doorloop de QA-lijst van Stap 9 — inclusief de woord-voor-woordcontrole dat elk doelwoord werkelijk in de dialoogtekst staat.
 10. Maak `seed-data/dialogs/a1_dialog_XX.seed.sql` aan (dialoog-metadata + blokken) en voer uit.
-11. Genereer audio: `generate-audio.mjs` (alle nieuwe blokken) gevolgd door `merge-audio.mjs --dialog a1-dialog-XX`.
+11. Genereer audio: `npm run audio:dialog-blocks` (alle nieuwe blokken) gevolgd door `npm run audio:dialog-merge -- --dialog a1-dialog-XX`.
 12. Commit alle bestanden.

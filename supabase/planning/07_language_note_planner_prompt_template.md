@@ -55,10 +55,25 @@ voor jou en blijven Nederlands; alles tussen `## Role` en het einde van
 `## Output Rules` gaat naar het model en is Engels.
 
 Waarom: elke prompt levert waarden op die uiteindelijk in het Engels in
-de database belanden — notetitels hier, dialoogtekst bij `04`,
-`learning_focus` bij `05`. Een Nederlandse prompt die om een Engelse
-waarde vraagt, is een zwakkere instructie dan een Engelse die dat doet.
-Dit template stond tot 2026-08-06 volledig in het Nederlands.
+de database belanden — notetitels hier, dialoogtekst bij `04` en `06`,
+`learning_focus` bij `05`, voorbeeldzinnen bij `09`. Een Nederlandse
+prompt die om een Engelse waarde vraagt, is een zwakkere instructie dan
+een Engelse die dat doet. Dit template stond tot 2026-08-06 volledig in
+het Nederlands.
+
+**Eén template haalt de regel nog niet: `05`.** Dat staat op dit moment
+ook tussen `## Role` en `## Output Rules` volledig in het Nederlands, en
+dat is een bewuste uitzondering en geen vergetelheid — `05` heeft de
+lessen 04 en 05 opgeleverd en verdient een eigen omzetting met een
+testrun erna, zodat een afwijking in het volgende voorstel toe te
+schrijven valt aan de les en niet aan de vertaling. Neem `05` dus niet
+als voorbeeld voor de vorm van een nieuw template.
+
+Voor dit bestand is de regel bovendien mechanisch: `fill-note-prompt.mjs`
+knipt alles tussen `## Role` en de regel
+`# Brief-view -> prompt mapping checklist` en schrijft alleen dat naar
+de ingevulde prompt. Hernoem geen van die twee kopregels — het script
+zoekt ze letterlijk. Wat je erbuiten schrijft, ziet het model nooit.
 
 De output van dit template is daardoor ook Engels. Dat is meegenomen: het
 plan gaat ongewijzigd de schrijverprompt in, en die is Engels.
@@ -189,6 +204,27 @@ zero `usage_tip` blocks is complete; never add one to reach a count.
   blocks per note. Tips draw their force from scarcity: if the concept
   has no pitfall, the note gets no tip.
 
+Two skeletons, depending on what the note explains. A note about a
+language pattern:
+
+```
+1. paragraph      — what this is and why you met it in the dialogue
+2. formula        — the pattern in schematic form
+3. example_group  — 2-4 examples of the pattern
+4. usage_tip      — one warning (only if there really is a pitfall)
+```
+
+A note explaining what a word means often needs only two blocks:
+
+```
+1. paragraph      — what the word means, and where you met it
+2. example_group  — 2-3 examples
+```
+
+Neither is a template to fill in. They show what a complete note looks
+like at each end of the range; take the blocks the language point calls
+for and no more.
+
 ## Speaker Gender
 
 Note examples are read by two fixed instruction voices, one female and
@@ -218,23 +254,6 @@ bolted on to show it.
 
 A note that teaches the male/female contrast itself is the one case where
 both bundles must appear side by side. Say so in the justification.
-
-Two skeletons, depending on what the note explains. A note about a
-language pattern:
-
-```
-1. paragraph      — what this is and why you met it in the dialogue
-2. formula        — the pattern in schematic form
-3. example_group  — 2-4 examples of the pattern
-4. usage_tip      — one warning (only if there really is a pitfall)
-```
-
-A note explaining what a word means often needs only two blocks:
-
-```
-1. paragraph      — what the word means, and where you met it
-2. example_group  — 2-3 examples
-```
 
 ## Guideline For This Lesson Phase (sequence_number {{sequence_number}})
 
@@ -330,6 +349,11 @@ Use exactly this structure.
 <doubts or alternatives a human must decide; leave empty if there are none>
 ```
 
+Those four headings — `## Note plan`, `### Note N`, `## Coverage check`,
+`## Open questions` — are the whole document. Do not add a fifth. The
+human adds one when approving; see the filling notes at the bottom of
+this file.
+
 ## Output Rules
 
 - **Carry every `key` over literally from the list above.** Never use
@@ -351,8 +375,8 @@ Use exactly this structure.
   recorded forms here, and a reconstructed form that lands in the
   proposal gets copied unquestioned in the writing phase.
 - **Assign a `speaker_gender` to every planned example**, `female` or
-  `male`. See "Speaker Gender" below. This is part of the plan, not of the writing
-  phase.
+  `male`. See "Speaker Gender" above. This is part of the plan, not of
+  the writing phase.
 - **No `subheading` as the first or last block**, and never two in a
   row.
 - **No `formula` without an `example_group`** in the same note.
@@ -477,7 +501,7 @@ Laat `register` weg. Elk masterobject draagt hem met de betekenis
 die botsing te vermijden. Hem alsnog meeplakken zet beide betekenissen in
 één prompt.
 
-## Notes for manual filling
+## Notities bij het invullen
 
 - Is een van de vier conceptlijsten leeg, schrijf dan letterlijk
   `(geen)` onder die kop. Laat de kop staan — een weggelaten kop leest
@@ -498,3 +522,24 @@ die botsing te vermijden. Hem alsnog meeplakken zet beide betekenissen in
   pas dan het leslink-seedbestand aan en draai het opnieuw — niet alleen
   de database. Een correctie die alleen in de database staat, verdwijnt
   bij de eerstvolgende reset.
+
+- **Sluit het goedgekeurde plan af met `## Redactionele beslissingen`.**
+  Dat kopje voeg jíj toe, niet het model — het staat daarom niet in
+  "Output Format" hierboven. `fill-note-prompt.mjs` knipt het plan bij
+  dat kopje af: alles erboven gaat mee de schrijverprompt in, alles
+  eronder niet. Zet er dus je motivering onder, in het Nederlands, voor
+  jezelf en voor een latere lezer.
+
+  Twee gevolgen die je moet kennen:
+
+  - **Ontbreekt het kopje, dan gaat het hele plan mee**, inclusief wat
+    je eronder had willen houden. Het script waarschuwt daar niet voor.
+  - **`## Open questions` staat erbóven en wordt dus wél doorgegeven.**
+    Dat is precies waarom een goedgekeurd plan er geen meer hoort te
+    hebben: een open vraag is iets wat jij beslist vóór je goedkeurt.
+    Los ze op, verwerk het antwoord in het plan zelf, en laat de kop
+    weg of leeg. Blijft er een staan, dan leest de schrijver een
+    twijfel die al beslecht is.
+
+  Het script zoekt daarnaast `### Note 1` als beginpunt; alles daarvóór
+  (de `## Note plan`-kop) valt af. Hernoem geen van beide.

@@ -109,6 +109,7 @@ it as authoritative even where it overlaps with earlier discussion.
 - Use short, clear lines.
 - Use one communicative move per line — a line does not have to be exactly one sentence. It may contain more than one short sentence when needed to fit a required word or phrase naturally, as long as it stays concise and beginner-readable. Multi-sentence lines become more natural and more expected as lessons progress past the early A1 phase.
 - Keep the Thai natural but simple.
+- **Polite particles follow the speaker, and the female forms are not interchangeable.** A female speaker ends a statement with ค่ะ and a question with คะ — it is ชอบเค้กไหม**คะ**, never ไหม**ค่ะ**. A male speaker uses ครับ for both. Keep each speaker's pronoun and particle in the same column: ผม goes with ครับ, ฉัน goes with ค่ะ or คะ, and never one form from each. Each character's gender is fixed by the continuity context already established in this conversation, so this is not a choice — it follows from who is speaking.
 - Respect speaker characterization and relationship rules already established earlier in this conversation.
 - Do not introduce important new grammar outside lesson scope.
 - Do not introduce romance, intimacy, or inappropriate familiarity unless explicitly allowed.
@@ -126,6 +127,8 @@ Before producing the dialogue, verify that:
 - The dialogue follows the character roles and relationship rules already established earlier in this conversation.
 - The dialogue is beginner-safe and matches the target line count already established — not just under it, but reasonably close to it.
 - Required phrases are not repeated unnecessarily.
+- Every polite particle matches its speaker, and every female question ends in คะ rather than ค่ะ.
+- Every tone mark in the transliteration was copied, not invented, and none was dropped.
 
 ## Romanization Convention (Paiboon)
 
@@ -135,6 +138,7 @@ All Paiboon transliteration in this dialogue must strictly follow the Paiboon Pu
 - Aspirated stops: ข, ค = k · ท, ถ = t · พ, ผ, ภ = p — never write "kh", "th", or "ph"
 - ง = ng, จ = j, ช = ch
 - Syllable-final ย is written "i" (not "y"); syllable-final ว is written "o" or "u" depending on the vowel pattern (not "w")
+- Tone marks exactly as the source records them — none added, none dropped. Mid tone is written without a mark in Paiboon, so "a mark on every syllable" is not the rule; copying faithfully is. A transliteration with the marks stripped out is not "nearly done", it is wrong — and inventing a mark to make a syllable look complete is equally wrong.
 - For words with the อัว/อวย vowel pattern (e.g. สวย, ครัว, ช่วย, ป่วย), whether it is spelled with a single or double "u" cannot be derived from the script alone and varies per word. Match whatever spelling that exact word already has in the Required Vocabulary list above or elsewhere in this conversation. If the word does not appear there, mark that transliteration as uncertain rather than guessing.
 
 ## Output Format
@@ -190,9 +194,10 @@ gedekt door het Stap 1-gesprek en hoeft niet herhaald te worden.
 {{required_patterns_list}} <- required_patterns_list
 {{dialogue_constraints_list}} <- dialogue_constraints_list
 
-## notes for manual filling
+## Notities bij het invullen
 
 - Vul alleen deze zes velden in.
-- Paste multi-line list cells exactly as they appear.
-- Do not paste quotes that belong only to CSV formatting.
-- Replace every placeholder before generation.
+- Plak multiline-cellen exact zoals ze zijn, zonder de regels te
+  herschikken.
+- Plak geen aanhalingstekens die alleen bij de CSV-opmaak horen.
+- Vervang elke placeholder vóór je genereert.

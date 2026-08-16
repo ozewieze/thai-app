@@ -14,10 +14,12 @@ heeft.
 
 ## Instructions
 
-- Open the lesson blueprint CSV and this template side by side.
-- Replace every placeholder with the value from the matching CSV column.
-- For multi-line list fields, paste the complete cell content unchanged.
-- Replace every placeholder before generation.
+- Open de blueprint-CSV van de les en dit template naast elkaar.
+- Vervang elke placeholder met de waarde uit de bijhorende CSV-kolom.
+- Plak bij multiline-lijstvelden de volledige celinhoud ongewijzigd. Die
+  velden bevatten newlines, en de meeste teksteditors tonen die fout als
+  extra rijen — klik de cel dan aan in Supabase Studio en kopieer daar.
+- Vervang elke placeholder vóór je genereert.
 
 ## Role
 
@@ -161,6 +163,7 @@ Treat any item listed under "Previously introduced ... allowed for reuse" (vocab
 - Use short, clear lines.
 - Use one communicative move per line — a line does not have to be exactly one sentence. It may contain more than one short sentence when needed to fit a required word or phrase naturally, as long as it stays concise and beginner-readable. Multi-sentence lines become more natural and more expected as lessons progress past the early A1 phase.
 - Keep the Thai natural but simple.
+- **Polite particles follow the speaker, and the female forms are not interchangeable.** A female speaker ends a statement with ค่ะ and a question with คะ — it is ชอบเค้กไหม**คะ**, never ไหม**ค่ะ**. A male speaker uses ครับ for both. Keep each speaker's pronoun and particle in the same column: ผม goes with ครับ, ฉัน goes with ค่ะ or คะ, and never one form from each. Each character's gender is fixed by the Continuity Context above, so this is not a choice — it follows from who is speaking.
 - Respect speaker characterization and relationship rules.
 - Do not introduce important new grammar outside lesson scope.
 - Do not introduce romance, intimacy, or inappropriate familiarity unless explicitly allowed.
@@ -178,6 +181,8 @@ Before producing the dialogue, verify that:
 - The dialogue follows the character roles and relationship rules.
 - The dialogue is beginner-safe and matches the target line count in Dialogue Design — not just under it, but reasonably close to it.
 - Required phrases are not repeated unnecessarily.
+- Every polite particle matches its speaker, and every female question ends in คะ rather than ค่ะ.
+- Every tone mark in the transliteration was copied, not invented, and none was dropped.
 
 ## Romanization Convention (Paiboon)
 
@@ -187,6 +192,7 @@ All Paiboon transliteration in this dialogue must strictly follow the Paiboon Pu
 - Aspirated stops: ข, ค = k · ท, ถ = t · พ, ผ, ภ = p — never write "kh", "th", or "ph"
 - ง = ng, จ = j, ช = ch
 - Syllable-final ย is written "i" (not "y"); syllable-final ว is written "o" or "u" depending on the vowel pattern (not "w")
+- Tone marks exactly as the source records them — none added, none dropped. Mid tone is written without a mark in Paiboon, so "a mark on every syllable" is not the rule; copying faithfully is. A transliteration with the marks stripped out is not "nearly done", it is wrong — and inventing a mark to make a syllable look complete is equally wrong.
 - For words with the อัว/อวย vowel pattern (e.g. สวย, ครัว, ช่วย, ป่วย), whether it is spelled with a single or double "u" cannot be derived from the script alone and varies per word. Match whatever spelling that exact word already has in the Required/Allowed Vocabulary lists above. If the word does not appear there, mark that transliteration as uncertain rather than guessing.
 
 ## Output Format
@@ -231,7 +237,13 @@ Return exactly these sections and no additional sections.
 
 # CSV -> prompt mapping checklist
 
-## lesson / goal
+Links de placeholder in dit bestand, rechts de kolom uit de
+builder-query-output van `03_build_dialog_lesson_blueprint.sql`. De
+kopjes hieronder dragen de naam van de promptsectie waar die
+placeholders staan, zodat je van boven naar beneden door het
+Studio-resultaat kan werken: de kolommen staan daar in dezelfde volgorde.
+
+## §Lesson Goal
 
 {{lesson_key}} <- lesson_key
 {{cefr_level}} <- cefr_level
@@ -240,7 +252,7 @@ Return exactly these sections and no additional sections.
 {{learning_focus}} <- learning_focus
 {{scene_summary}} <- scene_summary
 
-## curriculum core
+## §Curriculum Core
 
 {{required_vocabulary_list}} <- required_vocabulary_list
 {{allowed_vocabulary_list}} <- allowed_vocabulary_list
@@ -250,9 +262,8 @@ Return exactly these sections and no additional sections.
 {{allowed_grammar_list}} <- allowed_grammar_list
 {{required_patterns_list}} <- required_patterns_list
 {{allowed_patterns_list}} <- allowed_patterns_list
-{{must_avoid_rule}} <- must_avoid_rule
 
-## continuity / speaker A
+## §Continuity Context — Speaker A
 
 {{speaker_a_name}} <- speaker_a_name
 {{speaker_a_name_thai}} <- speaker_a_name_thai
@@ -262,7 +273,7 @@ Return exactly these sections and no additional sections.
 {{speaker_a_default_tone}} <- speaker_a_default_tone
 {{speaker_a_default_usage}} <- speaker_a_default_usage
 
-## continuity / speaker B
+## §Continuity Context — Speaker B
 
 {{speaker_b_name}} <- speaker_b_name
 {{speaker_b_name_thai}} <- speaker_b_name_thai
@@ -272,7 +283,7 @@ Return exactly these sections and no additional sections.
 {{speaker_b_default_tone}} <- speaker_b_default_tone
 {{speaker_b_default_usage}} <- speaker_b_default_usage
 
-## relationship context
+## §Relationship Context
 
 {{start_state}} <- start_state
 {{current_stage}} <- current_stage
@@ -280,7 +291,7 @@ Return exactly these sections and no additional sections.
 {{allowed_progression}} <- allowed_progression
 {{relationship_rules_list}} <- relationship_rules_list
 
-## dialogue design
+## §Dialogue Design
 
 {{scene_type}} <- scene_type
 {{suggested_location}} <- suggested_location
@@ -288,9 +299,11 @@ Return exactly these sections and no additional sections.
 {{estimated_line_count}} <- estimated_line_count
 {{dialogue_constraints_list}} <- dialogue_constraints_list
 
-## notes for manual filling
+## Notities bij het invullen
 
-- Paste scalar values directly from the CSV cell.
-- Paste multi-line list cells exactly as they appear.
-- Do not paste quotes that belong only to CSV formatting.
-- Replace every placeholder before generation.
+- Plak scalaire waarden rechtstreeks uit de CSV-cel.
+- Plak multiline-cellen exact zoals ze zijn, zonder de regels te
+  herschikken; haal ze bij twijfel uit de cel in Supabase Studio in
+  plaats van uit de CSV.
+- Plak geen aanhalingstekens die alleen bij de CSV-opmaak horen.
+- Vervang elke placeholder vóór je genereert.

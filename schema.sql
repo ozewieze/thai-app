@@ -566,6 +566,20 @@ $$;
 ALTER FUNCTION "public"."fn_lesson_vocabulary_state_machine"() OWNER TO "postgres";
 
 
+CREATE OR REPLACE FUNCTION "public"."fn_reset_vocabulary_master_audio"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    AS $$
+begin
+  new.audio_url := null;
+  new.voice_key := null;
+  return new;
+end;
+$$;
+
+
+ALTER FUNCTION "public"."fn_reset_vocabulary_master_audio"() OWNER TO "postgres";
+
+
 CREATE OR REPLACE FUNCTION "public"."fn_set_updated_at"() RETURNS "trigger"
     LANGUAGE "plpgsql"
     AS $$
@@ -1502,8 +1516,10 @@ CREATE TABLE IF NOT EXISTS "public"."vocabulary_examples" (
     "voice_key" "text",
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "example_key" "text" NOT NULL,
     CONSTRAINT "vocabulary_examples_audio_url_not_blank" CHECK ((("audio_url" IS NULL) OR ("btrim"("audio_url") <> ''::"text"))),
     CONSTRAINT "vocabulary_examples_display_order_check" CHECK (("display_order" >= 1)),
+    CONSTRAINT "vocabulary_examples_example_key_format" CHECK (("example_key" ~ '^[a-z0-9]+(-[a-z0-9]+)*$'::"text")),
     CONSTRAINT "vocabulary_examples_paiboon_not_blank" CHECK (("btrim"("paiboon") <> ''::"text")),
     CONSTRAINT "vocabulary_examples_thai_not_blank" CHECK (("btrim"("thai_script") <> ''::"text")),
     CONSTRAINT "vocabulary_examples_translation_not_blank" CHECK (("btrim"("translation_en") <> ''::"text")),
@@ -1512,6 +1528,54 @@ CREATE TABLE IF NOT EXISTS "public"."vocabulary_examples" (
 
 
 ALTER TABLE "public"."vocabulary_examples" OWNER TO "postgres";
+
+
+CREATE OR REPLACE VIEW "public"."vocabulary_example_brief_view" WITH ("security_invoker"='true') AS
+ SELECT "id" AS "lesson_id",
+    "lesson_key",
+    "title" AS "lesson_title",
+    "subtitle" AS "lesson_subtitle",
+    "cefr_level",
+    "lesson_type",
+    "section_key",
+    "sequence_number",
+    "is_published",
+    COALESCE(( SELECT "jsonb_agg"("jsonb_build_object"('lesson_vocabulary_id', "lv"."id", 'vocabulary_id', "vm"."id", 'source_key', "vm"."source_key", 'thai_script', "vm"."thai_script", 'paiboon', "vm"."paiboon", 'english_gloss', "vm"."english_gloss", 'part_of_speech', "vm"."part_of_speech", 'register', "vm"."register", 'usage_note', "vm"."usage_note", 'is_multifunctional', "vm"."is_multifunctional", 'lesson_role', "lv"."role", 'display_order', "lv"."display_order", 'lesson_notes', "lv"."notes", 'requires_explanation', "lv"."requires_explanation", 'intro_lesson_id', "intro"."id", 'intro_lesson_key', "intro"."lesson_key", 'intro_sequence_number', "intro"."sequence_number", 'is_introduced_here', (NOT ("intro"."id" IS DISTINCT FROM "l"."id")), 'existing_example_count', ( SELECT "count"(*) AS "count"
+                   FROM "public"."vocabulary_examples" "ve"
+                  WHERE ("ve"."vocabulary_id" = "vm"."id")), 'needs_example', (NOT (EXISTS ( SELECT 1
+                   FROM "public"."vocabulary_examples" "ve"
+                  WHERE ("ve"."vocabulary_id" = "vm"."id")))), 'existing_examples', COALESCE(( SELECT "jsonb_agg"("jsonb_build_object"('vocabulary_example_id', "ve"."id", 'display_order', "ve"."display_order", 'thai_script', "ve"."thai_script", 'paiboon', "ve"."paiboon", 'translation_en', "ve"."translation_en", 'has_audio', ("ve"."audio_url" IS NOT NULL), 'voice_key', "ve"."voice_key") ORDER BY "ve"."display_order") AS "jsonb_agg"
+                   FROM "public"."vocabulary_examples" "ve"
+                  WHERE ("ve"."vocabulary_id" = "vm"."id")), '[]'::"jsonb")) ORDER BY "lv"."display_order" NULLS FIRST, "lv"."id") AS "jsonb_agg"
+           FROM ((("public"."lesson_vocabulary" "lv"
+             JOIN "public"."vocabulary_master" "vm" ON (("vm"."id" = "lv"."vocabulary_id")))
+             LEFT JOIN "public"."vocabulary_status" "vs" ON (("vs"."vocabulary_id" = "vm"."id")))
+             LEFT JOIN "public"."lessons" "intro" ON (("intro"."id" = "vs"."first_lesson_id")))
+          WHERE (("lv"."lesson_id" = "l"."id") AND ("lv"."role" = 'target'::"text"))), '[]'::"jsonb") AS "target_words",
+    COALESCE(( SELECT "jsonb_agg"("jsonb_build_object"('intro_lesson_id', "intro"."id", 'intro_lesson_key', "intro"."lesson_key", 'intro_sequence_number', "intro"."sequence_number", 'word_count', ( SELECT "count"(*) AS "count"
+                   FROM (("public"."vocabulary_master" "bvm"
+                     JOIN "public"."vocabulary_status" "bvs" ON (("bvs"."vocabulary_id" = "bvm"."id")))
+                     JOIN "public"."lessons" "bintro" ON (("bintro"."id" = "bvs"."first_lesson_id")))
+                  WHERE ("bintro"."sequence_number" <= "intro"."sequence_number")), 'words', COALESCE(( SELECT "jsonb_agg"("jsonb_build_object"('vocabulary_id', "bvm"."id", 'source_key', "bvm"."source_key", 'thai_script', "bvm"."thai_script", 'paiboon', "bvm"."paiboon", 'english_gloss', "bvm"."english_gloss", 'part_of_speech', "bvm"."part_of_speech", 'register', "bvm"."register", 'usage_note', "bvm"."usage_note", 'intro_lesson_key', "bintro"."lesson_key", 'intro_sequence_number', "bintro"."sequence_number", 'availability',
+                        CASE
+                            WHEN ("bintro"."sequence_number" = "intro"."sequence_number") THEN 'intro_lesson'::"text"
+                            ELSE 'previous'::"text"
+                        END, 'in_intro_lesson_set', (EXISTS ( SELECT 1
+                           FROM "public"."lesson_vocabulary" "blv"
+                          WHERE (("blv"."vocabulary_id" = "bvm"."id") AND ("blv"."lesson_id" = "intro"."id"))))) ORDER BY "bintro"."sequence_number", "bvm"."source_key") AS "jsonb_agg"
+                   FROM (("public"."vocabulary_master" "bvm"
+                     JOIN "public"."vocabulary_status" "bvs" ON (("bvs"."vocabulary_id" = "bvm"."id")))
+                     JOIN "public"."lessons" "bintro" ON (("bintro"."id" = "bvs"."first_lesson_id")))
+                  WHERE ("bintro"."sequence_number" <= "intro"."sequence_number")), '[]'::"jsonb")) ORDER BY "intro"."sequence_number") AS "jsonb_agg"
+           FROM (( SELECT DISTINCT "vs"."first_lesson_id"
+                   FROM ("public"."lesson_vocabulary" "lv"
+                     JOIN "public"."vocabulary_status" "vs" ON (("vs"."vocabulary_id" = "lv"."vocabulary_id")))
+                  WHERE (("lv"."lesson_id" = "l"."id") AND ("lv"."role" = 'target'::"text") AND ("vs"."first_lesson_id" IS NOT NULL))) "anchors"
+             JOIN "public"."lessons" "intro" ON (("intro"."id" = "anchors"."first_lesson_id")))), '[]'::"jsonb") AS "example_vocabulary_budgets"
+   FROM "public"."lessons" "l";
+
+
+ALTER VIEW "public"."vocabulary_example_brief_view" OWNER TO "postgres";
 
 
 ALTER TABLE "public"."vocabulary_examples" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
@@ -1828,6 +1892,11 @@ ALTER TABLE ONLY "public"."vocabulary_examples"
 
 
 ALTER TABLE ONLY "public"."vocabulary_examples"
+    ADD CONSTRAINT "vocabulary_examples_vocab_key_unique" UNIQUE ("vocabulary_id", "example_key");
+
+
+
+ALTER TABLE ONLY "public"."vocabulary_examples"
     ADD CONSTRAINT "vocabulary_examples_vocab_order_unique" UNIQUE ("vocabulary_id", "display_order") DEFERRABLE;
 
 
@@ -1937,6 +2006,10 @@ CREATE OR REPLACE TRIGGER "trg_lesson_vocabulary_state_machine" BEFORE INSERT OR
 
 
 CREATE OR REPLACE TRIGGER "trg_vocabulary_examples_set_updated_at" BEFORE UPDATE ON "public"."vocabulary_examples" FOR EACH ROW EXECUTE FUNCTION "public"."fn_set_updated_at"();
+
+
+
+CREATE OR REPLACE TRIGGER "trg_vocabulary_master_reset_audio" BEFORE UPDATE ON "public"."vocabulary_master" FOR EACH ROW WHEN (("old"."thai_script" IS DISTINCT FROM "new"."thai_script")) EXECUTE FUNCTION "public"."fn_reset_vocabulary_master_audio"();
 
 
 
@@ -2579,7 +2652,7 @@ GRANT UPDATE ON SEQUENCE "public"."grammar_status_id_seq" TO "service_role";
 
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_blocks" TO "anon";
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_blocks" TO "authenticated";
-GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_blocks" TO "service_role";
+GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_blocks" TO "service_role";
 
 
 
@@ -2591,7 +2664,7 @@ GRANT UPDATE ON SEQUENCE "public"."language_note_blocks_id_seq" TO "service_role
 
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."lesson_grammar" TO "anon";
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."lesson_grammar" TO "authenticated";
-GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."lesson_grammar" TO "service_role";
+GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."lesson_grammar" TO "service_role";
 
 
 
@@ -2609,7 +2682,7 @@ GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."lesson_phra
 
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."lesson_vocabulary" TO "anon";
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."lesson_vocabulary" TO "authenticated";
-GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."lesson_vocabulary" TO "service_role";
+GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."lesson_vocabulary" TO "service_role";
 
 
 
@@ -2637,15 +2710,23 @@ GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_
 
 
 
+GRANT UPDATE("audio_url") ON TABLE "public"."vocabulary_master" TO "service_role";
+
+
+
+GRANT UPDATE("voice_key") ON TABLE "public"."vocabulary_master" TO "service_role";
+
+
+
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_status" TO "anon";
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_status" TO "authenticated";
-GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_status" TO "service_role";
+GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_status" TO "service_role";
 
 
 
-GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_brief_view" TO "anon";
-GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_brief_view" TO "authenticated";
-GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_brief_view" TO "service_role";
+GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_brief_view" TO "anon";
+GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_brief_view" TO "authenticated";
+GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_brief_view" TO "service_role";
 
 
 
@@ -2663,7 +2744,15 @@ GRANT UPDATE ON SEQUENCE "public"."language_note_concepts_id_seq" TO "service_ro
 
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_examples" TO "anon";
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_examples" TO "authenticated";
-GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_examples" TO "service_role";
+GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_note_examples" TO "service_role";
+
+
+
+GRANT UPDATE("audio_url") ON TABLE "public"."language_note_examples" TO "service_role";
+
+
+
+GRANT UPDATE("voice_key") ON TABLE "public"."language_note_examples" TO "service_role";
 
 
 
@@ -2675,7 +2764,7 @@ GRANT UPDATE ON SEQUENCE "public"."language_note_examples_id_seq" TO "service_ro
 
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_notes" TO "anon";
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_notes" TO "authenticated";
-GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_notes" TO "service_role";
+GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."language_notes" TO "service_role";
 
 
 
@@ -2831,7 +2920,21 @@ GRANT UPDATE ON SEQUENCE "public"."revisions_id_seq" TO "service_role";
 
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_examples" TO "anon";
 GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_examples" TO "authenticated";
-GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_examples" TO "service_role";
+GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_examples" TO "service_role";
+
+
+
+GRANT UPDATE("audio_url") ON TABLE "public"."vocabulary_examples" TO "service_role";
+
+
+
+GRANT UPDATE("voice_key") ON TABLE "public"."vocabulary_examples" TO "service_role";
+
+
+
+GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_example_brief_view" TO "anon";
+GRANT REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_example_brief_view" TO "authenticated";
+GRANT SELECT,REFERENCES,TRIGGER,TRUNCATE,MAINTAIN ON TABLE "public"."vocabulary_example_brief_view" TO "service_role";
 
 
 

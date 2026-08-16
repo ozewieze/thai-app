@@ -171,14 +171,17 @@ something; it has to buy something back.
 ## Voice, Particles and Pronouns
 
 Examples are read aloud by two fixed instruction voices, one female and
-one male. Which of the two reads a given example follows from the
-sentence itself: a sentence with ผม or ครับ is read by the male voice, any
-other by the female one.
+one male. Choosing which voice reads which sentence is **not your job** —
+a later step works that out from the finished sentence. Your job is to
+make sure the sentence is internally consistent, so that whichever voice
+it gets is the right one.
 
 **You choose the division; you do not choose per sentence what feels
 natural.** Give every example a `speaker_gender` — `female` or `male` —
 and spread the two across the target words of this run. Then write each
-sentence entirely within its own column.
+sentence entirely within its own column. The `speaker_gender` is not a
+field you return: ครับ or ค่ะ in the sentence already says which one it
+is.
 
 **The gendered elements of a sentence form one bundle.** Voice, polite
 particle and first-person pronoun belong together; if one of them is
@@ -276,6 +279,38 @@ word you are not allowed to use. Check "Available Vocabulary" first.
 - **Only words from "Available Vocabulary"**, plus the three polite
   particles.
 
+### The sentences in one run must differ in more than their nouns
+
+Read your own set before you return it. If most of the sentences share a
+single frame with only the object swapped — `[pronoun] + [verb] +
+[noun] + [particle]`, five times over, all translated "I'll have X" —
+then the cards teach the learner one thing five times instead of five
+things once.
+
+This is the failure this section exists to prevent, and it is not
+hypothetical: in one lesson four of six cards came back as exactly that
+frame. Nothing else was wrong with them. The Paiboon was right, the
+bundles were right, every word was inside the budget — which is why no
+mechanical check caught it and why you have to look.
+
+Two distinctions matter.
+
+**Frame overlap is arithmetic, not a fault.** In an early lesson the
+budget may hold three verbs and five nouns. Sentences will resemble each
+other, and forcing variety that the budget cannot carry is worse than
+the resemblance. **Point overlap is the fault:** two cards built around
+the same verb with a different object, teaching the same thing twice.
+
+**The budget always wins.** Never reach outside "Available Vocabulary"
+to make a sentence look different, and never bolt on a pronoun or a
+particle for variety — those rules are absolute and this one is not.
+Within the budget, the usual room is: a question instead of a statement
+(using a question word the learner already has), a describing sentence
+with no first person at all, a less obvious noun or verb from the
+budget, or a different position for the target word in the sentence. If
+the budget genuinely offers no room, keep the sentences and say nothing
+— a correct repetitive set beats an invented word.
+
 ### What a canonical example must never contain
 
 This section is the opposite of the corresponding rule for Language
@@ -362,7 +397,7 @@ all. It is handled elsewhere, by a human, and not by you.
 | `display_order` | The array order **is** the screen order. The generator refuses the field, precisely so nobody assumes it does something. |
 | `lesson_key` | A canonical example belongs to the word, not to a lesson. A lesson field in the source data invites a lesson-bound sentence. |
 | `audio_url` | Output of a later step, generated from the frozen text. |
-| `voice_key` | Empty means "use the fixed default female voice", not "unknown". A value here invites variation where there is nothing to choose. |
+| `voice_key` | Output of the same later step. The audio script derives the voice from the sentence itself and then records which one read it; nothing reads this field to pick a voice. A value here would be a report about a recording that does not exist yet. |
 | anything else | Unknown fields are a hard error. |
 
 ### Complete example
@@ -471,11 +506,18 @@ Verify all of these before you produce output:
     conversation, a lesson or the course.
 12. Every sentence is understandable with nothing around it.
 13. In every sentence the target word is what the sentence is about.
-14. Every translation is natural English and agrees with the
+14. The transliteration of the target word inside the sentence is
+    character for character the form given for that word in "Available
+    Vocabulary" — not a variant of it.
+15. Every translation is natural English and agrees with the
     `english_gloss` of its word.
-15. `example_key` is `e1` everywhere; every `source_key` was copied
+16. **Read the whole set side by side.** No two cards make the same
+    point with only the object swapped, and the set as a whole is not
+    one frame repeated. If the budget left no room for more variety,
+    that is acceptable — but check that it really did not.
+17. `example_key` is `e1` everywhere; every `source_key` was copied
     literally and matches `^[a-z0-9]+(_[a-z0-9]+)*$`.
-16. No `display_order`, no `lesson_key`, no `audio_url`, no `voice_key`,
+18. No `display_order`, no `lesson_key`, no `audio_url`, no `voice_key`,
     no other unlisted field.
 
 ## Output Rules
@@ -635,7 +677,7 @@ where lesson_key = 'a1-dialog-XX';
 `budget_blocks` hoort **1** te zijn, en `word_count` hoort gelijk te zijn
 aan het aantal regels dat de vorige query oplevert.
 
-## Notes for manual filling
+## Notities bij het invullen
 
 - **Het model verdeelt de twee stemmen; jij controleert het evenwicht
   over de lessen heen.** Binnen één run kan het model zelf spreiden, en

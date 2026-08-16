@@ -120,8 +120,8 @@ The Paiboon form given here is the only correct form for that word.
 **One narrow exception.** A note explaining a pattern, phrase or grammar
 point may use the Thai element of *that* concept even though it is not in
 the list above — a note about จะ cannot avoid writing จะ. The exception
-covers only the element belonging to a concept in "Concepts To Explain";
-it unlocks nothing else.
+covers only the element belonging to a concept in "Concepts You May
+Claim"; it unlocks nothing else.
 
 Its transliteration is not in the list either. Take it from the dialogue
 transliteration below — that is the only verified source you have for it.
@@ -418,7 +418,7 @@ row.
 | --- | --- |
 | `display_order` | The array order **is** the screen order. The generator refuses the field, precisely so nobody assumes it does something. |
 | `audio_url` | Output of a later step (Stap 8), generated from the frozen text. |
-| `voice_key` | Empty means "use the fixed default female voice", not "unknown". A value here invites variation where there is nothing to choose. |
+| `voice_key` | Output of the same later step. The audio script derives the voice from the sentence itself and then records which one read it; nothing reads this field to pick a voice. A value here would be a report about a recording that does not exist yet. |
 | `heading` on a text block | `heading` exists only for `example_group`. |
 | anything else | Unknown fields are a hard error. |
 
@@ -621,12 +621,17 @@ Verify all of these before you produce output:
 14. No `example_group` contains a copy of a dialogue sentence, and every
     opening paragraph quotes a real Thai fragment with the dialogue's own
     translation.
-15. Every note has at least one entry in `concepts`, every `key` was
+15. Every English translation reads as natural English, and any sentence
+    that reuses a construction from the dialogue is translated the same
+    way the dialogue translates it. Two different translations of the
+    same construction on one lesson page is an error, not stylistic
+    variation.
+16. Every note has at least one entry in `concepts`, every `key` was
     copied literally from "Concepts You May Claim", and every concept
     listed there appears in at least one note.
-16. No `display_order`, no `audio_url`, no `voice_key`, no `heading` on
+17. No `display_order`, no `audio_url`, no `voice_key`, no `heading` on
     a text block, no other unlisted field.
-17. Every `note_key`, `block_key` and `example_key` is present and
+18. Every `note_key`, `block_key` and `example_key` is present and
     matches `^[a-z0-9]+(-[a-z0-9]+)*$`.
 
 ## Output Rules
@@ -688,7 +693,7 @@ from public.language_note_brief_view v,
 where v.lesson_key = 'a1-dialog-XX';
 ```
 
-## Notes for manual filling
+## Notities bij het invullen
 
 - **De namenlijst onder "Given names" is vast; daar vul je niets in.**
   Dezelfde zes namen staan letterlijk in `09`. Wil je er een toevoegen,

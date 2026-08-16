@@ -1,21 +1,45 @@
 # Curriculum Sequencer Prompt Template
 
 Gebruik dit template MET de resultaten van
-`00_build_curriculum_sequencer_context.sql` (secties 1 t/m 5).
+`00_build_curriculum_sequencer_context.sql`. Dat script levert **acht**
+resultatensets: SECTIE 1, 2, 3, 3b, 3c, 3d, 4 en 5. Sectie 3 is in vier
+delen gesplitst (vocabulaire, grammatica, phrases, patterns), dus "1 t/m
+5" zijn er acht om te plakken, geen vijf.
+
 Dit is een apart, voorafgaand gesprek — niet de dialoogprompt zelf.
 Het doel is een onderbouwd voorstel voor de VOLGENDE les, dat je
 bijstuurt vóór je iets seedt.
 
 ## Instructions
 
-- Open dit template en de zes SQL-sectieresultaten naast elkaar.
+- Open dit template en de acht SQL-sectieresultaten naast elkaar.
 - Vervang elke placeholder met het resultaat van de bijhorende sectie.
-- Vul "Lesson Phase Guidance" zelf in: zoek op basis van
-  {{next_sequence_number}} de bijhorende rij op in "Hoeveel nieuwe
-  woorden en regels per lesfase" (workflow-gids) en vul het aantal
-  nieuwe woorden en de regelrichtlijn direct in als tekst — dit is een
-  vaste, kleine tabel die zelden verandert, dus die hoef je niet
-  telkens volledig te plakken.
+- Vul onder "Lesson Phase Guidance" alleen de regelrichtlijn in: zoek
+  `{{next_sequence_number}}` op in de tabel onder "Hoeveel nieuwe
+  woorden en regels per les" in `docs/thai_a1_dialog_workflow_guide.md`
+  en neem de bijhorende `estimated_line_count` over (bv. `6-8 lines`).
+  Dat is een vaste, kleine tabel die zelden verandert, dus die hoef je
+  niet telkens volledig te plakken.
+
+  **Het aantal nieuwe woorden hoef je niet meer op te zoeken.** Dat
+  staat al als vaste tekst in de prompt: 5 à 8, voor elke les van het
+  A1-traject. De staffel per lesfase (4–5 woorden voor les 1–10,
+  oplopend naar 8–10) is op 2026-08-13 losgelaten omdat de ondergrens
+  in de praktijk al niet klopte en het verschil tussen les 10 en les 11
+  geen didactische breuklijn is. Alleen `estimated_line_count` is nog
+  fasegebonden — een beginnersdialoog hoort werkelijk korter te zijn.
+
+- Laat de regelrichtlijn nooit leeg staan. Een lege bullet ziet er niet
+  uit als een openstaand veld en is daardoor voor geen enkele controle
+  vindbaar; zie de invulinstructies van
+  `07_language_note_planner_prompt_template.md` voor wat dat bij
+  `a1-dialog-01` opleverde.
+
+- De lijst onder "Toegestane waarden" verderop is de enige plaats in het
+  project waar die waarden staan; de dialoogworkflowgids verwijst
+  hiernaartoe. Het zijn check constraints, dus ze veranderen bij een
+  migratie — werk ze hier bij zodra dat gebeurt. Huidige stand
+  gecontroleerd op 2026-08-16 tegen `supabase/migrations/`.
 
 ## Role
 
@@ -85,7 +109,7 @@ wordt.
 
 ## Lesson Phase Guidance (sequence_number {{next_sequence_number}})
 
-- Aantal nieuwe woorden:
+- Aantal nieuwe woorden: 5 à 8 — hetzelfde in elke lesfase
 - Richtlijn estimated_line_count:
 
 **Let op bij het inschatten van de haalbaarheid:** `estimated_line_count`
@@ -126,6 +150,7 @@ Elke paiboon-romanisatie die je voorstelt (vooral bij **NEW**-vocabulaire) moet 
 - Aangeblazen medeklinkers: ข, ค = k · ท, ถ = t · พ, ผ, ภ = p — nooit "kh", "th" of "ph"
 - ง = ng, จ = j, ช = ch
 - Syllabefinale ย = "i" (niet "y"); syllabefinale ว = "o" of "u" afhankelijk van het klinkerpatroon (niet "w")
+- Toontekens exact zoals de bron ze vastlegt — niets toevoegen, niets weglaten. Middentoon wordt in Paiboon zonder teken geschreven, dus "een teken op elke lettergreep" is niet de regel; trouw overschrijven is dat wel. Een transliteratie waaruit de tekens zijn weggevallen is fout, niet onaf — en een teken erbij verzinnen om een lettergreep compleet te laten lijken is even fout.
 - Bij woorden met het อัว/อวย-klinkerpatroon (bv. สวย, ครัว, ช่วย, ป่วย) is enkele vs. dubbele "u" niet uit het schrift af te leiden en verschilt per woord. Sluit aan bij de spelling die dat exacte woord al heeft onder "Already Introduced" of de "Unused Candidate Pool" hierboven. Komt het woord daar niet in voor, markeer de romanisatie dan expliciet als onzeker onder "Open Questions" in plaats van te gokken.
 
 ## Toegestane waarden (database-constraints)
@@ -135,8 +160,8 @@ Gebruik voor elk gelabeld veld hieronder uitsluitend een van deze waarden — ee
 - `register`: neutral, formal, informal, polite, colloquial
 - `part_of_speech` (vocabulary): noun, verb, adjective, adverb, pronoun, preposition, conjunction, particle, classifier, question_word, expression, numeral, number, other
 - `phrase_type`: sentence_frame, collocation, formulaic_expression, functional_pattern, discourse_pattern, question_answer_exchange, other
-- `pattern_type`: sentence_frame, collocation, formulaic_expression, functional_pattern, discourse_pattern, other
-- `concept_type` (grammar): pattern, particle, word_order, question_form, negation, classifier_usage, politeness, other
+- `pattern_type`: sentence_frame, negation_frame, ability_frame, request_frame, preference_frame, permission_frame, question_frame, location_frame, time_frame, quantity_frame, classifier_frame, result_frame, comparison_frame, politeness_frame, response_frame
+- `concept_type` (grammar): sentence_pattern, modifier_pattern, question_pattern, pronoun_system, negation, verb_pattern, location_pattern, tense_aspect, functional_expression, politeness, particle, classifier_pattern, quantity, comparison, time_expression
 - `fixedness_level` (phrases/patterns): fixed, semi_fixed, productive
 - `is_productive` (phrases/patterns): true of false
 
@@ -221,7 +246,11 @@ Gebruik exact deze structuur. Let op: elk **NEW**-item krijgt in elke categorie 
   Grammar en Patterns exact dezelfde subvelden bevat als het
   voorbeeld hierboven — niet enkel bij Vocabulary.
 - Lesson title is altijd exact "Dialog" + het voorgestelde sequence_number — verzin geen alternatieve titel. De subtitel is het enige element dat je zelf voorstelt als beschrijvende scènetitel.
-- Stel niet meer nieuwe items voor dan de lesfase-richtlijn toelaat.
+- Stel niet meer nieuwe items voor dan de richtlijn onder "Lesson Phase
+  Guidance" toelaat. Het woordaantal is een richtlijn en geen harde
+  grens: een scène die er zeven nodig heeft is geen probleem, en een
+  scène die met vier af kan evenmin. Het getal bestaat om te voorkomen
+  dat een lesset ongemerkt uitdijt.
 - Herhaal geen item dat al onder "Already Introduced" staat als
   doelconcept.
 - Wees beknopt in de redenen (één regel per item volstaat).

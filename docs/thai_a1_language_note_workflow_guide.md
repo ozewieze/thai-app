@@ -90,7 +90,11 @@ node --env-file=.env.local scripts/fill-note-prompt.mjs --lesson a1-dialog-XX --
 
 Het script faalt luid zodra er een placeholder blijft staan. Dat is waarom het bestaat: bij `a1-dialog-01` gingen de twee guideline-waarden als lege bullets de deur uit en bleven `{{lesson_key}}` en `{{sequence_number}}` op twee plaatsen staan, waarna het model drie notes van zes blokken plande terwijl er twee van vijf golden. Een leeg veld dat er niet uitziet als een veld is voor geen enkele controle vindbaar.
 
-Voor de writer-stage leest het script het goedgekeurde plan uit `supabase/generation/language-notes/<les>_plan.md` — alleen het gedeelte tot "Redactionele beslissingen", want die motivering is Nederlands en voor jou.
+Voor de writer-stage leest het script het goedgekeurde plan uit `supabase/generation/language-notes/<les>_plan.md`, en wel het stuk van `### Note 1` tot aan `## Redactionele beslissingen`.
+
+**Dat laatste kopje voeg jij toe bij het goedkeuren; de planner produceert het niet.** `07` schrijft vier kopjes voor — `## Note plan`, `### Note N`, `## Coverage check`, `## Open questions` — en de vijfde is jouw slotsectie. Alles wat je eronder zet is Nederlands en voor jou, en bereikt de schrijver niet. Dat is de bedoeling, maar het betekent ook dat een plan zónder dat kopje in zijn geheel wordt doorgegeven, zonder waarschuwing.
+
+Let daarbij op de volgorde: `## Open questions` staat erbóven en gaat dus wél mee. Een goedgekeurd plan hoort er geen meer te hebben — een open vraag is iets wat jij beslecht vóór je goedkeurt, waarna het antwoord in het plan zelf verwerkt wordt. De vier bestaande plannen doen dit al zo: ze dragen alle vier een `## Redactionele beslissingen` en geen enkele een `## Open questions`. Deze afspraak stond tot 2026-08-16 nergens opgeschreven en werkte alleen omdat ze toevallig consequent gevolgd werd.
 
 **De skill `thai-lesson-content-review`** draagt de reviewchecklist voor Stap 1–5: wat er in de praktijk misging bij eerdere lessen, plus de mechanische controles op woordbudget, Paiboon, genderbundels, sleutels en dekking. Roep hem aan wanneer je een plan of een gegenereerde JSON laat nakijken.
 
@@ -217,6 +221,8 @@ Richtlijnen per bloktype, met de reden erbij:
 Het skelet komt uit dezelfde plannerprompt als Stap 1 (`07_language_note_planner_prompt_template.md`), zodat conceptverdeling en structuur in één voorstel te beoordelen zijn — het skelet is juist wat de conceptverdeling toetsbaar maakt.
 
 **Goedkeuringsmoment:** het skelet (bloktypes + volgorde + welke voorbeelden er ongeveer komen) wordt goedgekeurd vóór de volledige tekst wordt geschreven. Waarom: een structuurfout herstellen kost na het uitschrijven vijf keer zoveel werk.
+
+**Toets bij dat goedkeuren: verdient elk blok zijn plaats?** Een formule bij iets zonder vaste vorm, of een tip zonder echte valkuil, is een blok dat er staat om het skelet vol te maken. Dit is het laatste moment waarop die vraag nog iets kan veranderen: de schrijverprompt bouwt exact de blokken uit het goedgekeurde plan en mag er niets aan toevoegen of uit weglaten. Wat je hier laat staan, staat straks in de note.
 
 ### Stap 4 — Schrijf de voorbeeldgroepen
 
@@ -471,7 +477,8 @@ Controleer vóór de audio-stap minstens:
 - Heeft elke note minstens één conceptkoppeling? De generator laat een lege `concepts`-array door.
 - Zijn de vertalingen natuurlijk Engels én consistent met de dialoogvertalingen?
 - Is er geen subheading als eerste of laatste blok, en geen lege voorbeeldgroep?
-- Verdient elk blok zijn plaats? Een formule bij iets zonder vaste vorm, of een tip zonder echte valkuil, is een blok dat er staat om het skelet vol te maken.
+
+**Wat hier bewust níét meer staat: "verdient elk blok zijn plaats?"** Dat is een controle op het *skelet*, en het skelet is in Stap 3 goedgekeurd. De schrijverprompt mag er niet van afwijken — `08` zegt letterlijk *"do not add a block that is not in the plan"* — dus een formule bij iets zonder vaste vorm is hier niet meer te repareren zonder terug te gaan naar het plan. De vraag is verplaatst naar het goedkeuringsmoment van Stap 3, waar hij nog iets kan veranderen. Tot 2026-08-16 stond hij op beide plaatsen, en dat maakte deze lijst een plek waar je een fout kon vaststellen die je niet meer mocht oplossen.
 
 Waarom QA vóór audio en niet erna: elke tekstwijziging ná audiogeneratie maakt die audio ongeldig en dwingt tot regenereren. Tekst eerst bevriezen is goedkoper.
 
@@ -603,7 +610,18 @@ Deze beslissingen zijn vastgelegd op 2026-07-31 en gelden voor alle notes. Ze zi
 1. **De note-inhoud is Engelstalig.** Alle leerlinggerichte tekst — titels, paragraphs, tips, vertalingen — staat in het Engels. Waarom: consistent met de leerlinginterface en met de dialoogvertalingen; een tweetalige leeromgeving dwingt de leerling voortdurend te schakelen.
 2. **Twee instructiestemmen, en per voorbeeld een toegewezen `speaker_gender`.** Note-voorbeelden worden ingesproken door een vaste vrouwelijke en een vaste mannelijke narrator. Elk voorbeeld krijgt vooraf een `speaker_gender` toegewezen, `female` of `male`, en over de voorbeelden heen wordt naar evenwicht gestreefd.
 
-   Deze beslissing is **letterlijk gelijk aan vastgelegde beslissing 4 van de vocabulairegids**, en dat is de bedoeling: kaart en note verschijnen in dezelfde les, en van sprekersgeslacht wisselen tussen die twee zonder reden is voor de leerling onverklaarbaar. Wijzigt die beslissing daar, dan wijzigt ze hier mee.
+   **Deze beslissing is gekoppeld aan vastgelegde beslissing 4 van de vocabulairegids.** Kaart en note verschijnen in dezelfde les, en van sprekersgeslacht wisselen tussen die twee zonder reden is voor de leerling onverklaarbaar. Wijzigt die beslissing daar, dan wijzigt ze hier mee.
+
+   Wat **woordelijk gelijk hoort te blijven** aan de vocabulairegids, is precies dit:
+
+   - het twee-bundels-principe: er zijn twee instructiestemmen, elk voorbeeld krijgt een toegewezen `speaker_gender`, en over de voorbeelden heen wordt naar evenwicht gestreefd;
+   - de bundeltabel hieronder, inclusief de asymmetrie ค่ะ/คะ;
+   - de regel dat een zin zonder eerste persoon en zonder eindpartikel geen `speaker_gender` draagt en niet meetelt in het evenwicht;
+   - de motivering waarom het `speaker_gender` heet en niet `register`.
+
+   Wat **terecht verschilt**, omdat de ketens verschillen: de lemma-audio (bestaat alleen bij vocabulaire), wie het `speaker_gender` toewijst (hier de planner in Stap 3, daar het model binnen één run), en de voorbeelden en metingen waarmee de regel wordt onderbouwd.
+
+   Dit onderscheid stond hier tot 2026-08-16 niet in — er stond "letterlijk gelijk", terwijl de twee teksten toen al op vijf punten verschilden. Een bewering die bij elke terechte lokale toevoeging onwaar wordt, houdt op als bewaking te werken; deze opsomming zegt waar de bewaking wél op slaat.
 
    **Herzien op 2026-08-09.** Tot dan gold hier één vrouwelijke standaardstem en dus ค่ะ als standaardpartikel, met een mannenstem alleen in een note die het contrast zélf onderwijst. Drie redenen om dat om te draaien, in volgorde van gewicht.
 
