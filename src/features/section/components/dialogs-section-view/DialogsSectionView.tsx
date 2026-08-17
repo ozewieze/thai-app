@@ -58,18 +58,15 @@ export default function DialogsSectionView({
               <div
                 className={isRevision ? styles.revisionBody : styles.lessonBody}
               >
-                <h2
-                  className={
-                    isRevision ? styles.revisionTitle : styles.lessonTitle
-                  }
-                >
-                  <Link
-                    href={`/lessons/${item.slug}`}
-                    className={styles.cardMainLink}
-                  >
-                    {item.title}
-                  </Link>
-                </h2>
+             <h2 className={isRevision ? styles.revisionTitle : styles.lessonTitle}>
+  {isLocked ? (
+    <span className={styles.cardMainLink}>{item.title}</span>
+  ) : (
+    <Link href={`/lessons/${item.slug}`} className={styles.cardMainLink}>
+      {item.title}
+    </Link>
+  )}
+</h2>
 
                 {item.subtitle ? (
                   <p

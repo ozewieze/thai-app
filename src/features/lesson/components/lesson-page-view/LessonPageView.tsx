@@ -124,7 +124,7 @@ export default function LessonPageView({
         {lesson.dialog && lesson.dialog.blocks.length > 0 ? (
           <DialogPlayer blocks={lesson.dialog.blocks} />
         ) : (
-          <p>Geen dialog gevonden voor deze lesson.</p>
+          <p>Coming soon</p>
         )}
 
         {/*
