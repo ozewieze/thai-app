@@ -1,0 +1,39 @@
+{
+  "examples": [
+    {
+      "source_key": "tea",
+      "example_key": "e1",
+      "thai_script": "ฉันดื่มชาค่ะ",
+      "paiboon": "chǎn dʉ̀ʉm chaa kâ",
+      "translation_en": "I drink tea."
+    },
+    {
+      "source_key": "hot",
+      "example_key": "e1",
+      "thai_script": "ผมดื่มชาร้อนครับ",
+      "paiboon": "pǒm dʉ̀ʉm chaa rɔ́ɔn kráp",
+      "translation_en": "I drink hot tea."
+    },
+    {
+      "source_key": "cool",
+      "example_key": "e1",
+      "thai_script": "ฉันดื่มกาแฟเย็นค่ะ",
+      "paiboon": "chǎn dʉ̀ʉm gaa-fɛɛ yen kâ",
+      "translation_en": "I drink iced coffee."
+    },
+    {
+      "source_key": "or",
+      "example_key": "e1",
+      "thai_script": "คุณดื่มชาหรือกาแฟครับ",
+      "paiboon": "kun dʉ̀ʉm chaa rʉ̌ʉ gaa-fɛɛ kráp",
+      "translation_en": "Do you drink tea or coffee?"
+    },
+    {
+      "source_key": "will",
+      "example_key": "e1",
+      "thai_script": "ฉันจะไปค่ะ",
+      "paiboon": "chǎn jà bpai kâ",
+      "translation_en": "I will go."
+    }
+  ]
+}

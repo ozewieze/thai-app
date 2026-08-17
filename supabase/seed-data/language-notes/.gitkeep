@@ -1,0 +1,4 @@
+# Houdt deze map in versiebeheer terwijl ze nog leeg is.
+# Nodig omdat supabase/config.toml hier een glob op heeft staan:
+# "./seed-data/language-notes/*.sql". Git bewaart geen lege mappen, dus
+# na een verse clone zou dat pad anders niet bestaan.

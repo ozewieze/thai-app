@@ -1,0 +1,4 @@
+# Houdt deze map in versiebeheer terwijl ze nog leeg is.
+# Hier komt de goedgekeurde JSON per les (a1_dialog_XX_notes.json), de invoer
+# van scripts/generate-language-note-seed.mjs. Zie Stap 6 van
+# docs/thai_a1_language_note_workflow_guide.md.

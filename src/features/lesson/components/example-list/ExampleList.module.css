@@ -1,0 +1,48 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.item {
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-16);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-12);
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  min-width: 0;
+}
+
+.thai {
+  font-family: var(--font-thai);
+  font-size: var(--size-18);
+  font-weight: var(--medium);
+  color: var(--color-heading);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.translit {
+  font-style: italic;
+  font-size: var(--size-14);
+  color: var(--color-text-soft);
+  margin: 0;
+}
+
+.english {
+  font-size: var(--size-14);
+  color: var(--color-text-soft);
+  margin: 0;
+}

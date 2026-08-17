@@ -1,0 +1,53 @@
+{
+  "examples": [
+    {
+      "source_key": "where",
+      "example_key": "e1",
+      "thai_script": "คุณไปที่ไหนคะ",
+      "paiboon": "kun bpai tîi-nǎi ká",
+      "translation_en": "Where are you going?"
+    },
+    {
+      "source_key": "go",
+      "example_key": "e1",
+      "thai_script": "ผมไปครับ",
+      "paiboon": "pǒm bpai kráp",
+      "translation_en": "I'm going."
+    },
+    {
+      "source_key": "drink",
+      "example_key": "e1",
+      "thai_script": "คุณดื่มอะไรครับ",
+      "paiboon": "kun dʉ̀ʉm à-rai kráp",
+      "translation_en": "What do you drink?"
+    },
+    {
+      "source_key": "coffee",
+      "example_key": "e1",
+      "thai_script": "ฉันดื่มกาแฟค่ะ",
+      "paiboon": "chǎn dʉ̀ʉm gaa-fɛɛ kâ",
+      "translation_en": "I drink coffee."
+    },
+    {
+      "source_key": "can",
+      "example_key": "e1",
+      "thai_script": "ผมไปได้ครับ",
+      "paiboon": "pǒm bpai dâai kráp",
+      "translation_en": "I can go."
+    },
+    {
+      "source_key": "together",
+      "example_key": "e1",
+      "thai_script": "ดื่มกาแฟด้วยกันค่ะ",
+      "paiboon": "dʉ̀ʉm gaa-fɛɛ dûai-gan kâ",
+      "translation_en": "We drink coffee together."
+    },
+    {
+      "source_key": "question_particle_mai",
+      "example_key": "e1",
+      "thai_script": "คุณชื่อฝนไหมคะ",
+      "paiboon": "kun chʉ̂ʉ fǒn mǎi ká",
+      "translation_en": "Is your name Fon?"
+    }
+  ]
+}

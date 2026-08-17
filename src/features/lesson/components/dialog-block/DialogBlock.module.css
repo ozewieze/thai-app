@@ -1,0 +1,87 @@
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-32);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  margin-bottom: var(--spacing-24);
+  color: var(--color-text-muted);
+  font-size: var(--size-14);
+  font-weight: var(--medium);
+}
+
+/* De play/pause knop naast "Block N" in de header */
+.audioBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border-subtle);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.audioBtn:hover:not(:disabled) {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+  border-color: var(--color-border-default);
+}
+
+/* Actieve staat: audio speelt af */
+.audioBtnActive {
+  background: var(--color-brand);
+  color: #fff;
+  border-color: var(--color-brand);
+}
+
+.audioBtnActive:hover:not(:disabled) {
+  background: var(--color-brand-hover);
+  border-color: var(--color-brand-hover);
+  color: #fff;
+}
+
+/* Disabled staat: geen audio beschikbaar */
+.audioBtnDisabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.thaiText {
+  font-family: var(--font-thai);
+  font-size: var(--size-24);
+  font-weight: var(--medium-bold);
+  color: var(--color-heading);
+  line-height: 1.4;
+  margin-bottom: var(--spacing-16);
+}
+
+@media (min-width: 40rem) {
+  .thaiText {
+    font-size: var(--size-30);
+  }
+}
+
+.transliteration {
+  font-style: italic;
+  font-size: var(--size-16);
+  color: var(--color-text-soft);
+  margin-bottom: var(--spacing-8);
+}
+
+.translation {
+  font-size: var(--size-16);
+  color: var(--color-text-soft);
+}

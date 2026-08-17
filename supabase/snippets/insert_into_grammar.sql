@@ -1,0 +1,1 @@
+delete from public.lesson_vocabulary where vocabulary_id = 187;

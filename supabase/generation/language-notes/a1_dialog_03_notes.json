@@ -1,0 +1,108 @@
+{
+  "lesson_key": "a1-dialog-03",
+  "notes": [
+    {
+      "note_key": "a1-dialog-03-note-1",
+      "title": "Talking about what you’ll do with จะ",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Narin and Mali both ask จะดื่มอะไร — \"What will you drink?\". จะ comes before a verb and shows what someone intends or is going to do. Here, จะดื่ม asks about what someone plans to drink."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "จะ + [verb] = future intention"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "จะไปด้วยกันครับ",
+              "paiboon": "jà bpai dûai-gan kráp",
+              "translation_en": "We'll go together."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ฉันจะดื่มกาแฟค่ะ",
+              "paiboon": "chǎn jà dʉ̀ʉm gaa-fɛɛ kâ",
+              "translation_en": "I will drink coffee."
+            },
+            {
+              "example_key": "e3",
+              "thai_script": "คุณจะไปที่ไหนคะ",
+              "paiboon": "kun jà bpai tîi-nǎi ká",
+              "translation_en": "Where will you go?"
+            }
+          ]
+        }
+      ],
+      "concepts": [
+        {
+          "type": "pattern",
+          "key": "ja_verb"
+        }
+      ]
+    },
+    {
+      "note_key": "a1-dialog-03-note-2",
+      "title": "Describing things: the noun comes first",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Narin asks about กาแฟร้อน and กาแฟเย็น — hot coffee and iced coffee. ร้อน means \"hot\", while เย็น can describe a drink as cold or iced. Notice that the describing word comes after the drink in Thai."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "[noun] + [adjective] = descriptive phrase"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "กาแฟร้อน",
+              "paiboon": "gaa-fɛɛ rɔ́ɔn",
+              "translation_en": "hot coffee"
+            },
+            {
+              "example_key": "e4",
+              "thai_script": "ชาเย็น",
+              "paiboon": "chaa yen",
+              "translation_en": "iced tea"
+            }
+          ]
+        },
+        {
+          "block_key": "b4",
+          "block_type": "usage_tip",
+          "content": "English usually puts the description before the noun, as in \"hot coffee\". In this Thai pattern, the order is reversed: say กาแฟร้อน, with the description after the noun."
+        }
+      ],
+      "concepts": [
+        {
+          "type": "vocabulary",
+          "key": "hot"
+        },
+        {
+          "type": "vocabulary",
+          "key": "cool"
+        },
+        {
+          "type": "grammar",
+          "key": "adjective_after_noun"
+        }
+      ]
+    }
+  ]
+}

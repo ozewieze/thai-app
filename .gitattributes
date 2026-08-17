@@ -1,0 +1,21 @@
+# Regeleindes normaliseren.
+# Git slaat alle tekstbestanden op met LF en checkt ze ook als LF uit.
+# Zo levert een editor die CRLF schrijft geen ruis meer op in de diff.
+* text=auto eol=lf
+
+# Binaire bestanden nooit als tekst behandelen.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.svg text eol=lf
+*.mp3 binary
+*.wav binary
+*.m4a binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary

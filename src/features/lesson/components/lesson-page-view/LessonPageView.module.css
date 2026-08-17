@@ -1,0 +1,212 @@
+.page {
+  padding-bottom: var(--spacing-96);
+}
+
+/* ---- Instructiecontent: study-area + leesvoorkeur-CSS ----
+   De TransliterationToggle (client) flipt data-translit-visible op deze
+   div; het verbergen gebeurt puur via CSS. Selectie op "false" zodat de
+   default (geen JS / vóór hydration) "zichtbaar" is. De [data-study-layer]-
+   selector is globaal; de .studyArea-scope beperkt het effect tot deze
+   subtree. Alleen transliteratie is een keuze; Thai en Engels blijven
+   altijd staan. */
+.studyArea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+}
+
+@media (min-width: 40rem) {
+  .studyArea {
+    gap: var(--spacing-64);
+  }
+}
+
+.studyArea[data-translit-visible="false"] [data-study-layer="transliteration"] {
+  display: none;
+}
+
+.content {
+  max-width: 52rem;
+  margin-inline: auto;
+  padding: var(--spacing-24) var(--spacing-24) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+}
+
+@media (min-width: 40rem) {
+  .content {
+    gap: var(--spacing-48);
+    padding-top: var(--spacing-32);
+  }
+}
+
+/* ---- Sub-header (breadcrumb) ---- */
+
+.subHeader {
+  display: flex;
+  align-items: center;
+  padding-bottom: var(--spacing-16);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  font-size: var(--size-14);
+  color: var(--color-text-soft);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--color-heading);
+}
+
+.registerLabel {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: var(--spacing-4) var(--spacing-12);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border-standout);
+  background: var(--color-brand-soft);
+  color: var(--color-brand);
+  font-size: var(--size-12);
+  font-weight: var(--medium-bold);
+  letter-spacing: 0.02em;
+}
+
+/* ---- Lesson header ---- */
+
+.lessonHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/* Nav + titel als één visuele eenheid */
+.lessonTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.lessonNav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.lessonNavBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-surface);
+  color: var(--color-text-soft);
+  text-decoration: none;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.lessonNavBtn:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-heading);
+}
+
+.lessonNavBtnDisabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+.lessonNavLabel {
+  font-size: var(--size-12);
+  font-weight: var(--medium);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lessonTitle {
+  font-size: var(--size-30);
+  font-weight: var(--bold);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-heading);
+  margin: 0;
+}
+
+@media (min-width: 40rem) {
+  .lessonTitle {
+    font-size: var(--size-36);
+  }
+}
+
+.lessonSubtitle {
+  font-size: var(--size-16);
+  color: var(--color-text-soft);
+  margin: 0;
+}
+
+.lessonMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-12);
+  padding-top: var(--spacing-4);
+}
+
+.learningFocus {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  font-size: var(--size-14);
+  color: var(--color-text-soft);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.learningFocusLabel {
+  font-size: var(--size-12);
+  font-weight: var(--medium);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---- Image ---- */
+
+.imageCard {
+  /*
+   * Vaste height: 500px zorgde ervoor dat de box op smalle schermen
+   * (waar width al krimpt naar de viewportbreedte) een heel ander
+   * hoogte/breedte-verhouding kreeg dan de afbeeldingen zelf (3:2,
+   * bv. 1536x1024 -- zie illustration-staging/). object-fit: cover in
+   * DialogFullSection.module.css vult de box altijd volledig, dus bij
+   * een afwijkende boxverhouding werd een steeds groter deel van de
+   * afbeelding weggesneden naarmate het scherm smaller werd.
+   * aspect-ratio: 3/2 i.p.v. een vaste height laat de box zelf meegroeien/
+   * -krimpen met de breedte, in dezelfde verhouding als de bron-
+   * afbeeldingen. Daardoor blijft cover nagenoeg een 1-op-1 fit (minimale
+   * crop) op elke schermgrootte, in plaats van contain te moeten
+   * gebruiken (wat lege balken zou geven) of alsnog te croppen.
+   */
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-faint);
+  font-size: var(--size-14);
+}

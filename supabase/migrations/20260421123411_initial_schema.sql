@@ -86,10 +86,13 @@ create table public.vocabulary_master (
         'adjective',
         'adverb',
         'pronoun',
+        'preposition',
+        'conjunction',
         'particle',
         'classifier',
         'question_word',
         'expression',
+        'numeral',
         'number',
         'other'
       )

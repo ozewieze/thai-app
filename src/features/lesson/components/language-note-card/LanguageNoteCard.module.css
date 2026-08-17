@@ -1,0 +1,41 @@
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-32) ;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+  /* Ruimte boven bij anchor-navigatie (ConceptNavigation): sticky header
+     (--spacing-64) + sticky transliteratie-toggle (~37px) samen ~102px
+     overlappen anders de titel. Iets ruimer genomen voor lucht erboven. */
+  scroll-margin-top: calc(var(--spacing-64) + var(--spacing-48));
+}
+
+.title {
+  font-size: var(--size-20);
+  font-weight: var(--bold);
+  color: var(--color-heading);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+@media (min-width: 40rem) {
+  .title {
+    font-size: var(--size-24);
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+}
+
+.divider {
+  height: 0;
+  border: 0;
+  border-top: 1px solid var(--color-border-subtle);
+  margin: var(--spacing-8) 0;
+}

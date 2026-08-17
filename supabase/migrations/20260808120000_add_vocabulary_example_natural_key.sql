@@ -1,0 +1,187 @@
+-- ============================================================
+-- Migratie: natuurlijke sleutel op vocabulary_examples
+-- ============================================================
+-- Probleem. De seeds van canonieke voorbeelden moeten idempotent zijn, net
+-- als die van de Language Notes sinds 2026-08-03 en die van de leslinks
+-- sinds 2026-08-02: het bestand opnieuw draaien is de manier om een
+-- correctie door te voeren. Dat vraagt `insert ... on conflict ... do
+-- update`, en dus een sleutel om op te botsen. Die was er niet.
+--
+-- Dit is letterlijk hetzelfde probleem dat
+-- 20260803120000_add_language_note_natural_keys.sql voor de Language
+-- Note-tabellen oploste. `vocabulary_examples` is van 22 juli, vóór die
+-- les geleerd werd.
+--
+-- Wat er wel was, en waarom het niet volstaat:
+--
+--   - De primary key `id`. Een identity-waarde die een seedbestand niet
+--     kent en niet mag kennen: na een `db reset` kan hetzelfde voorbeeld
+--     een ander nummer krijgen. 
+--
+--   - `vocabulary_examples_vocab_order_unique (vocabulary_id,
+--     display_order)`. Twee bezwaren, elk op zich voldoende.
+--
+--     Technisch: deze constraint is `deferrable initially immediate`
+--     aangemaakt, en Postgres weigert een deferrable unique constraint als
+--     `on conflict`-arbiter. `pg_index.indimmediate` staat op false voor
+--     deze index; die vlag wordt gezet zodra een constraint DEFERRABLE is,
+--     dus INITIALLY IMMEDIATE helpt niet -- dat verplaatst alleen het
+--     startpunt binnen de transactie.
+--
+--     Gemeten op 2026-08-08 op een replica van deze twee tabellen (zelfde
+--     DDL, PostgreSQL 16.2; het project draait 17, maar dit gedrag is niet
+--     versiegebonden). De melding luidt letterlijk:
+--
+--       ERROR: ON CONFLICT does not support deferrable unique
+--              constraints/exclusion constraints as arbiters
+--
+--     zowel via de kolomlijst als via `on conflict on constraint
+--     vocabulary_examples_vocab_order_unique`.
+--
+--     Valkuil bij het narekenen: dit is een UITVOERINGSfout, geen
+--     planfout. Dezelfde statement met `explain (costs off)` ervoor slaagt
+--     gewoon en drukt in dezelfde meting af:
+--
+--       Insert on vocabulary_examples
+--         Conflict Resolution: UPDATE
+--         Conflict Arbiter Indexes: vocabulary_examples_vocab_order_unique
+--
+--     Wie deze migratie met EXPLAIN probeert te controleren, concludeert
+--     dus precies het tegenovergestelde van de waarheid. Het QA-script
+--     voert daarom echt uit.
+--
+--     Tweede valkuil, zichtbaar na deze migratie: een probe-insert die
+--     `example_key` weglaat, faalt op NOT NULL vóórdat de arbiter-controle
+--     aan bod komt. Dat leest als bewijs terwijl het iets anders meet.
+--
+--     Inhoudelijk, en dat weegt zwaarder: `display_order` is precies het
+--     veld dat je wilt kunnen wijzigen. Een upsert die daarop botst, zou
+--     bij het verplaatsen van een voorbeeld geen bestaande rij bijwerken
+--     maar een nieuwe invoegen, en de oude als wees achterlaten --
+--     inclusief zijn audio. De seed zou dan stil verkeerde data
+--     produceren in plaats van te falen.
+--
+-- Oplossing. Een aparte sleutel per rij, door de auteur bepaald, die NIET
+-- meebeweegt met de volgorde. Identiteit valt daarmee uit elkaar met
+-- volgorde: de sleutel zegt wélke rij dit is, `display_order` zegt waar
+-- hij staat.
+--
+-- Overwogen en verworpen:
+--
+--   - `unique (vocabulary_id)`, zonder nieuwe kolom. Een perfecte arbiter
+--     die nul kolommen kost, want vastgelegde beslissing 2 van
+--     docs/thai_a1_vocabulary_workflow_guide.md zegt: precies één canoniek
+--     voorbeeld per doelwoord. Verworpen omdat diezelfde gids er
+--     uitdrukkelijk bij zegt dat dit géén databaseconstraint is maar een
+--     publicatieregel: onvolledigheid tijdens het schrijven is normaal, en
+--     het enige moment waarop volledigheid afdwingbaar moet zijn is
+--     publicatie. Een redactionele beslissing die per definitie
+--     herzienbaar is, hoort niet in het schema gebetonneerd te worden --
+--     herzien zou dan een migratie kosten in plaats van een regel code.
+--     De bovengrens wordt daarom door de generator bewaakt, niet door de
+--     database.
+--
+--   - De bestaande constraint niet-deferrable maken. Dat maakt hem
+--     bruikbaar als arbiter, maar offert het herordenen binnen één
+--     transactie op (waarvoor hij bewust deferrable is aangemaakt) en lost
+--     het inhoudelijke bezwaar hierboven niet op.
+--
+--   - Een globaal unieke sleutel afgeleid van `source_key`
+--     ('hello-e1'). Zie de motivering bij sectie 1.
+--
+-- Reikwijdte. Alleen additief: één kolom, één unique constraint, één
+-- vormcheck. Geen bestaande constraint, index, trigger of policy wordt
+-- aangeraakt. De frontend selecteert een expliciete kolomlijst
+-- (src/features/lesson/server/queries.ts, `vocabulary_examples (...)`),
+-- dus er breekt niets.
+--
+-- Over NOT NULL zonder default: de tabel is leeg. Staat er tóch een rij,
+-- dan faalt deze migratie met "column ... contains null values" en dat is
+-- de bedoeling -- dan hoort er eerst een backfill te komen die weet welke
+-- sleutel bij welke bestaande rij past. Die vraag mag een migratie niet
+-- zelf verzinnen.
+-- ============================================================
+
+begin;
+
+-- =========================================================
+-- 1. vocabulary_examples.example_key
+--
+-- Uniek binnen het WOORD, niet globaal. De identiteit van een voorbeeld
+-- is daarmee het paar (source_key, example_key).
+--
+-- Waarom lokaal en niet globaal, in volgorde van gewicht:
+--
+--   - De les komt er niet in voor, en kán er niet in voorkomen.
+--     Vastgelegde beslissing 8 van de vocabulairegids bindt deze migratie:
+--     een voorbeeld wordt geïdentificeerd via de sleutel van het WOORD,
+--     nooit via een les. Een sleutel als 'a1-dialog-03-...' zou de
+--     lesneutraliteit doorbreken die de hele gids draagt -- een canoniek
+--     voorbeeld verschijnt ook in les 24. Een sleutel die alleen binnen
+--     het woord bestaat, maakt die fout onmogelijk in plaats van
+--     afgeraden.
+--
+--   - De ouder draagt de context al via de foreign key. 'hello-e1' zou de
+--     source_key een tweede keer opschrijven en bij een hernoeming op twee
+--     plaatsen moeten veranderen. Dat is hetzelfde argument waarmee
+--     `block_key` en `example_key` bij de Language Notes lokaal gehouden
+--     zijn ('b1' binnen de note, niet 'a1-dialog-03-note-1-b1').
+--
+--   - De schrijfwijzen zouden botsen. `vocabulary_master.source_key`
+--     gebruikt underscores ('thank_you', 'i_male'), terwijl de
+--     sleutelvormcheck in dit project hyphens voorschrijft. Een afgeleide
+--     sleutel zou óf die check moeten verruimen, óf twee schrijfwijzen van
+--     dezelfde sleutel introduceren ('thank_you' naast 'thank-you') -- een
+--     stille mismatchbron.
+--
+-- Vandaag is de waarde altijd 'e1', gevolg van beslissing 2. Dat is geen
+-- bezwaar maar het punt: de sleutel doet zijn werk juist door niet te
+-- veranderen. "Een voorbeeld vervangen mag altijd" wordt daarmee een
+-- update van de bestaande rij, met behoud van id, en dus zonder wees.
+-- =========================================================
+
+alter table public.vocabulary_examples
+  add column example_key text not null;
+
+alter table public.vocabulary_examples
+  add constraint vocabulary_examples_vocab_key_unique
+  unique (vocabulary_id, example_key);
+
+-- Vormcheck, geen naamgevingscheck. Kleine letters, cijfers en
+-- koppeltekens: dat vangt spaties, hoofdletters en onzichtbare witruimte
+-- af zonder de redactionele conventie in het schema te betonneren. Welke
+-- naam een voorbeeld krijgt is een beslissing van de gids, en die hoort
+-- daar herzienbaar te blijven. Identiek aan de drie vormchecks uit
+-- 20260803120000.
+alter table public.vocabulary_examples
+  add constraint vocabulary_examples_example_key_format
+  check (example_key ~ '^[a-z0-9]+(-[a-z0-9]+)*$');
+
+-- =========================================================
+-- 2. Geen wijziging aan vocabulary_examples_vocab_order_unique
+--
+-- Die constraint blijft staan en blijft deferrable. Ze doet nog steeds
+-- twee dingen: ze bewaakt dat er geen twee voorbeelden op dezelfde plek
+-- staan, en ze dekt de FK-kolom vocabulary_id als index (de kolom staat
+-- vooraan). De twee mechanismen naast elkaar laten bestaan kost één kolom
+-- en houdt beide eigenschappen: herordenen binnen één transactie via
+--   set constraints public.vocabulary_examples_vocab_order_unique deferred;
+-- én een bruikbare arbiter.
+--
+-- De nieuwe constraint is bewust NIET deferrable. Hij mag ook niet
+-- deferrable zijn -- dan zou hij precies zo onbruikbaar zijn als de oude.
+-- En hij hoeft het niet te zijn: een sleutel beweegt niet, dus er bestaat
+-- geen tussenstand waarin twee rijen tijdelijk dezelfde sleutel dragen.
+-- =========================================================
+
+-- =========================================================
+-- 3. Geen grants
+--
+-- De nieuwe kolom erft de tabelrechten uit 20260722130000: select voor
+-- anon en authenticated, verder niets. Seeden gebeurt als postgres. Zodra
+-- een script deze tabel schrijft (de audiostap voor voorbeeldaudio), hoort
+-- dat een eigen migratie te zijn met een eigen motivering, zoals
+-- 20260716120100_grant_service_role_select_status_link_tables.sql.
+-- =========================================================
+
+commit;

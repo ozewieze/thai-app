@@ -1,0 +1,173 @@
+{
+  "lesson_key": "a1-dialog-02",
+  "notes": [
+    {
+      "note_key": "a1-dialog-02-note-1",
+      "title": "Saying where you are going and what you are going to do",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Narin asks ไปที่ไหนครับ — \"Where are you going?\", and Mali says ไปดื่มกาแฟค่ะ — \"I am going to drink coffee.\". ไป can show where someone is going, or it can come before an action to show what someone is going to do. The second use is the one you will practise below."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "ไป + [verb phrase] = going to do something"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ฉันไปดื่มกาแฟค่ะ",
+              "paiboon": "chǎn bpai dʉ̀ʉm gaa-fɛɛ kâ",
+              "translation_en": "I am going to drink coffee."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ไปดื่มกาแฟด้วยกันครับ",
+              "paiboon": "bpai dʉ̀ʉm gaa-fɛɛ dûai-gan kráp",
+              "translation_en": "Let's go and drink coffee together."
+            }
+          ]
+        }
+      ],
+      "concepts": [
+        {
+          "type": "grammar",
+          "key": "movement_pai"
+        }
+      ]
+    },
+    {
+      "note_key": "a1-dialog-02-note-2",
+      "title": "Asking yes/no questions with ไหม",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Narin asks ดื่มกาแฟด้วยกันไหมครับ — \"Would you like to drink coffee together?\". Thai does not reorder the sentence to make this kind of question. Keep the statement as it is and add ไหม at the end."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "[statement] + ไหม = yes/no question"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "คุณดื่มกาแฟไหมคะ",
+              "paiboon": "kun dʉ̀ʉm gaa-fɛɛ mǎi ká",
+              "translation_en": "Do you drink coffee?"
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "คุณไปไหมครับ",
+              "paiboon": "kun bpai mǎi kráp",
+              "translation_en": "Are you going?"
+            }
+          ]
+        }
+      ],
+      "concepts": [
+        {
+          "type": "pattern",
+          "key": "statement_mai"
+        }
+      ]
+    },
+    {
+      "note_key": "a1-dialog-02-note-3",
+      "title": "Saying something can be done with ได้",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Mali answers ได้ค่ะ — \"Yes, I'd like to.\". Here she is saying that what Narin suggested can be done. In the full construction, ได้ comes after everything you can do; the standalone ได้ is simply a short answer form of the same idea."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "formula",
+          "content": "[verb phrase] + ได้ = ability or possibility"
+        },
+        {
+          "block_key": "b3",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ผมดื่มกาแฟได้ครับ",
+              "paiboon": "pǒm dʉ̀ʉm gaa-fɛɛ dâai kráp",
+              "translation_en": "I can drink coffee."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ฉันไปได้ค่ะ",
+              "paiboon": "chǎn bpai dâai kâ",
+              "translation_en": "I can go."
+            }
+          ]
+        },
+        {
+          "block_key": "b4",
+          "block_type": "usage_tip",
+          "content": "ได้ goes at the very end, after the object: ดื่มกาแฟได้. The object comes between the verb and ได้, not the other way around."
+        }
+      ],
+      "concepts": [
+        {
+          "type": "pattern",
+          "key": "verb_dai"
+        }
+      ]
+    },
+    {
+      "note_key": "a1-dialog-02-note-4",
+      "title": "Thai often leaves out the subject",
+      "blocks": [
+        {
+          "block_key": "b1",
+          "block_type": "paragraph",
+          "content": "In the dialogue, Mali says ไปดื่มกาแฟค่ะ — \"I am going to drink coffee.\". There is no word for \"I\" in the Thai sentence. Thai often leaves the subject out when the context already makes it clear who or what the sentence is about."
+        },
+        {
+          "block_key": "b2",
+          "block_type": "example_group",
+          "heading": null,
+          "content": null,
+          "examples": [
+            {
+              "example_key": "e1",
+              "thai_script": "ชื่อฝนค่ะ",
+              "paiboon": "chʉ̂ʉ fǒn kâ",
+              "translation_en": "My name is Fon."
+            },
+            {
+              "example_key": "e2",
+              "thai_script": "ดื่มกาแฟครับ",
+              "paiboon": "dʉ̀ʉm gaa-fɛɛ kráp",
+              "translation_en": "I am drinking coffee."
+            }
+          ]
+        }
+      ],
+      "concepts": [
+        {
+          "type": "grammar",
+          "key": "subject_omission_when_clear"
+        }
+      ]
+    }
+  ]
+}

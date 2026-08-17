@@ -1,0 +1,44 @@
+/* ---- Leesvoorkeur ----
+   Sticky op alle breedtes: de toggle is een set-and-forget leesvoorkeur
+   voor gevorderde gebruikers (declutter), maar wordt af en toe even aan/uit
+   geklikt bij twijfel over een woord -- ook op mobiel moet dat dan
+   bereikbaar zijn zonder helemaal terug te scrollen. Op mobiel wel
+   compactere padding, want verticale ruimte is daar het kostbaarst.
+   top = hoogte van de globale sticky nav (.site-header, min-height
+   --spacing-64); z-index onder die van de nav (40). */
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  top: var(--spacing-64);
+  z-index: 5;
+  background: var(--color-bg);
+  padding: var(--spacing-4) 0;
+}
+
+@media (min-width: 40rem) {
+  .controls {
+    padding: var(--spacing-8) 0;
+  }
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  cursor: pointer;
+  font-size: var(--size-14);
+  color: var(--color-text-soft);
+  user-select: none;
+}
+
+.toggle:hover {
+  color: var(--color-heading);
+}
+
+.checkbox {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--color-brand);
+  cursor: pointer;
+}

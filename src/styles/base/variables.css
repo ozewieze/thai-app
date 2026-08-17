@@ -1,0 +1,152 @@
+:root {
+  /* FONTS */
+  --font-ui: var(--font-inter);
+  --font-thai: var(--font-noto-thai);
+
+  /* COLORS */
+
+  /* Foundations */
+  --color-header-bg: #ffffff;
+  --color-bg: #faf8f5;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f8f9fb;
+  --color-surface-muted: #f3f5f8;
+  --color-surface-pressed: #eceff4;
+
+  /* Atmospheric wash */
+  --color-wash-blue: #a5c9e3;
+  --color-wash-blue-flat: rgba(165, 201, 227, 0.025);
+  --color-wash-blue-soft: rgba(165, 201, 227, 0.1);
+  --color-wash-blue-fade: rgba(165, 201, 227, 0);
+
+  /* Borders */
+  --color-border-subtle: rgba(36, 50, 72, 0.08);
+  --color-border-default: rgba(36, 50, 72, 0.1);
+  --color-border-strong: rgba(36, 50, 72, 0.14);
+  --color-divider: rgba(36, 50, 72, 0.08);
+  --color-border-standout: rgba(53, 87, 137, 0.12);
+
+  /* Text */
+  --color-heading: #2c476d;
+  --color-text: #243248;
+  --color-text-soft: #556070;
+  --color-text-muted: #69717b;
+  --color-text-faint: #96a0ab;
+  --color-text-inverse: #ffffff;
+
+  /* Brand */
+  --color-brand: #355789;
+  --color-brand-hover: #29456c;
+  --color-brand-active: #203552;
+  --color-brand-soft: #e8f0fb;
+  --color-brand-soft-hover: #dbe8f8;
+
+  /* Interaction semantics */
+  --color-interactive-primary-bg: var(--color-brand);
+  --color-interactive-primary-hover: var(--color-brand-hover);
+  --color-interactive-primary-active: var(--color-brand-active);
+  --color-interactive-primary-text: var(--color-text-inverse);
+
+  --color-interactive-secondary-bg: var(--color-surface);
+  --color-interactive-secondary-hover: var(--color-surface-muted);
+  --color-interactive-secondary-active: var(--color-surface-pressed);
+  --color-interactive-secondary-border: var(--color-border-default);
+  --color-interactive-secondary-border-hover: var(--color-border-strong);
+  --color-interactive-secondary-text: var(--color-text-soft);
+  --color-interactive-secondary-text-hover: var(--color-heading);
+
+  --color-interactive-selected-bg: var(--color-brand-soft);
+  --color-interactive-selected-bg-hover: var(--color-brand-soft-hover);
+  --color-interactive-selected-text: var(--color-brand);
+
+  --color-interactive-ghost-hover: rgba(53, 87, 137, 0.06);
+  --color-interactive-ghost-active: rgba(53, 87, 137, 0.1);
+
+  /* Accent */
+  --color-accent: #a85c4a;
+  --color-accent-soft: #f5e8e4;
+
+  /* Semantic states */
+  --color-completed: #8eb892;
+  --color-completed-soft: #a5c5a5;
+  --color-success: #73926c;
+  --color-success-soft: #e8f1e5;
+  --color-warning: #9c7b4e;
+  --color-warning-soft: #f4ecdf;
+  --color-danger: #a15b69;
+  --color-danger-soft: #f6e6ea;
+
+  /* Levels */
+  --level-a-bg: #edf3fa;
+  --level-a-text: #6f95bd;
+  --level-a-border: #d7e5f2;
+
+  --level-b-bg: #eef4ec;
+  --level-b-text: #819c77;
+  --level-b-border: #dbe8d7;
+
+  --level-c-bg: #f1ece4;
+  --level-c-text: #8e734f;
+  --level-c-border: #e2d7c8;
+
+  /* MyWords */
+  --marker-core: #355789;
+  --marker-practical: #819c77;
+  --marker-personal: #b35f71;
+
+  /* Focus */
+  --color-focus: #203552;
+  --color-focus-ring: rgba(32, 53, 82, 0.18);
+
+  /* Effects */
+  --shadow-sm: 0 2px 8px rgba(36, 50, 72, 0.05);
+  --shadow-md: 0 10px 30px rgba(36, 50, 72, 0.08);
+  --shadow-lg: 0 24px 60px rgba(36, 50, 72, 0.12);
+
+  /* SPACING: 2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 /128 ... */
+  --spacing-2: 0.125rem;
+  --spacing-4: 0.25rem;
+  --spacing-8: 0.5rem;
+  --spacing-12: 0.75rem;
+  --spacing-16: 1rem;
+  --spacing-24: 1.5rem;
+  --spacing-32: 2rem;
+  --spacing-48: 3rem;
+  --spacing-64: 4rem;
+  --spacing-80: 5rem;
+  --spacing-96: 6rem;
+  --spacing-128: 8rem;
+
+  /* fONT-SIZE: 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98  */
+  --size-10: 0.625rem;
+  --size-12: 0.75rem;
+  --size-14: 0.875rem;
+  --size-16: 1rem;
+  --size-18: 1.125rem;
+  --size-20: 1.25rem;
+  --size-24: 1.5rem;
+  --size-30: 1.875rem;
+  --size-36: 2.25rem;
+  --size-44: 2.75rem;
+  --size-52: 3.25rem;
+  --size-62: 3.875rem;
+
+  /* FONT-WEIGHT */
+  --light: 300;
+  --normal: 400;
+  --medium: 500;
+  --medium-bold: 600;
+  --bold: 700;
+  --extra-bold: 800;
+
+  /* RADIUS */
+  --radius-sm: 0.625rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-pill: 999px;
+
+  /* MOTION */
+  --transition-fast: 180ms ease;
+  --transition-smooth: 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}

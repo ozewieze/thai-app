@@ -1,0 +1,18 @@
+{
+  "examples": [
+    {
+      "source_key": "zz_fixture_word_1",
+      "example_key": "e1",
+      "thai_script": "ฉันชอบชาเย็นค่ะ",
+      "paiboon": "chǎn chɔ̂ɔp chaa yen kâ",
+      "translation_en": "I'd like iced tea."
+    },
+    {
+      "source_key": "zz_fixture_word_2",
+      "example_key": "e1",
+      "thai_script": "กาแฟร้อนค่ะ",
+      "paiboon": "gaa-fɛɛ rɔ́ɔn kâ",
+      "translation_en": "It's hot coffee."
+    }
+  ]
+}

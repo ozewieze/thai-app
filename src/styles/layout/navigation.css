@@ -1,0 +1,266 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--color-header-bg);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--spacing-64);
+  gap: var(--spacing-16);
+}
+
+.site-header__brand {
+  color: var(--color-brand);
+  text-decoration: none;
+  font-size: var(--size-24);
+  font-weight: var(--medium-bold);
+  letter-spacing: -0.035em;
+}
+
+.site-header__nav {
+  display: none;
+  @media (min-width: 48rem) {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-32);
+  }
+}
+
+.site-header__link {
+  color: var(--color-text-soft);
+  text-decoration: none;
+  font-weight: var(--medium);
+  font-size: var(--size-16);
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+  &:hover,
+  &:focus-visible {
+    color: var(--color-brand);
+  }
+}
+
+.site-header__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+  border: 1px solid var(--color-interactive-secondary-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-interactive-secondary-bg);
+  color: var(--color-text);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+  &:hover {
+    background: var(--color-interactive-secondary-hover);
+    border-color: var(--color-interactive-secondary-border-hover);
+  }
+  @media (min-width: 48rem) {
+    display: none;
+  }
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--spacing-24);
+}
+
+.mobile-menu__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(36, 50, 72, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.mobile-menu__panel {
+  /* position: relative; */
+  z-index: 1;
+  width: min(100%, 28rem);
+  padding: var(--size-20);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.mobile-menu__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-16);
+}
+
+.mobile-menu__title {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--size-12);
+  font-weight: var(--bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mobile-menu__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.875rem;
+  height: 2.875rem;
+  border: 1px solid var(--color-border-default);
+  box-shadow: 0 1px 2px rgba(36, 50, 72, 0.04);
+  border-radius: var(--radius-pill);
+  background: var(--color-interactive-secondary-bg);
+  color: var(--color-text);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.mobile-menu__close:hover {
+  background: var(--color-interactive-secondary-hover);
+  border-color: var(--color-border-strong);
+}
+
+.mobile-menu__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.mobile-menu__link {
+  display: flex;
+  align-items: center;
+  min-height: 3.5rem;
+  padding: var(--spacing-16);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--size-18);
+  font-weight: var(--medium-bold);
+  text-decoration: none;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.mobile-menu__link:hover,
+.mobile-menu__link:focus-visible,
+.mobile-menu__link--active {
+  background: var(--color-interactive-selected-bg);
+  color: var(--color-interactive-selected-text);
+}
+
+.mobile-menu__footer {
+  display: grid;
+  gap: var(--spacing-12);
+  margin-top: var(--spacing-24);
+  padding-top: var(--spacing-16);
+  border-top: 1px solid var(--color-divider);
+}
+
+.mobile-menu__secondary,
+.mobile-menu__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding-inline: var(--spacing-24);
+  border-radius: var(--radius-pill);
+  font-weight: var(--medium-bold);
+  text-decoration: none;
+}
+
+.mobile-menu__secondary {
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-interactive-secondary-bg);
+  color: var(--color-interactive-secondary-text);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.mobile-menu__secondary:hover {
+  background: var(--color-interactive-secondary-hover);
+  border-color: var(--color-interactive-secondary-border-hover);
+  color: var(--color-interactive-secondary-text-hover);
+}
+
+.mobile-menu__cta {
+  background: var(--color-interactive-primary-bg);
+  color: var(--color-interactive-primary-text);
+  transition: background-color var(--transition-fast);
+}
+
+.mobile-menu__cta:hover {
+  background: var(--color-interactive-primary-hover);
+}
+
+/* Alleen animeren als de gebruiker GEEN voorkeur voor minder beweging heeft ingesteld */
+@media (prefers-reduced-motion: no-preference) {
+  /* De donkere/blur achtergrond achter het menu fade rustig in */
+  .mobile-menu__backdrop {
+    /* Ik gebruik de keyframes 'menu-fade' en de snelheid uit mijn variabelen */
+    animation: menu-fade var(--transition-fast);
+  }
+
+  /* Het menu-paneel zelf verschijnt met een zachtere, iets rijkere animatie */
+  .mobile-menu__panel {
+    /* Ik gebruik de keyframes 'menu-panel-in' en de iets tragere/smoother timing */
+    animation: menu-panel-in var(--transition-smooth);
+  }
+}
+
+/* Als de gebruiker in zijn toestel 'reduce motion' heeft aangezet */
+@media (prefers-reduced-motion: reduce) {
+  /* Zet ik alle niet-essentiële animatie voor dit menu uit */
+  .mobile-menu__backdrop,
+  .mobile-menu__panel {
+    animation: none;
+  }
+}
+
+/* Keyframes voor de achtergrondlaag */
+@keyframes menu-fade {
+  /* Start volledig transparant */
+  from {
+    opacity: 0;
+  }
+
+  /* Eindig volledig zichtbaar */
+  to {
+    opacity: 1;
+  }
+}
+
+/* Keyframes voor het menu-paneel zelf */
+@keyframes menu-panel-in {
+  /* Start:
+     - onzichtbaar
+     - 14px lager dan de eindpositie
+     - een héél klein beetje kleiner */
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+
+  /* Eindig:
+     - volledig zichtbaar
+     - op de juiste plek
+     - op normale grootte */
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

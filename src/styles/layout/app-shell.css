@@ -1,0 +1,12 @@
+.app-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell__main {
+  flex: 1;
+  background:
+    linear-gradient(var(--color-wash-blue-flat), var(--color-wash-blue-flat)),
+    var(--color-bg);
+}

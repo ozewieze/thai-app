@@ -36,6 +36,28 @@ yarn-error.log*
 # vercel
 .vercel
 
+# illustratiesysteem: lokale staging-map vóór upload naar Supabase Storage
+# (scripts/upload-slides.mjs) -- wegwerpbaar, zie docs/illustration-system/05_storage_strategy.md
+/illustration-staging
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+docs/illustration-system/design-reference
+
+# persoonlijk werkdocument, tijdelijk -- niet committen, later verwijderen
+docs/lesson-instructional-content-architectuur.md
+docs/backlog-startprompts.md
+docs/LANGUA~1.MD
+docs/vocab_card_prompts.md
+docs/audio_pipeline_prompt.md
+docs/language_note_budget_extension_prompt.md
+
+# test seed SQL-bestanden, tijdelijk -- niet committen, later verwijderen   
+scripts/dev-seed-instructional-content.sql
+
+# Language Note-fixtures: de JSON is de bron, de SQL wordt gegenereerd vlak
+# voor supabase/qa/verify_language_note_seed_format.sql draait. Committen zou
+# dezelfde inhoud een tweede keer vastleggen.
+supabase/qa/fixtures/*.seed.sql

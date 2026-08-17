@@ -1,0 +1,13 @@
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
