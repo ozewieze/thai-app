@@ -85,12 +85,29 @@ export async function getLessonNav(
 
   const supabase = await createClient();
 
+  // Waarom lesson_type en access_tier hier meefilteren.
+  //
+  // is_published staat op alle twaalf lessen true, ook op de premium-
+  // placeholders en de twee revisielessen. Die hebben geen dialog_blocks,
+  // dus LessonPageView valt daar terug op "Geen dialog gevonden". Zonder
+  // deze twee filters lopen de vorige/volgende-pijltjes dus vanaf Dialog 5
+  // regelrecht een lege pagina in -- dezelfde val die op de sectiekaarten
+  // is dichtgezet met isInert (zie DialogsSectionView).
+  //
+  // De pijltjes bewegen daarmee alleen tussen lessen die echt inhoud
+  // hebben. Op Dialog 5 wordt nextSlug null en toont LessonPageView een
+  // uitgeschakeld pijltje; dat gedrag zat er al in.
+  //
+  // Tijdelijk: zodra revisielessen een eigen pagina-indeling hebben en de
+  // premium-lessen inhoud, mogen deze twee regels weer weg.
   const [prevResult, nextResult] = await Promise.all([
     supabase
       .from("lessons")
       .select("slug")
       .eq("is_published", true)
       .eq("section_key", sectionKey) //de section_key wordt gebruikt om de vorige les te vinden binnen dezelfde sectie
+      .eq("lesson_type", "dialog") //revisies overslaan: geen dialoog, geen eigen pagina-indeling
+      .eq("access_tier", "free") //premium-placeholders overslaan: nog geen inhoud
       .lt("id", lessonId) //lt betekent "less than" en wordt gebruikt om de vorige les te vinden op basis van de ID
       .order("id", { ascending: false })
       .limit(1)
@@ -100,6 +117,8 @@ export async function getLessonNav(
       .select("slug")
       .eq("is_published", true)
       .eq("section_key", sectionKey)
+      .eq("lesson_type", "dialog")
+      .eq("access_tier", "free")
       .gt("id", lessonId)
       .order("id", { ascending: true })
       .limit(1)
