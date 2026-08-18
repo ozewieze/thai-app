@@ -35,6 +35,21 @@ export default function DialogsSectionView({
         const isLocked = isLessonLocked(item, viewer);
         const isRevision = item.lessonType === "revision";
 
+        // Twee verschillende redenen om een kaart niet aanklikbaar te maken,
+        // bewust apart gehouden omdat ze een andere badge krijgen:
+        //
+        //   isLocked   -- premium content, de bezoeker mag er (nog) niet bij
+        //   isRevision -- een revisieles heeft nog geen eigen pagina-indeling.
+        //                 LessonPageView toont het dialoogvenster, en een
+        //                 revisie heeft geen dialoog maar oefeningen. Tot die
+        //                 indeling bestaat, leidt de link naar een pagina die
+        //                 "Geen dialog gevonden" toont. Kaart wel tonen, niet
+        //                 laten aanklikken.
+        //
+        // Zodra de revisiepagina er is, verdwijnt isRevision hier weer en
+        // blijft alleen isLocked over.
+        const isInert = isLocked || isRevision;
+
         return (
           <li key={item.lessonKey} className={styles.gridItem}>
             <article
@@ -48,8 +63,16 @@ export default function DialogsSectionView({
                 <span className={styles.lessonNumber}>
                   {item.sequenceNumber}
                 </span>
+
+                {/*
+                  Volgorde is niet vrij: de premium-revisie is zowel premium
+                  als revisie. isLocked staat eerst, zodat die het kroontje
+                  krijgt en niet het "Coming soon"-label.
+                */}
                 {isLocked ? (
                   <PremiumBadge />
+                ) : isRevision ? (
+                  <span className={styles.comingSoonBadge}>Coming soon</span>
                 ) : (
                   <LessonCompletionButton lessonTitle={item.title} comingSoon />
                 )}
@@ -58,15 +81,28 @@ export default function DialogsSectionView({
               <div
                 className={isRevision ? styles.revisionBody : styles.lessonBody}
               >
-             <h2 className={isRevision ? styles.revisionTitle : styles.lessonTitle}>
-  {isLocked ? (
-    <span className={styles.cardMainLink}>{item.title}</span>
-  ) : (
-    <Link href={`/lessons/${item.slug}`} className={styles.cardMainLink}>
-      {item.title}
-    </Link>
-  )}
-</h2>
+                <h2
+                  className={
+                    isRevision ? styles.revisionTitle : styles.lessonTitle
+                  }
+                >
+                  {/*
+                    cardMainLink heeft een ::after die de hele kaart afdekt,
+                    zodat je overal op de kaart kunt klikken. Die overlay hoort
+                    niet op een inerte kaart -- vandaar cardMainText, dezelfde
+                    typografie zonder het klikvlak.
+                  */}
+                  {isInert ? (
+                    <span className={styles.cardMainText}>{item.title}</span>
+                  ) : (
+                    <Link
+                      href={`/lessons/${item.slug}`}
+                      className={styles.cardMainLink}
+                    >
+                      {item.title}
+                    </Link>
+                  )}
+                </h2>
 
                 {item.subtitle ? (
                   <p
