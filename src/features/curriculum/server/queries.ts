@@ -22,8 +22,6 @@ export async function getLessonsForSection(
   }
 
   const rows = (data ?? []) as LessonRow[];
-  // ik heb deze mapper nodig omdat ik in de database snake_case gebruik en in de frontend camelCase.
-  console.log("rows without mapper", rows);
-  console.log("rows", rows.map(mapLessonRowToSectionItem));
+  // ik heb deze mapper nodig omdat ik in de database snake_case gebruik en in de frontend camelCase. 
   return rows.map(mapLessonRowToSectionItem);
 }
