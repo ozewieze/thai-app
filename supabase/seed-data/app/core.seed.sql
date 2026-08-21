@@ -90,7 +90,7 @@ values
     true
   ),
   (
-    'a1-dialog-premium-01',
+    'a1-dialog-06',
     'how-much-is-it',
     'A1',
     'dialogs',
@@ -102,7 +102,7 @@ values
     true
   ),
   (
-    'a1-dialog-premium-02',
+    'a1-dialog-07',
     'at-the-market',
     'A1',
     'dialogs',
@@ -114,7 +114,7 @@ values
     true
   ),
   (
-    'a1-dialog-premium-03',
+    'a1-dialog-08',
     'where-is-the-station',
     'A1',
     'dialogs',
@@ -126,7 +126,7 @@ values
     true
   ),
   (
-    'a1-dialog-premium-04',
+    'a1-dialog-09',
     'what-time-do-we-meet',
     'A1',
     'dialogs',
@@ -138,7 +138,7 @@ values
     true
   ),
   (
-    'a1-dialog-premium-05',
+    'a1-dialog-10',
     'talking-about-family',
     'A1',
     'dialogs',
@@ -150,7 +150,7 @@ values
     true
   ),
   (
-    'a1-revision-premium-01',
+    'a1-revision-02',
     'revision-6-10',
     'A1',
     'dialogs',
